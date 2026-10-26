@@ -113,11 +113,17 @@ clock (Stop exits only through reset). The BB2 also has 21 I/O on QSOP24.
 | 21 | P0.7 | LNA_PATH | out | both SPDTs; 1 = through LNA; 10 k pull-down = bypass |
 | 20–18 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 in parallel; 10 k pull-downs = branch 0 (THRU) |
 | 17 | P1.3 | FMN | out | FM-notch SPDTs (DNP option); 10 k pull-down |
-| 16 | P1.4 | LED_SER | out | 595 chain data |
-| 15 | P1.5 | LED_SCK | out | |
-| 14 | P1.6 | LED_RCK | out | |
-| 13 | P1.7 | LED_OE_N | out | 10 k pull-up: lamps dark until the first write |
-| 12–9 | P2.0–P2.3 | — | out | spare, driven low; bring out to pads |
+| 16–13 | P1.4–P1.7 | — | out | spare, driven low; test pads |
+| 12 | P2.0 | LED_SER | out | 595 chain data |
+| 11 | P2.1 | LED_SCK | out | |
+| 10 | P2.2 | LED_RCK | out | |
+| 9 | P2.3 | LED_OE_N | out | 10 k pull-up: lamps dark until the first write |
+
+The pins are assigned by package side. Pins 1–12 carry the analog inputs,
+power, debug and the lamp chain, and face the power and panel area. Pins
+13–24 carry RF switch control, LNA_EN and FAULT_N, and face the RF chain. No
+control line crosses under the MCU. (Co-designing placement and pinout cut
+ratsnest crossings by about 20 % on an earlier board.)
 | 8 | P3.0/C2D | C2D | — | debug |
 | 7 | RSTb/C2CK | C2CK | — | debug, 1 k series + 10 k pull-up |
 

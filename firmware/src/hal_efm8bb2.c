@@ -12,8 +12,12 @@
  *   P0.7 LNA_PATH  out  SPDT pair, 1=LNA  (10k pull-down: bypass in reset)
  *   P1.0..2 SW_V1..3   both PE42582      (10k pull-downs: THRU in reset)
  *   P1.3 FMN       out  FM notch SPDTs   (10k pull-down: out in reset)
- *   P1.4 LED_SER, P1.5 LED_SCK, P1.6 LED_RCK, P1.7 LED_OE_N (10k pull-up)
- *   P2.0..3        spare, driven low
+ *   P1.4..7        spare, driven low (test points)
+ *   P2.0 LED_SER, P2.1 LED_SCK, P2.2 LED_RCK, P2.3 LED_OE_N (10k pull-up)
+ *
+ * Pin sides follow the placement: QSOP pins 1-12 (analog, power, debug,
+ * lamp chain) face the power/panel area, pins 13-24 (RF switch control,
+ * LNA_EN/FAULT_N) face the RF chain - no control line crosses the MCU.
  *   P3.0 C2D       debug
  *
  * SYSCLK stays at the reset default, HFOSC0/8 = 3.0625 MHz.
@@ -29,10 +33,10 @@
 
 SBIT(LNA_EN,   0x86);   /* P0.6 */
 SBIT(LNA_PATH, 0x87);   /* P0.7 */
-SBIT(LED_SER,  0x94);   /* P1.4 */
-SBIT(LED_SCK,  0x95);   /* P1.5 */
-SBIT(LED_RCK,  0x96);   /* P1.6 */
-SBIT(LED_OE_N, 0x97);   /* P1.7 */
+SBIT(LED_SER,  0xA0);   /* P2.0 */
+SBIT(LED_SCK,  0xA1);   /* P2.1 */
+SBIT(LED_RCK,  0xA2);   /* P2.2 */
+SBIT(LED_OE_N, 0xA3);   /* P2.3 */
 
 SFR(P2MDOUT, 0xA6);     /* page 0x00 */
 SFR(LFO0CN,  0xB1);
@@ -129,8 +133,8 @@ void hal_init(void)
 
     /* latches first: safe RF state, LEDs dark */
     P0 = 0x2Fu;                         /* LNA_EN=0, LNA_PATH=0, TP=0, inputs 1 */
-    P1 = 0x80u;                         /* V=000 (THRU), FMN=0, OE_N=1          */
-    P2 = 0x00u;
+    P1 = 0x00u;                         /* V=000 (THRU), FMN=0, spares low      */
+    P2 = 0x08u;                         /* lamp chain idle, OE_N=1              */
     P0MDIN  = 0xF1u;                    /* P0.1..P0.3 analog                    */
     P0MDOUT = 0xD0u;                    /* P0.4, P0.6, P0.7 push-pull           */
     P1MDIN  = 0xFFu;
