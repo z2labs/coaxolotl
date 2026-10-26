@@ -206,6 +206,7 @@ class Part:
     nets: Dict[str, Optional[str]] = field(default_factory=dict)  # pin -> net / None(NC)
     fields: Dict[str, str] = field(default_factory=dict)
     dnp: bool = False
+    txt: Optional[Tuple[float, float]] = None   # explicit Reference position (Value 2.54 below)
 
 
 class Sheet:
@@ -406,8 +407,15 @@ class Sheet:
                          "Value": (max(xs), max(ys) + 2.54, "left")}
             else:
                 place = {"Reference": (p.x, min(ys) - 5.08, None), "Value": (p.x, max(ys) + 5.08, None)}
+        if p.txt:
+            tx, ty = p.txt[0], p.txt[1]
+            just = p.txt[2] if len(p.txt) > 2 else "left"
+            place = {"Reference": (tx, ty, just), "Value": (tx, ty + 2.54, just)}
         self._instance(p.lib_id, p.ref, p.value, p.x, p.y, p.rot, p.footprint, dict(p.fields),
                        pins=list(pins), dnp=p.dnp, place=place)
+        if not getattr(self, "stubs", True):
+            self.parts.append(p)
+            return
         for num in pins:
             px, py, ox, oy = self.pin_xy(p.lib_id, p.x, p.y, p.rot, num)
             self.attach(p.nets[num], px, py, ox, oy)
@@ -442,6 +450,10 @@ class Sheet:
                         [Sym("property"), "Sheetfile", child.file, [Sym("at"), x, y + h + 0.6, 0],
                          [Sym("effects"), [Sym("font"), [Sym("size"), 1.27, 1.27]],
                           [Sym("justify"), Sym("left"), Sym("top")]]],
+                        *[[Sym("pin"), name, Sym(shape), [Sym("at"), px, py, 180 if side == "L" else 0],
+                           [Sym("effects"), [Sym("font"), [Sym("size"), 1.27, 1.27]],
+                            [Sym("justify"), Sym("left" if side == "L" else "right")]], [Sym("uuid"), uid()]]
+                          for name, shape, px, py, side in getattr(child, "sheet_pins", [])],
                         [Sym("instances"), [Sym("project"), project,
                                             [Sym("path"), "/" + root_uuid, [Sym("page"), pages[child.file]]]]]])
         if path == "/" + root_uuid:

@@ -30,7 +30,7 @@ def main() -> int:
     ap.add_argument("--pending", nargs="*", default=sorted(PENDING))
     a = ap.parse_args()
 
-    build.main()
+    _, style_errors = build.main()
     with tempfile.TemporaryDirectory() as td:
         net_file = pathlib.Path(td) / "n.net"
         subprocess.run(["kicad-cli", "sch", "export", "netlist", "-o", str(net_file),
@@ -53,26 +53,34 @@ def main() -> int:
     lib = g.Library(extra=[KICAD / "coaxolotl.kicad_sym"])
     errors, warns = [], []
     flags = set()
-    for sheet_fn in (build.sheet_power, build.sheet_mcu):
-        sh = sheet_fn(lib)
+    want = collections.defaultdict(set)          # intended net -> {(ref, pin)}
+    for sh in build.all_sheets(lib):
         flags |= sh.flags
         for p in sh.parts:
-            for pin, want in p.nets.items():
-                got = seen.get((p.ref, pin))
-                if want is None:
-                    if got and not got.startswith("unconnected-") and len(nets.get(got, [])) > 1:
+            for pin, net in p.nets.items():
+                if net is None:
+                    got = seen.get((p.ref, pin))
+                    if got and len(nets.get(got, [])) > 1:
                         errors.append(f"{p.ref}.{pin}: meant NC, KiCad has net {got}")
                     continue
-                want_n = want.lstrip("+") if want == "+3V3" else want
-                if got is None or (got != want and got != want_n and got.split("/")[-1] != want):
-                    errors.append(f"{p.ref}.{pin}: want {want}, KiCad has {got}")
+                want[net].add((p.ref, pin))
+    got_groups = {name: {(r, pn) for r, pn, _ in nodes if not r.startswith("#")} for name, nodes in nets.items()}
+    for net, pins in sorted(want.items()):
+        kicad = {seen.get(rp) for rp in pins}
+        if len(kicad) != 1 or None in kicad:
+            errors.append(f"net {net}: pins split over KiCad nets {sorted(map(str, kicad))}")
+            continue
+        kname = kicad.pop()
+        extra = got_groups[kname] - pins
+        if extra:
+            errors.append(f"net {net}: KiCad net {kname} also has {sorted(extra)} (short?)")
 
     for name, nodes in sorted(nets.items()):
         real = [n for n in nodes if not n[0].startswith("#")]
         types = [t for _, _, t in nodes]
         if name.startswith("unconnected-"):
             continue
-        if len(real) < 2 and name not in a.pending:
+        if len(real) < 2 and name.split("/")[-1] not in a.pending:
             warns.append(f"single-pin net {name}: {real}")
         if "power_in" in types and "power_out" not in types and name not in flags:
             errors.append(f"net {name}: power input(s) without a driver or PWR_FLAG")
@@ -83,9 +91,10 @@ def main() -> int:
     print(f"netlist: {len(nets)} nets, {len(seen)} pin connections")
     for w in warns:
         print("WARN ", w)
+    errors += [f"style: {e}" for e in style_errors]
     for e in errors:
         print("ERROR", e)
-    pend = [n for n in a.pending if n in nets]
+    pend = [n for n in nets if n.split("/")[-1] in a.pending]
     if pend:
         print("pending (end on a sheet not drawn yet):", ", ".join(pend))
     print("OK" if not errors else f"{len(errors)} errors")
