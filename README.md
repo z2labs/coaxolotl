@@ -102,3 +102,12 @@ python3 host/coaxolotl.py send --bank 3 --backend rtl_biast    # rtl-sdr-blog to
   for each, and the `SNOOZE=0` build avoids them.
 * ⚠️ No schematic or PCB yet. The open items before layout are listed in
   `docs/hardware.md`.
+
+## License
+
+| Part | License |
+|---|---|
+| Hardware: `hardware/` (schematics, PCB, BOM), and the hardware design in `docs/hardware.md` | [CERN-OHL-S-2.0](hardware/LICENSE) |
+| Software: `firmware/`, `host/`, `tools/`, future SDR plugins | [MIT](LICENSE) |
+
+Documentation follows the part it describes.
