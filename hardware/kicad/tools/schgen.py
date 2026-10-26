@@ -43,6 +43,19 @@ def parse(text: str):
     return stack[0][0]
 
 
+FONT_FACE = "Arial"   # TrueType face for every schematic text (KiCad 7+); falls back if missing
+
+
+def with_face(node):
+    """Add (face FONT_FACE) to every (font ...) node that has none."""
+    if isinstance(node, list):
+        if node and node[0] == "font" and not any(isinstance(e, list) and e and e[0] == "face" for e in node):
+            node.insert(1, [Sym("face"), FONT_FACE])
+        for e in node:
+            with_face(e)
+    return node
+
+
 def dump(x, indent=0) -> str:
     pad = "  " * indent
     if isinstance(x, list):
@@ -462,4 +475,4 @@ class Sheet:
                                             [Sym("path"), "/" + root_uuid, [Sym("page"), pages[child.file]]]]]])
         if path == "/" + root_uuid:
             out.append([Sym("sheet_instances"), [Sym("path"), "/", [Sym("page"), "1"]]])
-        return dump(out) + "\n"
+        return dump(with_face(out)) + "\n"

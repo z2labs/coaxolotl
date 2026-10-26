@@ -2268,26 +2268,26 @@
       )
     )
   )
-  (symbol "LNA_MMIC"
+  (symbol "QPL9547"
     (in_bom yes)
     (on_board yes)
     (property "Reference" "U"
-      (at 0 3.81 0)
+      (at 0 8.89 0)
       (effects
         (font
           (size 1.27 1.27)
         )
       )
     )
-    (property "Value" "LNA_MMIC"
-      (at 0 -3.81 0)
+    (property "Value" "QPL9547"
+      (at 0 -8.89 0)
       (effects
         (font
           (size 1.27 1.27)
         )
       )
     )
-    (property "Footprint" "coaxolotl:LNA_TBD"
+    (property "Footprint" "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm"
       (at 0 0 0)
       (effects
         (font
@@ -2296,7 +2296,7 @@
         hide
       )
     )
-    (property "Datasheet" "~"
+    (property "Datasheet" "https://www.qorvo.com/products/p/QPL9547"
       (at 0 0 0)
       (effects
         (font
@@ -2305,7 +2305,7 @@
         hide
       )
     )
-    (property "Description" "Broadband MMIC LNA, ~100 mA, biased through RFOUT (part TBD)"
+    (property "Description" "Qorvo 0.1-6 GHz ultra-low-noise LNA, 3.3-5 V, 65 mA (adjustable), DFN-8 2x2. VDD through RF_OUT; pins 3, 4, 5, 8 NC (no symbol pin)"
       (at 0 0 0)
       (effects
         (font
@@ -2314,10 +2314,10 @@
         hide
       )
     )
-    (symbol "LNA_MMIC_0_1"
+    (symbol "QPL9547_0_1"
       (rectangle
-        (start -7.62 2.54)
-        (end 7.62 -2.54)
+        (start -10.16 7.62)
+        (end 10.16 -7.62)
         (stroke
           (width 0.254)
           (type default)
@@ -2327,47 +2327,11 @@
         )
       )
     )
-    (symbol "LNA_MMIC_1_1"
+    (symbol "QPL9547_1_1"
       (pin input line
-        (at -10.16 0 0)
+        (at -12.7 5.08 0)
         (length 2.54)
-        (name "RFIN"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "1"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin output line
-        (at 10.16 0 180)
-        (length 2.54)
-        (name "RFOUT"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "3"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin power_in line
-        (at 0 -5.08 90)
-        (length 2.54)
-        (name "GND"
+        (name "RF_IN"
           (effects
             (font
               (size 1.27 1.27)
@@ -2382,10 +2346,63 @@
           )
         )
       )
-      (pin passive line
-        (at 0 -5.08 90)
+      (pin input line
+        (at -12.7 -5.08 0)
         (length 2.54)
-        hide
+        (name "SHDN"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "6"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin output line
+        (at 12.7 5.08 180)
+        (length 2.54)
+        (name "RF_OUT"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "7"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin input line
+        (at 0 10.16 270)
+        (length 2.54)
+        (name "VBIAS"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin power_in line
+        (at 0 -10.16 90)
+        (length 2.54)
         (name "GND"
           (effects
             (font
@@ -2393,7 +2410,7 @@
             )
           )
         )
-        (number "4"
+        (number "9"
           (effects
             (font
               (size 1.27 1.27)

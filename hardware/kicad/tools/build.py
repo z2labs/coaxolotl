@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Generate the Coaxolotl KiCad project (Olimex-style, hand-placed and wired).
+"""Generate the Coaxolotl KiCad project (hand-placed and wired).
 
     python3 hardware/kicad/tools/build.py
     python3 hardware/kicad/tools/check.py
 
-Style (AI PCB Dev schematic guide, Olimex reference):
+Style (AI PCB Dev schematic guide):
   * one function per A3 sheet, dashed blocks with bold italic titles
   * power/ground only as power symbols (rails up, GND down), one GND per part
   * wires inside a block, hierarchical labels between sheets, no global labels
@@ -187,10 +187,13 @@ def build_library(path: pathlib.Path):
             left=[("1", "IN")], right=[("3", "OUT")], bottom_pins=[("2,4", "GND")],
             pin_types={"1": "passive", "3": "passive", "2,4": "power_in"}),
         ic_symbol(
-            "LNA_MMIC", "U", "coaxolotl:LNA_TBD",
-            "~", "Broadband MMIC LNA, ~100 mA, biased through RFOUT (part TBD)",
-            left=[("1", "RFIN")], right=[("3", "RFOUT")], bottom_pins=[("2,4", "GND")],
-            pin_types={"1": "input", "3": "output", "2,4": "power_in"}),
+            "QPL9547", "U", "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm",
+            "https://www.qorvo.com/products/p/QPL9547",
+            "Qorvo 0.1-6 GHz ultra-low-noise LNA, 3.3-5 V, 65 mA (adjustable), DFN-8 2x2. "
+            "VDD through RF_OUT; pins 3, 4, 5, 8 NC (no symbol pin)",
+            left=[("2", "RF_IN"), None, None, None, ("6", "SHDN")], right=[("7", "RF_OUT")], width=20.32,
+            top_pins=[("1", "VBIAS")], bottom_pins=[("9", "GND")],
+            pin_types={"2": "input", "7": "output", "6": "input", "1": "input", "9": "power_in"}),
         ic_symbol(
             "RF_FILTER", "FL", "coaxolotl:FILTER_TBD",
             "~", "Placeholder for an LC filter network (designed in the filter review)",
@@ -203,7 +206,7 @@ def build_library(path: pathlib.Path):
 
 
 # ---------------------------------------------------------------------------
-# part helpers (Value = critical parameters, Olimex style)
+# part helpers (Value = critical parameters)
 
 
 def R(ref, val, x, y, a, b, rot=0, fp=R0603, txt=None, **f):
@@ -591,30 +594,40 @@ def sheet_rf_fe(lib) -> DSheet:
     s.intent("tank 56 nH || 47 pF: f0 = 98 MHz", 218.44, 186.69)
 
     # LNA --------------------------------------------------------------------
-    s.frame(304.8, 86.36, 55.88, 53.34, "LNA")
+    s.frame(306.07, 81.28, 54.61, 71.12, "LNA")
     s.add(C("C28", "100nF/16V/X7R", 309.88, yl, "FMN_OUT", "LNA_RFIN", rot=90, txt=(309.88, yl - 6.35, None)))
     s.w(s.pt("R22", "2"), s.pt("C28", "1"))
-    s.add(Part("U13", "coaxolotl:LNA_MMIC", "LNA_MMIC(TBD,~100mA)", 325.12, yl, 0, "coaxolotl:LNA_TBD",
-               {"1": "LNA_RFIN", "3": "LNA_RFOUT", "2": "GND", "4": "GND"},
-               {"Note": "pick a part: gain/NF/OIP3 at 4.2 V"}, txt=(328.93, yl + 8.89)))
-    s.w(s.pt("C28", "2"), s.pt("U13", "1"))
-    s.gnd("U13", "2")
+    s.add(Part("U13", "coaxolotl:QPL9547", "QPL9547TR7(DFN8-2x2)", 327.66, yl + 5.08, 0,
+               "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm",
+               {"2": "LNA_RFIN", "7": "LNA_RFOUT", "1": "LNA_VBIAS", "6": "LNA_SHDN", "9": "GND"},
+               {"Note": "VERIFY Rbias / SHDN polarity / RF_OUT choke against the datasheet"},
+               txt=(331.47, 139.7)))
+    s.w(s.pt("C28", "2"), s.pt("U13", "2"))
+    s.gnd("U13", "9")
+    s.add(R("R25", "0R/0603", 322.58, 113.03, "LNA_BIAS", "LNA_VBIAS", Note="Rbias: sets IDD (65 mA default)",
+            txt=(320.04, 111.76, "right")))
+    s.pw("U13", "1", (None, 116.84), s.pt("R25", "2"))
+    s.w(s.pt("R25", "1"), (322.58, 104.14), (340.36, 104.14))
+    s.add(R("R26", "10k/5%", 312.42, 135.89, "LNA_SHDN", "GND", Note="SHDN low = on (VERIFY polarity)",
+            txt=(309.88, 137.16, "right")))
+    s.pw("U13", "6", (312.42, None), s.pt("R26", "1"))
+    s.gnd("R26", "2")
     xb = 340.36
     s.add(Part("L4", "Device:L", "1uH/BROADBAND", xb, yl - 7.62, 0, "Inductor_SMD:L_0805_2012Metric",
                {"1": "LNA_BIAS", "2": "LNA_RFOUT"}, {"Note": "VERIFY SRF > 2 GHz or conical"},
-               txt=(xb - 2.54, yl - 8.89, "right")))
-    s.add(Part("FB2", "Device:FerriteBead_Small", "FB0603/600R/1.3A", xb, yl - 22.86, 0, FB0603,
-               {"1": "LNA_VCC", "2": "LNA_BIAS"}, txt=(xb - 2.54, yl - 24.13, "right")))
-    s.add(C("C30", "10uF/10V/20%", xb + 7.62, yl - 13.97, "LNA_BIAS", "GND", fp=C0805))
+               txt=(342.9, yl - 6.35)))
+    s.add(Part("FB2", "Device:FerriteBead_Small", "FB0603/600R/1.3A", xb, yl - 27.94, 0, FB0603,
+               {"1": "LNA_VCC", "2": "LNA_BIAS"}, txt=(xb - 2.54, yl - 29.21, "right")))
+    s.add(C("C30", "10uF/10V/20%", xb + 7.62, yl - 19.05, "LNA_BIAS", "GND", fp=C0805))
     s.add(C("C31", "100nF/16V/X7R", 350.52, yl, "LNA_RFOUT", "LNA_RF_SW", rot=90, txt=(350.52, yl + 3.81, None)))
-    s.w(s.pt("U13", "3"), s.pt("C31", "1"))
+    s.w(s.pt("U13", "7"), s.pt("C31", "1"))
     s.w(s.pt("L4", "2"), (xb, yl))
     s.w(s.pt("L4", "1"), s.pt("FB2", "2"))
     s.w((xb, s.pt("C30", "1")[1] - 2.54), (xb + 7.62, s.pt("C30", "1")[1] - 2.54), s.pt("C30", "1"))
     s.gnd("C30", "2")
     s.w(s.pt("FB2", "1"), (xb, s.pt("FB2", "1")[1] - 2.54))
     s.rail("LNA_VCC", xb, s.pt("FB2", "1")[1] - 2.54)
-    s.intent("bias via RFOUT; add 100 pF || for > 1 GHz", 307.34, 137.16)
+    s.intent("VDD via RF_OUT choke, IDD 65 mA (QPL9547)", 308.61, 151.13)
 
     # LNA / bypass out -------------------------------------------------------
     s.frame(365.76, 45.72, 30.48, 58.42, "LNA/BYP OUT")

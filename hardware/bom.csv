@@ -46,8 +46,8 @@ R8,1,1k/1%,R_0603_1608Metric,,,MCU,
 R9,1,100R/5%,R_0603_1608Metric,,,Power,
 R10 R24,2,220R/5%,R_0603_1608Metric,,,"Filter bank, Power",R24: damps the L6 self-resonance
 R11 R12,2,1M/1%,R_0603_1608Metric,,,Power,
-R13 R14 R15 R16 R17 R18 R19 R20,8,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write
-R21 R22,2,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted
+R13 R14 R15 R16 R17 R18 R19 R20 R26,9,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write; R26: SHDN low = on (VERIFY polarity)
+R21 R22 R25,3,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted; R25: Rbias: sets IDD (65 mA default)
 TP1,1,TP/TX,TestPoint_Pad_D1.0mm,,,MCU,
 TP6,1,TP/SENSE,TestPoint_Pad_D1.0mm,,,MCU,
 U1,1,LM66100DCKR(SC70-6),SOT-363_SC-70-6,,,Power,
@@ -59,4 +59,4 @@ U6 U7,2,PE42522B(LGA29),PE42522_LGA-29_4x4mm,,,RF front end,
 U8 U11,2,PE42582A(QFN24),QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm,,,Filter bank,
 U9 U10,2,NA(PE42522B),PE42522_LGA-29_4x4mm,,DNP,RF front end,
 U12,1,LFCN-2250+(FV1206),MiniCircuits_FV1206,,,RF front end,
-U13,1,"LNA_MMIC(TBD,~100mA)",LNA_TBD,,,RF front end,U13: pick a part: gain/NF/OIP3 at 4.2 V
+U13,1,QPL9547TR7(DFN8-2x2),Qorvo_DFN-8-1EP_2x2mm_P0.5mm,,,RF front end,U13: VERIFY Rbias / SHDN polarity / RF_OUT choke against the datasheet

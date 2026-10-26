@@ -9,8 +9,9 @@ python3 hardware/kicad/tools/bom.py        # grouped BOM -> hardware/bom.csv
 kicad-cli sch export pdf -o hardware/kicad/coaxolotl-schematic.pdf hardware/kicad/coaxolotl.kicad_sch
 ```
 
-## Style (Olimex reference, AI PCB Dev schematic guide)
+## Style (AI PCB Dev schematic guide)
 
+- Text uses the Arial TrueType face (KiCad 7+ falls back to its own font if Arial is missing).
 - One function per A3 sheet. Blocks are dashed frames with bold italic titles.
 - Power and ground appear **only as power symbols**: rails point up, GND points down, and every part gets its own GND. The project rails (VCOAX, VMAIN, VHOLD, VLED, LNA_VCC) are real power symbols in `coaxolotl.kicad_sym`.
 - Inside a block, parts connect with **wires**. Between sheets they connect through **hierarchical labels** and sheet pins. No global labels.

@@ -1,7 +1,7 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "99468fb0-a8d6-417a-8a36-61bd1d342350")
+  (uuid "c2d65c0e-4de9-4e9d-9e07-9d22af32d00d")
   (paper "A3")
   (title_block
     (title "Panel")
@@ -23,6 +23,7 @@
         (at 2.032 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -31,6 +32,7 @@
         (at 0 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -39,6 +41,7 @@
         (at -1.778 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -48,6 +51,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -57,6 +61,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -66,6 +71,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -75,6 +81,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -100,6 +107,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -107,6 +115,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -118,6 +127,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -125,6 +135,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -143,6 +154,7 @@
         (at 0 -3.81 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -152,6 +164,7 @@
         (at 0 3.556 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -160,6 +173,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -169,6 +183,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -178,6 +193,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -187,6 +203,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -241,6 +258,7 @@
           (name "+3V3"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -248,6 +266,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -266,19 +285,20 @@
     (fill
       (type none)
     )
-    (uuid "07efbba8-aeca-4624-a009-b4175852f63b")
+    (uuid "bc344f9b-29c2-434d-94e6-312a55f975cc")
   )
   (text "Lamp chain inputs"
     (at 26.67 44.45 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "40ae4077-683b-46a9-b6e6-8f0ffc35cfa0")
+    (uuid "bbeae321-1e95-49b5-b26d-73692e7a15bd")
   )
   (hierarchical_label "LED_SER"
     (shape input)
@@ -286,11 +306,12 @@
     (fields_autoplaced)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
       (justify right)
     )
-    (uuid "88eaa941-811c-476a-a154-efd1f62008e4")
+    (uuid "8dbd078d-0984-48b5-89e3-e2fabb06c3ab")
   )
   (hierarchical_label "LED_SCK"
     (shape input)
@@ -298,11 +319,12 @@
     (fields_autoplaced)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
       (justify right)
     )
-    (uuid "601c3025-5639-451c-bcc0-645b1549b695")
+    (uuid "e215ca10-4c85-412f-867c-943728f74557")
   )
   (hierarchical_label "LED_RCK"
     (shape input)
@@ -310,11 +332,12 @@
     (fields_autoplaced)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
       (justify right)
     )
-    (uuid "e191d6e8-173c-4334-9aba-1408bd77b521")
+    (uuid "ba3c2029-e9c0-4cb7-84ab-b1df646db7df")
   )
   (symbol
     (lib_id "Device:R")
@@ -323,11 +346,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "023864b5-ddde-40e4-80f7-662bf87d72b3")
+    (uuid "a9131c6f-1e4f-4ff5-8d46-cd99c1b3f191")
     (property "Reference" "R20"
       (at 78.74 72.39 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -337,6 +361,7 @@
       (at 78.74 74.93 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -346,6 +371,7 @@
       (at 80.01 73.66 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -355,6 +381,7 @@
       (at 80.01 73.66 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -364,6 +391,7 @@
       (at 80.01 73.66 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -373,20 +401,21 @@
       (at 80.01 73.66 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "3b272a58-9c07-4d17-bc82-2de21baead2f")
+      (uuid "2e6daf1e-ab96-48b7-9f00-51f004105d51")
     )
     (pin "2"
-      (uuid "9378368f-8050-49ee-abbb-9c6d830ad062")
+      (uuid "b9201533-05db-4c25-9f9e-6a160cebc4ef")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/145f96f9-152c-4645-9c11-a9ddb49dfe79"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/02428aa8-a1c8-4140-a619-fd4410a29de9"
           (reference "R20")
           (unit 1)
         )
@@ -399,11 +428,12 @@
     (fields_autoplaced)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
       (justify right)
     )
-    (uuid "c39d7a8e-879c-46f2-b767-aa248e469f8f")
+    (uuid "40ad3f47-4619-4329-936c-748bab1cc2ad")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -412,11 +442,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "0d1e3523-1854-4289-b4b4-88b5394cceb7")
+    (uuid "eabf662c-4ae0-4b40-a630-fe55c177efea")
     (property "Reference" "#PWR001"
       (at 80.01 69.85 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -426,6 +457,7 @@
       (at 76.2 63.5 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -434,6 +466,7 @@
       (at 80.01 67.31 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -443,17 +476,18 @@
       (at 80.01 67.31 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "5fd20dbd-a336-495b-a4ca-9c7191020288")
+      (uuid "3feb3f57-6129-44d1-9ea2-1d7ab580730f")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/145f96f9-152c-4645-9c11-a9ddb49dfe79"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/02428aa8-a1c8-4140-a619-fd4410a29de9"
           (reference "#PWR001")
           (unit 1)
         )
@@ -464,13 +498,14 @@
     (at 27.94 91.44 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "4c486351-9d66-4905-be89-770a39f9948f")
+    (uuid "c1e97d59-b00e-4f18-b6f1-f4505d16de4a")
   )
   (wire
     (pts
@@ -481,7 +516,7 @@
       (width 0)
       (type default)
     )
-    (uuid "195933bf-50f0-444f-bd11-4595dec86ef7")
+    (uuid "3112a16a-6f32-420b-a7ee-17b4a414a5e3")
   )
   (wire
     (pts
@@ -492,6 +527,6 @@
       (width 0)
       (type default)
     )
-    (uuid "92ac576a-60d9-44ff-aacd-054fa13b6fec")
+    (uuid "53b798f2-298d-4663-8847-aed4e94bcbdf")
   )
 )

@@ -1,7 +1,7 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "35617b03-d5a3-43df-8856-836981f12dcb")
+  (uuid "537fb7bf-acab-43d0-bff7-5de850ba4b04")
   (paper "A3")
   (title_block
     (title "Coaxolotl")
@@ -16,13 +16,14 @@
     (at 20.32 30.48 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "3cc5e1d3-53d4-4ef2-879c-ddd84fef6104")
+    (uuid "2cabe222-d230-4316-a802-5861e0439739")
   )
   (rectangle
     (start 18 60)
@@ -35,26 +36,28 @@
       (type color)
       (color 232 232 232 1)
     )
-    (uuid "bf30ab9e-cfbf-4c0e-a520-8544a4981ec0")
+    (uuid "6b617639-7aa4-4257-838c-26a71bc965a5")
   )
   (text "ANTENNA"
     (at 31 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "c48719ad-ac71-4f79-8700-de007ab98812")
+    (uuid "f20e8a06-a7ca-4baa-9f9d-b2dcf65033c7")
   )
   (text "20 kHz-2 GHz"
     (at 31 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "9ca49f5c-8219-4812-9b82-31a080961288")
+    (uuid "b6cb435a-be77-47aa-bd5c-4c2bf482327a")
   )
   (rectangle
     (start 51 60)
@@ -67,26 +70,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "4a841907-8030-42c9-b59c-bef145636940")
+    (uuid "19cf15e6-0e71-4735-945d-746bc6d64182")
   )
   (text "PROTECTION"
     (at 64 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "05d9ba44-61f2-4480-9496-85b722f18e1a")
+    (uuid "40b7e491-2609-41d0-902a-7163cb729d29")
   )
   (text "GDT, limiter"
     (at 64 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "ea980993-a8cf-4aeb-ae85-63f27f0f84dd")
+    (uuid "47e06f68-a7cf-4dda-bb30-dba8a250156b")
   )
   (rectangle
     (start 84 60)
@@ -99,26 +104,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "60766d13-c375-4ccc-bc05-8fa956e608cf")
+    (uuid "b7ac3aca-c9f5-4327-a5b5-0e7de9ee95cf")
   )
   (text "SPDT"
     (at 97 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "d72eebaa-eb49-4356-b6a4-716904389a6a")
+    (uuid "524bf5df-7d0a-4f88-b97b-cdd9cd0a3e8a")
   )
   (text "PE42522"
     (at 97 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "d30118c1-7797-4026-8ea0-8e5e5990c6db")
+    (uuid "01242851-0a6d-4f0d-a345-8797201dc0e8")
   )
   (rectangle
     (start 216 60)
@@ -131,26 +138,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "1f9084be-5b6d-417b-8709-a18573b39e56")
+    (uuid "052c6171-8b81-4c14-9263-ff6318bec795")
   )
   (text "SPDT"
     (at 229 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "96eb1df8-afdf-455e-a9bb-923d540ddb05")
+    (uuid "1efe73cb-1bae-41e9-a28a-d7d0377b5ad9")
   )
   (text "PE42522"
     (at 229 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "8322546b-f4c9-4840-ba97-eb76df31038e")
+    (uuid "926a9c3c-11e1-475b-b099-421d5bf9d9ed")
   )
   (rectangle
     (start 249 60)
@@ -163,26 +172,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "ee2bc416-35b6-47fd-960a-e8bf7456a462")
+    (uuid "6e471b1e-acec-4f8a-ac48-5c2298df69fd")
   )
   (text "SP8T"
     (at 262 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "d2e09116-87e3-4d52-81f9-c0e656d114af")
+    (uuid "600c0b1d-a925-4e9c-9fbf-717a05bb528d")
   )
   (text "PE42582"
     (at 262 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "c1311fd9-7a36-4632-9716-6f89a39073de")
+    (uuid "afeeb284-6f66-4148-976b-56a487fc477b")
   )
   (rectangle
     (start 282 60)
@@ -195,26 +206,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "0d0215b4-f125-4270-a8a6-ece3dec075c7")
+    (uuid "5cb2c821-15ba-47ca-9262-b61ef7a7b39b")
   )
   (text "8 FILTERS"
     (at 295 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "9b3b9359-7d25-47f5-bad0-f39f0a072314")
+    (uuid "a7478b85-9d2b-4ace-be0c-5cc874d33870")
   )
   (text "F0 THRU..F7"
     (at 295 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "8f65d622-5ab5-4f92-9eda-daf931f94959")
+    (uuid "faf4f114-5402-4bd9-b3b4-beb8f1df4512")
   )
   (rectangle
     (start 315 60)
@@ -227,26 +240,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "361bb410-8b96-41d4-bb9f-8d63f74a735a")
+    (uuid "3a03e871-95eb-4f0a-9752-a2105ab5ebff")
   )
   (text "SP8T"
     (at 328 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "9f1a9817-d9bd-4e48-bd0b-d420f09a7de8")
+    (uuid "d4a79329-005a-42e5-ab2c-f89bf25e5f15")
   )
   (text "PE42582"
     (at 328 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "cfef1298-e5c8-4981-9853-2ffd34207a39")
+    (uuid "7aa40654-50c7-48d6-b5f7-3b181c96b822")
   )
   (rectangle
     (start 348 60)
@@ -259,26 +274,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "5ce1b797-a1f2-4ead-ae08-85a4f016a04e")
+    (uuid "c1fce4dd-11de-42bf-97bd-211bd753269b")
   )
   (text "BIAS-T"
     (at 361 65.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "b25bc72b-49a1-4b78-89ce-8514cfa96c09")
+    (uuid "e67c4a90-6d9a-404a-817e-2e1f189d358f")
   )
   (text "20 kHz-2 GHz"
     (at 361 68.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "c663b89b-3d12-4b16-a687-d08fe3380b5f")
+    (uuid "45b719b3-25d9-4cd9-8c62-cbd849deeee2")
   )
   (rectangle
     (start 117 38)
@@ -291,26 +308,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "2c5c9367-18f8-4fc4-832c-3443c448bc9e")
+    (uuid "e4f7fc65-ca98-4210-880a-91651bcfb0d5")
   )
   (text "PRESELECTOR"
     (at 130 43.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "191326ca-6861-42ee-b69e-01c25a4b998d")
+    (uuid "6be365fe-4f21-41c7-a9c6-75813c19012a")
   )
   (text "HPF 25M, LPF 2.2G"
     (at 130 46.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "c4f2a5b1-36a6-46dd-be25-c3143cab1f8d")
+    (uuid "2bc0963e-1341-4f83-8a53-3a055b12bca0")
   )
   (rectangle
     (start 150 38)
@@ -323,26 +342,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "e30512b6-efc3-43fc-a6f3-3b7fdd9fa5e5")
+    (uuid "504f1e17-1efc-48db-92de-37b30ae09dd4")
   )
   (text "FM NOTCH"
     (at 163 43.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "fc36dc74-1ccb-46b3-90e0-32701a582911")
+    (uuid "05a9a3e9-b9f4-4aaa-becd-5f3fd879d650")
   )
   (text "88-108 MHz, opt."
     (at 163 46.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "a1c56071-5855-45f5-84ac-31e68c88328a")
+    (uuid "bb69f8b7-a4c1-4164-9254-078e64f10d7c")
   )
   (rectangle
     (start 183 38)
@@ -355,26 +376,28 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "07ef52aa-7ee2-45a9-87b8-31f9f0c5953b")
+    (uuid "c2051df4-eaab-4a65-a9fe-67f342c2a442")
   )
   (text "LNA"
     (at 196 43.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "a3d38db7-fef8-4019-a54c-e4ec540de5cc")
+    (uuid "6f5c9481-ad46-427f-a442-cb9b623d06f3")
   )
   (text "~100 mA"
     (at 196 46.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "5faaf19d-2f46-4c33-a579-bac2340cd21d")
+    (uuid "e7226634-72d3-44b1-b48a-71f78a0e1a6e")
   )
   (polyline
     (pts
@@ -388,7 +411,7 @@
     (fill
       (type none)
     )
-    (uuid "3a39b7b3-01f0-4bf6-95e8-e5b370435d6c")
+    (uuid "bb6d9ee5-5920-48bb-b858-f6fbf3e6d530")
   )
   (polyline
     (pts
@@ -404,7 +427,7 @@
     (fill
       (type outline)
     )
-    (uuid "8cb5cc49-c2e8-4464-9ffc-657fb9c39f89")
+    (uuid "1a80acba-1641-4667-abdc-6772c3d7abfa")
   )
   (polyline
     (pts
@@ -418,7 +441,7 @@
     (fill
       (type none)
     )
-    (uuid "feabf0fd-b0f8-461d-bf68-88d7104e8760")
+    (uuid "fb640df5-97d0-4b58-80b7-507581712856")
   )
   (polyline
     (pts
@@ -434,7 +457,7 @@
     (fill
       (type outline)
     )
-    (uuid "fdb7db86-69bd-4213-a85e-eacec3ade182")
+    (uuid "0d7264c1-462e-44c6-937e-bc482e727a70")
   )
   (polyline
     (pts
@@ -448,7 +471,7 @@
     (fill
       (type none)
     )
-    (uuid "635c4429-eb2c-4343-905b-afe8a6dc0916")
+    (uuid "6c940325-3940-427f-a3a1-4edc652d204f")
   )
   (polyline
     (pts
@@ -464,7 +487,7 @@
     (fill
       (type outline)
     )
-    (uuid "e7daede2-7b11-4ea6-a77c-d1f049c230b9")
+    (uuid "0bd7b0a0-025b-40a9-8409-c8186426711b")
   )
   (polyline
     (pts
@@ -478,7 +501,7 @@
     (fill
       (type none)
     )
-    (uuid "9645faef-7541-40e9-ac84-999d3fcb4b4b")
+    (uuid "aad666cf-1371-4805-bd94-26c6b2403840")
   )
   (polyline
     (pts
@@ -494,7 +517,7 @@
     (fill
       (type outline)
     )
-    (uuid "504dad2e-9e52-4018-9984-9284bc323aa4")
+    (uuid "9cf1b0c0-2c3b-4490-b943-591cab2b9504")
   )
   (polyline
     (pts
@@ -508,7 +531,7 @@
     (fill
       (type none)
     )
-    (uuid "5dbf70a0-7eb7-4df9-a1b7-f0e59c9643f4")
+    (uuid "dbdd5fd0-84be-4a74-9bf1-6dec9f80c611")
   )
   (polyline
     (pts
@@ -524,7 +547,7 @@
     (fill
       (type outline)
     )
-    (uuid "5f02effd-88ef-4269-bfdd-e4cf671c56ba")
+    (uuid "f9454008-4dc2-4f27-9179-065bf6d1855d")
   )
   (polyline
     (pts
@@ -538,7 +561,7 @@
     (fill
       (type none)
     )
-    (uuid "9a0a4ca8-d3e3-40b8-b738-11e125382439")
+    (uuid "cd29754e-49c3-4ad1-a7d8-a6ec75bbf642")
   )
   (polyline
     (pts
@@ -554,7 +577,7 @@
     (fill
       (type outline)
     )
-    (uuid "5f67b710-7a91-4917-bb99-9d7334cc2205")
+    (uuid "0fe85e55-c702-45fc-bf31-c1bda6667d88")
   )
   (polyline
     (pts
@@ -569,7 +592,7 @@
     (fill
       (type none)
     )
-    (uuid "f2b00d97-002d-453b-92cb-ae1dec8e40d0")
+    (uuid "e615d908-c604-475a-97f0-d882c2f47da3")
   )
   (polyline
     (pts
@@ -585,7 +608,7 @@
     (fill
       (type outline)
     )
-    (uuid "3c94c800-b270-48bb-af4b-aa07a2c4dba4")
+    (uuid "30e2e10e-e566-48ad-98bb-57edf8319556")
   )
   (polyline
     (pts
@@ -599,7 +622,7 @@
     (fill
       (type none)
     )
-    (uuid "1360ad27-4a00-4eff-a91c-d60e88d8e2b2")
+    (uuid "9c9ddc8f-3a2f-4e06-8509-50a610353c8b")
   )
   (polyline
     (pts
@@ -615,7 +638,7 @@
     (fill
       (type outline)
     )
-    (uuid "9d5b1079-c749-4532-9ceb-64f6336bcaec")
+    (uuid "f54e8e2a-2577-4e9d-af89-21af4792e29f")
   )
   (polyline
     (pts
@@ -629,7 +652,7 @@
     (fill
       (type none)
     )
-    (uuid "b87d3415-eb61-47d6-9a09-0466ccc6113a")
+    (uuid "71e88427-600a-4007-b71c-bf1cfb3550c9")
   )
   (polyline
     (pts
@@ -645,7 +668,7 @@
     (fill
       (type outline)
     )
-    (uuid "5f2785f9-bb19-4d03-92e3-e8fbe4bebd21")
+    (uuid "799e61de-f46b-4059-bafa-63b3de7a0efe")
   )
   (polyline
     (pts
@@ -660,7 +683,7 @@
     (fill
       (type none)
     )
-    (uuid "5402eef6-d7c8-4cf4-a893-0db79bb9df71")
+    (uuid "68a8e3bc-16a5-41b1-90e4-9d432c7c74ae")
   )
   (polyline
     (pts
@@ -676,7 +699,7 @@
     (fill
       (type outline)
     )
-    (uuid "c617c77e-07ba-4bef-a7af-24f6b3c519c4")
+    (uuid "2eded270-b6ac-4881-9510-962e499ae850")
   )
   (polyline
     (pts
@@ -690,7 +713,7 @@
     (fill
       (type none)
     )
-    (uuid "5a27d0da-62c4-4c70-af1d-51933d34fe1d")
+    (uuid "22b17f75-5a28-47a3-96a7-c8cb5670ae9b")
   )
   (polyline
     (pts
@@ -706,16 +729,17 @@
     (fill
       (type outline)
     )
-    (uuid "b395cade-8ef7-4939-b231-335baf6dd059")
+    (uuid "238990fb-19ac-4cab-987b-388326367a3f")
   )
   (text "bypass (F1-F4 force it: AUTO)"
     (at 128 65.2 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "24af87ce-6853-4c18-ae46-4145b04049c3")
+    (uuid "087ebcd9-1a71-431a-a324-0f0bf02425ce")
   )
   (polyline
     (pts
@@ -729,7 +753,7 @@
     (fill
       (type none)
     )
-    (uuid "5ae236aa-4c52-464e-89f0-6aeee1b6e067")
+    (uuid "9848b4ab-0c91-412d-affc-88a4c2cb1816")
   )
   (polyline
     (pts
@@ -745,80 +769,88 @@
     (fill
       (type outline)
     )
-    (uuid "b3561fea-496c-463a-b7c4-b1c946cc0d53")
+    (uuid "addfcc01-ec92-4613-a376-dbee282d145c")
   )
   (text "COAX"
     (at 390 62.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "a470db93-e272-4e42-9ea7-9401680d9e9e")
+    (uuid "5fc8a7de-649b-4c0b-8311-2d46227a8677")
   )
   (text "RF -> RTL-SDR V3"
     (at 390 70 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "6bf0504a-7c14-452c-8c64-caefcf04363d")
+    (uuid "1721104f-832a-4aa7-8a5b-de7bc97157d7")
   )
   (text "<- DC 4.5 V + OOK"
     (at 390 72.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "e1d1ea72-7c27-432f-9f97-b3b216deaafb")
+    (uuid "926599b3-dec1-43d1-b688-830d8e8c7fae")
   )
   (text "LNA_PATH"
     (at 97 76.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "42ff26c0-d576-4949-b5d1-6c41e5a1bf09")
+    (uuid "0aa7ded1-8935-48fd-afea-eb4817aa7ebe")
   )
   (text "LNA_PATH"
     (at 229 76.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "41925e0e-10fc-4774-a193-bcae366e1c3d")
+    (uuid "7ccabf13-d236-4d46-991f-00fd97a617a0")
   )
   (text "SW_V1..3"
     (at 262 76.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "a39e6f17-461a-4b10-a8ef-ba382d12d3f5")
+    (uuid "347bf58c-095c-4514-b90b-60a776edd792")
   )
   (text "SW_V1..3"
     (at 328 76.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "773df911-ad97-464f-9ab4-83c8f20653dc")
+    (uuid "ded5533e-22eb-43e4-99c2-dc13050098a7")
   )
   (text "FMN"
     (at 163 36.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "0ff2be41-36cf-4685-9b0f-dc6ceb7e2575")
+    (uuid "5422879a-f73a-4902-a0d8-984202da41be")
   )
   (rectangle
     (start 348 98)
@@ -831,26 +863,28 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "6169f248-44bb-42ea-b9e3-c55775c2dc56")
+    (uuid "2eaa4c5d-ec86-47ea-952d-ead07af9f195")
   )
   (text "VCOAX TAP"
     (at 361 103.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "c17baee9-f6e3-476b-a1d6-3c4089b6de04")
+    (uuid "f4b77d20-5fcc-4a24-a045-64d06cb111bd")
   )
   (text "SENSE, 680R, PWR"
     (at 361 106.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "072059f9-bf1a-4f4c-ae7a-1066c4f7192e")
+    (uuid "6c2109c9-9ca8-4f76-823c-bbe4bb4ec7ac")
   )
   (rectangle
     (start 315 98)
@@ -863,26 +897,28 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "80968b3b-98e9-4f7c-a60e-2b4d41aa1f23")
+    (uuid "7fc05979-5800-41f2-8e30-800f8e2b5518")
   )
   (text "IDEAL DIODE"
     (at 328 103.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "cfeec533-7317-4039-b2e5-1897d22b9cc9")
+    (uuid "26fa5ed5-cf12-48a7-84cc-cf590012fd65")
   )
   (text "LM66100"
     (at 328 106.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "d084c427-5b37-4508-8272-4d693e13935c")
+    (uuid "d2d1aa2a-96ef-4213-bddc-9dcde82f37e6")
   )
   (rectangle
     (start 282 98)
@@ -895,26 +931,28 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "279485ef-19b3-4494-8ed4-9a54ce27132b")
+    (uuid "d5b8bfaa-ad09-49d7-84f3-c5385c6e4db8")
   )
   (text "LAMP RAIL"
     (at 295 103.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "bbd1bde0-1a61-4e02-b532-c5091a255152")
+    (uuid "94dd1ef7-edca-43ba-8fd2-4f95c6aa5cc9")
   )
   (text "FB + 47uF"
     (at 295 106.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "ec3a9a2d-9c5f-4ccf-82b8-24a959022ca2")
+    (uuid "3f24ea25-821d-4543-916a-b49f6bcfb0bf")
   )
   (rectangle
     (start 183 98)
@@ -927,26 +965,28 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "ebea900c-4914-49be-8e69-e8499cba3899")
+    (uuid "7bd4c6b6-acb9-4876-b15f-95d4fccab2c6")
   )
   (text "LNA SUPPLY"
     (at 196 103.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "aa4ec165-1c4b-42a3-91ef-34ca66eec3fc")
+    (uuid "4f8a899e-ddcc-4cf9-9894-8b4af2e27d71")
   )
   (text "TPS2553+INA180"
     (at 196 106.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "bb8766d5-4981-4ea9-b11a-72a7d8e7872d")
+    (uuid "94aabddc-6f9b-4f58-ae02-cacdcafc8641")
   )
   (rectangle
     (start 150 98)
@@ -959,26 +999,28 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "053ce93b-1932-4f23-824a-3fa521590697")
+    (uuid "a40445a0-fe97-4391-9b19-9df61c6cf7ce")
   )
   (text "HOLD-UP"
     (at 163 103.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "60db8d7b-3f4c-4013-a4e2-df59d2a65ebf")
+    (uuid "a25d1492-b16b-481f-8a69-d63e2d9c0d2a")
   )
   (text "330uF || 0.1F"
     (at 163 106.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "d4b9717c-1629-4c12-8760-ca9aca2f0393")
+    (uuid "16bbcc7b-1844-4d30-8f19-4a969ad7bc64")
   )
   (rectangle
     (start 117 98)
@@ -991,26 +1033,28 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "812eab42-9075-4968-b22b-8786c0ffa5a1")
+    (uuid "d8b74601-5e03-4fcc-b6a5-b59b05a7055e")
   )
   (text "3V3 LDO"
     (at 130 103.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "14a0be32-a0d0-41de-9268-73f241fee141")
+    (uuid "25404f9e-3e08-470b-86df-a0280e9203fe")
   )
   (text "MCP1700"
     (at 130 106.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "e06a3399-53a8-4b96-b0eb-de559b006bb3")
+    (uuid "3fa3c40b-f0eb-4ebc-94d9-6eee4cb8ab07")
   )
   (polyline
     (pts
@@ -1024,7 +1068,7 @@
     (fill
       (type none)
     )
-    (uuid "2f252425-01ce-46b2-a26d-baf750603b55")
+    (uuid "e5985075-9657-4025-8c7d-71d0691aceab")
   )
   (polyline
     (pts
@@ -1040,16 +1084,17 @@
     (fill
       (type outline)
     )
-    (uuid "2da62738-17f4-4c48-8caa-810aed04ee99")
+    (uuid "ea12848b-ade6-49b3-a6b8-8875abac3606")
   )
   (text "VCOAX"
     (at 368 86 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "47a6466f-74a0-47d4-8831-3cb0dd8b39bf")
+    (uuid "f92b0808-b2e9-46e1-8867-54e51b5ae313")
   )
   (polyline
     (pts
@@ -1063,7 +1108,7 @@
     (fill
       (type none)
     )
-    (uuid "e1dd41d0-4bb6-423f-afce-d11276daff1d")
+    (uuid "a0e2e662-3e5e-4c50-8011-6dc40941fe0b")
   )
   (polyline
     (pts
@@ -1079,7 +1124,7 @@
     (fill
       (type outline)
     )
-    (uuid "b2ad5691-620a-4eba-a406-f56489246c0c")
+    (uuid "9b239c58-84d1-4ec0-8f73-8f50fefa4f22")
   )
   (polyline
     (pts
@@ -1094,17 +1139,18 @@
     (fill
       (type none)
     )
-    (uuid "afd687f7-e0b4-405a-b0c3-85e43a4bc50d")
+    (uuid "b5094eb5-60ca-4e64-a9e6-0ee9d59137da")
   )
   (text "VMAIN"
     (at 255 89.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.2 1.2)
         bold
       )
     )
-    (uuid "9e68ae5f-3caa-47d1-97ef-4b8a95f7b261")
+    (uuid "1899b61a-c444-4cc6-92b3-bd8c824f4463")
   )
   (polyline
     (pts
@@ -1118,7 +1164,7 @@
     (fill
       (type none)
     )
-    (uuid "8893240b-8e70-44a3-b667-3665ff6b149f")
+    (uuid "539982f3-582f-4584-868b-e728b3296b9c")
   )
   (polyline
     (pts
@@ -1134,7 +1180,7 @@
     (fill
       (type outline)
     )
-    (uuid "1540ff59-ffce-41ea-a9e1-b9b730c26166")
+    (uuid "1fecdb93-d0d6-4f1e-b475-a69299b0c0c6")
   )
   (polyline
     (pts
@@ -1148,7 +1194,7 @@
     (fill
       (type none)
     )
-    (uuid "e4051842-dc28-4d04-a6d2-8f8f9c9590ca")
+    (uuid "77135541-0078-46a7-8d8b-599ab5eb666d")
   )
   (polyline
     (pts
@@ -1164,7 +1210,7 @@
     (fill
       (type outline)
     )
-    (uuid "2efc376e-fcb6-4d26-a1de-1fd645719930")
+    (uuid "df69797d-13ca-4ceb-a39b-56b1f3f86576")
   )
   (polyline
     (pts
@@ -1178,7 +1224,7 @@
     (fill
       (type none)
     )
-    (uuid "6ee96b43-039d-43da-a24a-ed4e8419e554")
+    (uuid "1c31300f-8b84-4dbf-beee-661a2a6093f8")
   )
   (polyline
     (pts
@@ -1194,7 +1240,7 @@
     (fill
       (type outline)
     )
-    (uuid "dd8d94b1-ce31-408d-8090-c115c1321685")
+    (uuid "8b08aeca-7626-44ec-b0b0-f23530056945")
   )
   (polyline
     (pts
@@ -1208,7 +1254,7 @@
     (fill
       (type none)
     )
-    (uuid "c42a65cc-48d2-4681-aa59-edbfa5f233df")
+    (uuid "b1eca093-0a26-4f42-9ade-907a08a0c620")
   )
   (polyline
     (pts
@@ -1224,16 +1270,17 @@
     (fill
       (type outline)
     )
-    (uuid "73f719b0-372c-4f01-af09-3f408117810d")
+    (uuid "10d73afd-6ee9-4ecb-bd81-689b15eb0790")
   )
   (text "VHOLD"
     (at 146.5 103.4 0)
     (effects
       (font
+        (face "Arial")
         (size 1 1)
       )
     )
-    (uuid "269cf2fb-6f6b-4e31-948b-e0d0e320dab1")
+    (uuid "22346bed-65c7-499e-bde5-7e2bb0e69361")
   )
   (polyline
     (pts
@@ -1248,7 +1295,7 @@
     (fill
       (type none)
     )
-    (uuid "d3fe031b-cbcc-483d-b4ca-52567dda2a6e")
+    (uuid "78433db0-cbe4-4696-933b-5d7756c5f645")
   )
   (polyline
     (pts
@@ -1265,16 +1312,17 @@
     (fill
       (type outline)
     )
-    (uuid "5a793ba1-9109-434a-adf8-3ccb6473239c")
+    (uuid "e45bfaea-b0f5-4707-af59-5f237ce7334f")
   )
   (text "LNA_VCC"
     (at 210 88 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "b10b9b8c-9887-47f8-b3e8-bf540a25f527")
+    (uuid "7cd7249b-aa66-4462-8ead-88ec88fe00c1")
   )
   (rectangle
     (start 183 128)
@@ -1287,35 +1335,38 @@
       (type color)
       (color 210 240 210 1)
     )
-    (uuid "54f91a8a-21cb-4f94-9dbf-9999277b65ab")
+    (uuid "3820ee85-3e98-4d70-963e-563934d493b0")
   )
   (text "MCU  EFM8BB21"
     (at 213 134.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "cdee07c6-a934-410c-8f79-930a8ec782ad")
+    (uuid "0b777bae-76da-4bf4-9c25-de8eb2a4e3d1")
   )
   (text "decodes OOK on SENSE, Snooze when idle"
     (at 213 137 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "4b8c3cc1-e85d-40d6-be42-31b019eafa9b")
+    (uuid "606da988-ed64-4ba4-affb-f1cfee840687")
   )
   (text "monitors SENSE, SCAP_ADC, ILNA, FAULT_N"
     (at 213 139.5 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "9c60deb6-6204-465d-bb7f-bcf2afc0233e")
+    (uuid "f3eb0aaa-c289-4191-a376-a31f6647973f")
   )
   (rectangle
     (start 282 128)
@@ -1328,26 +1379,28 @@
       (type color)
       (color 255 245 180 1)
     )
-    (uuid "fab059ac-ce7e-4bdf-991a-b73ce0f70e12")
+    (uuid "c90481c5-cf1d-4a23-8036-6ab7ce7345dc")
   )
   (text "FRONT PANEL"
     (at 299 135.75 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "e6aac56b-4d6b-47c4-8210-41a3999eff98")
+    (uuid "2107a643-4519-4943-ba39-48d2b4b5f2a8")
   )
   (text "6x 74HC595, 48 lamps"
     (at 299 138.25 0)
     (effects
       (font
+        (face "Arial")
         (size 1.15 1.15)
       )
     )
-    (uuid "096adeb1-6981-49a2-a886-b6476a1487ee")
+    (uuid "23626bd8-df6d-46a1-b9f4-adedbed16775")
   )
   (polyline
     (pts
@@ -1361,7 +1414,7 @@
     (fill
       (type none)
     )
-    (uuid "f0b47a01-9860-4689-b1a8-1b6fbf1470f3")
+    (uuid "beb129bf-0ce6-4500-bf61-680809d302ab")
   )
   (polyline
     (pts
@@ -1377,16 +1430,17 @@
     (fill
       (type outline)
     )
-    (uuid "64fe3090-a02d-421c-9a2c-70e2ec93a26d")
+    (uuid "ca87835d-b59b-454b-a3b5-a4a5d268e570")
   )
   (text "VLED"
     (at 300 120 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "dfd73b31-280b-4424-b247-1190d3443587")
+    (uuid "bb304ab9-ddeb-4089-84fa-d950a6d3b3de")
   )
   (polyline
     (pts
@@ -1401,7 +1455,7 @@
     (fill
       (type none)
     )
-    (uuid "317d919e-2594-4ff6-a66e-513d00f33b2e")
+    (uuid "64f8cc04-9c63-411d-8570-afcdfc9d5f32")
   )
   (polyline
     (pts
@@ -1418,16 +1472,17 @@
     (fill
       (type outline)
     )
-    (uuid "f4548fa5-03d8-4805-b4bc-46eaf26de690")
+    (uuid "f47ec201-6040-49fb-a7cf-1d19b522ba73")
   )
   (text "LED bus"
     (at 262 135.2 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "6957d142-2969-424c-802b-115511765c77")
+    (uuid "679bc75d-8939-4d18-bd15-9af75e619784")
   )
   (polyline
     (pts
@@ -1442,7 +1497,7 @@
     (fill
       (type none)
     )
-    (uuid "b759e96b-4c81-4b2d-b3a0-7e7bef7ef692")
+    (uuid "62b296fa-2fa2-495c-8b9a-43abd599ba42")
   )
   (polyline
     (pts
@@ -1458,16 +1513,17 @@
     (fill
       (type outline)
     )
-    (uuid "cc24184d-609f-45c8-b2dd-475bd1276763")
+    (uuid "af217124-8702-4e37-9950-d732808830bb")
   )
   (text "+3V3"
     (at 140 135.2 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "1b9fc6e0-75ba-4f68-8dfd-97b96aef079f")
+    (uuid "1684ef18-aad6-4d13-a36c-1b0feba64578")
   )
   (polyline
     (pts
@@ -1482,7 +1538,7 @@
     (fill
       (type none)
     )
-    (uuid "b3c32f07-2793-4942-ab74-a27d2c3b384d")
+    (uuid "b0db9830-98c8-4bce-8aa3-1391176d7f61")
   )
   (polyline
     (pts
@@ -1497,7 +1553,7 @@
     (fill
       (type none)
     )
-    (uuid "057f40f2-9801-4f53-b6dc-25dd1df22be3")
+    (uuid "546f0ed8-4c4e-4cf7-8e89-60decc95b3df")
   )
   (polyline
     (pts
@@ -1512,7 +1568,7 @@
     (fill
       (type none)
     )
-    (uuid "b4d362cb-7319-4236-b2b3-d70cc81bf2a4")
+    (uuid "9c92f53d-c3cf-454b-a507-8146bda92c71")
   )
   (polyline
     (pts
@@ -1529,7 +1585,7 @@
     (fill
       (type outline)
     )
-    (uuid "c42528e1-44fb-4a65-a942-903defa1f1e5")
+    (uuid "01cb980c-58af-40b3-8eec-e0172a2f64ee")
   )
   (polyline
     (pts
@@ -1544,7 +1600,7 @@
     (fill
       (type none)
     )
-    (uuid "497f52f6-a293-498e-922d-94220d94477b")
+    (uuid "b04f7f05-95ca-478c-aa71-b0454d773a76")
   )
   (polyline
     (pts
@@ -1561,7 +1617,7 @@
     (fill
       (type outline)
     )
-    (uuid "1afc6885-1c85-422a-b38e-820c2abdc18d")
+    (uuid "96572902-44d0-49cd-870f-7f07d045ee09")
   )
   (polyline
     (pts
@@ -1576,7 +1632,7 @@
     (fill
       (type none)
     )
-    (uuid "f178af34-c267-4264-9eae-11aef3516b74")
+    (uuid "17224c0e-95c3-4523-bdd4-98be0003cf12")
   )
   (polyline
     (pts
@@ -1593,7 +1649,7 @@
     (fill
       (type outline)
     )
-    (uuid "0deb81e4-33a7-4ef2-a4ed-89e6780c3be4")
+    (uuid "4ac88d6e-878f-4e4b-8503-2bbae64158e5")
   )
   (polyline
     (pts
@@ -1608,7 +1664,7 @@
     (fill
       (type none)
     )
-    (uuid "16d40142-0ee3-460a-877d-c6da4f5ac738")
+    (uuid "a5e5fb51-dab6-4caf-ad2f-75dda5cc8139")
   )
   (polyline
     (pts
@@ -1625,7 +1681,7 @@
     (fill
       (type outline)
     )
-    (uuid "a34b140d-d884-49e7-80a5-ff0bf1fae20f")
+    (uuid "7144bc28-b1fc-431d-8db2-b657828f30cc")
   )
   (polyline
     (pts
@@ -1640,7 +1696,7 @@
     (fill
       (type none)
     )
-    (uuid "73c175bb-0aa3-48a3-80a3-f6a0a67b88da")
+    (uuid "5d6fb0f8-f70b-4b29-b3cb-a0d2f1e879a2")
   )
   (polyline
     (pts
@@ -1657,7 +1713,7 @@
     (fill
       (type outline)
     )
-    (uuid "ebb838d1-5642-42ad-8606-301bf124b211")
+    (uuid "7f9de0d2-a4da-4576-a2d6-0a11b6707456")
   )
   (polyline
     (pts
@@ -1672,7 +1728,7 @@
     (fill
       (type none)
     )
-    (uuid "55a8e54e-48aa-425f-8c2c-714f6a524ec8")
+    (uuid "f1aeb930-ffc0-4ed1-b34c-d23586a9f2ad")
   )
   (polyline
     (pts
@@ -1689,16 +1745,17 @@
     (fill
       (type outline)
     )
-    (uuid "04e1feed-fa65-48cd-8ac6-95eba8efc8fe")
+    (uuid "3ca0bd9a-a7e6-41a3-bb86-cc1ff7465ee0")
   )
   (text "control (blue, dashed): LNA_PATH, SW_V1..3, FMN, LNA_EN"
     (at 120 84.4 0)
     (effects
       (font
+        (face "Arial")
         (size 1.1 1.1)
       )
     )
-    (uuid "a0f2e0b9-fb96-4db7-b441-9ed9043055dd")
+    (uuid "77f851f0-4c8e-4a01-9b66-f66f75f2827d")
   )
   (rectangle
     (start 18 126)
@@ -1711,27 +1768,29 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "e113803e-b29b-4194-aaca-0c40d92c4c27")
+    (uuid "375c6651-2194-41a2-927e-c3a998d3d19d")
   )
   (text ""
     (at 21 128 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "248ef122-4f8f-4150-882d-1fe6f660d098")
+    (uuid "7f29ac75-2f13-439c-96b2-9337ffecbdde")
   )
   (text "RF signal path (sheets 4, 5)"
     (at 26 128.6 0)
     (effects
       (font
+        (face "Arial")
         (size 1.2 1.2)
       )
       (justify left)
     )
-    (uuid "5b50c658-dd7b-446d-8d60-6ad6bcc6e552")
+    (uuid "92453068-3031-44a2-b47f-70155e3c7d8d")
   )
   (rectangle
     (start 18 132)
@@ -1744,27 +1803,29 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "a9dad134-65e4-479f-acc8-f7e589d8973c")
+    (uuid "aa698724-3a85-4b4a-93d9-cc7715b2ec08")
   )
   (text ""
     (at 21 134 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "e37de60f-ee4b-4c84-82d9-5426d5b46526")
+    (uuid "e181b055-8134-4d99-b787-bf49af9c05e2")
   )
   (text "power (sheet 2)"
     (at 26 134.6 0)
     (effects
       (font
+        (face "Arial")
         (size 1.2 1.2)
       )
       (justify left)
     )
-    (uuid "df536df4-a562-49ee-87d6-809ec0978e95")
+    (uuid "2659aec8-dd77-4ff4-9e4a-6224deef7ff7")
   )
   (rectangle
     (start 18 138)
@@ -1777,27 +1838,29 @@
       (type color)
       (color 210 240 210 1)
     )
-    (uuid "8bd60c05-4862-43cf-87d7-78f6b67fc9f0")
+    (uuid "0f0b5fb7-6bb9-4cd8-86d9-6b1c266bb4f7")
   )
   (text ""
     (at 21 140 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "6bd4d90b-a271-49c3-af28-58c1b3d25777")
+    (uuid "6dfec3f3-49db-441e-b1f9-34bbf1b5d2a3")
   )
   (text "MCU (sheet 3)"
     (at 26 140.6 0)
     (effects
       (font
+        (face "Arial")
         (size 1.2 1.2)
       )
       (justify left)
     )
-    (uuid "444a00f4-2b2b-4e13-819a-bdcea9225031")
+    (uuid "7a17cf35-fc45-49ce-8971-bcd357446820")
   )
   (rectangle
     (start 18 144)
@@ -1810,63 +1873,68 @@
       (type color)
       (color 255 245 180 1)
     )
-    (uuid "d9863832-b643-4b30-8d21-bba02367711b")
+    (uuid "dc946081-b3ac-42a4-b9c1-77ab13aa8b1a")
   )
   (text ""
     (at 21 146 0)
     (effects
       (font
+        (face "Arial")
         (size 1.6 1.6)
         bold
       )
     )
-    (uuid "5e1b4466-6c87-465d-aa3a-bc8bc69ccb8d")
+    (uuid "4a10ad3b-0614-4bc7-9098-c9db0f08b29f")
   )
   (text "panel (sheet 6)"
     (at 26 146.6 0)
     (effects
       (font
+        (face "Arial")
         (size 1.2 1.2)
       )
       (justify left)
     )
-    (uuid "5097a405-2b37-42d2-a7d6-14a33dca720e")
+    (uuid "2cb9d452-d8c4-4c1d-9673-0e76cd9e889b")
   )
   (text "Sheets"
     (at 20.32 168.91 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "b4b3d5f3-ad81-4677-a246-f2e20b652afc")
+    (uuid "5fff9aad-b750-40a7-88bd-9d4b92c24e9f")
   )
   (text "Power and ground cross sheets only as power symbols (VCOAX, VMAIN, VHOLD, VLED, LNA_VCC, +3V3, GND)."
     (at 20.32 251.46 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "fb63be98-c069-48a7-9bee-8fdf8f68f0ca")
+    (uuid "cfe1f6ab-a042-413f-9915-b0d0b53a3983")
   )
   (text "Signals cross sheets as hierarchical labels through the sheet pins above. Firmware pin map: firmware/src/hal_efm8bb2.c"
     (at 20.32 254.64 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "45c5a6c0-b609-4b71-ad71-525ecadadb0e")
+    (uuid "16f652e6-69a0-4b43-b2e1-880a7ca6e890")
   )
   (wire
     (pts
@@ -1877,7 +1945,7 @@
       (width 0)
       (type default)
     )
-    (uuid "3c303153-e61a-4526-8776-413454e90d0a")
+    (uuid "83316be0-be16-40a3-91db-48bc5b7acf3f")
   )
   (wire
     (pts
@@ -1888,7 +1956,7 @@
       (width 0)
       (type default)
     )
-    (uuid "4bae4a21-70cc-479b-a812-9eee7c66a490")
+    (uuid "a5af41ef-9f71-4b04-812f-7c803eb3ac9b")
   )
   (wire
     (pts
@@ -1899,7 +1967,7 @@
       (width 0)
       (type default)
     )
-    (uuid "d5a80855-01c4-4c40-96aa-0a72472d9a04")
+    (uuid "aed9b40e-cb27-4401-8e01-b20b0d6643b8")
   )
   (wire
     (pts
@@ -1910,7 +1978,7 @@
       (width 0)
       (type default)
     )
-    (uuid "1450af6f-034c-4473-accf-ca65b4e34d53")
+    (uuid "2095a0ff-650e-4989-8d6d-56c681cf73b2")
   )
   (wire
     (pts
@@ -1921,7 +1989,7 @@
       (width 0)
       (type default)
     )
-    (uuid "97e32578-d4a6-404f-90f3-8ba6f8d235fc")
+    (uuid "8d38eccf-e702-40a6-86ae-1818cec57ae4")
   )
   (wire
     (pts
@@ -1932,7 +2000,7 @@
       (width 0)
       (type default)
     )
-    (uuid "98660406-ffb9-46fc-a80b-37a3a4bece05")
+    (uuid "2b2a0b8a-99ec-424e-a06e-39baff97fa17")
   )
   (wire
     (pts
@@ -1943,7 +2011,7 @@
       (width 0)
       (type default)
     )
-    (uuid "19c84d8f-b3be-4396-81fc-ec8a136f7076")
+    (uuid "9f630a2f-0c62-4a35-a15d-15011b5a4138")
   )
   (wire
     (pts
@@ -1954,7 +2022,7 @@
       (width 0)
       (type default)
     )
-    (uuid "586f64ba-87f4-4c06-b567-4542bf159aa2")
+    (uuid "c4b4226f-fd0f-4207-aba3-470d4b9f47ef")
   )
   (wire
     (pts
@@ -1965,7 +2033,7 @@
       (width 0)
       (type default)
     )
-    (uuid "15ccc4aa-bfd1-4df7-a286-4013c046b6d1")
+    (uuid "c000a6f1-5107-43fa-8b88-7a6c0a7dd799")
   )
   (wire
     (pts
@@ -1976,7 +2044,7 @@
       (width 0)
       (type default)
     )
-    (uuid "084a959e-563e-4165-991b-d2fb594f5094")
+    (uuid "bc33cce8-bffc-4d6d-ac79-cdaf12a5f525")
   )
   (wire
     (pts
@@ -1987,7 +2055,7 @@
       (width 0)
       (type default)
     )
-    (uuid "d65507b0-32c7-4882-b9f5-83efa252ac1e")
+    (uuid "dda2202d-cff5-4bd1-88c6-4468f3666a86")
   )
   (wire
     (pts
@@ -1998,7 +2066,7 @@
       (width 0)
       (type default)
     )
-    (uuid "9af5ec9b-eeca-4c7f-a68c-42449e030d9e")
+    (uuid "d369a1ce-95b7-4cec-b29f-b8237485ab00")
   )
   (wire
     (pts
@@ -2009,7 +2077,7 @@
       (width 0)
       (type default)
     )
-    (uuid "dfd0abff-1474-49f0-b45d-3fd771eecb2d")
+    (uuid "2adad717-7384-496b-90a9-358576dfa125")
   )
   (wire
     (pts
@@ -2020,7 +2088,7 @@
       (width 0)
       (type default)
     )
-    (uuid "95801858-9dd6-4527-846f-c81c2278051a")
+    (uuid "51cb069f-7a02-47bc-b4fb-5ae0f83ff52d")
   )
   (wire
     (pts
@@ -2031,7 +2099,7 @@
       (width 0)
       (type default)
     )
-    (uuid "250b7eea-e04f-4554-8648-883a0256248f")
+    (uuid "805372c9-164e-47f1-906e-4fb76d815a79")
   )
   (wire
     (pts
@@ -2042,7 +2110,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6c491f34-e1a6-4d27-b650-bb559141dc78")
+    (uuid "9d8f3a54-2ba1-45c4-9146-0bd50bfc39d6")
   )
   (wire
     (pts
@@ -2053,7 +2121,7 @@
       (width 0)
       (type default)
     )
-    (uuid "4bd7c919-9ae2-4610-bc3a-058772097a7f")
+    (uuid "4bb6ffca-02b1-48c7-8da1-4639ea5d000c")
   )
   (sheet
     (at 30.48 175.26)
@@ -2066,11 +2134,12 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "c5cc752a-b894-441c-b233-f90e622fb5a0")
+    (uuid "365a4ded-acde-47bd-87a9-4767383deb30")
     (property "Sheetname" "Power"
       (at 30.48 174.56 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left bottom)
@@ -2080,6 +2149,7 @@
       (at 30.48 206.34 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left top)
@@ -2089,55 +2159,60 @@
       (at 81.28 180.34 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "6848166c-349c-4fa9-ba13-e823bc1314eb")
+      (uuid "e6d5b53a-c8bb-40f2-97eb-e584e4266d72")
     )
     (pin "SCAP_ADC" output
       (at 81.28 185.42 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "3bed7bac-bb87-4154-b523-191cdc00f5c5")
+      (uuid "832e97a7-7665-4b0b-a79b-651ecc5bbaf9")
     )
     (pin "ILNA" output
       (at 81.28 190.5 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "d6123cfb-dcb0-4df5-9e21-eae78685fab6")
+      (uuid "c61e9740-9840-494f-8bff-29acdb444170")
     )
     (pin "FAULT_N" output
       (at 81.28 195.58 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "726b50c3-b802-4a41-8f1b-1452029aa237")
+      (uuid "12649b77-f1a6-4073-bcfc-71fe994b78a8")
     )
     (pin "LNA_EN" input
       (at 81.28 200.66 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "5bbb0ac8-4e70-486c-94c4-a2483027b699")
+      (uuid "c91996cb-0dd7-41bf-a980-e1533340e819")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04"
           (page "2")
         )
       )
@@ -2154,11 +2229,12 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "1d0c98a3-db63-41e3-bf40-6f2996261b2e")
+    (uuid "019acd61-b97c-4a70-a799-8de6d6df7c11")
     (property "Sheetname" "MCU"
       (at 139.7 174.56 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left bottom)
@@ -2168,6 +2244,7 @@
       (at 139.7 246.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left top)
@@ -2177,145 +2254,159 @@
       (at 139.7 180.34 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "0afe09c3-629b-4813-83cf-2787e5dd830a")
+      (uuid "17c3f7b0-2db4-406f-a5ca-1f4133c2b017")
     )
     (pin "SCAP_ADC" input
       (at 139.7 185.42 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "289b19ae-616a-40da-99b5-228178e13048")
+      (uuid "321d4fc9-513d-4117-9e6e-08537242ab33")
     )
     (pin "ILNA" input
       (at 139.7 190.5 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "941086af-7e56-41a9-b2b2-f21229ab6e00")
+      (uuid "3d7d37c6-3cbf-4a6d-8f7f-3df08619a0f0")
     )
     (pin "FAULT_N" input
       (at 139.7 195.58 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "c93b115c-1cce-47de-a896-b75abc576b18")
+      (uuid "69abb973-400a-401b-9393-008b1777b096")
     )
     (pin "LNA_EN" output
       (at 139.7 200.66 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "65c9d8de-fc72-4255-a379-725b51dde5d6")
+      (uuid "e0aade13-b1ac-4b55-88a3-1b669fce353a")
     )
     (pin "LNA_PATH" output
       (at 190.5 180.34 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "24d06a93-b265-41bb-9922-1f796caa97a9")
+      (uuid "71746ff1-e4a9-4a05-bb14-be265786fb64")
     )
     (pin "FMN" output
       (at 190.5 185.42 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "611316f4-dfa2-469b-9c62-29d360c04ab3")
+      (uuid "5f081078-1512-4b15-bf1c-3f66995648fc")
     )
     (pin "SW_V1" output
       (at 190.5 200.66 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "3c02707d-7ed3-4dba-8186-ade802de2e74")
+      (uuid "dd261d8a-61d3-44c5-8f1c-433badaa01c7")
     )
     (pin "SW_V2" output
       (at 190.5 205.74 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "803c209d-d3a3-46cc-ad3d-9d30b34c20c1")
+      (uuid "40830e1f-8a04-4182-86d7-676f85a844ea")
     )
     (pin "SW_V3" output
       (at 190.5 210.82 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "2169ce32-ed96-4723-a430-81cfd7bbc153")
+      (uuid "48eec25a-4b4e-4abe-a391-f36b3cd8c06d")
     )
     (pin "LED_SER" output
       (at 190.5 226.06 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "72466000-df12-43cd-98b7-3852efd130d4")
+      (uuid "48b45c02-a342-496f-a387-776f456a005f")
     )
     (pin "LED_SCK" output
       (at 190.5 231.14 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "3a04b8f8-9239-4dba-8c8e-7f555dd1955b")
+      (uuid "7a52a236-150e-4b0c-808f-4a7b3de2297f")
     )
     (pin "LED_RCK" output
       (at 190.5 236.22 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "14eb0951-b7c8-48bd-b427-880ffaffa83b")
+      (uuid "9f27a570-468c-46d0-b484-26bf86e6b040")
     )
     (pin "LED_OE_N" output
       (at 190.5 241.3 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "97b17a55-4370-4ef7-8bc1-6566f32ba14a")
+      (uuid "98c69be5-2cb3-4c50-bd42-a6669c9d3c14")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04"
           (page "3")
         )
       )
@@ -2332,11 +2423,12 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "bc3ad14e-2d22-433b-b3c8-178830647619")
+    (uuid "c4f3316e-f704-4b49-b93c-953485657600")
     (property "Sheetname" "RF front end"
       (at 248.92 174.56 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left bottom)
@@ -2346,6 +2438,7 @@
       (at 248.92 188.56 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left top)
@@ -2355,35 +2448,38 @@
       (at 248.92 180.34 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "6178302c-80ce-46ac-b764-99a533c5bd60")
+      (uuid "fe766bc3-12cc-461a-89c0-d0519ec9fd67")
     )
     (pin "FMN" input
       (at 248.92 185.42 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "2e174b48-81f1-4752-9155-bc53425f4c79")
+      (uuid "7c0a0eb5-4536-401a-8303-cb5ea024e311")
     )
     (pin "RF_BANK" bidirectional
       (at 299.72 182.88 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "bbf9722b-fd86-4f54-95bc-9e9b45206904")
+      (uuid "9b220a35-6276-44a1-86dd-1e7fd5fde247")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04"
           (page "4")
         )
       )
@@ -2400,11 +2496,12 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "aa2996ff-9ebf-4474-af90-e6c7c75a8477")
+    (uuid "ffffc027-37d9-48fb-b2cf-06ae7ab8d162")
     (property "Sheetname" "Filter bank"
       (at 248.92 194.88 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left bottom)
@@ -2414,6 +2511,7 @@
       (at 248.92 213.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left top)
@@ -2423,45 +2521,49 @@
       (at 248.92 200.66 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "e0229da1-e388-46c0-8eae-e9873b3df5ab")
+      (uuid "155dcd0b-a274-4780-a7f6-ab655f079eda")
     )
     (pin "SW_V2" input
       (at 248.92 205.74 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "1422d2c4-b0c9-45a7-ae86-8383717868fd")
+      (uuid "b81b0f68-31af-45b1-b30e-1becbb76837c")
     )
     (pin "SW_V3" input
       (at 248.92 210.82 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "3b6ebb39-ca1a-43c2-9fb6-a29e6751fdee")
+      (uuid "2cfa916e-f027-42c7-a720-f77d921aec2e")
     )
     (pin "RF_BANK" bidirectional
       (at 299.72 205.74 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
-      (uuid "09094d32-bf05-4f3d-bb31-7d16b3ee9c35")
+      (uuid "b30b2959-409f-4cbf-be03-84c05f10e372")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04"
           (page "5")
         )
       )
@@ -2478,11 +2580,12 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "145f96f9-152c-4645-9c11-a9ddb49dfe79")
+    (uuid "02428aa8-a1c8-4140-a619-fd4410a29de9")
     (property "Sheetname" "Panel"
       (at 248.92 220.28 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left bottom)
@@ -2492,6 +2595,7 @@
       (at 248.92 244.44 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left top)
@@ -2501,45 +2605,49 @@
       (at 248.92 226.06 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "de09aad9-9c82-4455-b637-d9f5f16b0c4b")
+      (uuid "35ff05f6-07d1-4fff-804b-8ed469305a52")
     )
     (pin "LED_SCK" input
       (at 248.92 231.14 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "2dd8d57f-9c80-4541-8f77-548258cc9e0d")
+      (uuid "0bd7536e-9f24-42da-ad2d-193dc2c30173")
     )
     (pin "LED_RCK" input
       (at 248.92 236.22 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "27064d00-6ddd-49e2-b1fd-210c4f23f469")
+      (uuid "202add77-159a-4328-82c8-21b37143bf0c")
     )
     (pin "LED_OE_N" input
       (at 248.92 241.3 180)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
-      (uuid "21c0afc8-33d4-49c2-b2c6-755116bd8306")
+      (uuid "128a47b0-ff00-4e2e-a3cb-b981a346adf0")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04"
           (page "6")
         )
       )

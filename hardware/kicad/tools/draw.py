@@ -1,4 +1,4 @@
-"""Hand-drawn (Olimex-style) schematic helpers on top of schgen.Sheet.
+"""Hand-drawn schematic helpers on top of schgen.Sheet.
 
 Rules enforced here (docs: AI PCB Dev schematic style guide):
   * power and ground only as power symbols (rails point up, GND down)

@@ -1,7 +1,7 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "7679c1d3-7047-4b60-96d1-1b3d088fe87c")
+  (uuid "29a50e30-e27a-49c3-825a-5a12d9b2ccec")
   (paper "A3")
   (title_block
     (title "RF front end")
@@ -23,6 +23,7 @@
         (at 0.254 3.048 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -31,6 +32,7 @@
         (at 2.921 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -39,6 +41,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -48,6 +51,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -57,6 +61,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -66,6 +71,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -75,6 +81,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -150,6 +157,7 @@
           (name "In"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -157,6 +165,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -168,6 +177,7 @@
           (name "Ext"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -175,6 +185,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -190,6 +201,7 @@
         (at 5.08 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -198,6 +210,7 @@
         (at 7.62 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -206,6 +219,7 @@
         (at 0 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -215,6 +229,7 @@
         (at 0 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -224,6 +239,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -233,6 +249,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -380,6 +397,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -387,6 +405,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -398,6 +417,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -405,6 +425,7 @@
           (number "3"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -420,6 +441,7 @@
         (at 0 5.08 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -428,6 +450,7 @@
         (at 0 2.54 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -436,6 +459,7 @@
         (at 0 -12.7 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -445,6 +469,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -454,6 +479,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -463,6 +489,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -472,6 +499,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -585,6 +613,7 @@
           (name "K"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -592,6 +621,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -603,6 +633,7 @@
           (name "A"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -610,6 +641,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -621,6 +653,7 @@
           (name "K"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -628,6 +661,7 @@
           (number "3"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -646,6 +680,7 @@
         (at 2.032 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -654,6 +689,7 @@
         (at 0 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -662,6 +698,7 @@
         (at -1.778 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -671,6 +708,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -680,6 +718,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -689,6 +728,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -698,6 +738,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -723,6 +764,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -730,6 +772,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -741,6 +784,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -748,6 +792,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -766,6 +811,7 @@
         (at 0 -6.35 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -775,6 +821,7 @@
         (at 0 -3.81 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -783,6 +830,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -792,6 +840,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -801,6 +850,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -810,6 +860,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -842,6 +893,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -849,6 +901,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -863,6 +916,7 @@
         (at 0 6.35 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -871,6 +925,7 @@
         (at 0 -6.35 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -879,6 +934,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -888,6 +944,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -897,6 +954,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -922,6 +980,7 @@
           (name "RFC"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -929,6 +988,7 @@
           (number "12"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -940,6 +1000,7 @@
           (name "V1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -947,6 +1008,7 @@
           (number "28"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -958,6 +1020,7 @@
           (name "RF1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -965,6 +1028,7 @@
           (number "22"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -976,6 +1040,7 @@
           (name "RF2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -983,6 +1048,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -994,6 +1060,7 @@
           (name "VDD"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1001,6 +1068,7 @@
           (number "24"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1012,6 +1080,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1019,6 +1088,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1031,6 +1101,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1038,6 +1109,7 @@
           (number "3"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1050,6 +1122,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1057,6 +1130,7 @@
           (number "4"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1069,6 +1143,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1076,6 +1151,7 @@
           (number "5"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1088,6 +1164,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1095,6 +1172,7 @@
           (number "6"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1107,6 +1185,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1114,6 +1193,7 @@
           (number "7"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1126,6 +1206,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1133,6 +1214,7 @@
           (number "8"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1145,6 +1227,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1152,6 +1235,7 @@
           (number "9"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1164,6 +1248,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1171,6 +1256,7 @@
           (number "10"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1183,6 +1269,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1190,6 +1277,7 @@
           (number "11"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1202,6 +1290,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1209,6 +1298,7 @@
           (number "13"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1221,6 +1311,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1228,6 +1319,7 @@
           (number "14"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1240,6 +1332,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1247,6 +1340,7 @@
           (number "15"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1259,6 +1353,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1266,6 +1361,7 @@
           (number "16"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1278,6 +1374,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1285,6 +1382,7 @@
           (number "17"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1297,6 +1395,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1304,6 +1403,7 @@
           (number "18"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1316,6 +1416,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1323,6 +1424,7 @@
           (number "19"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1335,6 +1437,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1342,6 +1445,7 @@
           (number "20"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1354,6 +1458,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1361,6 +1466,7 @@
           (number "21"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1373,6 +1479,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1380,6 +1487,7 @@
           (number "23"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1392,6 +1500,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1399,6 +1508,7 @@
           (number "25"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1411,6 +1521,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1418,6 +1529,7 @@
           (number "26"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1430,6 +1542,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1437,6 +1550,7 @@
           (number "27"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1449,6 +1563,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1456,6 +1571,7 @@
           (number "29"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1468,6 +1584,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1475,6 +1592,7 @@
           (number "30"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1493,6 +1611,7 @@
         (at 0 -3.81 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1502,6 +1621,7 @@
         (at 0 3.556 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -1510,6 +1630,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1519,6 +1640,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1528,6 +1650,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1537,6 +1660,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1591,6 +1715,7 @@
           (name "+3V3"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1598,6 +1723,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1616,6 +1742,7 @@
         (at 0.635 2.54 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           (justify left)
@@ -1625,6 +1752,7 @@
         (at 0.635 -2.54 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           (justify left)
@@ -1634,6 +1762,7 @@
         (at 0.9652 -3.81 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1643,6 +1772,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1652,6 +1782,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1661,6 +1792,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1670,6 +1802,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1710,6 +1843,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1717,6 +1851,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1728,6 +1863,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1735,6 +1871,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1754,6 +1891,7 @@
         (at -1.27 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -1762,6 +1900,7 @@
         (at 1.905 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -1770,6 +1909,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1779,6 +1919,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1788,6 +1929,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1797,6 +1939,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1806,6 +1949,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1868,6 +2012,7 @@
           (name "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1875,6 +2020,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1886,6 +2032,7 @@
           (name "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1893,6 +2040,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1907,6 +2055,7 @@
         (at 0 3.81 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -1915,6 +2064,7 @@
         (at 0 -3.81 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -1923,6 +2073,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1932,6 +2083,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1941,6 +2093,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -1966,6 +2119,7 @@
           (name "IN"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1973,6 +2127,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1984,6 +2139,7 @@
           (name "OUT"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -1991,6 +2147,7 @@
           (number "3"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2002,6 +2159,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2009,6 +2167,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2021,6 +2180,7 @@
           (name "GND"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2028,6 +2188,7 @@
           (number "4"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2035,56 +2196,61 @@
         )
       )
     )
-    (symbol "coaxolotl:LNA_MMIC"
+    (symbol "coaxolotl:QPL9547"
       (in_bom yes)
       (on_board yes)
       (property "Reference" "U"
-        (at 0 3.81 0)
+        (at 0 8.89 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
       )
-      (property "Value" "LNA_MMIC"
-        (at 0 -3.81 0)
+      (property "Value" "QPL9547"
+        (at 0 -8.89 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
       )
-      (property "Footprint" "coaxolotl:LNA_TBD"
+      (property "Footprint" "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm"
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
         )
       )
-      (property "Datasheet" "~"
+      (property "Datasheet" "https://www.qorvo.com/products/p/QPL9547"
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
         )
       )
-      (property "Description" "Broadband MMIC LNA, ~100 mA, biased through RFOUT (part TBD)"
+      (property "Description" "Qorvo 0.1-6 GHz ultra-low-noise LNA, 3.3-5 V, 65 mA (adjustable), DFN-8 2x2. VDD through RF_OUT; pins 3, 4, 5, 8 NC (no symbol pin)"
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
         )
       )
-      (symbol "LNA_MMIC_0_1"
+      (symbol "QPL9547_0_1"
         (rectangle
-          (start -7.62 2.54)
-          (end 7.62 -2.54)
+          (start -10.16 7.62)
+          (end 10.16 -7.62)
           (stroke
             (width 0.254)
             (type default)
@@ -2094,49 +2260,14 @@
           )
         )
       )
-      (symbol "LNA_MMIC_1_1"
+      (symbol "QPL9547_1_1"
         (pin input line
-          (at -10.16 0 0)
+          (at -12.7 5.08 0)
           (length 2.54)
-          (name "RFIN"
+          (name "RF_IN"
             (effects
               (font
-                (size 1.27 1.27)
-              )
-            )
-          )
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)
-              )
-            )
-          )
-        )
-        (pin output line
-          (at 10.16 0 180)
-          (length 2.54)
-          (name "RFOUT"
-            (effects
-              (font
-                (size 1.27 1.27)
-              )
-            )
-          )
-          (number "3"
-            (effects
-              (font
-                (size 1.27 1.27)
-              )
-            )
-          )
-        )
-        (pin power_in line
-          (at 0 -5.08 90)
-          (length 2.54)
-          (name "GND"
-            (effects
-              (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2144,25 +2275,87 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
           )
         )
-        (pin passive line
-          (at 0 -5.08 90)
+        (pin input line
+          (at -12.7 -5.08 0)
           (length 2.54)
-          hide
-          (name "GND"
+          (name "SHDN"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
           )
-          (number "4"
+          (number "6"
             (effects
               (font
+                (face "Arial")
+                (size 1.27 1.27)
+              )
+            )
+          )
+        )
+        (pin output line
+          (at 12.7 5.08 180)
+          (length 2.54)
+          (name "RF_OUT"
+            (effects
+              (font
+                (face "Arial")
+                (size 1.27 1.27)
+              )
+            )
+          )
+          (number "7"
+            (effects
+              (font
+                (face "Arial")
+                (size 1.27 1.27)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at 0 10.16 270)
+          (length 2.54)
+          (name "VBIAS"
+            (effects
+              (font
+                (face "Arial")
+                (size 1.27 1.27)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "Arial")
+                (size 1.27 1.27)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at 0 -10.16 90)
+          (length 2.54)
+          (name "GND"
+            (effects
+              (font
+                (face "Arial")
+                (size 1.27 1.27)
+              )
+            )
+          )
+          (number "9"
+            (effects
+              (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2181,6 +2374,7 @@
         (at 1.905 1.27 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           (justify left)
@@ -2190,6 +2384,7 @@
         (at 1.905 -1.27 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           (justify left)
@@ -2199,6 +2394,7 @@
         (at -1.778 0 90)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2208,6 +2404,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2217,6 +2414,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2226,6 +2424,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2235,6 +2434,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2291,6 +2491,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2298,6 +2499,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2309,6 +2511,7 @@
           (name "~"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2316,6 +2519,7 @@
           (number "2"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2334,6 +2538,7 @@
         (at 0 -3.81 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2343,6 +2548,7 @@
         (at 0 3.556 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
         )
@@ -2351,6 +2557,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2360,6 +2567,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2369,6 +2577,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2378,6 +2587,7 @@
         (at 0 0 0)
         (effects
           (font
+            (face "Arial")
             (size 1.27 1.27)
           )
           hide
@@ -2432,6 +2642,7 @@
           (name "LNA_VCC"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2439,6 +2650,7 @@
           (number "1"
             (effects
               (font
+                (face "Arial")
                 (size 1.27 1.27)
               )
             )
@@ -2457,19 +2669,20 @@
     (fill
       (type none)
     )
-    (uuid "6d17022e-2a6c-439a-964e-d64c0cee1198")
+    (uuid "6653c0b5-6e88-4a7e-b437-e67242a394b7")
   )
   (text "Antenna input + protection"
     (at 16.51 44.45 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "67bd5e96-0ad2-4301-ae73-073c5f880c16")
+    (uuid "87f29c95-f5fe-4af9-9abe-89decc43a52f")
   )
   (symbol
     (lib_id "Connector:Conn_Coaxial")
@@ -2479,11 +2692,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "5e4b6352-b9b6-4d1f-bb51-8678f6568817")
+    (uuid "b636672d-5ca8-44fb-9c9e-630bb765fd78")
     (property "Reference" "J2"
       (at 25.4 66.04 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2492,6 +2706,7 @@
       (at 25.4 68.58 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2500,6 +2715,7 @@
       (at 29.21 77.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2509,6 +2725,7 @@
       (at 29.21 77.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2518,6 +2735,7 @@
       (at 29.21 77.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2527,20 +2745,21 @@
       (at 29.21 77.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "6e3963ed-863f-4e28-a1fb-3039ae4d55f6")
+      (uuid "d91b5db3-1a14-4489-b55e-09ccc11a8c89")
     )
     (pin "2"
-      (uuid "89b0511f-b005-44ba-8f00-11fc75364fa9")
+      (uuid "30829b3d-80dd-46b6-bfca-90673a5ab424")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "J2")
           (unit 1)
         )
@@ -2554,11 +2773,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "1109926c-665e-4b30-8fb3-0183b92eab30")
+    (uuid "90033088-95a1-44cb-a198-ec2d6405e4ed")
     (property "Reference" "GDT1"
       (at 40.64 96.52 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2567,6 +2787,7 @@
       (at 40.64 99.06 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2575,6 +2796,7 @@
       (at 44.45 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2584,6 +2806,7 @@
       (at 44.45 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2593,6 +2816,7 @@
       (at 44.45 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2602,6 +2826,7 @@
       (at 44.45 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2611,20 +2836,21 @@
       (at 44.45 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "e68598bd-2d95-4ffd-974e-104788f137ea")
+      (uuid "f98dc567-2c37-4dbd-83ec-1e3089718d44")
     )
     (pin "3"
-      (uuid "f52fedb0-2b2d-4e29-ab36-7eb2142ade40")
+      (uuid "5269f9d8-dea2-4c61-88c6-4b03588d7ada")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "GDT1")
           (unit 1)
         )
@@ -2638,11 +2864,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "1ed0d824-6568-4a5a-b277-2fef1b3a365f")
+    (uuid "bc670306-5abe-4193-bb79-61a6a8a0e7b7")
     (property "Reference" "D6"
       (at 58.42 96.52 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2651,6 +2878,7 @@
       (at 58.42 99.06 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2659,6 +2887,7 @@
       (at 62.23 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2668,6 +2897,7 @@
       (at 62.23 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2677,6 +2907,7 @@
       (at 62.23 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2686,23 +2917,24 @@
       (at 62.23 82.55 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "4eeb7e7a-4f8f-4584-a5d4-e4f43864fffb")
+      (uuid "60c8a097-beb3-42d9-9e2a-2f3adfbf3eda")
     )
     (pin "2"
-      (uuid "56f84aee-dc2e-4b7c-9388-c594523842fd")
+      (uuid "5f7cdf0c-b9ef-4cba-8177-aac17c4a1a32")
     )
     (pin "3"
-      (uuid "396a746a-b3e4-4c74-b24e-39f87f6f6eee")
+      (uuid "bf8fbbb7-5b97-4f24-acbc-28e73ff2b688")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "D6")
           (unit 1)
         )
@@ -2716,11 +2948,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "1f515145-4068-4910-baf0-f41d5a651e1d")
+    (uuid "836d19af-4799-4b92-a9fb-6b7cce651c76")
     (property "Reference" "R23"
       (at 76.2 96.52 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2729,6 +2962,7 @@
       (at 76.2 99.06 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2737,6 +2971,7 @@
       (at 80.01 81.28 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2746,6 +2981,7 @@
       (at 80.01 81.28 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2755,6 +2991,7 @@
       (at 80.01 81.28 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2764,20 +3001,21 @@
       (at 80.01 81.28 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "21672c37-98c7-43ce-b83a-cf60283f020c")
+      (uuid "f075e313-f5e8-4dd3-81d3-ba70915062a0")
     )
     (pin "2"
-      (uuid "3406ec05-0190-4ee3-ace8-43bcc07a2abb")
+      (uuid "63dc25be-32f2-4c67-a5be-249381a04733")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "R23")
           (unit 1)
         )
@@ -2791,11 +3029,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "9e6203da-883d-47cf-9ec2-e2ada63f02fa")
+    (uuid "4228d6c2-6804-4a4b-bef6-52f871cde5fe")
     (property "Reference" "#PWR001"
       (at 29.21 87.63 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2805,6 +3044,7 @@
       (at 25.4 88.9 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2813,6 +3053,7 @@
       (at 29.21 85.09 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2822,17 +3063,18 @@
       (at 29.21 85.09 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "3ca1f903-9772-488b-800a-736e94024a5e")
+      (uuid "76c60e30-ea57-4d41-894c-5a4530f7f016")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR001")
           (unit 1)
         )
@@ -2846,11 +3088,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "3a969f92-fb2c-4f81-9766-87a4207ff7a3")
+    (uuid "be69c6e6-0ff8-402d-abc2-311327906d51")
     (property "Reference" "#PWR002"
       (at 44.45 92.71 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2860,6 +3103,7 @@
       (at 40.64 93.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2868,6 +3112,7 @@
       (at 44.45 90.17 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2877,17 +3122,18 @@
       (at 44.45 90.17 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "5893c416-5e18-44e3-bf8d-9d89d86548b4")
+      (uuid "8e8c2d21-2df0-4687-bb2a-fc0edbb9919f")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR002")
           (unit 1)
         )
@@ -2901,11 +3147,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "414c75d1-d5b0-4419-af49-df0f44eec98a")
+    (uuid "ebe795a9-1e1d-41be-a952-85927814babd")
     (property "Reference" "#PWR003"
       (at 72.39 87.63 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2915,6 +3162,7 @@
       (at 68.58 88.9 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2923,6 +3171,7 @@
       (at 72.39 85.09 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2932,17 +3181,18 @@
       (at 72.39 85.09 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "07460014-bd0e-4a76-bf6b-fee06423a2f5")
+      (uuid "278ff358-64bc-4d45-88bc-1efc06cd74b9")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR003")
           (unit 1)
         )
@@ -2956,11 +3206,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "844286ef-94cd-4a7d-88e3-328965f00ae4")
+    (uuid "b0bff550-e605-4ad6-9a50-555eb88b4380")
     (property "Reference" "#PWR004"
       (at 52.07 87.63 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2970,6 +3221,7 @@
       (at 48.26 88.9 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -2978,6 +3230,7 @@
       (at 52.07 85.09 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -2987,17 +3240,18 @@
       (at 52.07 85.09 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "49b8d8a0-4447-4429-bd32-b8ad0207a0f6")
+      (uuid "66355d84-9184-4927-b5b8-222bf44580bc")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR004")
           (unit 1)
         )
@@ -3011,11 +3265,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "088d0060-63c8-40b1-af91-4b6c68824feb")
+    (uuid "03f3654f-83fc-4ed4-b5da-283eb3a91ae4")
     (property "Reference" "#PWR005"
       (at 80.01 90.17 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3025,6 +3280,7 @@
       (at 76.2 91.44 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3033,6 +3289,7 @@
       (at 80.01 87.63 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3042,17 +3299,18 @@
       (at 80.01 87.63 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "12343d52-124e-4c0d-ad91-1d92d1817cdd")
+      (uuid "433ad1fc-a363-4c33-8a2d-154cf2d12d1d")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR005")
           (unit 1)
         )
@@ -3063,13 +3321,14 @@
     (at 17.78 102.87 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "1eec68c2-368a-44cd-b832-aeb77feac149")
+    (uuid "803f13da-f1c6-4d12-a14b-ba72f2526656")
   )
   (rectangle
     (start 88.9 45.72)
@@ -3081,19 +3340,20 @@
     (fill
       (type none)
     )
-    (uuid "4ddf9f97-d3be-4cf0-a723-de2fa1827d8f")
+    (uuid "a267fd7f-84d5-41df-a316-a1cfb8375fcc")
   )
   (text "LNA/BYP IN"
     (at 90.17 44.45 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "fc0d626d-1f88-4659-8f02-c7dfbec7f3b3")
+    (uuid "8edfba65-a6cb-4c75-a150-aa52cb96948a")
   )
   (symbol
     (lib_id "coaxolotl:PE42522")
@@ -3102,11 +3362,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "5bf85764-c983-4acc-8535-b63c84ac796c")
+    (uuid "2196add7-0d5d-4d91-9904-5ebfb430c9ae")
     (property "Reference" "U6"
       (at 104.14 97.79 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3115,6 +3376,7 @@
       (at 104.14 100.33 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3123,6 +3385,7 @@
       (at 107.95 80.01 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3132,6 +3395,7 @@
       (at 107.95 80.01 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3141,104 +3405,105 @@
       (at 107.95 80.01 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "12"
-      (uuid "c4d0feba-4cb8-451e-a162-450787a79fd7")
+      (uuid "bac0e6d0-ceff-4d7b-a5c3-5a61e8dec596")
     )
     (pin "28"
-      (uuid "a2547360-0811-4ba2-a3cc-fbf1ab7a8012")
+      (uuid "8b6a81a3-e473-4758-99bb-1c80628b72a6")
     )
     (pin "22"
-      (uuid "815a9402-a523-4911-8a86-96d514015c7f")
+      (uuid "10ff0a4d-bc99-4468-8b56-b8eb26c29d64")
     )
     (pin "2"
-      (uuid "998a8957-f5c7-40f1-a8c9-8a5ada35835d")
+      (uuid "712526b9-2a2a-4fcb-a1bc-47fcff14a5e9")
     )
     (pin "24"
-      (uuid "641a39e8-5b33-474a-ac3a-f7943844154d")
+      (uuid "b90b4340-61b4-429c-8595-b95aebf4bd08")
     )
     (pin "1"
-      (uuid "bea48576-e0f7-44d0-8486-1761934e54a2")
+      (uuid "25a8314f-23f9-443d-bdc2-e603d22a42d6")
     )
     (pin "3"
-      (uuid "21238da0-a5ef-4e9c-997c-026ce07b1ef4")
+      (uuid "30d36396-bb3d-4b9d-be1f-5751788f4d3b")
     )
     (pin "4"
-      (uuid "e29b5255-edca-48ba-9cc3-7bb0ee24563c")
+      (uuid "86127db8-db11-42cc-904d-da21c24d6179")
     )
     (pin "5"
-      (uuid "296e2f98-c436-4d9d-8536-421f241e486f")
+      (uuid "502aa578-fa30-43df-b770-23f6b5aa9a74")
     )
     (pin "6"
-      (uuid "53b5488a-92df-4946-88e4-bf5c90040816")
+      (uuid "dcf25147-62e0-4dbb-84ab-db17492fd078")
     )
     (pin "7"
-      (uuid "50c46fd8-8ae8-4ab1-bb67-7deaa2e27f75")
+      (uuid "f5d64021-7a56-45e3-a4c9-e261cf4fe4cf")
     )
     (pin "8"
-      (uuid "70df73c7-cd45-4844-a806-62a0d0a4d9dd")
+      (uuid "9ae9e2d3-f76f-4abf-a563-523009994b20")
     )
     (pin "9"
-      (uuid "6a84cb70-08b9-46f6-92ec-d3b40421b37c")
+      (uuid "13d3843a-9b70-44a5-b92e-7d465a9d4643")
     )
     (pin "10"
-      (uuid "47dceda6-9d80-48a7-9989-8afe8c4f2835")
+      (uuid "8f2736d1-ce67-4b7e-b798-32891b908277")
     )
     (pin "11"
-      (uuid "7117bdfd-f223-46df-a4d6-00a8fc08ea29")
+      (uuid "50f3e742-bd8b-47e1-99a7-ef5a612c8db4")
     )
     (pin "13"
-      (uuid "15919dfa-5712-4699-a4af-f42ef650d1ee")
+      (uuid "d4671a03-1e4c-47c4-939b-7c7180e2d12a")
     )
     (pin "14"
-      (uuid "181f2c86-1d3b-444e-8c66-8373ec760fba")
+      (uuid "602f3602-e63c-4a78-9876-5cfa26b70a76")
     )
     (pin "15"
-      (uuid "4cd194aa-4551-4bdf-b483-edbeef580d2f")
+      (uuid "03cc47be-7379-4179-935a-2d64752bb9e8")
     )
     (pin "16"
-      (uuid "89f9057a-af7e-48d1-8942-4f20248a1d52")
+      (uuid "fdbf12b3-c6cb-47c9-9ac6-97dd74d52282")
     )
     (pin "17"
-      (uuid "dfed18ba-49a8-47df-9eaa-af6e95eafee6")
+      (uuid "a3bdd255-be4b-4cc0-9e4c-494cec4d970e")
     )
     (pin "18"
-      (uuid "035fa662-bb06-444f-b637-c88f6346df73")
+      (uuid "e616c3e6-f8b3-430e-a27f-25e920d36a85")
     )
     (pin "19"
-      (uuid "a49cadca-de37-4894-a4c6-6dc1d8f90951")
+      (uuid "3fd360dc-b47d-426f-8cd5-ce7bd1dfc6ae")
     )
     (pin "20"
-      (uuid "ec38444b-2a8a-48e2-90d8-5cfa5380e937")
+      (uuid "91e2d83c-1539-4ca8-8d5b-610a51a15b6c")
     )
     (pin "21"
-      (uuid "a45a91e0-a74e-4d67-b455-b057df993292")
+      (uuid "cd0aa778-dec8-4788-811c-ce792e91c770")
     )
     (pin "23"
-      (uuid "1e152eab-0feb-4d7a-8e48-142655197fb7")
+      (uuid "77d1c0cd-615b-4160-a611-d4c11f3f43c4")
     )
     (pin "25"
-      (uuid "355c4944-bc47-465b-bdfd-97dc86ab4106")
+      (uuid "be29573b-1bdb-4a50-afa4-d6e68ecad4a7")
     )
     (pin "26"
-      (uuid "9084431e-bb8c-4e71-b78b-8cdb4b0d3995")
+      (uuid "482bbde3-32e5-4cec-8fb2-63b014896df6")
     )
     (pin "27"
-      (uuid "89288d1f-c5b7-48e9-97e6-b02a70a8d56d")
+      (uuid "b8948b03-0592-4cdc-9929-78c9abb59a69")
     )
     (pin "29"
-      (uuid "37544804-5f0a-43e1-8001-4c39f212b496")
+      (uuid "57af6014-855a-4761-95e2-f44d8735fe32")
     )
     (pin "30"
-      (uuid "f16ed824-74c5-4d85-813d-2628843f319f")
+      (uuid "d59cc9eb-2cb6-4853-bcbe-4c77e82106f9")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "U6")
           (unit 1)
         )
@@ -3252,11 +3517,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "f25677c9-6332-4e2e-85ef-ad7cb61c2352")
+    (uuid "49150776-ee4d-43cb-8a7a-a49471d2c135")
     (property "Reference" "#PWR006"
       (at 107.95 92.71 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3266,6 +3532,7 @@
       (at 104.14 93.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3274,6 +3541,7 @@
       (at 107.95 90.17 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3283,17 +3551,18 @@
       (at 107.95 90.17 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "01861857-323b-4065-a3c5-baddaba07086")
+      (uuid "285c6119-fd88-4af6-a6bf-fa96d9adee16")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR006")
           (unit 1)
         )
@@ -3307,11 +3576,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "4aabc377-2209-4d89-9eab-8f7f3607224f")
+    (uuid "401d4e38-8c79-4e6d-a6c8-d63c8923aed0")
     (property "Reference" "#PWR007"
       (at 107.95 57.15 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3321,6 +3591,7 @@
       (at 104.14 50.8 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3329,6 +3600,7 @@
       (at 107.95 54.61 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3338,17 +3610,18 @@
       (at 107.95 54.61 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "f934a37f-8d2d-427b-a62c-28768cb40440")
+      (uuid "b1e220ba-d93a-45ec-847b-8a0258a41253")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR007")
           (unit 1)
         )
@@ -3362,11 +3635,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "d6a662f8-3733-448c-b62d-32c18758e5d0")
+    (uuid "e57dca5d-e7d7-47a3-92bb-ebd85dde4997")
     (property "Reference" "C36"
       (at 114.3 59.69 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -3376,6 +3650,7 @@
       (at 114.3 62.23 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -3385,6 +3660,7 @@
       (at 115.57 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3394,6 +3670,7 @@
       (at 115.57 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3403,6 +3680,7 @@
       (at 115.57 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3412,20 +3690,21 @@
       (at 115.57 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "5c4f07a3-4db0-411b-81cb-c24ea7e4e93f")
+      (uuid "77e18068-f134-4aaa-8dfa-d3e46c3f4e00")
     )
     (pin "2"
-      (uuid "9255c768-bb2a-4b0d-98e4-10208096e874")
+      (uuid "6971d075-8b69-475b-bd5f-b23b56184c5a")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C36")
           (unit 1)
         )
@@ -3439,11 +3718,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "caee9ddb-2883-4dce-a5ac-5b756e12a847")
+    (uuid "4228f48f-2136-4450-823e-c8641a6bd77b")
     (property "Reference" "#PWR008"
       (at 115.57 69.85 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3453,6 +3733,7 @@
       (at 111.76 71.12 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3461,6 +3742,7 @@
       (at 115.57 67.31 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3470,17 +3752,18 @@
       (at 115.57 67.31 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "6792b01f-9712-40cc-842e-f03d6d03271b")
+      (uuid "57be3bf4-76da-41fc-85fb-31e62efed860")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR008")
           (unit 1)
         )
@@ -3497,19 +3780,20 @@
     (fill
       (type none)
     )
-    (uuid "7a2453c6-62ab-4bde-95a7-536d29f264a9")
+    (uuid "d196db50-f932-4791-8c4c-86a8aea681cf")
   )
   (text "Preselector (LNA path only)"
     (at 115.57 107.95 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "dcad0417-c276-4dcf-8a49-3df9b282674a")
+    (uuid "6f07b800-7858-48ed-a6d3-1a5f2b360a9c")
   )
   (symbol
     (lib_id "Device:C")
@@ -3518,11 +3802,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "464c6aaf-1db4-4405-9745-2adfb80d0325")
+    (uuid "e6244fb1-14e6-4007-a2a6-e0d9cd87b4cb")
     (property "Reference" "C24"
       (at 129.54 115.57 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3531,6 +3816,7 @@
       (at 129.54 118.11 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3539,6 +3825,7 @@
       (at 133.35 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3548,6 +3835,7 @@
       (at 133.35 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3557,20 +3845,21 @@
       (at 133.35 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "3e489368-fdfa-4e02-b2e8-96276de21173")
+      (uuid "349cda37-32ac-4238-a046-eb35c66a7693")
     )
     (pin "2"
-      (uuid "b6028e9c-0543-4121-ab22-043604f9bbe8")
+      (uuid "022e78b0-7df7-4e33-b437-d27b41a73e42")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C24")
           (unit 1)
         )
@@ -3584,11 +3873,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "14e94395-0b89-4e13-8404-45ae10a36d2d")
+    (uuid "3ac35fed-019d-4f4f-b016-717fd8b69e22")
     (property "Reference" "C25"
       (at 154.94 115.57 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3597,6 +3887,7 @@
       (at 154.94 118.11 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3605,6 +3896,7 @@
       (at 158.75 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3614,6 +3906,7 @@
       (at 158.75 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3623,20 +3916,21 @@
       (at 158.75 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "41ea39c5-49c1-48c8-b7f2-35be28057477")
+      (uuid "b19c8ff0-7d41-4301-b87a-a9ffa241235c")
     )
     (pin "2"
-      (uuid "a42100c0-8bbf-416a-aaab-08481995bdb1")
+      (uuid "84dd0954-59d3-49cd-8f8c-2db013deb141")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C25")
           (unit 1)
         )
@@ -3650,11 +3944,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "fbc1fba8-2886-4bfe-b44a-381aeaddcfc7")
+    (uuid "a879e3fb-a758-4725-921e-15a00d01cff7")
     (property "Reference" "C26"
       (at 180.34 115.57 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3663,6 +3958,7 @@
       (at 180.34 118.11 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3671,6 +3967,7 @@
       (at 184.15 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3680,6 +3977,7 @@
       (at 184.15 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3689,20 +3987,21 @@
       (at 184.15 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "a7ae8b58-fbc0-4019-b183-0ad47e176a77")
+      (uuid "ca295d1b-c313-41cd-a3c2-29a0a1b3629d")
     )
     (pin "2"
-      (uuid "b6541f8d-f100-4213-9608-1c1a0567a30c")
+      (uuid "b29ceb32-ac81-45c2-927e-5c18d865b9c8")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C26")
           (unit 1)
         )
@@ -3716,11 +4015,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "49d8c9d7-f804-4686-959c-3b97deac3f64")
+    (uuid "3935682b-c635-4311-9c61-91594a1b5e46")
     (property "Reference" "L1"
       (at 144.78 125.73 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -3730,6 +4030,7 @@
       (at 144.78 128.27 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -3739,6 +4040,7 @@
       (at 146.05 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3748,6 +4050,7 @@
       (at 146.05 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3757,20 +4060,21 @@
       (at 146.05 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "2c0af9d0-c460-49e0-bfd9-3aba0238c545")
+      (uuid "f2f2fb24-a339-4405-9fd5-d206ce415193")
     )
     (pin "2"
-      (uuid "60f34f87-f540-4b24-99a6-9cff7732f2ae")
+      (uuid "2020d165-3306-474b-b714-c5767d031fd6")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "L1")
           (unit 1)
         )
@@ -3784,11 +4088,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "f0183e35-ca00-4714-b8b5-a61860c88728")
+    (uuid "57e47de4-9922-4d26-a259-82fe2d7f8f6d")
     (property "Reference" "#PWR009"
       (at 146.05 135.89 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3798,6 +4103,7 @@
       (at 142.24 137.16 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3806,6 +4112,7 @@
       (at 146.05 133.35 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3815,17 +4122,18 @@
       (at 146.05 133.35 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "8b694007-4ed7-43d2-9ce5-88ca5016b02f")
+      (uuid "b4efc85b-6185-4a2c-af79-665d13702316")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR009")
           (unit 1)
         )
@@ -3839,11 +4147,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "3970ee68-a389-492f-b93a-063dce9b9579")
+    (uuid "f2ea7e26-8631-4457-afe7-a50f56175585")
     (property "Reference" "L2"
       (at 170.18 125.73 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -3853,6 +4162,7 @@
       (at 170.18 128.27 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -3862,6 +4172,7 @@
       (at 171.45 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3871,6 +4182,7 @@
       (at 171.45 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3880,20 +4192,21 @@
       (at 171.45 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "1f30f1b5-fbd8-4dbe-855d-030696225174")
+      (uuid "05695746-2966-4546-b329-464ba24f0e03")
     )
     (pin "2"
-      (uuid "bc6ad496-4946-4e6e-9e6e-d224e1c718d1")
+      (uuid "44b82ba1-89fe-44ff-a9da-7c42dff28c32")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "L2")
           (unit 1)
         )
@@ -3907,11 +4220,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "55735c07-07d2-49b3-8a05-ea430b23fce3")
+    (uuid "fd7c66d1-0b2a-41a7-a4a5-7be1a249b6a5")
     (property "Reference" "#PWR010"
       (at 171.45 135.89 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3921,6 +4235,7 @@
       (at 167.64 137.16 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3929,6 +4244,7 @@
       (at 171.45 133.35 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3938,17 +4254,18 @@
       (at 171.45 133.35 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "646f719d-667d-4494-8d50-b1b5ae397975")
+      (uuid "affea5e0-8e06-44dc-b03a-8d42316ca15d")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR010")
           (unit 1)
         )
@@ -3962,11 +4279,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "1748c8ab-9b60-457d-83d5-f85c4cac85b7")
+    (uuid "677b465c-ccec-4819-a742-46f42b25d045")
     (property "Reference" "U12"
       (at 203.2 114.3 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3975,6 +4293,7 @@
       (at 203.2 116.84 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -3983,6 +4302,7 @@
       (at 207.01 121.92 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -3992,6 +4312,7 @@
       (at 207.01 121.92 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4001,26 +4322,27 @@
       (at 207.01 121.92 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "7ef90852-f392-4646-891b-1bdfdc992bb0")
+      (uuid "6cb26099-b5d7-4c36-8ea3-ac0ce13002e3")
     )
     (pin "3"
-      (uuid "fefb40e7-8510-408c-91c8-c91eb4d3b877")
+      (uuid "e408646a-65eb-44af-be4f-763fb6283c61")
     )
     (pin "2"
-      (uuid "9fa33a30-962f-4e9c-8377-e45d6941ecc6")
+      (uuid "d4e50612-3ed0-4e5f-bba9-23c5032f887e")
     )
     (pin "4"
-      (uuid "31ffc811-9d8f-44c2-8a91-067133bbe11f")
+      (uuid "32e78276-4b5a-4d19-a8c6-aaa981aad3d7")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "U12")
           (unit 1)
         )
@@ -4034,11 +4356,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "ce0a934d-c8e0-43e5-8619-fb76cc049bbf")
+    (uuid "a3d4a2e3-e7b4-41a2-83d9-48a2a1c6bbad")
     (property "Reference" "#PWR011"
       (at 207.01 132.08 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4048,6 +4371,7 @@
       (at 203.2 133.35 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4056,6 +4380,7 @@
       (at 207.01 129.54 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4065,17 +4390,18 @@
       (at 207.01 129.54 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "7aecdb2a-2057-469e-a667-945476cad081")
+      (uuid "71c3b25d-3f06-4343-a564-cee780f2e1c8")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR011")
           (unit 1)
         )
@@ -4086,25 +4412,27 @@
     (at 121.92 113.03 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "f31cb555-78f1-43bd-9bff-495de2da3756")
+    (uuid "726938e9-2c3b-4ab9-aaec-1bec8f65fb53")
   )
   (text "LPF: LTCC, fc ~2.2 GHz"
     (at 166.37 113.03 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "3657eccc-f2dd-4894-82b7-3c01888467b3")
+    (uuid "d52a2248-47d5-4179-9c24-b5456ac39a3e")
   )
   (rectangle
     (start 215.9 144.78)
@@ -4116,19 +4444,20 @@
     (fill
       (type none)
     )
-    (uuid "99b39c2d-fad9-4234-8c89-dbe6c063f673")
+    (uuid "3bf296e2-8804-4dc2-b935-f57f74cf72c1")
   )
   (text "FM notch (DNP option)"
     (at 217.17 143.51 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "a4a67dda-7541-468c-a40f-b603cb78e1e6")
+    (uuid "aa7c575c-aabe-41f5-ba34-43d67b6c1ec8")
   )
   (symbol
     (lib_id "Device:R")
@@ -4137,11 +4466,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "a6f4498e-3a21-455e-a606-c0d14aaedcdc")
+    (uuid "4ead0e2f-e101-4afd-902b-e593ef7451bc")
     (property "Reference" "R22"
       (at 226.06 115.57 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4150,6 +4480,7 @@
       (at 226.06 118.11 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4158,6 +4489,7 @@
       (at 229.87 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4167,6 +4499,7 @@
       (at 229.87 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4176,6 +4509,7 @@
       (at 229.87 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4185,20 +4519,21 @@
       (at 229.87 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "46b00c72-9dfb-400a-979f-1f2a9fcdf4ff")
+      (uuid "cb3f868e-ddfb-4539-b612-532421ccd2fa")
     )
     (pin "2"
-      (uuid "441471c5-8b12-48b5-a2d0-455602659508")
+      (uuid "06e31285-1af3-4dde-b083-ace286c36be8")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "R22")
           (unit 1)
         )
@@ -4212,11 +4547,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp yes)
-    (uuid "294f205f-b67c-4508-a138-4acc0265e448")
+    (uuid "78e91905-d093-4c96-a0aa-92af56c3ce11")
     (property "Reference" "U9"
       (at 231.14 177.8 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4225,6 +4561,7 @@
       (at 231.14 180.34 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4233,6 +4570,7 @@
       (at 234.95 160.02 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4242,6 +4580,7 @@
       (at 234.95 160.02 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4251,104 +4590,105 @@
       (at 234.95 160.02 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "12"
-      (uuid "e382792a-7a22-47dd-8062-4536e51da1f5")
+      (uuid "07240bdc-08d7-414c-9765-7b5014c11252")
     )
     (pin "28"
-      (uuid "f4dae9f9-81ae-4e14-9913-d64218cf15d6")
+      (uuid "bdb7738a-892b-4660-ab7c-91a4502f5617")
     )
     (pin "22"
-      (uuid "d5be5eb4-9dd0-49ce-a51d-e3517105964c")
+      (uuid "d6de2b4c-264a-4f7c-9ae3-6932076ed253")
     )
     (pin "2"
-      (uuid "80ea2a8b-bc04-4332-99c1-aabe97909275")
+      (uuid "58160d4c-5fce-40d2-b1ff-c927d28c6307")
     )
     (pin "24"
-      (uuid "d1c520b9-81a6-4d0a-b377-d462c30ce430")
+      (uuid "0194de55-0043-4129-8459-5d8731ff2616")
     )
     (pin "1"
-      (uuid "123b23dc-3fa9-4f86-b331-70ad8863b98e")
+      (uuid "19e284ae-63f6-43dc-b098-88869df06f4c")
     )
     (pin "3"
-      (uuid "1696681f-2f25-47a8-b542-bee6633caf14")
+      (uuid "14da1fff-d02d-4d6b-8be0-bc17effa515c")
     )
     (pin "4"
-      (uuid "04debdff-72ed-4ea7-8263-094b3e46f60b")
+      (uuid "10ca71a4-87ad-4a17-8939-d7ae4b6f0e73")
     )
     (pin "5"
-      (uuid "abff25c4-efc0-4cc6-8639-7f3ad8a59990")
+      (uuid "b8015232-a696-49b4-9bde-e0f9abfb0292")
     )
     (pin "6"
-      (uuid "35348aa2-f797-4137-ab72-224e522ef615")
+      (uuid "6c599b94-51ff-4594-b7d1-ac67234fb75d")
     )
     (pin "7"
-      (uuid "6606c38f-333c-40d6-808f-de30184b8d61")
+      (uuid "ea1e7f98-5bf7-4617-b169-29c60eec1511")
     )
     (pin "8"
-      (uuid "c68a4602-5b61-4712-8025-4e9e8e3f5aeb")
+      (uuid "307c2f5c-3170-4970-beb3-29561345fcb0")
     )
     (pin "9"
-      (uuid "1c0e26ae-2998-4df8-9814-8f3b41818aed")
+      (uuid "c5ba35bd-360c-40f6-ad17-225580216d57")
     )
     (pin "10"
-      (uuid "26df1057-6e3b-405d-88ad-d36b49922c8a")
+      (uuid "f5b38222-33da-4905-9536-e8c24863a878")
     )
     (pin "11"
-      (uuid "6c23feb6-57d6-43ef-90f7-e3bfba9715bb")
+      (uuid "b60b0777-bb60-40fe-89b2-80356dc723ed")
     )
     (pin "13"
-      (uuid "fd16b8ae-e15c-46e4-8dcf-e1093b8df602")
+      (uuid "be3a055a-d2ed-49c3-b170-3bde751722a9")
     )
     (pin "14"
-      (uuid "2b6cd24c-62ee-42a9-88ca-4074b8b72f4d")
+      (uuid "e533f49e-5777-46e8-9e4d-fed9eb44bec4")
     )
     (pin "15"
-      (uuid "63278173-c8dd-4b16-845a-9d4060c303ca")
+      (uuid "6ab181b6-5cf4-4a01-bf77-9840dd94797b")
     )
     (pin "16"
-      (uuid "338bb196-d1c3-4d22-89e9-690b0e2d0f59")
+      (uuid "0334cbed-a364-4045-8f71-033da253b10b")
     )
     (pin "17"
-      (uuid "9354126d-6104-4a3c-9576-421ba3c95c9c")
+      (uuid "e4d967ac-f987-47e6-ab94-e6aefa399efc")
     )
     (pin "18"
-      (uuid "708996fe-1ff7-496e-9d22-c0531af6d8a2")
+      (uuid "079f647d-959c-4929-918b-a28bf039e050")
     )
     (pin "19"
-      (uuid "07343e33-e57f-4610-a71a-f587179cc82b")
+      (uuid "5f800e25-cef1-437a-9de0-d5ce607459bb")
     )
     (pin "20"
-      (uuid "353459ac-979c-45e3-8c75-8e4bc1a7773c")
+      (uuid "7ec14458-edfc-4cd6-b04f-91abfcb6fffa")
     )
     (pin "21"
-      (uuid "e4bd829a-357a-4e15-9619-f4874c83e734")
+      (uuid "4023d49d-3b29-4e10-8a01-fd3a8352a2bc")
     )
     (pin "23"
-      (uuid "8c853546-be74-4446-be93-ab1e8c61bc66")
+      (uuid "ab1c7e02-acb6-44d8-a845-ee857092d138")
     )
     (pin "25"
-      (uuid "1719f438-4cc0-4e4a-92ff-ca48d6866776")
+      (uuid "ca302053-b541-4ce9-b11d-a37f7b45bc83")
     )
     (pin "26"
-      (uuid "e2517934-fec7-4e2c-828d-a8f5d2964217")
+      (uuid "7ee7e470-1dc4-4c9d-be12-19887191856d")
     )
     (pin "27"
-      (uuid "4352364b-3de1-4e9b-98f2-7d46fc3e9bb7")
+      (uuid "f0bb97c4-35ec-465f-920b-39cb702a8488")
     )
     (pin "29"
-      (uuid "e13446ab-5cbb-40ee-9b77-7b75efed195b")
+      (uuid "66e37dd1-f1aa-41e3-af0e-4c85ad6cb323")
     )
     (pin "30"
-      (uuid "26215362-b1a9-458b-bdb7-0b246640f6f4")
+      (uuid "c9c9be80-4e8b-4287-ba72-f5591dca8dd4")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "U9")
           (unit 1)
         )
@@ -4362,11 +4702,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "bce5eddb-4a96-4705-8265-413a3f597e8c")
+    (uuid "8319a2a3-fe37-4b63-baed-a2e9fb1f5455")
     (property "Reference" "#PWR012"
       (at 234.95 172.72 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4376,6 +4717,7 @@
       (at 231.14 173.99 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4384,6 +4726,7 @@
       (at 234.95 170.18 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4393,17 +4736,18 @@
       (at 234.95 170.18 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "93206450-ec83-42dd-a690-a7a226d84908")
+      (uuid "991304f1-a0f8-4391-9e7f-f6144740ac24")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR012")
           (unit 1)
         )
@@ -4418,11 +4762,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp yes)
-    (uuid "124bb03d-99a3-4d9e-acfd-87843817dffb")
+    (uuid "0ad63ea9-eb5e-4e2e-b47b-f6f836da8397")
     (property "Reference" "U10"
       (at 281.94 177.8 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4431,6 +4776,7 @@
       (at 281.94 180.34 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4439,6 +4785,7 @@
       (at 285.75 160.02 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4448,6 +4795,7 @@
       (at 285.75 160.02 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4457,104 +4805,105 @@
       (at 285.75 160.02 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "12"
-      (uuid "f87a21c4-8fef-4b53-92a7-d7351b2f3181")
+      (uuid "0a4efbe5-e71d-4780-b6bc-efb57e2facf9")
     )
     (pin "28"
-      (uuid "af3ce335-5400-45a4-b040-787cfee97f12")
+      (uuid "e27b3663-68a6-4737-acdc-063307099e99")
     )
     (pin "22"
-      (uuid "c52be2b6-8637-4463-a3d3-a3a5ef9f4ab9")
+      (uuid "268ffc9e-f113-43fe-ac92-765a67bc6c75")
     )
     (pin "2"
-      (uuid "5ad70c9c-9a2d-4145-a276-9f93a485f592")
+      (uuid "35f54979-6fc8-46de-bbec-8077c2b602dc")
     )
     (pin "24"
-      (uuid "2e358b78-dc59-4f7f-8f60-e229515e9b95")
+      (uuid "54ba2efc-be5b-4b70-82f4-38ec8f5ece24")
     )
     (pin "1"
-      (uuid "211e4ec2-9c10-41fd-8af7-f3c42177aeca")
+      (uuid "58576957-6214-4869-a290-3db5afbb454b")
     )
     (pin "3"
-      (uuid "a08c881d-2756-4047-912f-d82bb422ff24")
+      (uuid "cfd05631-2c79-4017-b997-99119b6c977e")
     )
     (pin "4"
-      (uuid "9e4dbf2c-d1d7-444d-bce3-cfa9c9a6f1bb")
+      (uuid "c2c5d9ce-bea5-4413-8699-9261dbf7c7cd")
     )
     (pin "5"
-      (uuid "23bd8dab-44ee-4cbb-928c-5159c8b9c81b")
+      (uuid "e6edeabb-3ab7-4fa9-9c97-d1e9a51092f9")
     )
     (pin "6"
-      (uuid "0d54e9e4-0bc8-482a-aac1-a84796d11481")
+      (uuid "c01c587d-3648-4ecb-b8a7-b982cf73f5e5")
     )
     (pin "7"
-      (uuid "31ca7fdb-d507-49f1-8827-0a92dffec51b")
+      (uuid "15835ea6-6d8f-4210-aa1c-e67e761115ef")
     )
     (pin "8"
-      (uuid "8e6adf57-fd7d-4140-b43b-ad0974710d4a")
+      (uuid "3c884898-3dee-449b-945d-846282483c15")
     )
     (pin "9"
-      (uuid "41b7c849-df54-4c9c-bf00-93173411ab83")
+      (uuid "c24fa342-10cb-4803-8c75-e811f7291664")
     )
     (pin "10"
-      (uuid "40de9692-c74a-4108-904b-1fc71b339da3")
+      (uuid "d60464a5-74a7-4a07-a680-7d384aeb448f")
     )
     (pin "11"
-      (uuid "7ff42118-5a22-49f5-8146-4f079452ac0b")
+      (uuid "eb19b359-bc3c-4ccd-99ea-e306519d9350")
     )
     (pin "13"
-      (uuid "b5a9c572-714e-4474-8d33-1ccc0f14df9b")
+      (uuid "f8484051-755e-451b-b593-229775d3d62f")
     )
     (pin "14"
-      (uuid "7f812e85-ab94-47e2-b774-8db7f9dd8f26")
+      (uuid "fa0f5a1b-9cf9-4f03-a451-ccc09487d77c")
     )
     (pin "15"
-      (uuid "ee92448a-3d5c-4216-8069-6bb8f544cb38")
+      (uuid "b0cf9932-3da7-4e8d-8d5d-7c52e04260cd")
     )
     (pin "16"
-      (uuid "e1b5ddb7-2b88-44fe-b4f3-ba4d91bd971d")
+      (uuid "7d51bd2b-383d-4a06-b5a8-ed301421222e")
     )
     (pin "17"
-      (uuid "eb397a92-8be3-41e2-8e6c-2e61df32d5e6")
+      (uuid "48ece36e-1a8d-4a06-aa78-833e1882b857")
     )
     (pin "18"
-      (uuid "e3146c3d-5dcd-47cb-8e06-a52d486925b4")
+      (uuid "8a4908a5-6a5a-4d0c-9929-111a2d89a9e5")
     )
     (pin "19"
-      (uuid "993ca29f-6a6d-4830-adeb-4f2d959c1951")
+      (uuid "8e4b1304-8eac-4593-b4a0-3e899de6c75b")
     )
     (pin "20"
-      (uuid "7c5558ee-be88-480d-a8a9-b6365bf8fe64")
+      (uuid "98b12c30-730f-4d45-97b6-c4021847528b")
     )
     (pin "21"
-      (uuid "25af1432-0ecd-40af-b26b-e39dadc6b3b7")
+      (uuid "ca52e8ba-6d79-4be9-a480-b7e8fe981c90")
     )
     (pin "23"
-      (uuid "fa1d1f59-7bf3-4858-8c86-6d23b5bfd99d")
+      (uuid "63f1dfe4-37a1-40dc-abdb-d591ea2f0af8")
     )
     (pin "25"
-      (uuid "8ed83238-7ba9-4be7-8939-5036d7527c90")
+      (uuid "477c2ddd-2848-43a9-b938-341f623ace31")
     )
     (pin "26"
-      (uuid "2151a839-087c-4d59-bc93-e9c87d06bad3")
+      (uuid "81cc4156-64f1-4a84-bc2e-17859fe1c2b7")
     )
     (pin "27"
-      (uuid "214a29a5-e116-429d-aa56-47c84547d3d7")
+      (uuid "fa18b226-a01b-4269-aead-bdff7af75c7d")
     )
     (pin "29"
-      (uuid "aa53ae1e-e819-4aa1-a1b7-f6214c45d462")
+      (uuid "d3bd2647-dad2-4d6e-96f9-d71003eee1d6")
     )
     (pin "30"
-      (uuid "071504f4-2a57-4fd2-bcfb-defe32bce1b0")
+      (uuid "56f12363-c061-47aa-956e-ab50db3f3d71")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "U10")
           (unit 1)
         )
@@ -4568,11 +4917,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "53fb7d36-d268-4617-841d-eabf06f9bbb2")
+    (uuid "581b8f3d-82a5-46b9-bb91-d055e3e310d9")
     (property "Reference" "#PWR013"
       (at 285.75 172.72 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4582,6 +4932,7 @@
       (at 281.94 173.99 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4590,6 +4941,7 @@
       (at 285.75 170.18 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4599,17 +4951,18 @@
       (at 285.75 170.18 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "d3a2fb31-f432-4c94-a3bb-9325e33a8e38")
+      (uuid "3141105f-34f5-419f-9beb-37556784cbdb")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR013")
           (unit 1)
         )
@@ -4623,11 +4976,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "58ecfd08-d9ba-4aca-a6d7-135c2043d615")
+    (uuid "1af82e6e-fa96-48ea-85c6-26e1819b4f29")
     (property "Reference" "#PWR014"
       (at 234.95 152.4 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4637,6 +4991,7 @@
       (at 231.14 146.05 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4645,6 +5000,7 @@
       (at 234.95 149.86 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4654,17 +5010,18 @@
       (at 234.95 149.86 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "f68905e4-ac51-477e-af4d-a749e27b310d")
+      (uuid "7de7df0a-777b-496b-aa19-cf529d9437bc")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR014")
           (unit 1)
         )
@@ -4678,11 +5035,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "50372487-8d17-410d-9e19-60af8fd4da53")
+    (uuid "f29970a1-4965-4038-9f80-5139b5c4a7a7")
     (property "Reference" "#PWR015"
       (at 285.75 152.4 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4692,6 +5050,7 @@
       (at 281.94 146.05 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4700,6 +5059,7 @@
       (at 285.75 149.86 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4709,17 +5069,18 @@
       (at 285.75 149.86 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "96716ff9-d70d-43aa-97d6-28a030a8b9f1")
+      (uuid "05f2d4d6-8018-48cb-a3f6-4831180d5179")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR015")
           (unit 1)
         )
@@ -4733,11 +5094,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp yes)
-    (uuid "1ce9eed2-1fc2-49be-9b1d-80244be1e40f")
+    (uuid "5dad8e89-d304-40bf-91a0-4648678431a3")
     (property "Reference" "L3"
       (at 256.54 175.26 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4746,6 +5108,7 @@
       (at 256.54 177.8 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4754,6 +5117,7 @@
       (at 260.35 162.56 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4763,6 +5127,7 @@
       (at 260.35 162.56 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4772,20 +5137,21 @@
       (at 260.35 162.56 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "a00ee7c3-602c-46b3-8462-f2286e6ad012")
+      (uuid "16e44456-3fdc-43fd-8d2a-8532d42c0a84")
     )
     (pin "2"
-      (uuid "a2e74c19-c549-4bfe-a0c6-91733f9ae1a4")
+      (uuid "6435edb5-c3dd-4dbe-a8cd-fda8235d2bf0")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "L3")
           (unit 1)
         )
@@ -4799,11 +5165,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "71d30c46-ff4e-4d52-9a90-f6e636aef4ae")
+    (uuid "5a59bae5-7985-439a-bfad-49649f6f25d3")
     (property "Reference" "C27"
       (at 256.54 180.34 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4812,6 +5179,7 @@
       (at 256.54 182.88 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4820,6 +5188,7 @@
       (at 260.35 170.18 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4829,6 +5198,7 @@
       (at 260.35 170.18 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4838,6 +5208,7 @@
       (at 260.35 170.18 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4847,20 +5218,21 @@
       (at 260.35 170.18 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "b5efff79-49ac-49ed-9dd8-7efa318ae90d")
+      (uuid "5a79e860-f83f-434d-af61-b3d0dd9f9369")
     )
     (pin "2"
-      (uuid "17f908b6-f337-496a-a24b-601cbfd6f98b")
+      (uuid "8de17fbb-da0d-405e-b9e1-3a1c8d2038c6")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C27")
           (unit 1)
         )
@@ -4871,17 +5243,18 @@
     (at 218.44 186.69 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "956cbb1e-3580-46c9-8ff3-e7b688277c83")
+    (uuid "65a200b7-7466-46d5-a97e-01cbbe96e654")
   )
   (rectangle
-    (start 304.8 86.36)
-    (end 360.68 139.7)
+    (start 306.07 81.28)
+    (end 360.68 152.4)
     (stroke
       (width 0.2)
       (type dash)
@@ -4889,19 +5262,20 @@
     (fill
       (type none)
     )
-    (uuid "4b0f2662-b026-4ee6-98b8-673bb28341d9")
+    (uuid "4ccaea6a-72ac-48e4-8bfb-c99d9caa4c13")
   )
   (text "LNA"
-    (at 306.07 85.09 0)
+    (at 307.34 80.01 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "b21e96b7-b301-4d9a-af8f-64fb6b92dfc1")
+    (uuid "69e6d44f-bbb3-416d-bea1-ca76ff03c2c4")
   )
   (symbol
     (lib_id "Device:C")
@@ -4910,11 +5284,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "7cedf6b0-945c-4088-9a25-d2cd54bcf772")
+    (uuid "bf3ffefc-b603-4330-9e26-b4556fa48fc8")
     (property "Reference" "C28"
       (at 309.88 115.57 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4923,6 +5298,7 @@
       (at 309.88 118.11 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -4931,6 +5307,7 @@
       (at 313.69 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4940,6 +5317,7 @@
       (at 313.69 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -4949,20 +5327,21 @@
       (at 313.69 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "e40a0279-7529-4ba7-b2e7-46c5f7b1a8ee")
+      (uuid "a4d7f042-7b66-4d1e-ba36-ccc010ce8d97")
     )
     (pin "2"
-      (uuid "16f418b1-1969-4692-bbcc-35a9bc583aae")
+      (uuid "23e277f3-328f-4d7d-a8e7-e14631958da4")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C28")
           (unit 1)
         )
@@ -4970,82 +5349,91 @@
     )
   )
   (symbol
-    (lib_id "coaxolotl:LNA_MMIC")
-    (at 325.12 121.92 0)
+    (lib_id "coaxolotl:QPL9547")
+    (at 327.66 127 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "e0de53d0-5033-472c-a99b-0ebf8081221b")
+    (uuid "1cff3721-25a1-4a02-b799-5e0ba8af1a60")
     (property "Reference" "U13"
-      (at 328.93 130.81 0)
+      (at 331.47 139.7 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
     )
-    (property "Value" "LNA_MMIC(TBD,~100mA)"
-      (at 328.93 133.35 0)
+    (property "Value" "QPL9547TR7(DFN8-2x2)"
+      (at 331.47 142.24 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
     )
-    (property "Footprint" "coaxolotl:LNA_TBD"
-      (at 328.93 121.92 0)
+    (property "Footprint" "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm"
+      (at 331.47 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Datasheet" "~"
-      (at 328.93 121.92 0)
+      (at 331.47 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
-    (property "Note" "pick a part: gain/NF/OIP3 at 4.2 V"
-      (at 328.93 121.92 0)
+    (property "Note" "VERIFY Rbias / SHDN polarity / RF_OUT choke against the datasheet"
+      (at 331.47 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Zone" "RF"
-      (at 328.93 121.92 0)
+      (at 331.47 127 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
-    (pin "1"
-      (uuid "be2e1b8e-a569-46f6-a28b-f53e9c225c2a")
-    )
-    (pin "3"
-      (uuid "926382c9-4881-4b03-b74e-d818d27eccaf")
-    )
     (pin "2"
-      (uuid "cf66ee3d-735a-4336-a096-fc0e7baa4550")
+      (uuid "0f935265-ced8-435a-becc-55cc58fff512")
     )
-    (pin "4"
-      (uuid "135d8158-1645-444a-bcec-c1bcd7cee125")
+    (pin "6"
+      (uuid "9affc2b2-2eed-43be-88a1-9ad9f2840c3e")
+    )
+    (pin "7"
+      (uuid "df9c8ea1-9627-4bc7-870f-e53c526900d4")
+    )
+    (pin "1"
+      (uuid "64625d47-f685-4022-a090-c8c2743d903f")
+    )
+    (pin "9"
+      (uuid "04148084-a300-4b34-9a14-6aa3c05242c3")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "U13")
           (unit 1)
         )
@@ -5054,54 +5442,283 @@
   )
   (symbol
     (lib_id "power:GND")
-    (at 325.12 129.54 0)
+    (at 327.66 139.7 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "9793b07d-00cd-4ce3-b2d3-374c80d4beac")
+    (uuid "3000d9d0-8571-4a00-b2c9-815aaa7aeae9")
     (property "Reference" "#PWR016"
-      (at 328.93 132.08 0)
+      (at 331.47 142.24 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Value" "GND"
-      (at 325.12 133.35 0)
+      (at 327.66 143.51 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
     )
     (property "Footprint" ""
-      (at 328.93 129.54 0)
+      (at 331.47 139.7 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Datasheet" "~"
-      (at 328.93 129.54 0)
+      (at 331.47 139.7 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "a0aa730c-2e91-4fd7-a1d8-7da5e167f90d")
+      (uuid "f9f8133d-7195-45e2-8fbf-ed2118541362")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "#PWR016")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "Device:R")
+    (at 322.58 113.03 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "fd8941f4-7eca-44a2-8fbe-7579f95b0858")
+    (property "Reference" "R25"
+      (at 320.04 111.76 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+    )
+    (property "Value" "0R/0603"
+      (at 320.04 114.3 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 326.39 113.03 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 326.39 113.03 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Note" "Rbias: sets IDD (65 mA default)"
+      (at 326.39 113.03 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Zone" "RF"
+      (at 326.39 113.03 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "d50535e8-28bf-4cfd-a230-22a7f5174cd5")
+    )
+    (pin "2"
+      (uuid "32fbd252-2b74-48b2-bc9b-386612868401")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "R25")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "Device:R")
+    (at 312.42 135.89 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d38fc0e1-07de-4524-b4d6-bfded79d711e")
+    (property "Reference" "R26"
+      (at 309.88 137.16 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+    )
+    (property "Value" "10k/5%"
+      (at 309.88 139.7 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 316.23 135.89 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 316.23 135.89 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Note" "SHDN low = on (VERIFY polarity)"
+      (at 316.23 135.89 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Zone" "RF"
+      (at 316.23 135.89 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "735bbc32-0e73-4254-9d23-18b2bbc3c241")
+    )
+    (pin "2"
+      (uuid "df4822d1-f3e4-42a2-8a9b-338c71b11299")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "R26")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "power:GND")
+    (at 312.42 142.24 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "072dfbb2-c9d5-4a7a-a3e6-ad6f18e2a590")
+    (property "Reference" "#PWR017"
+      (at 316.23 144.78 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Value" "GND"
+      (at 312.42 146.05 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 316.23 142.24 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 316.23 142.24 0)
+      (effects
+        (font
+          (face "Arial")
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "37cfa831-e3af-4a5e-9456-aef2f80ac09e")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR017")
           (unit 1)
         )
       )
@@ -5114,29 +5731,32 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "11ea5e7b-6f56-4039-8a30-f8c96e2c0057")
+    (uuid "7011070b-921e-4252-8b6d-edc642c1f4a6")
     (property "Reference" "L4"
-      (at 337.82 113.03 0)
+      (at 342.9 115.57 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
-        (justify right)
+        (justify left)
       )
     )
     (property "Value" "1uH/BROADBAND"
-      (at 337.82 115.57 0)
+      (at 342.9 118.11 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
-        (justify right)
+        (justify left)
       )
     )
     (property "Footprint" "Inductor_SMD:L_0805_2012Metric"
       (at 344.17 114.3 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5146,6 +5766,7 @@
       (at 344.17 114.3 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5155,6 +5776,7 @@
       (at 344.17 114.3 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5164,20 +5786,21 @@
       (at 344.17 114.3 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "36ea64c8-18da-4bc5-98ab-ad23f6c0a5cd")
+      (uuid "fcaec434-482e-43d5-9b74-3930bca6512e")
     )
     (pin "2"
-      (uuid "8b52d55e-19b8-4cdb-a490-bf9064e33769")
+      (uuid "d7feb6ed-042d-4dbf-9449-d6c0fc687071")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "L4")
           (unit 1)
         )
@@ -5186,66 +5809,71 @@
   )
   (symbol
     (lib_id "Device:FerriteBead_Small")
-    (at 340.36 99.06 0)
+    (at 340.36 93.98 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "f1dc0eee-869a-49c4-87cb-c51cbbb9fda8")
+    (uuid "936ab8eb-339c-4324-abe2-f262e6e271ad")
     (property "Reference" "FB2"
-      (at 337.82 97.79 0)
+      (at 337.82 92.71 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
     )
     (property "Value" "FB0603/600R/1.3A"
-      (at 337.82 100.33 0)
+      (at 337.82 95.25 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify right)
       )
     )
     (property "Footprint" "Inductor_SMD:L_0603_1608Metric"
-      (at 344.17 99.06 0)
+      (at 344.17 93.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Datasheet" "~"
-      (at 344.17 99.06 0)
+      (at 344.17 93.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Zone" "RF"
-      (at 344.17 99.06 0)
+      (at 344.17 93.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "a6529545-a9ad-4c60-ba20-127d077f39fb")
+      (uuid "438226f5-0f10-469e-8ec0-5f46cfcf4c02")
     )
     (pin "2"
-      (uuid "a5b3fcfa-44fc-4ae6-b67b-11ae618c07fa")
+      (uuid "58805e51-a270-4ed0-ab6f-a9f2efe5b3fb")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "FB2")
           (unit 1)
         )
@@ -5254,66 +5882,71 @@
   )
   (symbol
     (lib_id "Device:C")
-    (at 347.98 107.95 0)
+    (at 347.98 102.87 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "afeeb9d2-30f5-496b-a301-b2dd3e22f2ed")
+    (uuid "8bc929ed-2fb7-4e84-8921-358017f5fbf7")
     (property "Reference" "C30"
-      (at 350.52 106.68 0)
+      (at 350.52 101.6 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
     )
     (property "Value" "10uF/10V/20%"
-      (at 350.52 109.22 0)
+      (at 350.52 104.14 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
       )
     )
     (property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-      (at 351.79 107.95 0)
+      (at 351.79 102.87 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Datasheet" "~"
-      (at 351.79 107.95 0)
+      (at 351.79 102.87 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Zone" "RF"
-      (at 351.79 107.95 0)
+      (at 351.79 102.87 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "9b2f39f1-5066-4a08-933e-16ae4ee88e37")
+      (uuid "56c2e363-a2aa-4bc8-9e5d-f84c60333f77")
     )
     (pin "2"
-      (uuid "091cf63a-c791-46b9-845a-59f5f352310d")
+      (uuid "c88e7628-c5be-4870-80f2-b12fdccbb3a2")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C30")
           (unit 1)
         )
@@ -5327,11 +5960,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "7bd633e3-2000-4aae-8fb8-263756be1671")
+    (uuid "49846a13-eb68-4037-859c-2ba03c235a56")
     (property "Reference" "C31"
       (at 350.52 125.73 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -5340,6 +5974,7 @@
       (at 350.52 128.27 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -5348,6 +5983,7 @@
       (at 354.33 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5357,6 +5993,7 @@
       (at 354.33 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5366,20 +6003,21 @@
       (at 354.33 121.92 90)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "dd114dd9-7d99-405b-9b53-11132463bd42")
+      (uuid "fb3c3c02-b4b2-4c5e-bebd-b57e25d6d03a")
     )
     (pin "2"
-      (uuid "bf72ca1c-e64c-4f8a-90c1-22b37abd56a6")
+      (uuid "391bfdac-f6eb-4f12-bd47-3d76930e693b")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C31")
           (unit 1)
         )
@@ -5388,54 +6026,58 @@
   )
   (symbol
     (lib_id "power:GND")
-    (at 347.98 114.3 0)
+    (at 347.98 109.22 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "b3264af6-73a1-460a-b4a5-c6fa23b8a722")
-    (property "Reference" "#PWR017"
-      (at 351.79 116.84 0)
+    (uuid "5f11b2c7-9c98-43b8-9039-984ffbad869f")
+    (property "Reference" "#PWR018"
+      (at 351.79 111.76 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Value" "GND"
-      (at 347.98 118.11 0)
+      (at 347.98 113.03 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
     )
     (property "Footprint" ""
-      (at 351.79 114.3 0)
+      (at 351.79 109.22 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Datasheet" "~"
-      (at 351.79 114.3 0)
+      (at 351.79 109.22 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "99820d26-267a-4332-a764-5e9985d5817b")
+      (uuid "af9ec1e4-b489-44f4-b3f6-5e0275bd3168")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
-          (reference "#PWR017")
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR018")
           (unit 1)
         )
       )
@@ -5443,70 +6085,75 @@
   )
   (symbol
     (lib_id "coaxolotl:LNA_VCC")
-    (at 340.36 93.98 0)
+    (at 340.36 88.9 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "7d40bbc0-7bfc-4b80-94be-763a12d0422f")
-    (property "Reference" "#PWR018"
-      (at 344.17 96.52 0)
+    (uuid "40ebe51f-c273-462a-b30b-1f6d06df4229")
+    (property "Reference" "#PWR019"
+      (at 344.17 91.44 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Value" "LNA_VCC"
-      (at 340.36 90.17 0)
+      (at 340.36 85.09 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
     )
     (property "Footprint" ""
-      (at 344.17 93.98 0)
+      (at 344.17 88.9 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (property "Datasheet" "~"
-      (at 344.17 93.98 0)
+      (at 344.17 88.9 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "0be4effd-d0b9-4e8f-983b-f133455cdc9a")
+      (uuid "c96914ea-0fbf-4cb0-8880-4372fbf2f40c")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
-          (reference "#PWR018")
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR019")
           (unit 1)
         )
       )
     )
   )
-  (text "bias via RFOUT; add 100 pF || for > 1 GHz"
-    (at 307.34 137.16 0)
+  (text "VDD via RF_OUT choke, IDD 65 mA (QPL9547)"
+    (at 308.61 151.13 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "d0f8657d-1481-4580-8772-85f0d2543d6b")
+    (uuid "ec4d5b4b-e5fc-404d-b954-356cf751ddb9")
   )
   (rectangle
     (start 365.76 45.72)
@@ -5518,19 +6165,20 @@
     (fill
       (type none)
     )
-    (uuid "01d7d59d-7f21-427a-aacf-f110496f2ef5")
+    (uuid "710ce5d8-e753-47bf-863b-cde2610f76b7")
   )
   (text "LNA/BYP OUT"
     (at 367.03 44.45 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "2a451de2-97e5-49b9-bb87-e70d72ba5b02")
+    (uuid "6eb71dd8-a9db-4150-b0a2-af794f15f733")
   )
   (symbol
     (lib_id "coaxolotl:PE42522")
@@ -5540,11 +6188,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "5d8f3585-3e5f-41b0-8f16-8e69c856caf9")
+    (uuid "ad6ce0bd-a62b-4c5f-9315-e62d90935fb0")
     (property "Reference" "U7"
       (at 381 97.79 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -5553,6 +6202,7 @@
       (at 381 100.33 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -5561,6 +6211,7 @@
       (at 384.81 80.01 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5570,6 +6221,7 @@
       (at 384.81 80.01 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5579,104 +6231,105 @@
       (at 384.81 80.01 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "12"
-      (uuid "7e29326d-52da-48ff-a90c-21750e39927e")
+      (uuid "3bad6121-b029-4998-98fa-d9184ac08006")
     )
     (pin "28"
-      (uuid "9afa1851-39b4-49b0-8131-f1b70c0b28c8")
+      (uuid "9e5921aa-a9d6-449e-ae36-7183b7cacd12")
     )
     (pin "22"
-      (uuid "af3f37da-a17d-4755-a012-4c190f4c3c18")
+      (uuid "a61b8b2c-91b7-471f-aa84-f0d5fdd7d6f0")
     )
     (pin "2"
-      (uuid "483a632d-a09f-4fbf-8502-534e7b4c7c14")
+      (uuid "3e7edb20-3d8b-4032-8c95-bbfb33dfb088")
     )
     (pin "24"
-      (uuid "8f31739f-07a8-4835-9b1e-05a14236c25c")
+      (uuid "9e68e797-a44b-4707-b179-3b7b6bea9709")
     )
     (pin "1"
-      (uuid "39dce9fa-9161-4fe3-b357-4b2c49479de4")
+      (uuid "8cab7a40-ebd3-49fa-9390-a3b7c557f954")
     )
     (pin "3"
-      (uuid "623f364a-063d-44a7-9329-2d2d369020da")
+      (uuid "9c0d1999-9cda-49d9-9320-a5390b03079b")
     )
     (pin "4"
-      (uuid "053cbde0-1684-421d-a91d-e6495ae9f8bd")
+      (uuid "f855ffa7-499b-487b-97a4-29e239728ec5")
     )
     (pin "5"
-      (uuid "31d456d7-0f52-4759-b872-36c1c45aa0ea")
+      (uuid "9ee10897-e067-4eb8-9d03-f79f1eb2ce53")
     )
     (pin "6"
-      (uuid "b028d70b-f80e-49cd-abee-0a78cc50a449")
+      (uuid "a02b6bfa-7852-410b-a288-0981db2b6be3")
     )
     (pin "7"
-      (uuid "5270865e-b9ed-4c63-a98e-c33d14fec213")
+      (uuid "06c1a9f5-543c-4104-8e9f-e422ba6151ce")
     )
     (pin "8"
-      (uuid "c5e26e0d-6ce3-4846-9eee-e5f95d0dff2f")
+      (uuid "bf75579f-48b9-4504-ba97-6b5cc0949c3b")
     )
     (pin "9"
-      (uuid "81a4f9ec-d300-4d31-8d08-4a6fdfd5f7c8")
+      (uuid "074d2c6a-2511-42f4-a52e-8600f9621f8d")
     )
     (pin "10"
-      (uuid "aa65b838-f835-498b-a260-5ef90ddb8c52")
+      (uuid "67fc3e9b-3a19-461b-a9f9-f3a31ed463b1")
     )
     (pin "11"
-      (uuid "89d4f9ac-3562-485d-9d2d-dd62cc3d3ba9")
+      (uuid "1fe08f19-0117-44b4-ab41-bf8252ce079f")
     )
     (pin "13"
-      (uuid "135d3c47-10d0-4cdb-ad9a-9d16b222feff")
+      (uuid "95934e90-c6dc-42d9-89a1-9df85984b1e6")
     )
     (pin "14"
-      (uuid "ca731c26-3ac1-44c1-a905-acde7e698656")
+      (uuid "7bdac0a7-6255-4f7b-8b5a-12961ddbe342")
     )
     (pin "15"
-      (uuid "1a56153f-6640-4606-a006-e6e3ce3b0770")
+      (uuid "9aa732a5-8329-4f2c-b3b8-c43fbb0b21fe")
     )
     (pin "16"
-      (uuid "9612848a-232f-4261-8d7c-eaaeedc427b9")
+      (uuid "47f6f821-3d69-4b79-9404-cb32102abd30")
     )
     (pin "17"
-      (uuid "bc664de7-397c-458f-b33d-6a76cdeca581")
+      (uuid "6bf97fc9-45d8-43cb-aa1d-d436d6de86be")
     )
     (pin "18"
-      (uuid "9344eabe-5192-4ec7-9b6a-a96e97a7ce86")
+      (uuid "3feb33d6-0bd1-4860-a186-4d5c1f0ba89f")
     )
     (pin "19"
-      (uuid "a8a65c7f-c194-4070-971b-9e1847a35431")
+      (uuid "59208b57-cc39-4e8e-a95a-3a1ede597814")
     )
     (pin "20"
-      (uuid "38431e0a-c738-42da-b4eb-94d8d3b284ac")
+      (uuid "b4c1f2a1-245e-4233-a352-36c2668dbfe9")
     )
     (pin "21"
-      (uuid "ef711a22-a2df-4199-ba0c-20ae506f3832")
+      (uuid "b03527f6-f947-4617-b8f4-e5e424895042")
     )
     (pin "23"
-      (uuid "a329bdda-b5da-4722-9cc6-dc51143dc1ff")
+      (uuid "dbdcf24d-cc30-4b76-99be-d169bdea0e10")
     )
     (pin "25"
-      (uuid "0566c9ba-a9e2-4e36-9a00-17edb50d7e27")
+      (uuid "af0503e9-a3fd-4d46-8c7a-fcc9dbb74ff9")
     )
     (pin "26"
-      (uuid "9a2af2b8-919b-4178-9ce2-0c004afb53db")
+      (uuid "b98de6bc-a48f-4765-a2a4-8f39b7c409c9")
     )
     (pin "27"
-      (uuid "d3df5e92-b2c7-497f-902c-13d49cc9ac93")
+      (uuid "831330f0-1788-45bf-bbd7-efb2b90a9281")
     )
     (pin "29"
-      (uuid "1e11f697-b525-4952-8083-e3e87b037f67")
+      (uuid "495b85be-1c81-40bd-93e0-4d2ab2a5d1a5")
     )
     (pin "30"
-      (uuid "9f8695d0-4efc-4162-9e2d-81eb67fc3646")
+      (uuid "fa181f38-b72a-4b1f-a623-14e0bd7b0d45")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "U7")
           (unit 1)
         )
@@ -5690,11 +6343,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "91f810ca-47c0-49f2-9145-4847973b1e3a")
-    (property "Reference" "#PWR019"
+    (uuid "18f4e01d-4f5b-4831-8856-e3146f5093a4")
+    (property "Reference" "#PWR020"
       (at 384.81 92.71 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5704,6 +6358,7 @@
       (at 381 93.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -5712,6 +6367,7 @@
       (at 384.81 90.17 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5721,18 +6377,19 @@
       (at 384.81 90.17 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "584e60d0-c55c-4f5a-b6d8-b96eba472dc1")
+      (uuid "79be4c63-45dd-4810-9caa-a0fd5dbab75a")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
-          (reference "#PWR019")
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR020")
           (unit 1)
         )
       )
@@ -5745,11 +6402,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "0eec1bf3-c736-46f0-b8b9-49be52405c93")
-    (property "Reference" "#PWR020"
+    (uuid "77dd28d2-9199-4747-8ff1-448a9eda7add")
+    (property "Reference" "#PWR021"
       (at 384.81 57.15 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5759,6 +6417,7 @@
       (at 381 50.8 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -5767,6 +6426,7 @@
       (at 384.81 54.61 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5776,18 +6436,19 @@
       (at 384.81 54.61 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "048460b6-0528-435e-b27a-fc4314dfc785")
+      (uuid "781413e1-6c95-4b4a-babb-a0f968a043d6")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
-          (reference "#PWR020")
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR021")
           (unit 1)
         )
       )
@@ -5800,11 +6461,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "f632e019-1354-48f8-9c39-ac221e4c17ee")
+    (uuid "c545f023-946a-4447-9575-f755863f63cc")
     (property "Reference" "C37"
       (at 375.92 59.69 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -5814,6 +6476,7 @@
       (at 375.92 62.23 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -5823,6 +6486,7 @@
       (at 377.19 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5832,6 +6496,7 @@
       (at 377.19 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5841,6 +6506,7 @@
       (at 377.19 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5850,20 +6516,21 @@
       (at 377.19 60.96 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "b53ec828-dccc-48b2-8168-b98afa572434")
+      (uuid "d306bbab-2d82-48d4-b990-35202b9521f1")
     )
     (pin "2"
-      (uuid "c4cfa7dc-ff69-4e92-806f-a2db897cc437")
+      (uuid "bf9c5220-be5d-4216-baec-f9fb3f347578")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "C37")
           (unit 1)
         )
@@ -5877,11 +6544,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "9b1e83ef-9fc2-439b-bc93-bef874d541f4")
-    (property "Reference" "#PWR021"
+    (uuid "bb47a571-8b30-4b37-b58a-b6ebffcaa7dc")
+    (property "Reference" "#PWR022"
       (at 377.19 69.85 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5891,6 +6559,7 @@
       (at 373.38 71.12 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -5899,6 +6568,7 @@
       (at 377.19 67.31 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -5908,18 +6578,19 @@
       (at 377.19 67.31 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "3cf122d8-2485-40b4-9c47-3c9b1e6fc3c8")
+      (uuid "3a54aff9-9234-4887-9497-912834cde1a2")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
-          (reference "#PWR021")
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR022")
           (unit 1)
         )
       )
@@ -5931,20 +6602,22 @@
     (fields_autoplaced)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
       (justify left)
     )
-    (uuid "a0bb5765-0a5d-4504-b9e6-49235b25e973")
+    (uuid "be86bd93-ac83-4404-a504-28cb2f54585f")
   )
   (text "bypass: F1-F4 (HF/LF) always, LNA off or tripped"
     (at 243.84 76.2 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
     )
-    (uuid "cb0e4240-f615-4332-af7c-3f7de4a76eab")
+    (uuid "04fd54f0-e0f1-43a1-ad82-f620599136fc")
   )
   (rectangle
     (start 15.24 193.04)
@@ -5956,19 +6629,20 @@
     (fill
       (type none)
     )
-    (uuid "ce501295-513a-4fee-b548-ec83768a2d69")
+    (uuid "4633abcb-a9e1-42d0-b5a3-89070a501033")
   )
   (text "Control inputs (reset-safe pull-downs)"
     (at 16.51 191.77 0)
     (effects
       (font
+        (face "Arial")
         (size 2.54 2.54)
         bold
         italic
       )
       (justify left bottom)
     )
-    (uuid "43d492d7-62c9-4d84-9d0f-24ee6d0896ec")
+    (uuid "503f66f3-b385-464d-b893-d64c8388f72a")
   )
   (symbol
     (lib_id "Device:R")
@@ -5977,11 +6651,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "ab1a77bc-d7cc-42ab-9f3c-c226db9d2ce0")
+    (uuid "770d0060-2a80-47ff-8eca-640eb0bd6379")
     (property "Reference" "R15"
       (at 53.34 220.98 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -5991,6 +6666,7 @@
       (at 53.34 223.52 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -6000,6 +6676,7 @@
       (at 54.61 222.25 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6009,6 +6686,7 @@
       (at 54.61 222.25 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6018,6 +6696,7 @@
       (at 54.61 222.25 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6027,20 +6706,21 @@
       (at 54.61 222.25 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "5b5f4649-f05b-465b-b1ef-3a44b90717d1")
+      (uuid "e6b87b65-a5cf-4b07-aff4-00b18c4c1f1c")
     )
     (pin "2"
-      (uuid "ca5b41c0-b91d-4fc3-9a03-968b53e7f5fa")
+      (uuid "3bb997a2-942f-4e36-984b-36421757ee2d")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "R15")
           (unit 1)
         )
@@ -6054,11 +6734,12 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "00bd2d99-1996-405d-9358-8d6dc3ee4612")
+    (uuid "e77cbbb6-1073-49a8-950a-77b9273d18c6")
     (property "Reference" "R19"
       (at 205.74 203.2 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -6068,6 +6749,7 @@
       (at 205.74 205.74 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         (justify left)
@@ -6077,6 +6759,7 @@
       (at 207.01 204.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6086,6 +6769,7 @@
       (at 207.01 204.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6095,6 +6779,7 @@
       (at 207.01 204.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6104,20 +6789,21 @@
       (at 207.01 204.47 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "3fd09359-331f-4165-8e99-5dadf9a6dffe")
+      (uuid "b83bb4a0-8ce9-467a-b681-05e0f7497c4b")
     )
     (pin "2"
-      (uuid "cdd4bd43-0116-4d06-9b5b-680624c04b59")
+      (uuid "8844813d-5f2f-42e6-b840-074b283fd69b")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
           (reference "R19")
           (unit 1)
         )
@@ -6130,11 +6816,12 @@
     (fields_autoplaced)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
       (justify right)
     )
-    (uuid "18929a57-8f0a-4735-b40d-eba992c42a77")
+    (uuid "06d30735-e47d-4320-ab19-01a6f9b55413")
   )
   (hierarchical_label "FMN"
     (shape input)
@@ -6142,11 +6829,12 @@
     (fields_autoplaced)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
       )
       (justify right)
     )
-    (uuid "21dd2de2-7c12-4cdc-8b39-bc12c98bcb09")
+    (uuid "02dcdcee-8636-481a-9960-fed00c4d0e66")
   )
   (symbol
     (lib_id "power:GND")
@@ -6155,11 +6843,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "b68091d6-68a5-4253-8f75-87bef94cc6b4")
-    (property "Reference" "#PWR022"
+    (uuid "b4a5ccdb-3820-49f5-8c75-54d5e53ff79f")
+    (property "Reference" "#PWR023"
       (at 54.61 231.14 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6169,6 +6858,7 @@
       (at 50.8 232.41 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -6177,6 +6867,7 @@
       (at 54.61 228.6 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6186,18 +6877,19 @@
       (at 54.61 228.6 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "d29bdea7-d07f-4a97-9fee-d751d928fc88")
+      (uuid "a2263944-c3dd-4284-a8e1-bf6208f03f23")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
-          (reference "#PWR022")
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR023")
           (unit 1)
         )
       )
@@ -6210,11 +6902,12 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "1bfa6b1d-4751-4257-9d3d-4b740a069e47")
-    (property "Reference" "#PWR023"
+    (uuid "501e731d-87d9-43bc-823c-e060f0b01af8")
+    (property "Reference" "#PWR024"
       (at 207.01 213.36 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6224,6 +6917,7 @@
       (at 203.2 214.63 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
       )
@@ -6232,6 +6926,7 @@
       (at 207.01 210.82 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
@@ -6241,18 +6936,19 @@
       (at 207.01 210.82 0)
       (effects
         (font
+          (face "Arial")
           (size 1.27 1.27)
         )
         hide
       )
     )
     (pin "1"
-      (uuid "4da49e56-b008-40ce-a531-f440db73f1fd")
+      (uuid "fb3609c8-2e25-45ac-bfd4-44689df14b76")
     )
     (instances
       (project "coaxolotl"
-        (path "/35617b03-d5a3-43df-8856-836981f12dcb/bc3ad14e-2d22-433b-b3c8-178830647619"
-          (reference "#PWR023")
+        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/c4f3316e-f704-4b49-b93c-953485657600"
+          (reference "#PWR024")
           (unit 1)
         )
       )
@@ -6262,127 +6958,135 @@
     (at 228.6 206.38 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "d13eb811-8433-483f-81b1-f7e28dd8d052")
+    (uuid "6aaa28e0-9cc8-4ee3-863d-ca7de76c3c16")
   )
   (text "PE42522 RF ports sit at 0 VDC: no blocking caps except around the LNA."
     (at 228.6 209.55 0)
     (effects
       (font
+        (face "Arial")
         (size 1.27 1.27)
         italic
         (color 0 0 194 1)
       )
       (justify left bottom)
     )
-    (uuid "6cd19a02-9f90-41b3-84df-4d5f496ef1a2")
+    (uuid "5aee0f89-d577-4e96-b73d-715165a28c17")
   )
   (junction
     (at 381 57.15)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "c50b3a0f-13b1-4754-a539-15524d00f22a")
+    (uuid "ce742e32-ae86-48a4-a5fd-4e6f8cb2315f")
   )
   (junction
     (at 76.2 77.47)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "c853d5aa-27b3-4f6d-a508-5026ebfe6791")
+    (uuid "a55d7349-e09d-461c-8a8d-fbd071aa78cd")
   )
   (junction
     (at 104.14 57.15)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "39ec9084-7f4f-4311-94d4-4a0a4e6f4166")
+    (uuid "deed33db-478e-4f52-892b-eab4bf2c98ca")
+  )
+  (junction
+    (at 340.36 104.14)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "029d84e0-f12a-429e-b5e1-df3f25e787b6")
   )
   (junction
     (at 50.8 218.44)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "ead5a3d8-3c5d-4bbd-8a71-f1d2aecc437d")
+    (uuid "973e3ea6-058e-400d-af4c-801d93c663a7")
   )
   (junction
     (at 167.64 121.92)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "63f303f4-baab-4eed-8936-6ec00f9e82f9")
-  )
-  (junction
-    (at 340.36 101.6)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "e277a8c2-8c3e-44c5-883a-b90fdd999113")
+    (uuid "6ac90989-3514-493d-86ba-74b86600b33e")
   )
   (junction
     (at 86.36 218.44)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "69a1e998-92cf-4e9e-a299-ca799e2be1b5")
+    (uuid "8bbe9103-758b-469d-827b-078d2d24d917")
   )
   (junction
     (at 215.9 200.66)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "55583e49-7c90-4c0b-afd5-0c90365c293d")
+    (uuid "d9e78ed5-0ca5-43fc-9363-b31a032973c1")
   )
   (junction
     (at 260.35 162.56)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "f85f04f4-03ad-485a-83cb-b64df087e4f2")
+    (uuid "34f101dd-afea-42c3-9be6-9118c2d205ac")
   )
   (junction
     (at 299.72 121.92)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "b813aa2b-d9c3-49b7-850b-90f0c824d282")
+    (uuid "087bf755-ed9a-427f-af6d-250e0f3d3406")
   )
   (junction
     (at 142.24 121.92)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "58e4eb29-f084-4d7f-8725-96c41b875137")
+    (uuid "54a22d38-df43-49bb-97c7-131efb6157d5")
   )
   (junction
     (at 203.2 200.66)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "16ab1a17-cf27-496e-9406-34f1ca4265b0")
+    (uuid "017d4ded-bbac-4696-ac20-c1bfebd741bb")
   )
   (junction
     (at 340.36 121.92)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "9933600f-dcd6-4f7c-ac3f-d593bf849cb9")
+    (uuid "c4cbc9d1-c22a-42a2-b561-a5d04e582c59")
   )
   (junction
     (at 40.64 77.47)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "968d3cdf-83f6-4af4-979a-6ad977e34078")
+    (uuid "85794cdc-9589-4ab9-8027-a85e1c5573b6")
   )
   (junction
     (at 252.73 162.56)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "22070a6b-8cd6-4b89-91f8-3ca5512beac3")
+    (uuid "de377541-1529-4af7-bb7a-3663abfe5036")
+  )
+  (junction
+    (at 340.36 96.52)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "aefa05d9-0304-4267-9e92-99735e9cca73")
   )
   (junction
     (at 58.42 77.47)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "e27f293a-3240-4ac2-a524-659ebb0910af")
+    (uuid "5e90a980-8e51-4aff-b7c2-836f44d309a2")
   )
   (junction
     (at 213.36 121.92)
     (diameter 0)
     (color 0 0 0 0)
-    (uuid "8d6da17c-f318-498b-9e1e-5a6ab62e97db")
+    (uuid "b01b62c8-b385-4026-8bce-9f1e493d2997")
   )
   (wire
     (pts
@@ -6393,7 +7097,7 @@
       (width 0)
       (type default)
     )
-    (uuid "bbc54a7c-f20b-4627-9cc3-de4503a45506")
+    (uuid "2209fa48-bf35-45f6-87e9-8ec806ceeaa9")
   )
   (wire
     (pts
@@ -6404,7 +7108,7 @@
       (width 0)
       (type default)
     )
-    (uuid "de56d329-9c25-4336-ade9-f11a3e2d1583")
+    (uuid "69f5ad5a-a2c4-4be0-80ef-8253e7a96521")
   )
   (wire
     (pts
@@ -6415,7 +7119,7 @@
       (width 0)
       (type default)
     )
-    (uuid "12f4ff9a-667f-4e0b-9ace-39d231d310b2")
+    (uuid "bcdd3195-d640-4ec0-b5e5-c0580388440c")
   )
   (wire
     (pts
@@ -6426,7 +7130,7 @@
       (width 0)
       (type default)
     )
-    (uuid "ee5698dd-8427-4193-8a2e-b49c021948b5")
+    (uuid "d54be2a7-9cdf-4438-bb9a-edaccbab586e")
   )
   (wire
     (pts
@@ -6437,7 +7141,7 @@
       (width 0)
       (type default)
     )
-    (uuid "545136ca-3a9c-4760-b054-def12c438af3")
+    (uuid "23d2dca5-2e42-4497-8d2f-fc53507f0eb1")
   )
   (wire
     (pts
@@ -6448,7 +7152,7 @@
       (width 0)
       (type default)
     )
-    (uuid "185e09b7-083e-4a52-8273-c71b161ad74e")
+    (uuid "5e18d921-c60b-454a-88f8-699cb0944194")
   )
   (wire
     (pts
@@ -6459,7 +7163,7 @@
       (width 0)
       (type default)
     )
-    (uuid "bcf4c991-6f9c-4506-ac87-d10f1b05fdd2")
+    (uuid "af9e77b6-686e-4227-a658-39d4cb37ce0f")
   )
   (wire
     (pts
@@ -6470,7 +7174,7 @@
       (width 0)
       (type default)
     )
-    (uuid "8ce6ba8b-ac40-4c39-8ee5-ac0c655eefe4")
+    (uuid "4ca69de8-a6b3-4076-8318-fbd7d5e47f8c")
   )
   (wire
     (pts
@@ -6481,7 +7185,7 @@
       (width 0)
       (type default)
     )
-    (uuid "2160d688-f071-45dc-8293-c5d30f23b97f")
+    (uuid "3d4ed275-9ea6-40a3-af21-dfe37c33fb92")
   )
   (wire
     (pts
@@ -6492,7 +7196,7 @@
       (width 0)
       (type default)
     )
-    (uuid "82a325f8-88c0-4541-84ee-a42b340d0d7c")
+    (uuid "4f6f698a-2c9b-45ef-8831-6cf211a876c8")
   )
   (wire
     (pts
@@ -6503,7 +7207,7 @@
       (width 0)
       (type default)
     )
-    (uuid "86038327-c1d9-49ec-ab1c-9d98604f2268")
+    (uuid "ec7a9108-4b49-4626-a191-dc21e08da1b4")
   )
   (wire
     (pts
@@ -6514,7 +7218,7 @@
       (width 0)
       (type default)
     )
-    (uuid "19d16352-02c8-4491-b98a-73c288bde67a")
+    (uuid "b73ab5ac-0e89-4c43-aaf7-7fc32166180e")
   )
   (wire
     (pts
@@ -6525,7 +7229,7 @@
       (width 0)
       (type default)
     )
-    (uuid "850dfe25-93f4-4c13-a1af-0d60824e239b")
+    (uuid "7df01847-0247-45a9-afc5-bfc148c06b02")
   )
   (wire
     (pts
@@ -6536,7 +7240,7 @@
       (width 0)
       (type default)
     )
-    (uuid "513156cc-bac9-45a4-9a7c-bcf2fca7ccde")
+    (uuid "3b41e4b2-1649-49c5-934d-9a22ce9580e3")
   )
   (wire
     (pts
@@ -6547,7 +7251,7 @@
       (width 0)
       (type default)
     )
-    (uuid "b9a8a822-f0c1-4c63-b855-74da69ef25f2")
+    (uuid "31236be1-4439-406e-9ac8-6810ce953910")
   )
   (wire
     (pts
@@ -6558,7 +7262,7 @@
       (width 0)
       (type default)
     )
-    (uuid "1e6e9bd0-15bf-4709-968b-89faba0fbf64")
+    (uuid "4bd06717-a270-4699-8e20-469de65c1c76")
   )
   (wire
     (pts
@@ -6569,7 +7273,7 @@
       (width 0)
       (type default)
     )
-    (uuid "0b92916f-c15f-4c18-a9e4-f3c845cc1415")
+    (uuid "51af4f9b-d44a-49e4-9d34-d5a0c49981d2")
   )
   (wire
     (pts
@@ -6580,7 +7284,7 @@
       (width 0)
       (type default)
     )
-    (uuid "25a4451f-2979-497e-b638-0bf80c325eed")
+    (uuid "682f9900-5a75-4fba-8894-c65b3befa02b")
   )
   (wire
     (pts
@@ -6591,7 +7295,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a62db943-57b2-45d1-b1c4-fef8afcebac9")
+    (uuid "3683da6b-52f5-48a5-a73b-3b315cd2daf1")
   )
   (wire
     (pts
@@ -6602,7 +7306,7 @@
       (width 0)
       (type default)
     )
-    (uuid "649791d1-47a5-4bf3-b0f1-eb4396dc2d53")
+    (uuid "e7b20ee1-934d-4a28-903a-a420d94464de")
   )
   (wire
     (pts
@@ -6613,7 +7317,7 @@
       (width 0)
       (type default)
     )
-    (uuid "c4d01a75-6213-4871-b1aa-63d10714b8ab")
+    (uuid "352471a7-ecce-43ad-a2ca-9d5bd334f909")
   )
   (wire
     (pts
@@ -6624,7 +7328,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a73a8a6d-16b2-482a-8182-6e36547f95e5")
+    (uuid "8421ccb8-19b6-4ef7-a932-20dc46f1ae77")
   )
   (wire
     (pts
@@ -6635,7 +7339,7 @@
       (width 0)
       (type default)
     )
-    (uuid "581fb9ba-f417-4f24-a13d-aa26565208de")
+    (uuid "f1bbcc98-5183-4d29-8c73-27b6b62f257e")
   )
   (wire
     (pts
@@ -6646,7 +7350,7 @@
       (width 0)
       (type default)
     )
-    (uuid "38b88889-b6b9-4a2f-9051-16fceb9606c1")
+    (uuid "2982f418-3f91-4973-a3e9-e65d3f7e917f")
   )
   (wire
     (pts
@@ -6657,7 +7361,7 @@
       (width 0)
       (type default)
     )
-    (uuid "71295aac-a864-4cf0-a708-ec3c2cb7427c")
+    (uuid "d7cb8f69-3e14-47e1-80cb-8fe41c3d3aef")
   )
   (wire
     (pts
@@ -6668,7 +7372,7 @@
       (width 0)
       (type default)
     )
-    (uuid "4b12c4a7-2490-4b14-b9a4-c656da45716c")
+    (uuid "5ad0ee6f-556d-475c-83c8-fdb54872a8a7")
   )
   (wire
     (pts
@@ -6679,7 +7383,7 @@
       (width 0)
       (type default)
     )
-    (uuid "b932b1d7-e662-4d8b-a508-3cf92006c3c9")
+    (uuid "3ac5c0a4-0c2b-4ccd-beed-141eec413bd4")
   )
   (wire
     (pts
@@ -6690,7 +7394,7 @@
       (width 0)
       (type default)
     )
-    (uuid "5153cc4a-20e9-4c09-bf16-8aa7d9edfddb")
+    (uuid "abf4c64a-4b52-42ab-bf8f-52b608e6e7e5")
   )
   (wire
     (pts
@@ -6701,7 +7405,7 @@
       (width 0)
       (type default)
     )
-    (uuid "c026f0a1-6baa-41c2-bf7d-dcbf6a9d9586")
+    (uuid "6e45a42a-bf58-4de5-ad33-b177c09bbf54")
   )
   (wire
     (pts
@@ -6712,7 +7416,7 @@
       (width 0)
       (type default)
     )
-    (uuid "812b394b-730e-4b7c-8bb9-9e6c74aaf712")
+    (uuid "80abc2fd-fa9e-4cee-816e-bd5dbf26e87a")
   )
   (wire
     (pts
@@ -6723,7 +7427,7 @@
       (width 0)
       (type default)
     )
-    (uuid "75d1f64b-3bec-476d-87bb-45830a819120")
+    (uuid "279019ff-2d59-49e1-864e-be27d519930e")
   )
   (wire
     (pts
@@ -6734,7 +7438,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f71d2fa2-a567-48ef-bde3-30e01b3f82ed")
+    (uuid "f23edb27-6608-4b34-ab4c-9955b2bee145")
   )
   (wire
     (pts
@@ -6745,7 +7449,7 @@
       (width 0)
       (type default)
     )
-    (uuid "c935c12c-7a9a-4fe5-a23c-4e3aff257b16")
+    (uuid "f3c20733-b6ec-4baf-8ac3-7a1a91bf03d9")
   )
   (wire
     (pts
@@ -6756,7 +7460,7 @@
       (width 0)
       (type default)
     )
-    (uuid "db704720-35ca-4e21-8789-9d7c07c6d3f3")
+    (uuid "0b7001d4-da82-47f5-9a39-b3d6c222c98a")
   )
   (wire
     (pts
@@ -6767,7 +7471,7 @@
       (width 0)
       (type default)
     )
-    (uuid "516c3664-2aa6-4fa9-a58b-d1b9b04d3890")
+    (uuid "833d9421-f2dd-44f3-a4bb-e7e96473c5af")
   )
   (wire
     (pts
@@ -6778,7 +7482,7 @@
       (width 0)
       (type default)
     )
-    (uuid "32d0809e-78bc-475c-bafd-d030384721e1")
+    (uuid "c6c6bae6-08ad-4802-8aaa-a3d1b2424217")
   )
   (wire
     (pts
@@ -6789,7 +7493,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6053139a-5867-427f-8335-64ceea574151")
+    (uuid "e13a1c8d-1238-4116-bff8-52e3cd66c384")
   )
   (wire
     (pts
@@ -6800,7 +7504,7 @@
       (width 0)
       (type default)
     )
-    (uuid "71b0d275-8107-42bd-8439-13d2e6122066")
+    (uuid "49449992-bc8d-411e-99b2-924b8b748e93")
   )
   (wire
     (pts
@@ -6811,7 +7515,7 @@
       (width 0)
       (type default)
     )
-    (uuid "680dad77-20bf-4ba9-bf4b-0e65e8676ac0")
+    (uuid "9fb1a28d-a74d-4bd4-943d-414c981d1858")
   )
   (wire
     (pts
@@ -6822,7 +7526,7 @@
       (width 0)
       (type default)
     )
-    (uuid "ad9b69ed-841d-4a67-bfc3-7b55b3a49eb1")
+    (uuid "906c638a-8f21-4958-80d0-7451ab14535d")
   )
   (wire
     (pts
@@ -6833,7 +7537,7 @@
       (width 0)
       (type default)
     )
-    (uuid "521673f8-fa9e-48fb-98c9-4e90e6efb953")
+    (uuid "c8af41c9-c012-4040-a24a-e11e39f7f7ff")
   )
   (wire
     (pts
@@ -6844,7 +7548,7 @@
       (width 0)
       (type default)
     )
-    (uuid "5c603085-3386-463e-bb76-b16fee48042b")
+    (uuid "6c9a8d1f-9444-43b6-9f81-27d9478f6c35")
   )
   (wire
     (pts
@@ -6855,7 +7559,7 @@
       (width 0)
       (type default)
     )
-    (uuid "9378ae4c-8ca6-480e-a241-d9a1b01ffeaf")
+    (uuid "9d878ba4-0c52-4e78-90d1-04bf72c4c8be")
   )
   (wire
     (pts
@@ -6866,7 +7570,7 @@
       (width 0)
       (type default)
     )
-    (uuid "944afaf8-c5f0-46b9-981c-a93704bfe900")
+    (uuid "5cee0a8a-7119-4954-83b0-2df679c42487")
   )
   (wire
     (pts
@@ -6877,7 +7581,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a4d91e1d-6524-4d78-8d55-79215d007d63")
+    (uuid "311ab268-18a5-4868-8805-3e7cdef0caec")
   )
   (wire
     (pts
@@ -6888,7 +7592,7 @@
       (width 0)
       (type default)
     )
-    (uuid "37850df3-800b-43da-b116-a132da8aa82b")
+    (uuid "9b19751a-1e3b-4105-97ee-9be4fe0824d5")
   )
   (wire
     (pts
@@ -6899,7 +7603,7 @@
       (width 0)
       (type default)
     )
-    (uuid "249c209a-b73b-43a9-b507-af7a3a947cba")
+    (uuid "210e7f63-7eda-461c-b593-d9779b064c8c")
   )
   (wire
     (pts
@@ -6910,7 +7614,7 @@
       (width 0)
       (type default)
     )
-    (uuid "d93f66ac-adc0-47d3-b0e3-27d65ba82f79")
+    (uuid "c444c8a8-a2e3-495b-b8fa-bbde60f21846")
   )
   (wire
     (pts
@@ -6921,7 +7625,7 @@
       (width 0)
       (type default)
     )
-    (uuid "7e1f5fc1-d490-46fc-99df-c66ecf136eaa")
+    (uuid "1235cb21-6d46-418c-82f8-5859aa300411")
   )
   (wire
     (pts
@@ -6932,7 +7636,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a9270de8-b0a3-403c-835e-be2dbb5609f1")
+    (uuid "c1b4c6bb-450e-4cc3-9505-ee748653cba1")
   )
   (wire
     (pts
@@ -6943,7 +7647,7 @@
       (width 0)
       (type default)
     )
-    (uuid "19cba9cd-0ff6-4493-a677-7dbad4e797be")
+    (uuid "4ca89c8b-50f7-4447-a08c-39a44847398d")
   )
   (wire
     (pts
@@ -6954,29 +7658,73 @@
       (width 0)
       (type default)
     )
-    (uuid "4ec44f0e-80fc-4978-88e5-18af9153de36")
+    (uuid "5564a133-82b0-4888-9c88-7f1e59288172")
   )
   (wire
     (pts
-      (xy 325.12 127)
-      (xy 325.12 129.54)
+      (xy 327.66 137.16)
+      (xy 327.66 139.7)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "2550a174-2b94-46eb-9dc5-01e5124b79a1")
+    (uuid "bcfec458-fe29-46a5-8640-24fab4445591")
   )
   (wire
     (pts
-      (xy 335.28 121.92)
-      (xy 340.36 121.92)
+      (xy 322.58 116.84)
+      (xy 327.66 116.84)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "f1205e8c-63d3-4876-a65d-5c866a0660c9")
+    (uuid "2dccd333-378c-407e-9009-fe9b70352300")
+  )
+  (wire
+    (pts
+      (xy 322.58 104.14)
+      (xy 322.58 109.22)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "cf457d86-0596-414a-9338-580a0821585e")
+  )
+  (wire
+    (pts
+      (xy 322.58 104.14)
+      (xy 340.36 104.14)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "22602ba8-39d3-4021-916c-82fb7ce55687")
+  )
+  (wire
+    (pts
+      (xy 312.42 132.08)
+      (xy 314.96 132.08)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8c6b6ec1-23da-4e9d-9dff-a5410ac4cba1")
+  )
+  (wire
+    (pts
+      (xy 312.42 139.7)
+      (xy 312.42 142.24)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "df5f1147-75b7-437d-855b-5c70230b2164")
   )
   (wire
     (pts
@@ -6987,7 +7735,7 @@
       (width 0)
       (type default)
     )
-    (uuid "e3d9e062-11c6-447c-91cb-8aa81e35de16")
+    (uuid "c7f96b7e-78cd-4b77-aed1-852753bd2162")
   )
   (wire
     (pts
@@ -6998,62 +7746,73 @@
       (width 0)
       (type default)
     )
-    (uuid "668d9115-2ad5-4fca-88f1-1ef5179dfd37")
+    (uuid "e5829af6-eeb3-4670-a257-d92881c01628")
   )
   (wire
     (pts
-      (xy 340.36 101.6)
+      (xy 340.36 96.52)
+      (xy 340.36 104.14)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "375b54ad-3655-4ac0-90f6-cc57568ce300")
+  )
+  (wire
+    (pts
+      (xy 340.36 104.14)
       (xy 340.36 110.49)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "36c3e067-91ed-40c4-82cb-7e9aa093db26")
+    (uuid "fa88e563-c4ee-4f35-b8fe-c4acfcac5242")
   )
   (wire
     (pts
-      (xy 340.36 101.6)
-      (xy 347.98 101.6)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "c8a9803a-0261-4281-b876-fe89fa7e1d17")
-  )
-  (wire
-    (pts
-      (xy 347.98 101.6)
-      (xy 347.98 104.14)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "99f72aab-556c-4e86-b707-26c56989e3f7")
-  )
-  (wire
-    (pts
-      (xy 347.98 111.76)
-      (xy 347.98 114.3)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "d0dce482-c7f6-4ad0-95cb-63c6aff00ae7")
-  )
-  (wire
-    (pts
-      (xy 340.36 93.98)
       (xy 340.36 96.52)
+      (xy 347.98 96.52)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "bf2d4a39-357a-43d1-85b7-e402b50b04ce")
+    (uuid "e30ca3b5-a9c5-484c-9ede-f801d777863e")
+  )
+  (wire
+    (pts
+      (xy 347.98 96.52)
+      (xy 347.98 99.06)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "aa5a2c15-602d-404b-9a1e-1e161b8b85dd")
+  )
+  (wire
+    (pts
+      (xy 347.98 106.68)
+      (xy 347.98 109.22)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "51e2219e-689a-45f4-b23b-1f4d597a610a")
+  )
+  (wire
+    (pts
+      (xy 340.36 88.9)
+      (xy 340.36 91.44)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "fac578b2-cc88-46b7-b6b2-26237c9e3327")
   )
   (wire
     (pts
@@ -7064,7 +7823,7 @@
       (width 0)
       (type default)
     )
-    (uuid "359c8126-2b81-490e-9af4-5b166f8c60f8")
+    (uuid "ac337cb4-cccb-4a41-900c-9f14137166fb")
   )
   (wire
     (pts
@@ -7075,7 +7834,7 @@
       (width 0)
       (type default)
     )
-    (uuid "eb58d0e3-86d8-42ab-9f0c-46282b65b226")
+    (uuid "39c12c58-3140-4027-a62a-3c2071c0910e")
   )
   (wire
     (pts
@@ -7086,7 +7845,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f1acd1eb-7a44-4729-867d-eb34ecd18a16")
+    (uuid "e2703212-aa71-4907-8ca5-fad9cfa0528d")
   )
   (wire
     (pts
@@ -7097,7 +7856,7 @@
       (width 0)
       (type default)
     )
-    (uuid "b08015fe-0797-4e07-9858-39a643cd4d59")
+    (uuid "ba9cb0e7-16cf-40cd-ad79-cc6548ba5f93")
   )
   (wire
     (pts
@@ -7108,7 +7867,7 @@
       (width 0)
       (type default)
     )
-    (uuid "5cacd527-8c70-4273-84f6-e22fa4303e9a")
+    (uuid "bb8d4f09-9afe-40ab-a655-c618a8543d88")
   )
   (wire
     (pts
@@ -7119,7 +7878,7 @@
       (width 0)
       (type default)
     )
-    (uuid "8ca33f46-3e70-40e8-8ff3-f1924c3801a9")
+    (uuid "2892894a-d6bd-4e9a-a774-d949689550c7")
   )
   (wire
     (pts
@@ -7130,7 +7889,7 @@
       (width 0)
       (type default)
     )
-    (uuid "fc1d6fcc-fd69-4ad3-94f2-4013fd7c4a09")
+    (uuid "a29797e4-66d3-4112-90ce-67abbc316b44")
   )
   (wire
     (pts
@@ -7141,7 +7900,7 @@
       (width 0)
       (type default)
     )
-    (uuid "87172d11-494e-424a-bf4a-aa7e58f28123")
+    (uuid "8f58cdb1-7c63-4a0b-98de-a777643213a0")
   )
   (wire
     (pts
@@ -7152,7 +7911,7 @@
       (width 0)
       (type default)
     )
-    (uuid "7748f7cf-aa45-4f2d-a7d5-d11172d433cd")
+    (uuid "03fa253e-5922-4ca8-be30-14019c071bb4")
   )
   (wire
     (pts
@@ -7163,7 +7922,7 @@
       (width 0)
       (type default)
     )
-    (uuid "fc220166-365c-4082-b1f1-ccf31caf5fb1")
+    (uuid "3dea7a0d-1873-4d37-bae1-2db8da89b865")
   )
   (wire
     (pts
@@ -7174,7 +7933,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f08026cf-eea3-4f94-b7a6-d1c111fad0a7")
+    (uuid "7f373845-47ba-4143-a323-10bb999f30ce")
   )
   (wire
     (pts
@@ -7185,7 +7944,7 @@
       (width 0)
       (type default)
     )
-    (uuid "949dfa25-0287-467b-bf63-8ef35ad4ddd0")
+    (uuid "6907fc1b-ed7f-4e60-9f52-292d29c8f7f0")
   )
   (wire
     (pts
@@ -7196,7 +7955,7 @@
       (width 0)
       (type default)
     )
-    (uuid "4838cd5d-3bcc-48c6-9857-5ed49883d17e")
+    (uuid "79978070-2afd-476b-a811-ea22d8aeb29d")
   )
   (wire
     (pts
@@ -7207,7 +7966,7 @@
       (width 0)
       (type default)
     )
-    (uuid "dc1fe78d-ee68-4ccd-ac64-9a1e6c5455bd")
+    (uuid "e32e6e6e-da55-41c9-9305-33e825d5b59c")
   )
   (wire
     (pts
@@ -7218,7 +7977,7 @@
       (width 0)
       (type default)
     )
-    (uuid "ece9bbf2-f418-43d9-9fa1-412c805b02f7")
+    (uuid "be7e76cf-421d-49c2-a9f2-77631108fd5d")
   )
   (wire
     (pts
@@ -7229,7 +7988,7 @@
       (width 0)
       (type default)
     )
-    (uuid "577ef36d-8dac-496c-a4bb-09eaba6ab730")
+    (uuid "c620bfe7-23b0-4ad9-8872-1faa5f6326f3")
   )
   (wire
     (pts
@@ -7240,7 +7999,7 @@
       (width 0)
       (type default)
     )
-    (uuid "e0e31543-087e-48b3-93d5-4bd40e48bc9b")
+    (uuid "12a48995-df9f-4567-a936-ab14911c7518")
   )
   (wire
     (pts
@@ -7251,7 +8010,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6f593384-1800-46dd-aebd-82eb2df9188b")
+    (uuid "0eeeffe7-eb85-4fc3-b29b-1e69451819ae")
   )
   (wire
     (pts
@@ -7262,7 +8021,7 @@
       (width 0)
       (type default)
     )
-    (uuid "9efa14bb-8a8d-45d9-9e36-5c65fb2d3e03")
+    (uuid "be317d5e-ab4a-411d-aec8-161a1f8d995b")
   )
   (wire
     (pts
@@ -7273,6 +8032,6 @@
       (width 0)
       (type default)
     )
-    (uuid "9b6e2a36-94a2-4f44-9b12-4b4340ccc3fd")
+    (uuid "45661372-f109-463f-91e9-e114453c0357")
   )
 )

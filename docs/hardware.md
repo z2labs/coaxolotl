@@ -10,7 +10,7 @@
 flowchart LR
   ANT[Antenna<br/>20 kHz-2 GHz] --> PROT[GDT + limiter<br/>100k bleed]
   PROT --> S1{SPDT<br/>PE42522}
-  S1 -- LNA --> PRE[HPF 25 MHz<br/>LPF 2.2 GHz] --> FMN{FM notch<br/>opt.} --> LNA[LNA ~100 mA] --> S2{SPDT<br/>PE42522}
+  S1 -- LNA --> PRE[HPF 25 MHz<br/>LPF 2.2 GHz] --> FMN{FM notch<br/>opt.} --> LNA[QPL9547 LNA<br/>65 mA] --> S2{SPDT<br/>PE42522}
   S1 -- bypass --> S2
   S2 --> SW1[PE42582<br/>SP8T] --> F[8 filters<br/>bandplan.json] --> SW2[PE42582<br/>SP8T] --> BT[Bias-T<br/>broadband]
   BT <== RF + DC + OOK ==> COAX[(coax to<br/>RTL-SDR V3)]
@@ -81,7 +81,7 @@ need to. Every 100 Ω costs about 0.6 mA more.
 
 | Load | Rail | Steady | Peak |
 |---|---|---|---|
-| LNA | VMAIN | 100 mA | — |
+| LNA (QPL9547, 65 mA default; budget kept at 100 mA) | VMAIN | 65–100 mA | — |
 | Lamps (1 mA each) | VMAIN | 8–15 mA typical, 23 mA worst | 48 mA during the lamp test (LNA still off) |
 | Bleeder + PWR + divider | VCOAX | 7 mA | |
 | 3V3 domain: MCU, INA180, PE42582 ×2, PE42522 ×2 (+2 DNP), 595s | VHOLD | 0.6 mA (Snooze) – 1.5 mA (active) | |
@@ -90,7 +90,8 @@ need to. Every 100 Ω costs about 0.6 mA more.
 
 The cable drop is about 50 mΩ/m loop for RG58. At 30 m and 140 mA that is
 about 0.2 V, so VCOAX ≈ 4.2–4.3 V. The LOW lamp lights below 3.9 V.
-**VERIFY** that your LNA still meets its gain and IP3 at about 4.2 V.
+**VERIFY** that the QPL9547 still meets its gain and OIP3 at about 4.2 V
+(it is specified for 3.3–5 V).
 
 ## MCU: EFM8BB21F16G-C-QSOP24
 
@@ -154,6 +155,12 @@ firmware runs.
   bandwidth and costs more; a cheaper DC-capable SPDT can replace it in the
   next revision. **VERIFY** the custom LGA-29 footprint against the
   datasheet land pattern.
+* **LNA: Qorvo QPL9547** (0.1–6 GHz, NF 0.3 dB and OIP3 about +39 dBm at
+  1.9 GHz, 3.3–5 V, 65 mA adjustable, DFN-8 2×2 mm). VDD goes in through the
+  RF_OUT choke (L4 1 µH, FB2, C30). R25 sets the bias current at VBIAS, and
+  R26 holds SHDN low. **VERIFY** R25, the SHDN polarity and the choke against
+  the datasheet application circuit. It is specified from 100 MHz, while the
+  LNA branch opens at 25 MHz (HPF); measure the 25–100 MHz gain and match.
 * **The preselector sits only in the LNA branch.** It is an HPF at 25 MHz
   (5–7th order LC) plus an LTCC LPF at about 2.2 GHz, so the HF/LF branches
   stay untouched. Branches F1–F4 force bypass and light **AUTO**. Below
@@ -191,7 +198,8 @@ firmware runs.
 
 ## Open items before layout
 
-1. PE42522 custom footprint (LGA-29); LNA part number; filter LC networks F1–F7.
+1. PE42522 custom footprint (LGA-29); QPL9547 footprint, Rbias (R25), SHDN polarity
+   and RF_OUT choke from the datasheet; filter LC networks F1–F7.
 2. TPS2553 ILIM resistor. Allowed range 15–232 kΩ, and ILIM tied to IN gives
    75 mA typical, which is too low. R5 = 150 kΩ is a placeholder: read IOS(min)
    > 130 mA off Eq. 1 / Fig. 22 in the PDF. FAULT deglitch is 8 ms.
