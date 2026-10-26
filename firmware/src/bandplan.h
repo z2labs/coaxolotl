@@ -2,19 +2,19 @@
 #ifndef COAX_BANDPLAN_H
 #define COAX_BANDPLAN_H
 
-/* F0 THRU     port 0  none (straight through)  LNA:yes FMN:no  */
-/* F1 LF       port 1  LPF 550 kHz              LNA:no  FMN:no  */
-/* F2 160/80   port 2  BPF 1.6-4.0 MHz          LNA:no  FMN:no  */
-/* F3 60-30    port 3  BPF 4-12 MHz             LNA:no  FMN:no  */
-/* F4 20-10    port 4  BPF 12-30 MHz            LNA:no  FMN:no  */
-/* F5 6/4m     port 5  BPF 30-88 MHz            LNA:yes FMN:no  */
-/* F6 2m/AIR   port 6  BPF 108-174 MHz          LNA:yes FMN:yes */
-/* F7 70/23cm  port 7  HPF 380 MHz              LNA:yes FMN:no  */
+/* F0 THRU     RF1 code 000  none (straight through)  LNA:yes FMN:no  */
+/* F1 LF       RF2 code 100  LPF 550 kHz              LNA:no  FMN:no  */
+/* F2 160/80   RF3 code 010  BPF 1.6-4.0 MHz          LNA:no  FMN:no  */
+/* F3 60-30    RF4 code 110  BPF 4-12 MHz             LNA:no  FMN:no  */
+/* F4 20-10    RF5 code 001  BPF 12-30 MHz            LNA:no  FMN:no  */
+/* F5 6/4m     RF6 code 101  BPF 30-88 MHz            LNA:yes FMN:no  */
+/* F6 2m/AIR   RF7 code 011  BPF 108-174 MHz          LNA:yes FMN:yes */
+/* F7 70/23cm  RF8 code 111  HPF 380 MHz              LNA:yes FMN:no  */
 
 #define BP_LNA_MASK 0xE1u
 #define BP_FMN_MASK 0x40u
 
 /* bank index -> PE42582 V3..V1 code */
-#define BP_PORT_INIT { 0, 1, 2, 3, 4, 5, 6, 7 }
+#define BP_PORT_INIT { 0, 4, 2, 6, 1, 5, 3, 7 }
 
 #endif
