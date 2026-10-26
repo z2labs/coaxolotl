@@ -45,7 +45,9 @@ Why it is split like this:
   state. Earlier drafts let the LNA pull the rail down. A tripped LNA would
   then have slowed every falling edge to over 100 ms and broken the link.
 * **The ideal diode** (LM66100, about 80 mΩ) stops VMAIN, the lamps and the
-  hold-up from back-feeding VCOAX during a gap.
+  hold-up from back-feeding VCOAX during a gap. Its CE pin must be tied to
+  VOUT, not GND. Only then does its comparator block reverse current. With CE
+  on GND it would just be an always-on switch. ST is unused and goes to GND.
 * **Two hold-up stages are diode-OR'ed.**
   * The 330 µF stage charges in about 30 ms, so the MCU boots fast.
   * The 0.1 F supercap charges slowly (τ ≈ 22 s, ≤ 18 mA). It carries the
@@ -172,8 +174,9 @@ firmware runs.
 ## Open items before layout
 
 1. PE42582 truth table and LS strap; PE42520 control polarity.
-2. TPS2553 ILIM resistor for about 150 mA (formula in its datasheet); FAULT
-   deglitch versus LNA inrush.
+2. TPS2553 ILIM resistor. Allowed range 15–232 kΩ, and ILIM tied to IN gives
+   75 mA typical, which is too low. R5 = 150 kΩ is a placeholder: read IOS(min)
+   > 130 mA off Eq. 1 / Fig. 22 in the PDF. FAULT deglitch is 8 ms.
 3. Supercap ESR (coin cells are 30–100 Ω). This is fine at about 1 mA.
 4. The bias discharge time with your V3 and coax (fall-time budget above).
 5. The EFM8BB2 register fields marked VERIFY in `firmware/include/efm8bb2_sfr.h`.
