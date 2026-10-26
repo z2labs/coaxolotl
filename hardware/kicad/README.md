@@ -5,6 +5,7 @@ Generated schematic. **Edit `tools/build.py`, then regenerate:**
 ```bash
 python3 hardware/kicad/tools/build.py      # writes *.kicad_sch + coaxolotl.kicad_sym + .kicad_pro
 python3 hardware/kicad/tools/check.py      # netlist vs. intent, shorts/splits, undriven power, style
+python3 hardware/kicad/tools/bom.py        # grouped BOM -> hardware/bom.csv
 kicad-cli sch export pdf -o hardware/kicad/coaxolotl-schematic.pdf hardware/kicad/coaxolotl.kicad_sch
 ```
 
@@ -28,8 +29,9 @@ kicad-cli sch export pdf -o hardware/kicad/coaxolotl-schematic.pdf hardware/kica
 | 1 | Block diagram + hierarchy | v0.2 |
 | 2 | Power | v0.2 for review |
 | 3 | MCU | v0.2 for review |
-| 4 | RF | placeholder: only the control inputs with reset-safe pull-downs |
-| 5 | Panel | placeholder: lamp-chain inputs, OE_N pull-up |
+| 4 | RF front end: protection, LNA/bypass SPDTs, preselector, FM notch (DNP), LNA | v0.2 for review |
+| 5 | Filter bank: 2× PE42582, F0–F7, bias-T, coax | v0.2 for review; F1–F7 are placeholders |
+| 6 | Panel | placeholder: lamp-chain inputs, OE_N pull-up |
 
 ## Checks and limits
 

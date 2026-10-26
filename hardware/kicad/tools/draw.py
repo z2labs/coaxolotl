@@ -38,13 +38,13 @@ class DSheet(g.Sheet):
         super().add(p)
         self.byref[p.ref] = p
         for num in self.lib.pins(p.lib_id):
-            x, y, _, _ = self.pin_xy(p.lib_id, p.x, p.y, p.rot, num)
+            x, y, _, _ = self.pin_xy(p.lib_id, p.x, p.y, p.rot, num, p.mirror)
             self.pinpts[(round(x, 3), round(y, 3))] = f"{p.ref}.{num}"
         return p
 
     def P(self, ref, num):
         p = self.byref[ref]
-        x, y, ox, oy = self.pin_xy(p.lib_id, p.x, p.y, p.rot, num)
+        x, y, ox, oy = self.pin_xy(p.lib_id, p.x, p.y, p.rot, num, p.mirror)
         return round(x, 3), round(y, 3), round(ox), round(oy)
 
     def pt(self, ref, num):

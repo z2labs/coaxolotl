@@ -9,8 +9,8 @@
 ```mermaid
 flowchart LR
   ANT[Antenna<br/>20 kHz-2 GHz] --> PROT[GDT + limiter<br/>100k bleed]
-  PROT --> S1{SPDT<br/>PE42520}
-  S1 -- LNA --> PRE[HPF 25 MHz<br/>LPF 2.2 GHz] --> FMN{FM notch<br/>opt.} --> LNA[LNA ~100 mA] --> S2{SPDT<br/>PE42520}
+  PROT --> S1{SPDT<br/>PE42522}
+  S1 -- LNA --> PRE[HPF 25 MHz<br/>LPF 2.2 GHz] --> FMN{FM notch<br/>opt.} --> LNA[LNA ~100 mA] --> S2{SPDT<br/>PE42522}
   S1 -- bypass --> S2
   S2 --> SW1[PE42582<br/>SP8T] --> F[8 filters<br/>bandplan.json] --> SW2[PE42582<br/>SP8T] --> BT[Bias-T<br/>broadband]
   BT <== RF + DC + OOK ==> COAX[(coax to<br/>RTL-SDR V3)]
@@ -84,7 +84,7 @@ need to. Every 100 Ω costs about 0.6 mA more.
 | LNA | VMAIN | 100 mA | — |
 | Lamps (1 mA each) | VMAIN | 8–15 mA typical, 23 mA worst | 48 mA during the lamp test (LNA still off) |
 | Bleeder + PWR + divider | VCOAX | 7 mA | |
-| 3V3 domain: MCU, INA180, PE42582 ×2, PE42520 ×2, 595s | VHOLD | 0.6 mA (Snooze) – 1.5 mA (active) | |
+| 3V3 domain: MCU, INA180, PE42582 ×2, PE42522 ×2 (+2 DNP), 595s | VHOLD | 0.6 mA (Snooze) – 1.5 mA (active) | |
 | Hold-up charging | VMAIN | 0 | 40 mA (330 µF, about 0.1 s) + 18 mA (SCAP, decays over about 1 min) |
 | **Total** | | **about 120 mA typical, 132 mA worst** | **about 140 mA** right after boot while the SCAP is still charging |
 
@@ -134,21 +134,33 @@ firmware runs.
 ## RF notes
 
 * **Switches.**
-  * 2× PE42582 SP8T (9 kHz–8 GHz, absorptive). **VERIFY** the V1–V3
-    truth table and the LS (logic select) strap. The firmware maps branch →
-    switch code through the `port` field in `bandplan.json`, so routing order
-    and truth-table quirks are fixed in data, not in code.
-  * Start with the internal negative-voltage generator. If its spur shows up
-    on the waterfall, feed VSS externally.
-* **LNA bypass.** 2× PE42520 SPDT (9 kHz–13 GHz, 2.3–5.5 V). They are DC
-  capable, so no blocking caps are needed. **VERIFY** the control polarity.
+  * 2× PE42582 SP8T (9 kHz–8 GHz, absorptive, QFN-24 4×4 mm). LS (pin 1,
+    internal 1 MΩ pull-up) is tied to GND, and so is V4 (V4 = 1 would turn
+    all ports off). With LS = 0 the V3 V2 V1 code per RF port is
+    RF1 000, RF2 100, RF3 010, RF4 110, RF5 001, RF6 101, RF7 011, RF8 111,
+    so it is not binary.
+  * Branch Fk is wired to RF(k+1) on both switches. `port` in
+    `bandplan.json` is that RF port index (0 = RF1), and
+    `tools/gen_bandplan.py` turns it into the switch code. Routing order and
+    the truth table live in data, not in code.
+  * VSS_EXT goes to GND, which selects the internal negative-voltage
+    generator. If its spur shows up on the waterfall, feed −3.3 V on VSS_EXT
+    (bypass mode).
+  * RF ports sit at 0 V DC, so no DC blocks are needed around the switches.
+* **LNA bypass.** 2× PE42522 SPDT (9 kHz–26.5 GHz, 2.3–5.5 V, LGA-29
+  4×4 mm). V1 = 0 selects RF1 (bypass), V1 = 1 selects RF2 (LNA). VSS_EXT
+  (pin 29) goes to GND. The PE42520 from the first sketch was dropped
+  because its pinout could not be verified. The PE42522 is overkill in
+  bandwidth and costs more; a cheaper DC-capable SPDT can replace it in the
+  next revision. **VERIFY** the custom LGA-29 footprint against the
+  datasheet land pattern.
 * **The preselector sits only in the LNA branch.** It is an HPF at 25 MHz
   (5–7th order LC) plus an LTCC LPF at about 2.2 GHz, so the HF/LF branches
   stay untouched. Branches F1–F4 force bypass and light **AUTO**. Below
   30 MHz the external noise is far above the RTL noise figure, and an LNA
   there only adds IMD.
-* **The FM notch is a population option.** It is a PE42520 pair around an
-  88–108 MHz LC notch inside the LNA branch, and it is used only by branches
+* **The FM notch is a population option.** It is a PE42522 pair around an
+  88–108 MHz LC notch (56 nH ‖ 47 pF, f0 ≈ 98 MHz) inside the LNA branch, and it is used only by branches
   with `fm_notch` (F6 by default). Fit 0 Ω links first and populate it only
   if you measure FM-driven IMD.
 * **Bias-T in the box.** It must pass DC and 20 kHz–2 GHz. A starting point:
@@ -179,7 +191,7 @@ firmware runs.
 
 ## Open items before layout
 
-1. PE42582 truth table and LS strap; PE42520 control polarity.
+1. PE42522 custom footprint (LGA-29); LNA part number; filter LC networks F1–F7.
 2. TPS2553 ILIM resistor. Allowed range 15–232 kΩ, and ILIM tied to IN gives
    75 mA typical, which is too low. R5 = 150 kΩ is a placeholder: read IOS(min)
    > 130 mA off Eq. 1 / Fig. 22 in the PDF. FAULT deglitch is 8 ms.

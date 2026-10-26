@@ -207,6 +207,7 @@ class Part:
     fields: Dict[str, str] = field(default_factory=dict)
     dnp: bool = False
     txt: Optional[Tuple[float, float]] = None   # explicit Reference position (Value 2.54 below)
+    mirror: bool = False                         # mirror about the Y axis (only with rot 0)
 
 
 class Sheet:
@@ -317,11 +318,13 @@ class Sheet:
             self.used_libs[lib_id] = self.lib.get(lib_id)
 
     def _instance(self, lib_id, ref, value, x, y, angle, footprint="", fields=None,
-                  pins=(), dnp=False, in_bom=True, on_board=True, show_ref=True, place=None):
+                  pins=(), dnp=False, in_bom=True, on_board=True, show_ref=True, place=None, mirror=False):
         self._use(lib_id)
         fields = fields or {}
-        hide_ref = [] if show_ref else [Sym("hide")]
-        node = [Sym("symbol"), [Sym("lib_id"), lib_id], [Sym("at"), x, y, angle], [Sym("unit"), 1],
+        node = [Sym("symbol"), [Sym("lib_id"), lib_id], [Sym("at"), x, y, angle]]
+        if mirror:
+            node.append([Sym("mirror"), Sym("y")])
+        node += [[Sym("unit"), 1],
                 [Sym("in_bom"), Sym("yes" if in_bom else "no")],
                 [Sym("on_board"), Sym("yes" if on_board else "no")],
                 [Sym("dnp"), Sym("yes" if dnp else "no")], [Sym("uuid"), uid()]]
@@ -344,11 +347,12 @@ class Sheet:
         self.items.append(node)
         return node
 
-    def pin_xy(self, lib_id, x, y, angle, num):
+    def pin_xy(self, lib_id, x, y, angle, num, mirror=False):
         p = self.lib.pins(lib_id)[num]
-        rx, ry = rot(p["x"], p["y"], angle)
+        px, pa = (-p["x"], 180 - p["angle"]) if mirror else (p["x"], p["angle"])
+        rx, ry = rot(px, p["y"], angle)
         # outward direction: opposite of the pin's own direction
-        ox, oy = rot(-math.cos(math.radians(p["angle"])), -math.sin(math.radians(p["angle"])), angle)
+        ox, oy = rot(-math.cos(math.radians(pa)), -math.sin(math.radians(pa)), angle)
         return x + rx, y - ry, ox, -oy
 
     def power(self, net, x, y, outward):
@@ -393,7 +397,7 @@ class Sheet:
         extra = set(p.nets) - set(pins)
         if extra:
             raise ValueError(f"{p.ref}: unknown pins {sorted(extra)}")
-        pts = [self.pin_xy(p.lib_id, p.x, p.y, p.rot, n)[:2] for n in pins]
+        pts = [self.pin_xy(p.lib_id, p.x, p.y, p.rot, n, p.mirror)[:2] for n in pins]
         xs, ys = [q[0] for q in pts], [q[1] for q in pts]
         if len(pins) == 2 and abs(xs[0] - xs[1]) < 0.1:          # vertical 2-pin
             place = {"Reference": (p.x + 2.54, p.y - 1.27, "left"),
@@ -401,7 +405,7 @@ class Sheet:
         elif len(pins) == 2:                                       # horizontal 2-pin
             place = {"Reference": (p.x, p.y - 3.81, None), "Value": (p.x, p.y + 3.81, None)}
         else:                                                      # IC
-            vert = any(abs(self.pin_xy(p.lib_id, p.x, p.y, p.rot, n)[3]) > 0.5 for n in pins)
+            vert = any(abs(self.pin_xy(p.lib_id, p.x, p.y, p.rot, n, p.mirror)[3]) > 0.5 for n in pins)
             if vert:   # pins on top/bottom too: text at the right edge, above/below the pin rows
                 place = {"Reference": (max(xs), min(ys) - 2.54, "left"),
                          "Value": (max(xs), max(ys) + 2.54, "left")}
@@ -412,12 +416,12 @@ class Sheet:
             just = p.txt[2] if len(p.txt) > 2 else "left"
             place = {"Reference": (tx, ty, just), "Value": (tx, ty + 2.54, just)}
         self._instance(p.lib_id, p.ref, p.value, p.x, p.y, p.rot, p.footprint, dict(p.fields),
-                       pins=list(pins), dnp=p.dnp, place=place)
+                       pins=list(pins), dnp=p.dnp, place=place, mirror=p.mirror)
         if not getattr(self, "stubs", True):
             self.parts.append(p)
             return
         for num in pins:
-            px, py, ox, oy = self.pin_xy(p.lib_id, p.x, p.y, p.rot, num)
+            px, py, ox, oy = self.pin_xy(p.lib_id, p.x, p.y, p.rot, num, p.mirror)
             self.attach(p.nets[num], px, py, ox, oy)
         self.parts.append(p)
 

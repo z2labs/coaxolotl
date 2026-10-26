@@ -5,7 +5,11 @@ The firmware needs only three facts per branch, so they are packed into
 compile-time constants instead of a table:
   BP_LNA_MASK   bit n set -> branch n may use the LNA
   BP_FMN_MASK   bit n set -> FM notch inserted when branch n runs with LNA
-  BP_PORT_n     PE42582 RF port index for branch n (PCB routing remap)
+  BP_PORT_INIT  PE42582 V3V2V1 control code per branch. 'port' in the json
+                is the RF port index (0 = RF1 ... 7 = RF8) the branch is wired
+                to; the PE42582 truth table (LS = 0) is not binary, so the
+                port is mapped to its code here: RF1 000, RF2 100, RF3 010,
+                RF4 110, RF5 001, RF6 101, RF7 011, RF8 111.
 """
 import json
 import pathlib
@@ -14,6 +18,9 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "bandplan.json"
 DST = ROOT / "firmware" / "src" / "bandplan.h"
+
+# PE42582 datasheet truth table, LS = 0, V4 = 0: RF port index -> V3V2V1
+PE42582_CODE = [0b000, 0b100, 0b010, 0b110, 0b001, 0b101, 0b011, 0b111]
 
 
 def main() -> int:
@@ -38,7 +45,7 @@ def main() -> int:
     ]
     for b in plan:
         lines.append(
-            f"/* F{b['id']} {b['name']:<8} port {b['port']}  {b['filter']:<24}"
+            f"/* F{b['id']} {b['name']:<8} RF{b['port'] + 1} code {PE42582_CODE[b['port']]:03b}  {b['filter']:<24}"
             f" LNA:{'yes' if b['lna_ok'] else 'no '} FMN:{'yes' if b['fm_notch'] else 'no '} */"
         )
     lines += [
@@ -47,7 +54,7 @@ def main() -> int:
         f"#define BP_FMN_MASK 0x{fmn:02X}u",
         "",
         "/* bank index -> PE42582 V3..V1 code */",
-        "#define BP_PORT_INIT { " + ", ".join(str(p) for p in ports) + " }",
+        "#define BP_PORT_INIT { " + ", ".join(str(PE42582_CODE[p]) for p in ports) + " }",
         "",
         "#endif",
         "",
