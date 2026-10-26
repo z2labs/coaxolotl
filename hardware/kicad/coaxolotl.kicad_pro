@@ -5,8 +5,91 @@
   },
   "sheets": [
     [
-      "f0ce2c39-b649-4fd2-8fba-4c9b55604502",
+      "b70a913d-c067-4d88-a33b-3e261f829424",
       "Root"
     ]
-  ]
+  ],
+  "net_settings": {
+    "classes": [
+      {
+        "name": "Default",
+        "clearance": 0.2,
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6,
+        "bus_width": 12,
+        "line_style": 0,
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1
+      },
+      {
+        "name": "POWER",
+        "clearance": 0.2,
+        "track_width": 0.4,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 6,
+        "bus_width": 12,
+        "line_style": 0,
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1
+      }
+    ],
+    "meta": {
+      "version": 3
+    },
+    "netclass_patterns": [
+      {
+        "netclass": "POWER",
+        "pattern": "VCOAX"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "VMAIN"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "VHOLD"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "VLED"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "LNA_VCC"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "LNA_SW"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "+3V3"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "HU_FAST"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "SC_CHG"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "VSCAP"
+      }
+    ]
+  }
 }
