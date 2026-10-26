@@ -216,6 +216,8 @@ class Sheet:
         self.uuid = uid()
         self.sheet_uuid = uid()          # uuid of this sheet's block in the parent
         self.globals_ = set(globals_)
+        self.zone = ""                   # default 'Zone' field for parts added next
+        self.place: Dict[str, str] = {}  # ref -> 'Place' field (satellite of REF.PIN / edge)
         self.items: List[list] = []
         self.parts: List[Part] = []
         self.used_libs: Dict[str, list] = {}
@@ -257,6 +259,48 @@ class Sheet:
         self.items.append([Sym("text"), s, [Sym("at"), x, y, 0],
                            [Sym("effects"), font, [Sym("justify"), Sym("left"), Sym("bottom")]],
                            [Sym("uuid"), uid()]])
+
+    # -- graphics (block diagram) ------------------------------------------
+    def poly(self, pts, width=0.3, dash=False, color=None):
+        stroke = [Sym("stroke"), [Sym("width"), width], [Sym("type"), Sym("dash" if dash else "solid")]]
+        if color:
+            stroke.append([Sym("color"), *color, 1])
+        self.items.append([Sym("polyline"), [Sym("pts")] + [[Sym("xy"), x, y] for x, y in pts],
+                           stroke, [Sym("fill"), [Sym("type"), Sym("none")]], [Sym("uuid"), uid()]])
+
+    def arrow(self, pts, width=0.3, dash=False, color=None, head=1.6):
+        self.poly(pts, width, dash, color)
+        (x1, y1), (x2, y2) = pts[-2], pts[-1]
+        L = math.hypot(x2 - x1, y2 - y1) or 1
+        ux, uy = (x2 - x1) / L, (y2 - y1) / L
+        bx, by = x2 - ux * head, y2 - uy * head
+        px, py = -uy * head * 0.45, ux * head * 0.45
+        tri = [(x2, y2), (bx + px, by + py), (bx - px, by - py), (x2, y2)]
+        stroke = [Sym("stroke"), [Sym("width"), width], [Sym("type"), Sym("solid")]]
+        if color:
+            stroke.append([Sym("color"), *color, 1])
+        self.items.append([Sym("polyline"), [Sym("pts")] + [[Sym("xy"), x, y] for x, y in tri],
+                           stroke, [Sym("fill"), [Sym("type"), Sym("outline")]], [Sym("uuid"), uid()]])
+
+    def block(self, x, y, w, h, title, lines=(), fill=(235, 235, 235)):
+        self.items.append([Sym("rectangle"), [Sym("start"), x, y], [Sym("end"), x + w, y + h],
+                           [Sym("stroke"), [Sym("width"), 0.35], [Sym("type"), Sym("solid")]],
+                           [Sym("fill"), [Sym("type"), Sym("color")], [Sym("color"), *fill, 1]],
+                           [Sym("uuid"), uid()]])
+        n = 1 + len(lines)
+        y0 = y + h / 2 - (n - 1) * 1.25
+        self.ctext(title, x + w / 2, y0, 1.6, bold=True)
+        for i, ln in enumerate(lines):
+            self.ctext(ln, x + w / 2, y0 + 2.5 * (i + 1), 1.15)
+
+    def ctext(self, s, x, y, size=1.27, bold=False, left=False):
+        font = [Sym("font"), [Sym("size"), size, size]]
+        if bold:
+            font.append(Sym("bold"))
+        eff = [Sym("effects"), font]
+        if left:
+            eff.append([Sym("justify"), Sym("left")])
+        self.items.append([Sym("text"), s, [Sym("at"), x, y, 0], eff, [Sym("uuid"), uid()]])
 
     def box(self, x, y, w, h, title, notes: List[str] = ()):
         self.items.append([Sym("rectangle"), [Sym("start"), x, y], [Sym("end"), x + w, y + h],
@@ -337,6 +381,10 @@ class Sheet:
             self.label(net, ex, ey, dir_to_angle(ox, oy), glob=net in self.globals_)
 
     def add(self, p: Part):
+        if self.zone:
+            p.fields.setdefault("Zone", self.zone)
+        if p.ref in self.place:
+            p.fields.setdefault("Place", self.place[p.ref])
         pins = self.lib.pins(p.lib_id)
         missing = set(pins) - set(p.nets)
         if missing:

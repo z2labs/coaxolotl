@@ -171,8 +171,18 @@ GLOBALS = {
 def sheet_power(lib) -> g.Sheet:
     s = g.Sheet(lib, PROJECT, "Power", "power.kicad_sch", globals_=GLOBALS,
                 comment="Coax DC tap, ideal diode, LNA switch + current monitor, hold-up, 3V3")
+    # placement hints (docs: satellites next to their parent pin, TVS at the connector)
+    s.place = {
+        "D1": "edge:J_COAX (RF sheet bias-T), shortest GND return", "C1": "D1",
+        "R3": "VCOAX tap", "R4": "R3", "C2": "U5.4 (SENSE at the MCU pin)",
+        "C3": "U1.6", "C4": "U2.1", "C5": "U2.6", "R5": "U2.5 (short ILIM loop)", "R6": "U2.4",
+        "R7": "between U2.6 and LNA feed", "C6": "U3.5", "R8": "U5.1 (ILNA RC at the ADC pin)", "C7": "U5.1",
+        "C12": "U4.3", "C13": "U4.2", "R11": "C10", "R12": "U5.2", "C11": "U5.2",
+        "C9": "D3 cathode / U4.3", "C8": "first 74HC595 (panel sheet)",
+    }
 
     # A: coax DC tap -------------------------------------------------------
+    s.zone = "POWER"
     s.box(15, 20, 130, 77, "A  VCOAX tap (ahead of all bulk capacitance)", [
         "Only these loads sit on VCOAX, so the OOK falling edge is set by R1 + coax/RTL capacitance.",
         "R1 = 680R gives ~6 ms with 10 uF on the RTL side; lower to 470R if bring-up step 1 needs it.",
@@ -184,11 +194,14 @@ def sheet_power(lib) -> g.Sheet:
     s.add(R("R1", "680", 60.96, 58.42, "VCOAX", "GND", fp=R0603))
     s.add(R("R2", "3k3", 76.2, 45.72, "VCOAX", "PWR_LED_A"))
     s.add(Part("D2", "Device:LED", "PWR green", 76.2, 81.28, 90, LED0603, {"2": "PWR_LED_A", "1": "GND"}))
+    s.zone = "ANALOG"
     s.add(R("R3", "10k 1%", 96.52, 58.42, "VCOAX", "SENSE"))
     s.add(R("R4", "22k 1%", 114.3, 58.42, "SENSE", "GND"))
     s.add(C("C2", "10n", 132.08, 58.42, "SENSE", "GND"))
+    s.zone = "POWER"
 
     # B: ideal diode --------------------------------------------------------
+    s.zone = "POWER"
     s.box(150, 20, 115, 75, "B  Ideal diode VCOAX -> VMAIN", [
         "CE tied to VOUT: the comparator turns the FET off whenever VMAIN > VCOAX,",
         "so LNA, lamps and hold-up never back-feed the sense node during a gap.",
@@ -200,6 +213,7 @@ def sheet_power(lib) -> g.Sheet:
     s.add(C("C3", "10u 10V", 243.84, 55.88, "VMAIN", "GND", fp=C0805))
 
     # C: LNA switch + current ----------------------------------------------
+    s.zone = "POWER"
     s.box(270, 20, 135, 112, "C  LNA supply: current-limited switch + shunt monitor", [
         "TPS2553: EN active-high, 8 ms FAULT deglitch, ILIM tied to IN = 75 mA typ (too low).",
         "R5 VERIFY: pick from datasheet Eq.1 / Fig.22 for IOS(min) > 130 mA (1% part).",
@@ -213,6 +227,7 @@ def sheet_power(lib) -> g.Sheet:
     s.add(R("R6", "100k", 312.42, 88.9, "+3V3", "FAULT_N"))
     s.add(C("C5", "1u", 327.66, 88.9, "LNA_SW", "GND"))
     s.add(R("R7", "0R39 1%", 347.98, 48.26, "LNA_SW", "LNA_VCC", fp=R1206, mpn="ERJ-8BQFR39V"))
+    s.zone = "ANALOG"
     s.add(Part("U3", "Amplifier_Current:INA180A2", "INA180A2IDBVR", 368.3, 86.36, 0,
                "Package_TO_SOT_SMD:SOT-23-5",
                {"3": "LNA_SW", "4": "LNA_VCC", "1": "ILNA_RAW", "5": "+3V3", "2": "GND"},
@@ -222,14 +237,16 @@ def sheet_power(lib) -> g.Sheet:
     s.add(C("C7", "100n", 398.78, 111.76, "ILNA", "GND"))
 
     # D: lamp rail ----------------------------------------------------------
-    s.box(150, 100, 115, 50, "D  Lamp rail", [
+    s.zone = "POWER"
+    s.box(270, 137, 135, 50, "D  Lamp rail", [
         "Lamps hang on VMAIN (not the hold-up): they go dark in every OOK gap",
         "and in a dropout instead of draining the supercap. 48 x ~1 mA max."])
-    s.add(Part("FB1", "Device:FerriteBead_Small", "600R@100MHz", 180.34, 124.46, 0, FB0603,
+    s.add(Part("FB1", "Device:FerriteBead_Small", "600R@100MHz", 299.72, 160.02, 0, FB0603,
                {"1": "VMAIN", "2": "VLED"}, {"MPN": "BLM18KG601SN1D"}))
-    s.add(C("C8", "47u 10V", 213.36, 124.46, "VLED", "GND", fp=C1206))
+    s.add(C("C8", "47u 10V", 335.28, 160.02, "VLED", "GND", fp=C1206))
 
     # E: hold-up ------------------------------------------------------------
+    s.zone = "POWER"
     s.box(15, 100, 130, 120, "E  Hold-up: fast 330 uF + 0.1 F supercap, diode-OR", [
         "Fast path R9/D3 boots the MCU in ~30 ms. Slow path R10/D4 charges the supercap",
         "(<=18 mA, tau ~22 s). D5 lets the supercap carry VHOLD through a dropout (~4 min @ 0.6 mA).",
@@ -244,20 +261,22 @@ def sheet_power(lib) -> g.Sheet:
     s.add(C("C10", "0.1F 5.5V", 30.48, 187.96, "VSCAP", "GND", pol=True,
             fp="Capacitor_THT:CP_Radial_D13.0mm_P5.00mm",
             mpn="KR-5R5V104-R", fields={"Note": "VERIFY footprint vs chosen coin supercap"}))
+    s.zone = "ANALOG"
     s.add(R("R11", "1M", 63.5, 187.96, "VSCAP", "SCAP_ADC"))
     s.add(R("R12", "1M", 86.36, 187.96, "SCAP_ADC", "GND"))
     s.add(C("C11", "100n", 104.14, 187.96, "SCAP_ADC", "GND"))
     s.pwr_flag("VHOLD", 124.46, 116.84)
 
     # F: 3V3 ----------------------------------------------------------------
-    s.box(150, 155, 115, 55, "F  3V3 for MCU, switches, INA180, 595s", [
+    s.zone = "POWER"
+    s.box(150, 100, 115, 55, "F  3V3 for MCU, switches, INA180, 595s", [
         "MCP1700: 1.6 uA Iq, 178 mV dropout. Needs >= 1 uF ceramic on the output."])
-    s.add(Part("U4", "Regulator_Linear:MCP1700x-330xxTT", "MCP1700T-3302E/TT", 200.66, 177.8, 0,
+    s.add(Part("U4", "Regulator_Linear:MCP1700x-330xxTT", "MCP1700T-3302E/TT", 200.66, 121.92, 0,
                "Package_TO_SOT_SMD:SOT-23", {"3": "VHOLD", "2": "+3V3", "1": "GND"},
                {"MPN": "MCP1700T-3302E/TT"}))
-    s.add(C("C12", "1u", 170.18, 190.5, "VHOLD", "GND"))
-    s.add(C("C13", "1u", 233.68, 190.5, "+3V3", "GND"))
-    s.pwr_flag("GND", 254.0, 172.72)
+    s.add(C("C12", "1u", 170.18, 134.62, "VHOLD", "GND"))
+    s.add(C("C13", "1u", 233.68, 134.62, "+3V3", "GND"))
+    s.pwr_flag("GND", 254.0, 116.84)
     return s
 
 
@@ -268,23 +287,30 @@ def sheet_power(lib) -> g.Sheet:
 def sheet_mcu(lib) -> g.Sheet:
     s = g.Sheet(lib, PROJECT, "MCU", "mcu.kicad_sch", globals_=GLOBALS,
                 comment="EFM8BB21F16G, C2 debug, reset-safe pull resistors")
+    s.place = {"C14": "U5.6", "C15": "U5.6 (closest)", "R13": "U5.7", "J1": "edge",
+               "R14": "U5.22", "R15": "U5.21", "R16": "U5.20", "R17": "U5.19", "R18": "U5.18",
+               "R19": "U5.17", "R20": "U5.9"}
 
+    s.zone = "DIGITAL"
     s.box(15, 20, 175, 130, "A  EFM8BB21F16G-C-QSOP24", [
         "Pin map = firmware/src/hal_efm8bb2.c. P0.0 and P0.1 share SENSE (digital + ADC).",
+        "Pins follow placement: QSOP pins 1-12 (analog, debug, lamp chain P2.x) face power/panel,",
+        "pins 13-24 (switch control, LNA_EN, FAULT_N) face the RF chain. No control line crosses the MCU.",
         "SYSCLK HFOSC0/8 = 3.06 MHz; Snooze when idle (no clock -> no spurs). Keep under the can."])
     s.add(Part("U5", "coaxolotl:EFM8BB21F16G-C-QSOP24", "EFM8BB21F16G-C-QSOP24", 101.6, 76.2, 0,
                "Package_SO:QSOP-24_3.9x8.7mm_P0.635mm",
                {"6": "+3V3", "7": "RST_N", "8": "C2D",
-                "12": "SPARE_P20", "11": "SPARE_P21", "10": "SPARE_P22", "9": "SPARE_P23", "5": "GND",
+                "12": "LED_SER", "11": "LED_SCK", "10": "LED_RCK", "9": "LED_OE_N", "5": "GND",
                 "4": "SENSE", "3": "SENSE", "2": "SCAP_ADC", "1": "ILNA",
                 "24": "TP_TX", "23": "FAULT_N", "22": "LNA_EN", "21": "LNA_PATH",
                 "20": "SW_V1", "19": "SW_V2", "18": "SW_V3", "17": "FMN",
-                "16": "LED_SER", "15": "LED_SCK", "14": "LED_RCK", "13": "LED_OE_N"},
+                "16": "SPARE_P14", "15": "SPARE_P15", "14": "SPARE_P16", "13": "SPARE_P17"},
                {"MPN": "EFM8BB21F16G-C-QSOP24"}))
     s.add(C("C14", "1u", 30.48, 132.08, "+3V3", "GND"))
     s.add(C("C15", "100n", 43.18, 132.08, "+3V3", "GND"))
 
     # B: debug -------------------------------------------------------------
+    s.zone = "DIGITAL"
     s.box(195, 20, 90, 60, "B  C2 debug / programming", [
         "4-pin 2.54 mm: 3V3, C2D, C2CK(RSTb), GND. Works with a SiLabs debug adapter",
         "or an Arduino-based C2 programmer. Do not add a cap on RSTb (C2 clock)."])
@@ -294,6 +320,7 @@ def sheet_mcu(lib) -> g.Sheet:
     s.add(R("R13", "10k", 213.36, 50.8, "+3V3", "RST_N"))
 
     # C: reset-safe defaults ------------------------------------------------
+    s.zone = "DIGITAL"
     s.box(195, 85, 210, 65, "C  Reset-safe defaults (pins are weak-pull-up / Hi-Z until firmware runs)", [
         "Pull-downs: LNA off, bypass, branch 0 = THRU, FM notch out -> the box is a plain cable during reset.",
         "OE_N pull-up keeps all lamps dark until the first panel write. FAULT_N pull-up is on the power sheet."])
@@ -303,9 +330,10 @@ def sheet_mcu(lib) -> g.Sheet:
     s.add(R("R20", "10k", x + 6 * 22.86, 115.57, "+3V3", "LED_OE_N"))
 
     # D: test points --------------------------------------------------------
+    s.zone = "DIGITAL"
     s.box(15, 155, 175, 40, "D  Test points", [
         "TP_TX: firmware drives it low; route UART0 TX here for debug prints if ever needed."])
-    for i, net in enumerate(["TP_TX", "SPARE_P20", "SPARE_P21", "SPARE_P22", "SPARE_P23", "SENSE", "+3V3"]):
+    for i, net in enumerate(["TP_TX", "SPARE_P14", "SPARE_P15", "SPARE_P16", "SPARE_P17", "SENSE", "+3V3"]):
         s.add(Part(f"TP{i + 1}", "Connector:TestPoint", net.replace("+", ""), 30.48 + i * 22.86, 175.26, 0,
                    TP, {"1": net}))
     return s

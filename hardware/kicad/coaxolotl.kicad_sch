@@ -1,7 +1,7 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "4a735de0-2544-4f0c-8819-8a9c09cd0fe7")
+  (uuid "1a04e1fa-0d14-4373-9a6d-130163cb4ea7")
   (paper "A3")
   (title_block
     (title "Coaxolotl")
@@ -21,7 +21,7 @@
       )
       (justify left bottom)
     )
-    (uuid "864ac425-c427-4338-87a4-196c33ce26c4")
+    (uuid "f3c58334-150c-4d74-acf6-bd40f04c412d")
   )
   (text "Mast-head LNA + 8-way filter bank, powered and keyed over one coax by the RTL-SDR bias-T."
     (at 25.4 38.1 0)
@@ -31,7 +31,7 @@
       )
       (justify left bottom)
     )
-    (uuid "b505484c-730a-4ea1-8217-8004260e139e")
+    (uuid "ea90757e-9699-4e5b-87e2-1eb022b0f11d")
   )
   (text "Sheets (review order):"
     (at 25.4 50.8 0)
@@ -41,7 +41,7 @@
       )
       (justify left bottom)
     )
-    (uuid "f2dedde0-ae79-4d82-be9c-4325d89447fa")
+    (uuid "a1604c0a-fc66-4712-847a-d215cdb9026f")
   )
   (text "  2  Power  - VCOAX tap, LM66100 ideal diode, TPS2553 + INA180 LNA supply, hold-up, 3V3     [this review]"
     (at 25.4 54.1 0)
@@ -51,7 +51,7 @@
       )
       (justify left bottom)
     )
-    (uuid "24df45a1-7086-46c8-9cb3-b5c6a9509dac")
+    (uuid "66a9fb35-467f-4213-9a8d-5250cf62f7ec")
   )
   (text "  3  MCU    - EFM8BB21F16G, C2, reset-safe pulls, test points                                [this review]"
     (at 25.4 57.4 0)
@@ -61,7 +61,7 @@
       )
       (justify left bottom)
     )
-    (uuid "40b7db1a-24e1-41f5-838c-3c0e81c33b82")
+    (uuid "800c4ac2-23ec-4857-8eb9-8a785c578203")
   )
   (text "  4  RF     - antenna protection, LNA/bypass SPDTs, preselector, FM notch, 2x PE42582, 8 filters, bias-T  [next]"
     (at 25.4 60.7 0)
@@ -71,7 +71,7 @@
       )
       (justify left bottom)
     )
-    (uuid "41c436b7-a1dd-4fd0-9de8-68607252b838")
+    (uuid "64be848f-d6c5-457d-91ad-1a073e7d3037")
   )
   (text "  5  Panel  - 6x 74HC595, 48 lamps                                                          [next]"
     (at 25.4 64 0)
@@ -81,7 +81,7 @@
       )
       (justify left bottom)
     )
-    (uuid "ca1574b8-3848-445f-a770-556104b7a4a8")
+    (uuid "a30cf99d-67dd-41c0-b7db-dcf05d80d4a5")
   )
   (text ""
     (at 25.4 67.3 0)
@@ -91,7 +91,7 @@
       )
       (justify left bottom)
     )
-    (uuid "9f225e00-8e9d-4ea3-a1fa-051351e0ecb6")
+    (uuid "5217b428-45bb-407b-a715-60a36b72ff70")
   )
   (text "Conventions: nets in CAPS with global labels cross sheets. Every pin is labelled (no long wires),"
     (at 25.4 70.6 0)
@@ -101,7 +101,7 @@
       )
       (justify left bottom)
     )
-    (uuid "d16f225d-86fd-40b2-9bc3-0e9f5f0d8abc")
+    (uuid "15e77640-1fb4-4c90-8a7c-e3f5cbbd9abe")
   )
   (text "so the Python in hardware/kicad/tools/build.py is the source of truth."
     (at 25.4 73.9 0)
@@ -111,7 +111,7 @@
       )
       (justify left bottom)
     )
-    (uuid "dc2ab40c-b83c-4677-8487-ff6840e33e4a")
+    (uuid "1c95c26d-31e2-492b-90a0-4f971ae0ddbb")
   )
   (text "Firmware pin map: firmware/src/hal_efm8bb2.c   Design notes: docs/hardware.md"
     (at 25.4 77.2 0)
@@ -121,7 +121,7 @@
       )
       (justify left bottom)
     )
-    (uuid "a19f50d9-99d8-403c-b66f-9b3ab2b89cf5")
+    (uuid "11250fe6-dc99-4525-aa2a-36523d73ced9")
   )
   (sheet
     (at 25.4 101.6)
@@ -134,7 +134,7 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "d2bb5aab-6652-40af-9d3d-521a7559008c")
+    (uuid "6881e70d-215a-4b02-bc71-f506b69893d2")
     (property "Sheetname" "Power"
       (at 25.4 100.9 0)
       (effects
@@ -155,7 +155,7 @@
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7"
+        (path "/1a04e1fa-0d14-4373-9a6d-130163cb4ea7"
           (page "2")
         )
       )
@@ -172,7 +172,7 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "0e9b7e7d-a577-492b-bbcc-712e0c2df0a3")
+    (uuid "a65203cf-856a-4039-9e96-db28394347c4")
     (property "Sheetname" "MCU"
       (at 85.4 100.9 0)
       (effects
@@ -193,7 +193,7 @@
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7"
+        (path "/1a04e1fa-0d14-4373-9a6d-130163cb4ea7"
           (page "3")
         )
       )
