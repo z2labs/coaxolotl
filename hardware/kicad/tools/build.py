@@ -836,8 +836,9 @@ def sheet_bank(lib) -> DSheet:
     s.add(C("C35", "22pF/50V/C0G", xc, y1 + 15.24, "RF_COAX_SW", "COAX", rot=90, txt=(xc, y1 + 25.4, None)))
     s.add(Part("L5", "Device:L", "100nH/0603", xl, y1 - 3.81, 0, "Inductor_SMD:L_0603_1608Metric",
                {"1": "BT_1", "2": "COAX"}, txt=(xl - 2.54, y1 - 5.08, "right")))
-    s.add(Part("L6", "Device:L", "10uH/0805", xl, y1 - 15.24, 0, "Inductor_SMD:L_0805_2012Metric",
-               {"1": "BT_2", "2": "BT_1"}, txt=(xl - 2.54, y1 - 16.51, "right")))
+    s.add(Part("L6", "Device:L", "10uH/0.45A(1210)", xl, y1 - 15.24, 0, "Inductor_SMD:L_1210_3225Metric",
+               {"1": "BT_2", "2": "BT_1"}, {"MPN": "LQH32CN100K33L"}, txt=(xl - 2.54, y1 - 16.51, "right")))
+    # L6 carries the whole coax DC (~150 mA): 1210 wire-wound, 450 mA rated (an 0805 10 uH is only ~15 mA)
     s.add(R("R24", "220R/5%", xl + 7.62, y1 - 15.24, "BT_2", "BT_1", Note="damps the L6 self-resonance"))
     s.add(Part("L7", "Device:L", "1mH/0.2A", xl, y1 - 26.67, 0, "Inductor_SMD:L_Bourns_SRR1260",
                {"1": "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))

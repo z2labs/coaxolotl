@@ -51,7 +51,7 @@ L1 L2 L501 L502,4,220nH/5%,L_0603_1608Metric,,,"Filter bank, RF front end",
 L3,1,NA(56nH/2%),L_0603_1608Metric,,DNP,RF front end,
 L4,1,560nH/5%,L_0603_1608Metric,,,RF front end,L4: low-band choke (SWL434)
 L5,1,100nH/0603,L_0603_1608Metric,,,Filter bank,
-L6,1,10uH/0805,L_0805_2012Metric,,,Filter bank,
+L6,1,10uH/0.45A(1210),L_1210_3225Metric,LQH32CN100K33L,,Filter bank,
 L7,1,1mH/0.2A,L_Bourns_SRR1260,SRR1260-102M,,Filter bank,
 L8,1,18nH/2%,L_0603_1608Metric,,,RF front end,L8: high-band choke at the pin (QPL9547 EVB L1)
 L101 L102,2,18uH/5%,L_1210_3225Metric,,,Filter bank,
