@@ -69,6 +69,10 @@ def find1(n, k):
     return r[0] if r else None
 
 
+# the schematic generator owns the net classes (POWER ...); pcbnew's Save rewrites the project file from the board's
+# own (empty) settings, so keep them now and merge them back after the save
+PRO_ORIG = json.load(open(os.path.join(PRJ, "coaxolotl.kicad_pro"), encoding="utf-8"))
+
 board = pcbnew.BOARD()
 board.SetCopperLayerCount(4)
 ds = board.GetDesignSettings()
@@ -758,7 +762,8 @@ RF_NETS = sorted({n for n in netpins if n.startswith(("Net-(U6-", "Net-(U7-", "N
                   or n.endswith("RF_BANK")} - {"Net-(C30-Pad1)"})
 pro = os.path.join(PRJ, "coaxolotl.kicad_pro")
 pj = json.load(open(pro, encoding="utf-8"))
-ns = pj.setdefault("net_settings", {})
+pj["net_settings"] = json.loads(json.dumps(PRO_ORIG.get("net_settings", {})))
+ns = pj["net_settings"]
 classes = ns.setdefault("classes", [])
 base = next(c for c in classes if c["name"] == "Default")
 base.update(clearance=0.2, track_width=0.2, via_diameter=0.6, via_drill=0.3)
