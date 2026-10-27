@@ -519,6 +519,8 @@ for ref, pins in FANOUT.items():
         block_line(q, v, 0.3)
 
 # ------------------------------------------------------------ 5) soft anchors (nearest free spot)
+# fine-pitch ICs get a fan-out ring: their own passives keep this far off the courtyard so every pin can escape
+CLEAR_AROUND = {"U5": 1.6}
 SOFT = {
     "L7": (88.0, 80.0, 0), "C10": (83.0, 94.0, 0),
     "U5": (87.0, 50.0, 0), "J1": (77.0, 40.0, 90),
@@ -527,6 +529,10 @@ SOFT = {
 }
 for ref, (x, y, r) in SOFT.items():
     place_near(ref, (x, y), (r,))
+    if ref in CLEAR_AROUND:
+        m = CLEAR_AROUND[ref]
+        bx = occupied[owner.index(ref)]
+        BLOCK.append((bx[0] - m, bx[1] - m, bx[2] + m, bx[3] + m))
 
 # ------------------------------------------------------------ 6) everything else next to its partner pad
 PARTNER = {

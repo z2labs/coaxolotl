@@ -136,7 +136,10 @@ def unconnected_nets():
         for it in u["items"]:
             m = re.search(r"\[([^\]]+)\]", it["description"])
             if m and m.group(1) != "GND":
-                nets.add(m.group(1))
+                n = m.group(1)
+                if n.startswith("Net-("):          # DRC prints the unescaped name; the netlist keeps {slash}
+                    n = n.replace("/", "{slash}")
+                nets.add(n)
     return sorted(nets)
 
 
