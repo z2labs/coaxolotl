@@ -858,6 +858,18 @@ def text(s, x, y, size=1.0, angle=0, th=0.15, layer=pcbnew.F_SilkS, just=None):
 for n in range(48):          # lamp names: one baseline per row, reading upward from just above the lamp
     row, i = divmod(n, 24)
     text(NAMES[n], LAMP_X0 + i * LAMP_DX, LABEL_BASE[row], 1.0, 90, just="left")
+# no copper along the routed slot (the router does not see the slot as board edge); the right tab is the link
+for (x0, y0, x1, y1) in ((0.0, SLOT_Y0 - 0.6, 80.6, SLOT_Y1 + 0.6),):
+    ko = pcbnew.ZONE(board); ko.SetIsRuleArea(True)
+    ko.SetDoNotAllowVias(True); ko.SetDoNotAllowTracks(True); ko.SetDoNotAllowPads(False)
+    ko.SetDoNotAllowZoneFills(True); ko.SetDoNotAllowFootprints(False)
+    ls_ = pcbnew.LSET(); [ls_.AddLayer(l) for l in (pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.B_Cu)]
+    ko.SetLayerSet(ls_); ko.SetZoneName("SLOT_KEEPOUT")
+    ol = ko.Outline(); ol.NewOutline()
+    for (x, y) in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
+        ol.Append(mm(OX + x), mm(OY + y))
+    board.Add(ko)
+
 # no via may land on a lamp name (silk_dfm would push the text off its grid)
 for (x0, y0, x1, y1) in LABEL_BOXES:
     ko = pcbnew.ZONE(board); ko.SetIsRuleArea(True)
@@ -905,7 +917,9 @@ base.update(clearance=0.15, track_width=0.2, via_diameter=0.6, via_drill=0.3)   
 rf = next((c for c in classes if c["name"] == "RF"), None)
 if rf is None:
     rf = dict(base); rf["name"] = "RF"; classes.append(rf)
-rf.update(clearance=0.2, track_width=0.35, via_diameter=0.6, via_drill=0.3)
+rf.update(clearance=0.15, track_width=0.35, via_diameter=0.6, via_drill=0.3)   # router keeps 0.2 (route.py)
+for c in classes:                      # one DRC clearance for every class: the post-route tools work to 0.15
+    c["clearance"] = 0.15
 pats = [p for p in ns.get("netclass_patterns", []) if p["netclass"] != "RF"]
 pats += [{"netclass": "RF", "pattern": n} for n in RF_NETS]
 ns["netclass_patterns"] = pats
