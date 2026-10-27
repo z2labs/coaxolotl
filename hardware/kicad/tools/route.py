@@ -59,7 +59,8 @@ def net_rules():
 PASSES = [
     ("pass1_rf", RF, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "80"]),
     ("pass2_power", POWER, [], ["-top", "F.Cu:3", "-via", "3000", "-it", "60"]),
-    ("pass3_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "80"]),
+    ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*"], [], ["-top", "F.Cu:2", "-via", "1500", "-it", "40"]),
+    ("pass4_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "40"]),
 ]
 
 

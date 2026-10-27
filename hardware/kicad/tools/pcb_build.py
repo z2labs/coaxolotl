@@ -275,6 +275,9 @@ def chain(start, end, allowed):
     return items
 
 
+EXTRA = {"R22": 3.6}           # room either side of the FM-notch bypass link for the notch switches U9 / U10
+
+
 def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
     """lay a chain along a polyline. side(d) -> unit vector of the side the shunts hang to for direction d."""
     segs = []
@@ -284,6 +287,7 @@ def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
             segs.append((a, ((b[0] - a[0]) / L, (b[1] - a[1]) / L), L))
     si, s = 0, s0
     for kind, ref, n_in, n_out in items:
+        s += EXTRA.get(ref, 0.0)
         while True:
             a, d, L = segs[si]
             o = side(d)
@@ -324,7 +328,7 @@ def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
             cx = lp[0] - d[0] * m_al - perp[0] * m_pp
             cy = lp[1] - d[1] * m_al - perp[1] * m_pp
             put(ref, round(cx, 3), round(cy, 3), r)
-            s = c_al + amax + CGAP
+            s = c_al + amax + CGAP + EXTRA.get(ref, 0.0)
             if s > L - s_end + 0.01 and si == len(segs) - 1:
                 print(f"WARNING: chain {name} overruns its line at {ref}")
             break
@@ -335,7 +339,7 @@ def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
 
 # ------------------------------------------------------------ 1) RF anchors
 DOWN, UP, LEFT, RIGHT = (0, 1), (0, -1), (-1, 0), (1, 0)
-X_U6, X_U7, X_U8 = 18.0, 29.5, 38.5
+X_U6, X_U7, X_U8 = 18.0, 33.0, 42.0
 put("J2", 2.54, YC, 180)              # flange line at local x = +2.54: rot 180 puts it on the board edge
 put("J3", W - 2.54, YC, 0)
 put("U6", X_U6, YC, orient("U6", {"7": LEFT, "11": DOWN}))     # RFC to the antenna, RF2 (LNA) down
@@ -355,6 +359,16 @@ a, b = padpos[("U6", "11")], padpos[("U7", "2")]
 LOOP = YC + 23.0
 lay(chain(pinnet[("U6", "11")], pinnet[("U7", "2")], fe),
     [a, (a[0], LOOP), (b[0], LOOP), b], OUTSIDE, s0=0.9, s_end=0.9, name="LNA")
+# FM notch (U9 / U10, not fitted by default): the switches sit just outside the loop at both ends of the R22 link,
+# RFC toward the line, so fitting them means only lifting R22
+r22 = nets_of("R22")
+p_in = next(padpos[("R22", p)] for p, n in r22.items() if n == pinnet[("U12", "3")])
+p_out = next(padpos[("R22", p)] for p, n in r22.items() if n != pinnet[("U12", "3")])
+d = ((p_out[0] - p_in[0]) / math.dist(p_in, p_out), (p_out[1] - p_in[1]) / math.dist(p_in, p_out))
+o = OUTSIDE((round(d[0]), round(d[1])))
+for u, p, sg in (("U9", p_in, -1), ("U10", p_out, 1)):
+    put(u, round(p[0] + sg * d[0] * 2.4 + o[0] * 3.4, 3), round(p[1] + sg * d[1] * 2.4 + o[1] * 3.4, 3),
+        orient(u, {"7": (-o[0], -o[1])}))
 block_line(padpos[("U6", "2")], (padpos[("U6", "2")][0], YC - 4.5))     # bypass arc over the top
 block_line((padpos[("U6", "2")][0], YC - 4.5), (padpos[("U7", "11")][0], YC - 4.5))
 block_line(padpos[("U7", "11")], (padpos[("U7", "11")][0], YC - 4.5))
