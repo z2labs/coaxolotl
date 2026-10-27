@@ -108,8 +108,15 @@ comps, sheet_of = {}, {}
 for c in find(find1(net, "components"), "comp"):
     ref = find1(c, "ref")[1]
     props = {find1(p, "name")[1] for p in find(c, "property") if find1(p, "name")}
+    fl = find1(c, "fields")
+    fields = {find1(f, "name")[1]: (f[2] if len(f) > 2 else "") for f in find(fl, "field")} if fl else {}
+    ls = find1(c, "libsource")
+    if ls is not None and find1(ls, "description"):
+        fields["Description"] = find1(ls, "description")[1]
+    if find1(c, "datasheet"):
+        fields["Datasheet"] = find1(c, "datasheet")[1]
     comps[ref] = dict(value=find1(c, "value")[1], fp=(find1(c, "footprint") or [None, ""])[1],
-                      dnp="dnp" in props, nobom="exclude_from_bom" in props)
+                      dnp="dnp" in props, nobom="exclude_from_bom" in props, fields=fields)
     sp = find1(c, "sheetpath")
     sheet_of[ref] = (find1(sp, "names")[1] if sp else "/").strip("/")
 pinnet, netobjs, netpins = {}, {}, {}
@@ -156,6 +163,13 @@ for ref, c in sorted(comps.items()):
     fp = load_fp(c["fp"])
     fp.SetReference(ref); fp.SetValue(c["value"])
     fp.SetDNP(c["dnp"]); fp.SetExcludedFromBOM(c["nobom"])
+    for fname, fval in c["fields"].items():          # symbol fields (MPN, Place, Zone): schematic parity
+        try:
+            fp.SetField(fname, fval)
+            f = fp.GetField(fname)
+        except Exception:
+            f = pcbnew.PCB_FIELD(fp, fp.GetFieldCount(), fname); f.SetText(fval); fp.AddField(f)
+        f.SetVisible(False); f.SetLayer(pcbnew.F_Fab)
     for pad in fp.Pads():
         n = pinnet.get((ref, pad.GetNumber()))
         if n:
