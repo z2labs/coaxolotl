@@ -478,6 +478,27 @@ for i, x in enumerate(bites):
     fp.SetReference(f"MB{i + 1}"); fp.SetPosition(P(x, ym)); fp.SetBoardOnly(True)
     board.Add(fp)
 
+# ------------------------------------------------------------ 4b) RF switch control pins: fan-out via positions
+# each control / supply pin gets its own via right off the pin (two staggered rows, 0.4/0.2 mm), so those nets drop
+# to In2/B.Cu inside the rings the RF tracks close on F.Cu. Kept free of parts from here on.
+FANOUT = {"U6": "14 15 16", "U7": "14 16", "U9": "14 15 16", "U10": "14 16", "U8": "8 9 10 11", "U11": "8 9 10 11"}
+FAN = []
+for ref, pins in FANOUT.items():
+    c = where[ref][:2]
+    side = []
+    for pin in pins.split():
+        q = padpos[(ref, pin)]
+        dx, dy = q[0] - c[0], q[1] - c[1]
+        n = (1.0 if dx > 0 else -1.0, 0.0) if abs(dx) > abs(dy) else (0.0, 1.0 if dy > 0 else -1.0)
+        side.append((pin, q, n))
+    side.sort(key=lambda t: t[1][0] * t[2][1] - t[1][1] * t[2][0])      # along the side
+    for i, (pin, q, n) in enumerate(side):
+        dist = 1.0 if i % 2 == 0 else 1.8
+        v = (q[0] + n[0] * dist, q[1] + n[1] * dist)
+        FAN.append((ref, pin, q, v))
+        BLOCK.append((v[0] - 0.5, v[1] - 0.5, v[0] + 0.5, v[1] + 0.5))
+        block_line(q, v, 0.3)
+
 # ------------------------------------------------------------ 5) soft anchors (nearest free spot)
 SOFT = {
     "L7": (88.0, 80.0, 0), "C10": (83.0, 94.0, 0),
@@ -646,25 +667,11 @@ for ref, fp in fps.items():
             add_track(q, (tx, ty), 0.15)
 print("exposed-pad vias:", nep)
 
-# control pins of the RF switches: each gets its own via right off the pin (two staggered rows, 0.4/0.2 mm), so the
-# control and supply nets drop to In2/B.Cu inside the rings the RF tracks close on F.Cu
-FANOUT = {"U6": "14 15 16", "U7": "14 16", "U9": "14 15 16", "U10": "14 16", "U8": "8 9 10 11", "U11": "8 9 10 11"}
 nfan = 0
-for ref, pins in FANOUT.items():
-    c = where[ref][:2]
-    side = []
-    for pin in pins.split():
-        q = padpos[(ref, pin)]
-        dx, dy = q[0] - c[0], q[1] - c[1]
-        n = (1.0 if dx > 0 else -1.0, 0.0) if abs(dx) > abs(dy) else (0.0, 1.0 if dy > 0 else -1.0)
-        side.append((pin, q, n))
-    side.sort(key=lambda t: t[1][0] * t[2][1] - t[1][1] * t[2][0])      # along the side
-    for i, (pin, q, n) in enumerate(side):
-        dist = 1.0 if i % 2 == 0 else 1.8
-        v = (q[0] + n[0] * dist, q[1] + n[1] * dist)
-        add_track(q, v, 0.15, pinnet[(ref, pin)])
-        add_via(*v, net=pinnet[(ref, pin)], d=0.4, h=0.2)
-        nfan += 1
+for ref, pin, q, v in FAN:
+    add_track(q, v, 0.15, pinnet[(ref, pin)])
+    add_via(*v, net=pinnet[(ref, pin)], d=0.4, h=0.2)
+    nfan += 1
 print("switch control fan-out vias:", nfan)
 
 # pins walled in by RF risers: U11 pin 1 (LS = VDD) sits between the RF2 riser and the RF1 riser round the corner.
@@ -811,7 +818,7 @@ pats = [p for p in ns.get("netclass_patterns", []) if p["netclass"] != "RF"]
 pats += [{"netclass": "RF", "pattern": n} for n in RF_NETS]
 ns["netclass_patterns"] = pats
 bd = pj.setdefault("board", {}).setdefault("design_settings", {}).setdefault("rules", {})
-bd.update(min_through_hole_diameter=0.2, min_via_diameter=0.45, min_via_annular_width=0.1,
+bd.update(min_through_hole_diameter=0.2, min_via_diameter=0.4, min_via_annular_width=0.1,
           min_copper_edge_clearance=0.3, min_clearance=0.15, min_track_width=0.15, min_hole_to_hole=0.25)
 json.dump(pj, open(pro, "w", encoding="utf-8"), indent=2)
 json.dump({r: list(v) for r, v in where.items()}, open(os.path.join(PRJ, "placement.json"), "w"), indent=0)
