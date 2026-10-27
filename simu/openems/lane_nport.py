@@ -43,6 +43,7 @@ def main():
     ap.add_argument("--variant", default=None)
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--nf", type=int, default=601)
+    ap.add_argument("--coarse", type=float, default=1.0, help="mesh coarsening (kicad_sim): >1 faster")
     a = ap.parse_args()
     ks._setup_python()
     from CSXCAD.KiCadImport import KiCadBoard
@@ -98,7 +99,7 @@ def main():
                    ports=names), open(os.path.join(a.out, "ports.json"), "w"), indent=1)
     print(f"{len(ports)} ports, window {x1 - x0:.1f} x {y1 - y0:.1f} mm", flush=True)
     ks.simulate(a.board, None, a.fmin, a.fmax, a.out, ports=ports, board_obj=b, variant=a.variant,
-                threads=a.threads, nf=a.nf)
+                threads=a.threads, nf=a.nf, coarse=a.coarse)
 
 
 if __name__ == "__main__":
