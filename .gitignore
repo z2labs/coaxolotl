@@ -2,3 +2,8 @@ firmware/build/
 __pycache__/
 *.pyc
 .venv/
+
+# routing scratch (DSN/SES per pass)
+hardware/kicad/route/
+hardware/kicad/*-backups/
+hardware/kicad/fp-info-cache

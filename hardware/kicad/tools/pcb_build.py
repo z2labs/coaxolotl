@@ -335,7 +335,7 @@ def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
 
 # ------------------------------------------------------------ 1) RF anchors
 DOWN, UP, LEFT, RIGHT = (0, 1), (0, -1), (-1, 0), (1, 0)
-X_U6, X_U7, X_U8 = 17.0, 29.0, 38.0
+X_U6, X_U7, X_U8 = 18.0, 29.5, 38.5
 put("J2", 2.54, YC, 180)              # flange line at local x = +2.54: rot 180 puts it on the board edge
 put("J3", W - 2.54, YC, 0)
 put("U6", X_U6, YC, orient("U6", {"7": LEFT, "11": DOWN}))     # RFC to the antenna, RF2 (LNA) down
@@ -477,6 +477,7 @@ PARTNER = {
     "C32": ("FB2", "1"), "C40": ("FB2", "1"), "FB2": ("L4", "1"), "R1": ("U1", "1"), "D1": ("U1", "1"),
     "C8": ("FB1", "2"), "R16": ("U5", "20"), "R17": ("U5", "19"), "R18": ("U5", "18"), "R15": ("U6", "14"),
     "R26": ("U7", "14"), "R19": ("U5", "17"), "R14": ("U2", "3"), "R20": ("U14", "13"),
+    "R9": ("U1", "3"), "FB1": ("U1", "3"), "R2": ("U1", "1"), "D3": ("R9", "2"), "D2": ("R2", "2"),
 }
 
 
@@ -722,6 +723,11 @@ for k, y in lane_y.items():
     text(f"F{k}", X0 - 0.3 - 1.4, y, 0.8)
 
 # ------------------------------------------------------------ save + project rules
+# lamp strip and its drivers: references on the fab layer (the strip is the front panel; JLC needs no silk refs)
+for ref, fp in fps.items():
+    if where.get(ref, (0, 99))[1] < SLOT_Y0:
+        fp.Reference().SetLayer(pcbnew.F_Fab)
+
 filler = pcbnew.ZONE_FILLER(board)
 filler.Fill(board.Zones())
 out = os.path.join(PRJ, "coaxolotl.kicad_pcb")
