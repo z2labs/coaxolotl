@@ -182,6 +182,16 @@ def build_library(path: pathlib.Path):
             pin_types={"16": "power_in", "14": "input", "15": "input",
                        "1,3,4,5,6,8,9,10,12,13,17": "power_in"}),
         ic_symbol(
+            "PE42520R", "U", "Package_DFN_QFN:QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
+            "https://www.lcsc.com/datasheet/C500478.pdf",
+            "PE42520 drawn for LS = GND: CTRL=0 RFC-RF2, CTRL=1 RFC-RF1 (datasheet table 5). Same part and "
+            "pins as PE42520; used where the board needs the RF ports swapped (one-layer ring, no crossing)",
+            left=[("7", "RFC"), None, ("14", "CTRL")], right=[("11", "RF2"), None, ("2", "RF1")],
+            width=20.32, top_pins=[("16", "VDD")],
+            bottom_pins=[("1,3,4,5,6,8,9,10,12,13,17", "GND"), ("15", "LS")],
+            pin_types={"16": "power_in", "14": "input", "15": "input",
+                       "1,3,4,5,6,8,9,10,12,13,17": "power_in"}),
+        ic_symbol(
             "LTCC_LPF", "U", "coaxolotl:MiniCircuits_FV1206",
             "https://www.minicircuits.com/pdfs/LFCN-2250+.pdf",
             "Mini-Circuits LFCN LTCC low-pass filter (FV1206). VERIFY pinout: 1 IN, 3 OUT, 2/4 GND",
@@ -508,20 +518,25 @@ def _sw_supply(s, ref, cap_ref, right=True, up=17.78):
     s.w((x, y - up + 2.54), (cxc, y - up + 2.54))
     s.add(C(cap_ref, "100nF/16V/10%", cxc, y - up + 6.35, "+3V3", "GND", Place=f"{ref}.{s.vdd[ref]}"))
     s.gnd(cap_ref, "2")
-    _ls_tie(s, ref, y - up + 12.7)
+    if s.byref[ref].lib_id.endswith("PE42520"):
+        _ls_tie(s, ref, y - up + 12.7)
 
 
 PE42520_GND = "1,3,4,5,6,8,9,10,12,13,17".split(",")
 
 
-def _pe42522(s, ref, x, y, rfc, v1, rf1, rf2, **kw):
-    """PE42520 SPDT (name kept for the call sites). LS = VDD: CTRL 0 = RF1."""
-    s.add(Part(ref, "coaxolotl:PE42520", kw.pop("value", "PE42520C-Z(QFN16)"), x, y, 0,
-               "Package_DFN_QFN:QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
-               {"7": rfc, "14": v1, "2": rf1, "11": rf2, "16": "+3V3", "15": "+3V3",
+def _pe42522(s, ref, x, y, rfc, v1, rf1, rf2, inv=False, **kw):
+    """PE42520 SPDT. rf1/rf2 = net on the upper/lower RF row of the symbol, which is the port selected by
+    CTRL = 0/1. inv=False: LS = VDD, upper row = RF1. inv=True: LS = GND, upper row = RF2 (PE42520R)."""
+    ports = {"11": rf1, "2": rf2} if inv else {"2": rf1, "11": rf2}
+    s.add(Part(ref, "coaxolotl:PE42520R" if inv else "coaxolotl:PE42520", kw.pop("value", "PE42520C-Z(QFN16)"),
+               x, y, 0, "Package_DFN_QFN:QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
+               {"7": rfc, "14": v1, **ports, "16": "+3V3", "15": "GND" if inv else "+3V3",
                 **{n: "GND" for n in PE42520_GND}}, **kw))
     s.vdd[ref] = "16"
     s.gnd(ref, "1")
+    if inv:
+        s.gnd(ref, "15")
 
 
 def _ls_tie(s, ref, ytop):
@@ -593,22 +608,23 @@ def sheet_rf_fe(lib) -> DSheet:
     s.w(s.pt("U12", "3"), s.pt("R22", "1"))
     _pe42522(s, "U9", 231.14, yn, "FMN_IN", "FMN", "FMN_THRU", "FMN_TANK_A", value="NA(PE42520C-Z)",
              dnp=True, txt=(231.14, 177.8, None))
-    _pe42522(s, "U10", 281.94, yn, "FMN_OUT", "FMN", "FMN_THRU", "FMN_TANK_B", value="NA(PE42520C-Z)",
+    _pe42522(s, "U10", 281.94, yn, "FMN_OUT", "FMN", "FMN_THRU", "FMN_TANK_B", inv=True, value="NA(PE42520C-Z)",
              dnp=True, mirror=True, txt=(281.94, 177.8, None))
     for ref in ("U9", "U10"):
         x, y = s.pt(ref, "16")
         s.w((x, y), (x, y - 5.08))
         s.rail("+3V3", x, y - 5.08)
-        _ls_tie(s, ref, y - 2.54)
+        if s.byref[ref].lib_id.endswith("PE42520"):
+            _ls_tie(s, ref, y - 2.54)
     s.add(Part("L3", "Device:L", "NA(56nH/2%)", 256.54, yn + 2.54, 90, "Inductor_SMD:L_0603_1608Metric",
                {"1": "FMN_TANK_A", "2": "FMN_TANK_B"}, dnp=True, txt=(256.54, 175.26, None)))
     s.add(C("C27", "NA(47pF/C0G)", 256.54, yn + 10.16, "FMN_TANK_A", "FMN_TANK_B", rot=90, dnp=True,
             txt=(256.54, 180.34, None)))
     s.w((213.36, yl), (213.36, yn - 2.54), s.pt("U9", "7"))
-    s.w(s.pt("U9", "2"), s.pt("U10", "2"))
+    s.w(s.pt("U9", "2"), s.pt("U10", "11"))
     s.w(s.pt("U9", "11"), s.pt("L3", "1"), )
     s.w(s.pt("L3", "1"), s.pt("C27", "1"))
-    s.w(s.pt("L3", "2"), s.pt("U10", "11"))
+    s.w(s.pt("L3", "2"), s.pt("U10", "2"))
     s.w(s.pt("L3", "2"), s.pt("C27", "2"))
     s.pw("U10", "7", (299.72, None), (None, yl))
     s.pw("U9", "14", (215.9, None), (None, yf))
@@ -662,11 +678,11 @@ def sheet_rf_fe(lib) -> DSheet:
         s.intent(t, 281.94, 131.45 + 3.18 * i)
     # LNA / bypass out -------------------------------------------------------
     s.frame(365.76, 45.72, 30.48, 58.42, "LNA/BYP OUT")
-    _pe42522(s, "U7", 381.0, 80.01, "RF_BANK", "LNA_PATH", "BYP_RF", "LNA_RF_SW", mirror=True,
+    _pe42522(s, "U7", 381.0, 80.01, "RF_BANK", "LNA_PATH", "BYP_RF", "LNA_RF_SW", inv=True, mirror=True,
              txt=(381.0, 97.79, None))
     _sw_supply(s, "U7", "C37", right=False)
-    s.w(s.pt("U6", "2"), s.pt("U7", "2"))
-    s.pw("C31", "2", (363.22, None), (None, s.pt("U7", "11")[1]), s.pt("U7", "11"))
+    s.w(s.pt("U6", "2"), s.pt("U7", "11"))
+    s.pw("C31", "2", (363.22, None), (None, s.pt("U7", "2")[1]), s.pt("U7", "2"))
     s.pw("U7", "7", (401.32, None))
     s.hlabel("RF_BANK", 401.32, y0, "R", "bidirectional")
     s.pw("U7", "14", (398.78, None), (None, yp))
@@ -682,7 +698,7 @@ def sheet_rf_fe(lib) -> DSheet:
     s.hlabel("FMN", 190.5, yf, "L", "input")
     s.gnd("R15", "2")
     s.gnd("R19", "2")
-    s.intent("LNA_PATH: 0 = RF1 = bypass, 1 = RF2 = LNA.   FMN: 0 = RF1 = through, 1 = RF2 = notch.", 228.6, 206.38)
+    s.intent("LNA_PATH 0 = bypass, 1 = LNA; FMN 0 = through. U7/U10 have LS = GND (RF ports swapped: one-layer ring).", 228.6, 206.38)
     s.intent("PE42520 RF ports sit at 0 VDC: no blocking caps except around the LNA.", 228.6, 209.55)
     return s
 
