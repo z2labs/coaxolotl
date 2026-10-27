@@ -359,7 +359,7 @@ def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
 # ------------------------------------------------------------ 1) RF anchors
 DOWN, UP, LEFT, RIGHT = (0, 1), (0, -1), (-1, 0), (1, 0)
 X_U6, X_U7, X_U8 = 18.0, 33.0, 42.0
-put("J2", 2.54, YC, 180)              # flange line at local x = +2.54: rot 180 puts it on the board edge
+put("J2", 2.541, YC, 180)             # flange line at local x = +2.54: rot 180 puts it on the board edge (1 um in)
 put("J3", W - 2.54, YC, 0)
 put("U6", X_U6, YC, orient("U6", {"7": LEFT, "11": DOWN}))     # RFC to the antenna, RF2 (LNA) down
 put("U7", X_U7, YC, orient("U7", {"7": RIGHT, "2": DOWN}))     # RFC to the bank, RF1 (LNA out) down
