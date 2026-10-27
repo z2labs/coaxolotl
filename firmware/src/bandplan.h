@@ -7,7 +7,7 @@
 /* F2 160/80   RF3 code 010  BPF 1.6-4.0 MHz          LNA:no  FMN:no  */
 /* F3 60-30    RF4 code 110  BPF 4-12 MHz             LNA:no  FMN:no  */
 /* F4 20-10    RF5 code 001  BPF 12-30 MHz            LNA:no  FMN:no  */
-/* F5 6/4m     RF6 code 101  BPF 30-88 MHz            LNA:yes FMN:no  */
+/* F5 6/4m     RF6 code 101  BPF 30-80 MHz            LNA:yes FMN:no  */
 /* F6 2m/AIR   RF7 code 011  BPF 108-174 MHz          LNA:yes FMN:yes */
 /* F7 70/23cm  RF8 code 111  HPF 380 MHz              LNA:yes FMN:no  */
 

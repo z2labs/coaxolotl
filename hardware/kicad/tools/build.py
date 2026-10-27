@@ -21,6 +21,7 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import schgen as g  # noqa: E402
+import filters
 from draw import DSheet  # noqa: E402
 from schgen import Part, Sym  # noqa: E402
 
@@ -675,43 +676,71 @@ def sheet_rf_fe(lib) -> DSheet:
 # sheet 5: FILTER BANK + BIAS-T
 
 PE42582_GND = "3,5,14,16,18,20,21,23,25".split(",")
-BANK = [("F0 THRU", None), ("F1 LPF 550 kHz", "LF"), ("F2 BPF 1.6-4 MHz", "160/80"),
-        ("F3 BPF 4-12 MHz", "60-30"), ("F4 BPF 12-30 MHz", "20-10"), ("F5 BPF 30-88 MHz", "6/4m"),
-        ("F6 BPF 108-174 MHz", "2m/AIR"), ("F7 HPF 380 MHz", "70/23cm")]
+FLT_PITCH = 15.24      # one ladder element per slot
+ROW0, ROW_PITCH = 60.96, 25.4
+
+
+def _ladder(s, k, x0, y, a, b):
+    """branch k LC ladder from (x0, y) on net a to net b; returns the end x."""
+    els = filters.design(k)
+    nseries = sum(1 for e in els if e[0] == "S")
+    x, node, n_c, n_l, si = x0, a, 0, 0, 0
+    for i, (topo, kind, _, val) in enumerate(els):
+        if kind == "C":
+            n_c += 1
+            ref = f"C{k}{n_c:02d}"
+        else:
+            n_l += 1
+            ref = f"L{k}{n_l:02d}"
+        value, fp = filters.part_value(kind, val)
+        lib = "Device:C" if kind == "C" else "Device:L"
+        cx = x + FLT_PITCH / 2
+        if topo == "S":
+            si += 1
+            nxt = b if si == nseries else f"F{k}_N{si}"
+            s.add(Part(ref, lib, value, cx, y, 90, fp, {"1": node, "2": nxt}, txt=(cx, y - 6.35, None)))
+            s.w((x, y), s.pt(ref, "1"))
+            s.w(s.pt(ref, "2"), (x + FLT_PITCH, y))
+            node = nxt
+        else:
+            s.add(Part(ref, lib, value, cx, y + 3.81, 0, fp, {"1": node, "2": "GND"},
+                       txt=(cx + 2.54, y + 3.81)))
+            s.w((x, y), (x + FLT_PITCH, y))
+            s.gnd(ref, "2")
+        x += FLT_PITCH
+    return x
 
 
 def sheet_bank(lib) -> DSheet:
     s = sheet(lib, "Filter bank", "filterbank.kicad_sch", "2x PE42582 SP8T, 8 filter branches, bias-T, coax")
     s.zone = "RF"
     rfp = ["24", "2", "4", "6", "13", "15", "17", "19"]          # RF1..RF8
-    s.frame(38.1, 38.1, 182.88, 200.66, "Filter bank")
-    for ref, x, mir, com in (("U8", 88.9, False, "RF_BANK"), ("U11", 190.5, True, "RF_COAX_SW")):
+    xu8, xu11 = 40.64, 289.56
+    yu = ROW0 + 8.89
+    s.frame(12.7, 30.48, 299.72, 222.25, "Filter bank")
+    for ref, x, mir, com in (("U8", xu8, False, "RF_BANK"), ("U11", xu11, True, "RF_COAX_SW")):
         nets = {"22": com, "9": "SW_V1", "10": "SW_V2", "11": "SW_V3", "12": "GND", "1": "GND", "7": "GND",
                 "8": "+3V3", **{n: "GND" for n in PE42582_GND}}
         nets.update({p: f"{ref}_RF{k + 1}" for k, p in enumerate(rfp)})
-        s.add(Part(ref, "coaxolotl:PE42582", "PE42582A(QFN24)", x, 76.2, 0,
+        s.add(Part(ref, "coaxolotl:PE42582", "PE42582A(QFN24)", x, yu, 0,
                    "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm", nets, mirror=mir,
-                   txt=(x, 99.06, None)))
-    # fan-out to the branches (lower pins turn earlier: no crossings)
+                   txt=(x, yu + 22.86, None)))
+    xs, xe = 76.2, 76.2 + 10 * FLT_PITCH
     for k, p in enumerate(rfp):
-        yr = 67.31 + 20.32 * k
-        xa = 104.14 + (7 - k) * 2.54
-        xb = 157.48 + k * 2.54
+        yr = ROW0 + ROW_PITCH * k
+        xa = 55.88 + (7 - k) * 2.54
+        xb = xe + 2.54 + k * 2.54
         a, b = f"U8_RF{k + 1}", f"U11_RF{k + 1}"
-        name, _ = BANK[k]
         if k == 0:
-            s.add(R("R21", "0R/0603", 139.7, yr, a, b, rot=90, Note="F0 = straight through",
-                    txt=(139.7, yr - 5.08, None)))
+            s.add(R("R21", "0R/0603", xs + FLT_PITCH / 2, yr, a, b, rot=90, Note="F0 = straight through",
+                    txt=(xs + FLT_PITCH / 2, yr - 6.35, None)))
             s.w(s.pt("U8", p), s.pt("R21", "1"))
             s.w(s.pt("R21", "2"), s.pt("U11", p))
-        else:
-            ref = f"FL{k}"
-            s.add(Part(ref, "coaxolotl:RF_FILTER", name, 139.7, yr, 0, "coaxolotl:FILTER_TBD",
-                       {"1": a, "2": b, "3": "GND"}, {"Note": "LC network: filter review"},
-                       txt=(130.81, yr - 6.35)))
-            s.pw("U8", p, (xa, None), (None, yr), s.pt(ref, "1"))
-            s.pw(ref, "2", (xb, None), (None, s.pt("U11", p)[1]), s.pt("U11", p))
-            s.gnd(ref, "3")
+            continue
+        s.pw("U8", p, (xa, None), (None, yr), (xs, yr))
+        end = _ladder(s, k, xs, yr, a, b)
+        s.w((end, yr), (xb, yr), (xb, s.pt("U11", p)[1]), s.pt("U11", p))
+        s.ctext(filters.BRANCHES[k][0], xs - 2.54, yr - 15.24, 1.27, left=True)
     for ref, sgn in (("U8", -1), ("U11", 1)):
         x = s.byref[ref].x
         side = x + sgn * 12.7
@@ -725,59 +754,64 @@ def sheet_bank(lib) -> DSheet:
         s.w((tie, s.pt(ref, "12")[1]), (tie, s.pt(ref, "7")[1] + 2.54))
         s.rail("GND", tie, s.pt(ref, "7")[1] + 2.54)
         s.gnd(ref, "3")
-        s.w(s.pt(ref, "8"), (x, 45.72))
-        s.rail("+3V3", x, 45.72)
+        top = s.pt(ref, "8")[1]
+        s.w(s.pt(ref, "8"), (x, top - 15.24))
+        s.rail("+3V3", x, top - 15.24)
         cx = x + (7.62 if sgn < 0 else -7.62)
-        s.w((x, 48.26), (cx, 48.26))
-        s.add(C(f"C{38 if ref == 'U8' else 39}", "100nF/16V/10%", cx, 52.07, "+3V3", "GND",
-                Place=f"{ref}.8"))
+        s.w((x, top - 12.7), (cx, top - 12.7))
+        s.add(C(f"C{38 if ref == 'U8' else 39}", "100nF/16V/10%", cx, top - 8.89, "+3V3", "GND",
+                Place=f"{ref}.8", txt=(cx + (2.54 if sgn < 0 else -2.54), top - 10.16, "left" if sgn < 0 else "right")))
         s.gnd(f"C{38 if ref == 'U8' else 39}", "2")
-    s.pw("U8", "22", (63.5, None))
-    s.hlabel("RF_BANK", 63.5, 67.31, "L", "bidirectional")
-    s.intent("Branch k on RFk+1 of both switches. LS = 0 code (V3 V2 V1) per RF port: "
-             "RF1 000, RF2 100, RF3 010, RF4 110, RF5 001, RF6 101, RF7 011, RF8 111", 40.64, 228.6)
-    s.intent("bandplan.json 'port' -> code mapping is done in tools/gen_bandplan.py. "
-             "V4 = LS = VSS_EXT = GND (all-off unused, internal negative generator).", 40.64, 231.77)
-    s.intent("Reset: V = 000 -> RF1 = F0 THRU (straight through).", 40.64, 234.95)
+    s.pw("U8", "22", (22.86, None))
+    s.hlabel("RF_BANK", 22.86, ROW0, "L", "bidirectional")
+    for i, t in enumerate(["Branch k on RFk+1 of both switches. LS = 0 code (V3 V2 V1):",
+                           "RF1 000, RF2 100, RF3 010, RF4 110, RF5 001, RF6 101, RF7 011, RF8 111",
+                           "(mapped in tools/gen_bandplan.py). V4 = LS = VSS_EXT = GND.",
+                           "Filters: 5th-order Chebyshev 0.1 dB, 50 ohm, E12 values,",
+                           "BPF = HPF + LPF (tools/filters.py). Ideal-part response there;",
+                           "VERIFY with real L Q / SRF and the layout on a VNA."]):
+        s.intent(t, 325.12, 200.66 + 3.18 * i)
 
     # bias-T + coax ---------------------------------------------------------
-    s.frame(223.52, 25.4, 78.74, 81.28, "Bias-T + coax to RTL-SDR")
-    xc, y1 = 231.14, 67.31
+    X = 322.58
+    s.frame(X, 25.4, 78.74, 81.28, "Bias-T + coax to RTL-SDR")
+    xc, y1 = X + 7.62, ROW0
+    xl = X + 30.48
     s.add(C("C33", "2.2uF/16V/X7R", xc, y1, "RF_COAX_SW", "COAX", rot=90, fp=C0805, txt=(xc, y1 - 7.62, None)))
     s.add(C("C34", "1nF/50V/C0G", xc, y1 + 7.62, "RF_COAX_SW", "COAX", rot=90, txt=(xc, y1 + 20.32, None)))
     s.add(C("C35", "22pF/50V/C0G", xc, y1 + 15.24, "RF_COAX_SW", "COAX", rot=90, txt=(xc, y1 + 25.4, None)))
-    s.add(Part("L5", "Device:L", "100nH/0603", 254.0, 63.5, 0, "Inductor_SMD:L_0603_1608Metric",
-               {"1": "BT_1", "2": "COAX"}, txt=(251.46, 62.23, "right")))
-    s.add(Part("L6", "Device:L", "10uH/0805", 254.0, 52.07, 0, "Inductor_SMD:L_0805_2012Metric",
-               {"1": "BT_2", "2": "BT_1"}, txt=(251.46, 50.8, "right")))
-    s.add(R("R24", "220R/5%", 261.62, 52.07, "BT_2", "BT_1", Note="damps the L6 self-resonance"))
-    s.add(Part("L7", "Device:L", "1mH/0.2A", 254.0, 40.64, 0, "Inductor_SMD:L_Bourns_SRR1260",
-               {"1": "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(251.46, 39.37, "right")))
-    s.add(Part("J3", "Connector:Conn_Coaxial", "SMA/EDGE(RTL-SDR)", 279.4, y1, 0,
+    s.add(Part("L5", "Device:L", "100nH/0603", xl, y1 - 3.81, 0, "Inductor_SMD:L_0603_1608Metric",
+               {"1": "BT_1", "2": "COAX"}, txt=(xl - 2.54, y1 - 5.08, "right")))
+    s.add(Part("L6", "Device:L", "10uH/0805", xl, y1 - 15.24, 0, "Inductor_SMD:L_0805_2012Metric",
+               {"1": "BT_2", "2": "BT_1"}, txt=(xl - 2.54, y1 - 16.51, "right")))
+    s.add(R("R24", "220R/5%", xl + 7.62, y1 - 15.24, "BT_2", "BT_1", Note="damps the L6 self-resonance"))
+    s.add(Part("L7", "Device:L", "1mH/0.2A", xl, y1 - 26.67, 0, "Inductor_SMD:L_Bourns_SRR1260",
+               {"1": "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
+    s.add(Part("J3", "Connector:Conn_Coaxial", "SMA/EDGE(RTL-SDR)", X + 55.88, y1, 0,
                "Connector_Coaxial:SMA_Amphenol_132289_EdgeMount", {"1": "COAX", "2": "GND"},
-               {"Place": "edge"}, txt=(281.94, 58.42)))
+               {"Place": "edge"}, txt=(X + 58.42, y1 - 8.89)))
     s.pw("U11", "22", s.pt("C33", "1"))
     s.w(s.pt("C33", "2"), s.pt("J3", "1"))
     s.w(s.pt("C33", "1"), s.pt("C34", "1"), s.pt("C35", "1"))
     s.w(s.pt("C33", "2"), s.pt("C34", "2"), s.pt("C35", "2"))
-    s.w(s.pt("L5", "2"), (254.0, y1))
+    s.w(s.pt("L5", "2"), (xl, y1))
     s.w(s.pt("L5", "1"), s.pt("L6", "2"))
     s.w(s.pt("L6", "1"), s.pt("L7", "2"))
-    s.w((254.0, 55.88), (261.62, 55.88))
-    s.w((254.0, 48.26), (261.62, 48.26))
-    s.w(s.pt("L7", "1"), (254.0, 34.29))
-    s.rail("VCOAX", 254.0, 34.29)
+    s.w((xl, s.pt("L6", "2")[1]), (xl + 7.62, s.pt("L6", "2")[1]))
+    s.w((xl, s.pt("L6", "1")[1]), (xl + 7.62, s.pt("L6", "1")[1]))
+    s.w(s.pt("L7", "1"), (xl, s.pt("L7", "1")[1] - 2.54))
+    s.rail("VCOAX", xl, s.pt("L7", "1")[1] - 2.54)
     s.gnd("J3", "2")
-    s.intent("DC block 2.2 uF || 1 nF || 22 pF; DC feed 100 nH -> 10 uH || 220R -> 1 mH:", 226.06, 100.33)
-    s.intent("20 kHz-2 GHz. VERIFY S21/S11 with a VNA. D1 (TVS) sits at J3 (power sheet).", 226.06, 103.51)
+    s.intent("DC block 2.2 uF || 1 nF || 22 pF; DC feed 100 nH -> 10 uH || 220R -> 1 mH:", X + 2.54, 100.33)
+    s.intent("20 kHz-2 GHz. VERIFY S21/S11 with a VNA. D1 (TVS) sits at J3 (power sheet).", X + 2.54, 103.51)
 
     # control inputs with pull-downs --------------------------------------------
-    s.frame(226.06, 119.38, 76.2, 63.5, "Control inputs")
+    s.frame(X, 119.38, 78.74, 63.5, "Control inputs")
     for i, net in enumerate(["SW_V1", "SW_V2", "SW_V3"]):
         yy = 134.62 + i * 15.24
-        s.add(R(f"R{16 + i}", "10k/5%", 266.7, yy + 3.81, net, "GND", Note="F0 THRU while MCU in reset"))
-        s.w((243.84, yy), s.pt(f"R{16 + i}", "1"))
-        s.hlabel(net, 243.84, yy, "L", "input")
+        s.add(R(f"R{16 + i}", "10k/5%", X + 40.64, yy + 3.81, net, "GND", Note="F0 THRU while MCU in reset"))
+        s.w((X + 17.78, yy), s.pt(f"R{16 + i}", "1"))
+        s.hlabel(net, X + 17.78, yy, "L", "input")
         s.gnd(f"R{16 + i}", "2")
     return s
 
@@ -879,14 +913,32 @@ def sheet_panel(lib) -> DSheet:
     s.w(s.pt("R20", "2"), (40.64, 233.68), (25.4, 233.68))
     s.hlabel("LED_OE_N", 25.4, 233.68, "L", "input")
     s.rail_pin("R20", "1", "+3V3")
-    s.intent("Lamp n: register n/8 (U14 = first after the MCU), output Q(n%8) - firmware/src/panel.h.",
-             66.04, 222.25)
-    s.intent("Q low = lamp on (sink). 1 mA per lamp: (VLED - 2 V - 0.1 V) / 2k2. Use 2 V LEDs only.",
-             66.04, 225.43)
-    s.intent("Lamp test lights all 48 (48 mA) with the LNA still off. Outside it, at most 23 lamps.",
-             66.04, 228.6)
-    s.intent("Panel modes (config frame, kept in flash): full / bands = U14 only / off = OE_N high.",
-             66.04, 231.78)
+    # break-off link: the lamp strip is a snap-off part of the board; these two
+    # unpopulated 1x7 rows (one each side of the break line) take a cable if it is snapped off
+    s.frame(66.04, 205.74, 104.14, 40.64, "Snap-off lamp strip link")
+    for k, (ref, x) in enumerate((("J4", 104.14), ("J5", 157.48))):
+        y = 229.87
+        nets = {"1": "+3V3", "2": "VLED", "3": "LED_SER", "4": "LED_SCK", "5": "LED_RCK", "6": "LED_OE_N",
+                "7": "GND"}
+        s.add(Part(ref, "Connector_Generic:Conn_01x07", "NA(HDR1x7/2.54)", x, y, 0,
+                   "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical", nets,
+                   {"Place": "main board, right end of the break line" if k == 0 else
+                    "lamp strip, right end of the break line"}, dnp=True, txt=(x + 2.54, y - 11.43)))
+        s.pw(ref, "1", (x - 7.62, None), (None, y - 12.7))
+        s.rail("+3V3", x - 7.62, y - 12.7)
+        s.pw(ref, "2", (x - 12.7, None), (None, y - 17.78))
+        s.rail("VLED", x - 12.7, y - 17.78)
+        for pin, net in (("3", "LED_SER"), ("4", "LED_SCK"), ("5", "LED_RCK"), ("6", "LED_OE_N")):
+            end = s.pw(ref, pin, (x - 17.78, None))
+            s.hlabel(net, *end, "L", "input")
+        s.pw(ref, "7", (x - 7.62, None), (None, y + 10.16))
+        s.rail("GND", x - 7.62, y + 10.16)
+    for i, t in enumerate(["Lamp n: register n/8 (U14 = first after the MCU), output Q(n%8) - firmware/src/panel.h.",
+                           "Q low = lamp on (sink). 1 mA per lamp: (VLED - 2 V - 0.1 V) / 2k2. Use 2 V LEDs only.",
+                           "Lamp test lights all 48 (48 mA) with the LNA still off. Outside it, at most 23 lamps.",
+                           "Panel modes (config frame, kept in flash): full / bands = U14 only / off = OE_N high.",
+                           "U14-U19, RN1-RN12, D7-D54, C41-C46 and J5 sit on the snap-off strip; J4 on the main board."]):
+        s.intent(t, 177.8, 222.25 + 3.18 * i)
     return s
 
 
