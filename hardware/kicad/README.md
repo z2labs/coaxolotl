@@ -76,3 +76,8 @@ only joins the switch pins to the lanes, at 0.25 mm (the QFN pin width), and `ro
 **Routing passes** (srouter, `-style oct`): RF on F.Cu only, then power, then the lamp strip with the MCU's lamp
 bus and the debug header, then the rest; a repair pass picks up connections KiCad sees open. GND is never
 routed: pours, the In1 plane, one via per GND pad (placed by `pcb_build.py`), stitching afterwards.
+
+**JLC DFM.** `postroute.ps1` ends with srouter's `jlc_dfm_check.py`. Its `via-pad` FAIL on the exposed pads (U6–U11,
+U13: 0.45/0.2 mm vias inside the thermal pad) is accepted by design: small open vias in an exposed pad do not wick the
+joint dry (Zoltan's production practice), and the RF switches and the LNA need the paddle grounded right under the
+die. No POFV. Every other via must keep 0.15 mm from SMD pads (`via_off_pad`).
