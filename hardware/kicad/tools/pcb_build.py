@@ -454,8 +454,8 @@ for x, u in zip(REG_X, REG_ORDER):
     # arrays under the lamps, LED side (pins 5-8) up; the register below them, Q1-Q7 (pins 1-7) up
     put(u, x, 25.0, orient(u, {"1": UP}))
     k = int(u[1:]) - 14
-    put(f"RN{1 + 2 * k}", x - 2.0, 19.4, orient(f"RN{1 + 2 * k}", {"8": UP}))
-    put(f"RN{2 + 2 * k}", x + 2.0, 19.4, orient(f"RN{2 + 2 * k}", {"8": UP}))
+    put(f"RN{1 + 2 * k}", x - 2.0, 19.4, orient(f"RN{1 + 2 * k}", {p: UP for p in "5678"}))
+    put(f"RN{2 + 2 * k}", x + 2.0, 19.4, orient(f"RN{2 + 2 * k}", {p: UP for p in "5678"}))
 rot_hdr = orient("J5", {"7": RIGHT})
 put("J5", 82.55, 27.0, rot_hdr)
 put("J4", 82.55, 35.0, rot_hdr)
