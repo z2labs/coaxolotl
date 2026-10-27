@@ -110,9 +110,6 @@ for c in find(find1(net, "components"), "comp"):
     props = {find1(p, "name")[1] for p in find(c, "property") if find1(p, "name")}
     fl = find1(c, "fields")
     fields = {find1(f, "name")[1]: (f[2] if len(f) > 2 else "") for f in find(fl, "field")} if fl else {}
-    ls = find1(c, "libsource")
-    if ls is not None and find1(ls, "description"):
-        fields["Description"] = find1(ls, "description")[1]
     if find1(c, "datasheet"):
         fields["Datasheet"] = find1(c, "datasheet")[1]
     comps[ref] = dict(value=find1(c, "value")[1], fp=(find1(c, "footprint") or [None, ""])[1],
@@ -490,7 +487,7 @@ for i, (x, y) in enumerate(HOLES):
     fp.SetReference(f"H{i + 1}"); fp.SetPosition(P(x, y)); fp.SetBoardOnly(True)
     board.Add(fp)
     occupied.append((x - 3.2, y - 3.2, x + 3.2, y + 3.2)); owner.append(f"H{i + 1}")
-bites = [0.7, 1.6, 2.5, 3.4] + [80.2, 81.1] + [83.82 + 2.54 * j for j in range(6)] + [98.4, 99.3]
+bites = [0.7, 1.6, 2.5, 3.4] + [80.2, 81.1] + [83.82 + 2.54 * j for j in range(6)] + [99.3]
 for i, x in enumerate(bites):
     fp = load_fp("coaxolotl:MouseBite_NPTH_0.6mm")
     fp.SetReference(f"MB{i + 1}"); fp.SetPosition(P(x, ym)); fp.SetBoardOnly(True)
@@ -883,13 +880,13 @@ pats = [p for p in ns.get("netclass_patterns", []) if p["netclass"] != "RF"]
 pats += [{"netclass": "RF", "pattern": n} for n in RF_NETS]
 ns["netclass_patterns"] = pats
 bd = pj.setdefault("board", {}).setdefault("design_settings", {}).setdefault("rules", {})
-bd.update(min_through_hole_diameter=0.2, min_via_diameter=0.4, min_via_annular_width=0.1,
+bd.update(min_through_hole_diameter=0.2, min_via_diameter=0.4, min_via_annular_width=0.075,
           min_copper_edge_clearance=0.3, min_clearance=0.15, min_track_width=0.15, min_hole_to_hole=0.25)
 json.dump(pj, open(pro, "w", encoding="utf-8"), indent=2)
 open(os.path.join(PRJ, "coaxolotl.kicad_dru"), "w", encoding="utf-8").write(
     "(version 1)\n"
     "# edge-mount SMA: the centre and ground pads run to the board edge by design\n"
-    "(rule \"SMA edge\"\n  (condition \"A.intersectsCourtyard('J2') || A.intersectsCourtyard('J3')\")\n"
+    "(rule \"SMA edge\"\n  (condition \"A.memberOfFootprint('J2') || A.memberOfFootprint('J3')\")\n"
     "  (constraint edge_clearance (min 0mm)))\n")
 json.dump({r: list(v) for r, v in where.items()}, open(os.path.join(PRJ, "placement.json"), "w"), indent=0)
 print("RF nets:", len(RF_NETS))

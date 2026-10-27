@@ -38,3 +38,41 @@ kicad-cli sch export pdf -o hardware/kicad/coaxolotl-schematic.pdf hardware/kica
 
 - The file format is KiCad 7, the newest version installable in the generator environment. KiCad 8, 9 and 10 open it and upgrade it on save.
 - KiCad 7's CLI has no ERC. `check.py` exports the netlist and proves, net by net, that the drawn wires give exactly the intended connectivity. **On KiCad 10, also run `kicad-cli sch erc`.**
+
+## PCB (KiCad 10, on Windows)
+
+Generated as well: placement, routing and post-processing are scripts, run with KiCad's own Python.
+
+```powershell
+$py = "C:\Program Files\KiCad\10.0\bin\python.exe"
+& $py hardware\kicad\tools\pcb_build.py      # outline, stack-up, placement, GND vias, zones -> coaxolotl_placed.kicad_pcb
+& $py hardware\kicad\tools\route.py          # srouter passes + repair -> coaxolotl.kicad_pcb
+powershell -ExecutionPolicy Bypass -File hardware\kicad\tools\postroute.ps1   # tidy, stitch, silk, DRC (-From <step>)
+```
+
+`route.py` needs srouter (`SROUTER`, default the `srouter-feat` build) and `postroute.ps1` its tools folder
+(`SROUTER_TOOLS`, default `srouter-jlc\tools`).
+
+**Board.** 100 × 102 mm, 4 layers (JLC04161H-7628), every part on the top.
+
+| y (mm) | |
+|---|---|
+| 0–30 | lamp strip: 2 × 24 lamps under their names, 6 × 74HC595 (each under the 4 columns it drives), 12 arrays, J5 |
+| 30–32 | routed slot; left and right tabs with 0.6 mm mouse-bite holes. The 7 strip links cross the right tab, J5 pin k straight to J4 pin k |
+| 32–102 | main board: ANT SMA left, RF axis at y = 64, filter bank in the middle, RTL-SDR SMA right, power and hold-up at the bottom, MCU top right |
+
+Snap the strip off at the slot and it still works on a 7-wire cable from J5 to J4 (same pin order).
+
+**Layers.** F.Cu: RF (50 Ω CPWG, 0.35 mm, 0.25 mm pour gap), parts, GND pour. In1.Cu: solid GND, the RF
+reference; nothing is routed on it. In2.Cu: power and control, GND fill. B.Cu: control, GND pour.
+
+**RF layout.** Each RF path is laid along a line: series parts in line, shunt parts hanging off one side, each with
+its own GND via. The filter bank is 8 nested lanes between U8 and U11 (the LS strapping makes the switch pair
+planar): F4/F3 innermost next to the control corridor, F7/F0 outermost. The LNA path is a loop under U6–U7,
+the FM-notch switches U9/U10 sit at both ends of the R22 link. Chain links are pre-routed pad to pad; the router
+only joins the switch pins to the lanes, at 0.25 mm (the QFN pin width), and `route.py` widens every RF segment to
+0.35 mm where the clearance allows.
+
+**Routing passes** (srouter, `-style oct`): RF on F.Cu only, then power, then the lamp strip with the MCU's lamp
+bus and the debug header, then the rest; a repair pass picks up connections KiCad sees open. GND is never
+routed: pours, the In1 plane, one via per GND pad (placed by `pcb_build.py`), stitching afterwards.

@@ -99,14 +99,18 @@ def import_ses(board, ses):
             t.SetDrill(pcbnew.FromMM(0.2 if w < 0.5 else 0.3))
 
 
-def main():
-    shutil.copy(PLACED, BOARD)
+def main(repair_only=False):
+    if not repair_only:
+        shutil.copy(PLACED, BOARD)
     rules_nets = net_rules()
     summary = []
     b = pcbnew.LoadBoard(BOARD)
-    for name, only, closed, args in PASSES:
-        b = run_pass(b, name, only, closed, args, rules_nets, summary)
-    # repair: connections srouter reports done but KiCad sees open (a terminal dropped by smoothing)
+    if repair_only:
+        b = cleanup(b)
+    else:
+        for name, only, closed, args in PASSES:
+            b = run_pass(b, name, only, closed, args, rules_nets, summary)
+    # repair: connections srouter reports done but KiCad sees open (a terminal dropped by smoothing or by the tidy)
     for rnd in range(2):
         open_nets = unconnected_nets()
         print(f"repair {rnd + 1}: open nets {open_nets}", flush=True)
@@ -120,10 +124,67 @@ def main():
         if other:
             b = run_pass(b, f"repair{rnd + 1}", other, [], ["-top", "F.Cu:3", "-via", "1500", "-it", "40"],
                          rules_nets, summary)
+        b = cleanup(b)
     print("RF widened:", fatten_rf(b))
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
     pcbnew.SaveBoard(BOARD, b)
     print("routed ->", BOARD, summary)
+
+
+def drc_json():
+    cli = r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe"
+    out = os.path.join(OUT, "drc_unconnected.json")
+    subprocess.run([cli, "pcb", "drc", "--format", "json", "-o", out, BOARD], capture_output=True)
+    return json.load(open(out, encoding="utf-8"))
+
+
+def cleanup(b):
+    """same-net vias closer than the hole-to-hole rule merge into one (their tracks follow); dangling vias and
+    track stubs that DRC reports go (the router's spare fan-out vias, the tidy's leftovers)"""
+    T = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
+    vias = [t for t in b.GetTracks() if t.GetClass() == "PCB_VIA"]
+    gone, merged = set(), 0
+    for i, v in enumerate(vias):
+        if id(v) in gone:
+            continue
+        for w in vias[i + 1:]:
+            if id(w) in gone or w.GetNetCode() != v.GetNetCode():
+                continue
+            dist = ((T(v.GetPosition())[0] - T(w.GetPosition())[0]) ** 2 + (T(v.GetPosition())[1] - T(w.GetPosition())[1]) ** 2) ** 0.5
+            if dist < (pcbnew.ToMM(v.GetDrill()) + pcbnew.ToMM(w.GetDrill())) / 2 + 0.25:
+                wp = w.GetPosition()
+                for t in b.GetTracks():
+                    if t.GetClass() == "PCB_VIA" or t.GetNetCode() != w.GetNetCode():
+                        continue
+                    if t.GetStart() == wp:
+                        t.SetStart(v.GetPosition())
+                    if t.GetEnd() == wp:
+                        t.SetEnd(v.GetPosition())
+                b.Remove(w); gone.add(id(w)); merged += 1
+    pcbnew.SaveBoard(BOARD, b)
+    b = pcbnew.LoadBoard(BOARD)
+    removed = 0
+    for _ in range(3):
+        d = drc_json()
+        spots = [(x["type"], round(x["items"][0]["pos"]["x"], 3), round(x["items"][0]["pos"]["y"], 3))
+                 for x in d["violations"] if x["type"] in ("via_dangling", "track_dangling")]
+        if not spots:
+            break
+        for t in list(b.GetTracks()):
+            if t.GetNetname() == "GND":
+                continue
+            for typ, x, y in spots:
+                if typ == "via_dangling" and t.GetClass() == "PCB_VIA" and abs(T(t.GetPosition())[0] - x) < 0.01 and \
+                        abs(T(t.GetPosition())[1] - y) < 0.01:
+                    b.Remove(t); removed += 1; break
+                if typ == "track_dangling" and t.GetClass() != "PCB_VIA":
+                    a_, c_ = T(t.GetStart()), T(t.GetEnd())
+                    if any(abs(p[0] - x) < 0.01 and abs(p[1] - y) < 0.01 for p in (a_, c_, ((a_[0] + c_[0]) / 2, (a_[1] + c_[1]) / 2))):
+                        b.Remove(t); removed += 1; break
+        pcbnew.SaveBoard(BOARD, b)
+        b = pcbnew.LoadBoard(BOARD)
+    print(f"cleanup: {merged} vias merged, {removed} dangling items removed", flush=True)
+    return b
 
 
 def unconnected_nets():
@@ -260,4 +321,4 @@ def fatten_rf(b, clr=RF_CLR + 0.01, end=0.7):
 
 
 if __name__ == "__main__":
-    main()
+    main(repair_only="--repair" in sys.argv)

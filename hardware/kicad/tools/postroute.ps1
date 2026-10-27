@@ -18,6 +18,7 @@ function step($name, [scriptblock]$b) {
 "" | Out-File -Encoding utf8 $log
 if ($From -le 1) { Copy-Item $board "$kd\route\pre_tidy.kicad_pcb" }
 step "1 track_tidy"   { & $py "$tools\track_tidy.py" $board }
+step "1b repair"      { & $py "$PSScriptRoot\route.py" --repair }
 step "2 zone fill"    { & $py -c "import pcbnew;b=pcbnew.LoadBoard(r'$board');pcbnew.ZONE_FILLER(b).Fill(b.Zones());pcbnew.SaveBoard(r'$board',b);print('filled')" }
 step "3 gnd_stitch"   { & $py "$tools\gnd_stitch.py" $board --plane In1.Cu }
 step "4 via_rescue"   { & $py "$tools\via_rescue.py" $board --net GND }
