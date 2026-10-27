@@ -138,53 +138,72 @@ def drc_json():
     return json.load(open(out, encoding="utf-8"))
 
 
-def cleanup(b):
-    """same-net vias closer than the hole-to-hole rule merge into one (their tracks follow); dangling vias and
-    track stubs that DRC reports go (the router's spare fan-out vias, the tidy's leftovers)"""
-    T = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
-    vias = [t for t in b.GetTracks() if t.GetClass() == "PCB_VIA"]
-    gone, merged = set(), 0
-    for i, v in enumerate(vias):
-        if id(v) in gone:
+def _delete_uuids(path, uuids):
+    """delete via / segment blocks by uuid in the board text (pcbnew Remove()+Save() is not safe on KiCad 10)"""
+    t = open(path, encoding="utf-8").read()
+    n = 0
+    for u in uuids:
+        k = t.find(f'(uuid "{u}")')
+        if k < 0:
             continue
-        for w in vias[i + 1:]:
-            if id(w) in gone or w.GetNetCode() != v.GetNetCode():
-                continue
-            dist = ((T(v.GetPosition())[0] - T(w.GetPosition())[0]) ** 2 + (T(v.GetPosition())[1] - T(w.GetPosition())[1]) ** 2) ** 0.5
-            if dist < (pcbnew.ToMM(v.GetDrill()) + pcbnew.ToMM(w.GetDrill())) / 2 + 0.25:
-                wp = w.GetPosition()
-                for t in b.GetTracks():
-                    if t.GetClass() == "PCB_VIA" or t.GetNetCode() != w.GetNetCode():
-                        continue
-                    if t.GetStart() == wp:
-                        t.SetStart(v.GetPosition())
-                    if t.GetEnd() == wp:
-                        t.SetEnd(v.GetPosition())
-                b.Remove(w); gone.add(id(w)); merged += 1
+        a = max(t.rfind("(via", 0, k), t.rfind("(segment", 0, k), t.rfind("(arc", 0, k))
+        depth, e = 0, a
+        while True:
+            ch = t[e]
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+            e += 1
+        ls = t.rfind("\n", 0, a) + 1
+        le = t.find("\n", e)
+        t = t[:ls] + t[le + 1:] if t[ls:a].strip() == "" and t[e + 1:le].strip() == "" else t[:a] + t[e + 1:]
+        n += 1
+    open(path, "w", encoding="utf-8").write(t)
+    return n
+
+
+def cleanup(b):
+    """co-located same-net vias collapse to one; dangling vias and track stubs that DRC reports go (the router's
+    spare fan-out vias, the tidy's leftovers)"""
+    T = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
     pcbnew.SaveBoard(BOARD, b)
-    b = pcbnew.LoadBoard(BOARD)
+    vias = [t for t in b.GetTracks() if t.GetClass() == "PCB_VIA"]
+    dup, seen = [], {}
+    for v in vias:
+        k = (v.GetNetCode(), round(T(v.GetPosition())[0], 3), round(T(v.GetPosition())[1], 3))
+        if k in seen:
+            dup.append(v.m_Uuid.AsString())
+        else:
+            seen[k] = v
+    merged = _delete_uuids(BOARD, dup)
     removed = 0
     for _ in range(3):
         d = drc_json()
-        spots = [(x["type"], round(x["items"][0]["pos"]["x"], 3), round(x["items"][0]["pos"]["y"], 3))
+        spots = [(x["type"], x["items"][0]["pos"]["x"], x["items"][0]["pos"]["y"])
                  for x in d["violations"] if x["type"] in ("via_dangling", "track_dangling")]
         if not spots:
             break
-        for t in list(b.GetTracks()):
+        b = pcbnew.LoadBoard(BOARD)
+        kill = []
+        for t in b.GetTracks():
             if t.GetNetname() == "GND":
                 continue
             for typ, x, y in spots:
-                if typ == "via_dangling" and t.GetClass() == "PCB_VIA" and abs(T(t.GetPosition())[0] - x) < 0.01 and \
-                        abs(T(t.GetPosition())[1] - y) < 0.01:
-                    b.Remove(t); removed += 1; break
+                if typ == "via_dangling" and t.GetClass() == "PCB_VIA":
+                    q = T(t.GetPosition())
+                    if abs(q[0] - x) < 0.01 and abs(q[1] - y) < 0.01:
+                        kill.append(t.m_Uuid.AsString()); break
                 if typ == "track_dangling" and t.GetClass() != "PCB_VIA":
                     a_, c_ = T(t.GetStart()), T(t.GetEnd())
-                    if any(abs(p[0] - x) < 0.01 and abs(p[1] - y) < 0.01 for p in (a_, c_, ((a_[0] + c_[0]) / 2, (a_[1] + c_[1]) / 2))):
-                        b.Remove(t); removed += 1; break
-        pcbnew.SaveBoard(BOARD, b)
-        b = pcbnew.LoadBoard(BOARD)
-    print(f"cleanup: {merged} vias merged, {removed} dangling items removed", flush=True)
-    return b
+                    if any(abs(p[0] - x) < 0.01 and abs(p[1] - y) < 0.01
+                           for p in (a_, c_, ((a_[0] + c_[0]) / 2, (a_[1] + c_[1]) / 2))):
+                        kill.append(t.m_Uuid.AsString()); break
+        removed += _delete_uuids(BOARD, kill)
+    print(f"cleanup: {merged} duplicate vias, {removed} dangling items removed", flush=True)
+    return pcbnew.LoadBoard(BOARD)
 
 
 def unconnected_nets():
