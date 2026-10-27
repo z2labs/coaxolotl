@@ -1,6 +1,7 @@
 # Post-routing pipeline in the order srouter docs/USAGE.md asks for, then KiCad DRC.
 #   powershell -ExecutionPolicy Bypass -File hardware\kicad\tools\postroute.ps1
 # SROUTER_TOOLS: srouter tools folder (default: the srouter-jlc checkout, feat/jlc-fab: silk_dfm also clears via holes)
+param([int]$From = 1)         # restart the pipeline at this step (e.g. -From 3 after a fix)
 $ErrorActionPreference = "Continue"
 $kd    = Resolve-Path "$PSScriptRoot\.."
 $py    = "C:\Program Files\KiCad\10.0\bin\python.exe"
@@ -9,12 +10,13 @@ $tools = if ($env:SROUTER_TOOLS) { $env:SROUTER_TOOLS } else { "C:\Users\RF\Docu
 $board = "$kd\coaxolotl.kicad_pcb"
 $log   = "$kd\route\postroute.log"
 function step($name, [scriptblock]$b) {
+  if ([int]($name.Split(" ")[0] -replace "[^0-9]", "") -lt $From) { return }
   "== $name  $(Get-Date -Format HH:mm:ss)" | Out-File -Append -Encoding utf8 $log
   & $b 2>&1 | Select-String -NotMatch "duplicate image handler|memory leak" | ForEach-Object { $_.Line } | Out-File -Append -Encoding utf8 $log
   "   exit $LASTEXITCODE" | Out-File -Append -Encoding utf8 $log
 }
 "" | Out-File -Encoding utf8 $log
-Copy-Item $board "$kd\route\pre_tidy.kicad_pcb"
+if ($From -le 1) { Copy-Item $board "$kd\route\pre_tidy.kicad_pcb" }
 step "1 track_tidy"   { & $py "$tools\track_tidy.py" $board }
 step "2 zone fill"    { & $py -c "import pcbnew;b=pcbnew.LoadBoard(r'$board');pcbnew.ZONE_FILLER(b).Fill(b.Zones());pcbnew.SaveBoard(r'$board',b);print('filled')" }
 step "3 gnd_stitch"   { & $py "$tools\gnd_stitch.py" $board --plane In1.Cu }
