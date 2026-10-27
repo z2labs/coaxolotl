@@ -463,6 +463,13 @@ NAMES = ["THRU", "LF", "160/80", "60-30", "20-10", "6/4m", "2m/AIR", "70/23",
          "0", "1", "OK", "ERR", "SYNC", "CHK", "GAP", "RUNT", "TMO", "LNA", "BYP", "AUTO", "FMN", "I-LO", "I-OK",
          "I-HI", "TRIP", "RUN", "HOLD", "LOW", "QUIET", "DROP", "GLT", "RST"]
 rot_led = orient("D7", {"1": DOWN})
+LABEL_BASE = (ROW_Y[0] - 1.9, ROW_Y[1] - 1.9)          # text starts 0.4 mm above the lamp courtyard
+LABEL_BOXES = []
+for n in range(48):
+    row, i = divmod(n, 24)
+    x = LAMP_X0 + i * LAMP_DX
+    L = 0.85 * len(NAMES[n]) + 0.3
+    LABEL_BOXES.append((x - 0.75, LABEL_BASE[row] - L - 0.2, x + 0.75, LABEL_BASE[row] + 0.2))
 for n in range(48):
     row, i = divmod(n, 24)
     put(f"D{7 + n}", LAMP_X0 + i * LAMP_DX, ROW_Y[row], rot_led)
@@ -753,6 +760,8 @@ for ref, pin, nb in (("U11", "1", "2"),):
 
 
 def via_ok(x, y, rv, ref, own=None, clr=0.25):
+    if any(b[0] - rv < x < b[2] + rv and b[1] - rv < y < b[3] + rv for b in LABEL_BOXES):
+        return False
     if x < 0.6 or y < 0.6 or x > W - 0.6 or y > H - 0.6 or SLOT_Y0 - 0.6 < y < SLOT_Y1 + 0.6:
         return False
     for r in pads_all:
@@ -836,9 +845,20 @@ def text(s, x, y, size=1.0, angle=0, th=0.15, layer=pcbnew.F_SilkS, just=None):
     board.Add(t)
 
 
-for n in range(48):
+for n in range(48):          # lamp names: one baseline per row, reading upward from just above the lamp
     row, i = divmod(n, 24)
-    text(NAMES[n], LAMP_X0 + i * LAMP_DX, (3.5, 12.0)[row], 1.0, 90)
+    text(NAMES[n], LAMP_X0 + i * LAMP_DX, LABEL_BASE[row], 1.0, 90, just="left")
+# no via may land on a lamp name (silk_dfm would push the text off its grid)
+for (x0, y0, x1, y1) in LABEL_BOXES:
+    ko = pcbnew.ZONE(board); ko.SetIsRuleArea(True)
+    ko.SetDoNotAllowVias(True); ko.SetDoNotAllowTracks(False); ko.SetDoNotAllowPads(False)
+    ko.SetDoNotAllowZoneFills(False); ko.SetDoNotAllowFootprints(False)
+    ls_ = pcbnew.LSET(); [ls_.AddLayer(l) for l in (pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.B_Cu)]
+    ko.SetLayerSet(ls_)
+    ol = ko.Outline(); ol.NewOutline()
+    for (x, y) in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
+        ol.Append(mm(OX + x), mm(OY + y))
+    board.Add(ko)
 text("COAXOLOTL", 90.0, 8.0, 2.0, 0, 0.3)
 text("rev 0.1  z2labs", 90.0, 11.5, 1.0)
 text("CERN-OHL-S-2.0", 90.0, 14.0, 1.0)
