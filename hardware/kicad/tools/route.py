@@ -105,9 +105,46 @@ def main():
     summary = []
     b = pcbnew.LoadBoard(BOARD)
     for name, only, closed, args in PASSES:
+        b = run_pass(b, name, only, closed, args, rules_nets, summary)
+    # repair: connections srouter reports done but KiCad sees open (a terminal dropped by smoothing)
+    for rnd in range(2):
+        open_nets = unconnected_nets()
+        print(f"repair {rnd + 1}: open nets {open_nets}", flush=True)
+        if not open_nets:
+            break
+        rf = [n for n in open_nets if n in RF]
+        other = [n for n in open_nets if n not in RF]
+        if rf:
+            b = run_pass(b, f"repair{rnd + 1}_rf", rf, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "40"],
+                         rules_nets, summary, ign_rf=False)
+        if other:
+            b = run_pass(b, f"repair{rnd + 1}", other, [], ["-top", "F.Cu:3", "-via", "1500", "-it", "40"],
+                         rules_nets, summary)
+    print("RF widened:", fatten_rf(b))
+    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+    pcbnew.SaveBoard(BOARD, b)
+    print("routed ->", BOARD, summary)
+
+
+def unconnected_nets():
+    cli = r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe"
+    out = os.path.join(OUT, "drc_unconnected.json")
+    subprocess.run([cli, "pcb", "drc", "--format", "json", "-o", out, BOARD], capture_output=True)
+    d = json.load(open(out, encoding="utf-8"))
+    nets = set()
+    for u in d.get("unconnected_items", []):
+        for it in u["items"]:
+            m = re.search(r"\[([^\]]+)\]", it["description"])
+            if m and m.group(1) != "GND":
+                nets.add(m.group(1))
+    return sorted(nets)
+
+
+def run_pass(b, name, only, closed, args, rules_nets, summary, ign_rf=None):
+    if True:
         dsn, ses, rep, rj = (os.path.join(OUT, name + e) for e in (".dsn", ".ses", "_report.json", "_rules.json"))
         export_dsn(b, dsn, closed)
-        ign = ["GND"] + (RF if name != "pass1_rf" else [])
+        ign = ["GND"] + (RF if (name != "pass1_rf" if ign_rf is None else ign_rf) else [])
         json.dump({"ignore_nets": ign, "nets": rules_nets, "only": "|".join(only), "smooth": True,
                    "style": "oct", "pad_entry": True}, open(rj, "w"), indent=1)
         cmd = [SR, "-de", dsn, "-do", ses, "-rules", rj, "-report", rep] + args
@@ -126,11 +163,7 @@ def main():
         import_ses(b, ses)
         summary.append((name, len(bad)))
         pcbnew.SaveBoard(BOARD, b)
-        b = pcbnew.LoadBoard(BOARD)
-    print("RF widened:", fatten_rf(b))
-    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
-    pcbnew.SaveBoard(BOARD, b)
-    print("routed ->", BOARD, summary)
+        return pcbnew.LoadBoard(BOARD)
 
 
 # ------------------------------------------------------------ RF tracks to 50 ohm width where the clearance allows

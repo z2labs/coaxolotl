@@ -282,6 +282,9 @@ def chain(start, end, allowed):
 EXTRA = {"R22": 3.6}           # room either side of the FM-notch bypass link for the notch switches U9 / U10
 
 
+CHAINS = []                    # laid chains: (polyline segments, items) - pre-routed along their line below
+
+
 def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
     """lay a chain along a polyline. side(d) -> unit vector of the side the shunts hang to for direction d."""
     segs = []
@@ -338,6 +341,7 @@ def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
             break
     for a, d, L in segs:
         block_line(a, (a[0] + d[0] * L, a[1] + d[1] * L), 0.5)
+    CHAINS.append((segs, items))
     return s
 
 
@@ -472,7 +476,7 @@ for i, (x, y) in enumerate(HOLES):
     fp.SetReference(f"H{i + 1}"); fp.SetPosition(P(x, y)); fp.SetBoardOnly(True)
     board.Add(fp)
     occupied.append((x - 3.2, y - 3.2, x + 3.2, y + 3.2)); owner.append(f"H{i + 1}")
-bites = [0.7, 1.6, 2.5, 3.4] + [80.2, 81.1] + [83.82 + 2.54 * j for j in range(6)] + [98.6, 99.4]
+bites = [0.7, 1.6, 2.5, 3.4] + [80.2, 81.1] + [83.82 + 2.54 * j for j in range(6)] + [98.4, 99.3]
 for i, x in enumerate(bites):
     fp = load_fp("coaxolotl:MouseBite_NPTH_0.6mm")
     fp.SetReference(f"MB{i + 1}"); fp.SetPosition(P(x, ym)); fp.SetBoardOnly(True)
@@ -481,7 +485,8 @@ for i, x in enumerate(bites):
 # ------------------------------------------------------------ 4b) RF switch control pins: fan-out via positions
 # each control / supply pin gets its own via right off the pin (two staggered rows, 0.4/0.2 mm), so those nets drop
 # to In2/B.Cu inside the rings the RF tracks close on F.Cu. Kept free of parts from here on.
-FANOUT = {"U6": "14 15 16", "U7": "14 16", "U9": "14 15 16", "U10": "14 16", "U8": "8 9 10 11", "U11": "8 9 10 11"}
+FANOUT = {"U6": "14 16", "U7": "14 16", "U9": "14 16", "U10": "14 16", "U8": "8 9 10 11", "U11": "8 9 10 11"}
+TIE = [("U6", "15", "16"), ("U9", "15", "16")]   # LS = VDD: pin to pin, one via
 FAN = []
 for ref, pins in FANOUT.items():
     c = where[ref][:2]
@@ -667,6 +672,46 @@ for ref, fp in fps.items():
             add_track(q, (tx, ty), 0.15)
 print("exposed-pad vias:", nep)
 
+# the 7 strip links across the right tab: straight from J5 pin k to J4 pin k, between the mouse-bite holes
+for k in range(1, 8):
+    net = pinnet[("J5", str(k))]
+    w = 0.25 if net.startswith("/") else 0.5
+    add_track(padpos[("J5", str(k))], padpos[("J4", str(k))], w, net)
+    if net == "GND":
+        add_track(padpos[("J5", str(k))], padpos[("J4", str(k))], w, net, layer=pcbnew.B_Cu)
+
+for ref, a_, b_ in TIE:
+    add_track(padpos[(ref, a_)], padpos[(ref, b_)], 0.2, pinnet[(ref, a_)])
+
+# chains: every node pre-routed along its line, pad to pad (the router only joins the switch pins to the lanes)
+padsize = {(r[0], r[6]): min(r[4] - r[2], r[5] - r[3]) for r in pads_all}
+npre = 0
+for segs, items in CHAINS:
+    offs, acc = [], 0.0
+    for a, d, L in segs:
+        offs.append(acc); acc += L
+
+    def along(p):
+        best = None
+        for (a, d, L), o in zip(segs, offs):
+            t = max(0.0, min(L, (p[0] - a[0]) * d[0] + (p[1] - a[1]) * d[1]))
+            q = (a[0] + d[0] * t, a[1] + d[1] * t)
+            dd = math.dist(p, q)
+            if best is None or dd < best[0]:
+                best = (dd, o + t)
+        return best[1]
+    refs = {it[1] for it in items}
+    nodes = {n for it in items for n in it[2:] if n != "GND"}
+    for net in nodes:
+        pads = sorted(((along(padpos[k]), k) for k in padpos if k[0] in refs and pinnet.get(k) == net), key=lambda t: t[0])
+        for (s1, k1), (s2, k2) in zip(pads, pads[1:]):
+            path = [padpos[k1]] + [a for (a, d, L), o in zip(segs, offs) if s1 < o < s2] + [padpos[k2]]
+            w = 0.35 if min(padsize.get(k1, 1), padsize.get(k2, 1)) >= 0.45 else 0.25
+            for p1, p2 in zip(path, path[1:]):
+                add_track(p1, p2, w, net)
+            npre += 1
+print("chain links pre-routed:", npre)
+
 nfan = 0
 for ref, pin, q, v in FAN:
     add_track(q, v, 0.15, pinnet[(ref, pin)])
@@ -821,6 +866,11 @@ bd = pj.setdefault("board", {}).setdefault("design_settings", {}).setdefault("ru
 bd.update(min_through_hole_diameter=0.2, min_via_diameter=0.4, min_via_annular_width=0.1,
           min_copper_edge_clearance=0.3, min_clearance=0.15, min_track_width=0.15, min_hole_to_hole=0.25)
 json.dump(pj, open(pro, "w", encoding="utf-8"), indent=2)
+open(os.path.join(PRJ, "coaxolotl.kicad_dru"), "w", encoding="utf-8").write(
+    "(version 1)\n"
+    "# edge-mount SMA: the centre and ground pads run to the board edge by design\n"
+    "(rule \"SMA edge\"\n  (condition \"A.intersectsCourtyard('J2') || A.intersectsCourtyard('J3')\")\n"
+    "  (constraint edge_clearance (min 0mm)))\n")
 json.dump({r: list(v) for r, v in where.items()}, open(os.path.join(PRJ, "placement.json"), "w"), indent=0)
 print("RF nets:", len(RF_NETS))
 print("placed", len(where), "of", len(fps), "footprints ->", out)
