@@ -4,13 +4,15 @@
 The bias-T is the whole link. A frame is 15 short power gaps:
   short gap (30 ms) = 0, long gap (70 ms) = 1, 100 ms of power between,
   at least 400 ms of steady power before the frame.
-  bits = sync 1 0 1 | bank[2:0] lna quiet clr | inverse of those 6 bits
+  state frame:  sync 1 0 1 | bank[2:0] lna quiet clr | inverse of those 6 bits
+  config frame: sync 0 1 0 | panel[1:0] 0 0 0 0      | inverse of those 6 bits
 
 Examples
   coaxolotl.py bands
   coaxolotl.py send --band 2m --lna                    # pyrtlsdr, device 0
   coaxolotl.py send --bank 3 --backend rtl_biast -d 1
   coaxolotl.py send --bank 6 --lna --backend dry-run | firmware/build/sim
+  coaxolotl.py panel bands                             # lamps: full | bands | off
 
 Library use (keep your own RtlSdr handle open while streaming):
   from coaxolotl import Frame, play
@@ -32,7 +34,9 @@ from typing import Callable, Iterable, List, Optional, Tuple
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 BANDPLAN = ROOT / "bandplan.json"
 
-SYNC = (1, 0, 1)
+SYNC = (1, 0, 1)          # state frame
+SYNC_CONFIG = (0, 1, 0)   # config frame
+PANEL_MODES = {"full": 0, "bands": 1, "off": 2}
 
 
 @dataclass(frozen=True)
@@ -66,22 +70,50 @@ class Frame:
         return (self.bank << 3) | (int(self.lna) << 2) | (int(self.quiet) << 1) | int(self.clr)
 
     def bits(self) -> List[int]:
-        p = self.payload
-        data = [(p >> i) & 1 for i in range(5, -1, -1)]
-        return list(SYNC) + data + [b ^ 1 for b in data]
+        return _bits(SYNC, self.payload)
 
     def edges(self, timing: Timing = Timing(), t0: float = 0.0) -> List[Tuple[float, int]]:
         """(t_ms, level) list: power on, idle, then one gap per bit; ends powered."""
-        timing.check()
-        t = t0
-        ev = [(t, 1)]
-        t += timing.pre
-        for b in self.bits():
-            ev.append((t, 0))
-            t += timing.gap1 if b else timing.gap0
-            ev.append((t, 1))
-            t += timing.on
-        return ev
+        return _edges(self.bits(), timing, t0)
+
+
+@dataclass(frozen=True)
+class ConfigFrame:
+    """Box settings that are not part of the RF state; the box keeps them in flash.
+
+    panel: 0 = full (every lamp), 1 = bands (F0..F7 only), 2 = off (PWR lamp only).
+    """
+    panel: int = 0
+
+    @property
+    def payload(self) -> int:
+        if self.panel not in (0, 1, 2):
+            raise ValueError("panel must be 0 (full), 1 (bands) or 2 (off)")
+        return self.panel << 4
+
+    def bits(self) -> List[int]:
+        return _bits(SYNC_CONFIG, self.payload)
+
+    def edges(self, timing: Timing = Timing(), t0: float = 0.0) -> List[Tuple[float, int]]:
+        return _edges(self.bits(), timing, t0)
+
+
+def _bits(sync: Tuple[int, int, int], payload: int) -> List[int]:
+    data = [(payload >> i) & 1 for i in range(5, -1, -1)]
+    return list(sync) + data + [b ^ 1 for b in data]
+
+
+def _edges(bits: List[int], timing: Timing, t0: float) -> List[Tuple[float, int]]:
+    timing.check()
+    t = t0
+    ev = [(t, 1)]
+    t += timing.pre
+    for b in bits:
+        ev.append((t, 0))
+        t += timing.gap1 if b else timing.gap0
+        ev.append((t, 1))
+        t += timing.on
+    return ev
 
 
 # --------------------------------------------------------------------------
@@ -195,8 +227,18 @@ def cmd_send(a: argparse.Namespace) -> int:
     if bank is None:
         raise SystemExit("give --bank N or --band NAME")
 
-    timing = parse_timing(a.timing)
     frame = Frame(bank=bank, lna=a.lna, quiet=a.quiet, clr=a.clr)
+    desc = f"frame F{bank} lna={int(a.lna)} quiet={int(a.quiet)} clr={int(a.clr)}"
+    return transmit(a, frame, desc)
+
+
+def cmd_panel(a: argparse.Namespace) -> int:
+    frame = ConfigFrame(panel=PANEL_MODES[a.mode])
+    return transmit(a, frame, f"config panel={a.mode}")
+
+
+def transmit(a: argparse.Namespace, frame, desc: str) -> int:
+    timing = parse_timing(a.timing)
     edges: List[Tuple[float, int]] = []
     t = 0.0
     for _ in range(a.repeat):
@@ -204,8 +246,7 @@ def cmd_send(a: argparse.Namespace) -> int:
         edges += fe if not edges else fe[1:]
         t = edges[-1][0] + timing.on
 
-    print(f"frame F{bank} lna={int(a.lna)} quiet={int(a.quiet)} clr={int(a.clr)} "
-          f"payload=0x{frame.payload:02X} bits={''.join(map(str, frame.bits()))} "
+    print(f"{desc} payload=0x{frame.payload:02X} bits={''.join(map(str, frame.bits()))} "
           f"({edges[-1][0] / 1000:.2f} s)", file=sys.stderr)
 
     if a.backend == "dry-run":
@@ -226,6 +267,14 @@ def cmd_send(a: argparse.Namespace) -> int:
     return 0
 
 
+def link_args(s: argparse.ArgumentParser) -> None:
+    s.add_argument("--backend", choices=["pyrtlsdr", "rtl_biast", "dry-run"], default="pyrtlsdr")
+    s.add_argument("-d", "--device", type=int, default=0, help="RTL-SDR index")
+    s.add_argument("--rtl-biast", default="rtl_biast", help="rtl_biast executable")
+    s.add_argument("--repeat", type=int, default=1, help="send the frame N times")
+    s.add_argument("--timing", help="gap0,gap1,on,pre in ms (default 30,70,100,400)")
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="Coaxolotl bias-T keyer")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -239,12 +288,14 @@ def main(argv: Optional[List[str]] = None) -> int:
     s.add_argument("--lna", action="store_true", help="request the LNA")
     s.add_argument("--quiet", action="store_true", help="no animations / RUN lamp (least EMI)")
     s.add_argument("--clr", action="store_true", help="clear sticky lamps, retry a tripped LNA")
-    s.add_argument("--backend", choices=["pyrtlsdr", "rtl_biast", "dry-run"], default="pyrtlsdr")
-    s.add_argument("-d", "--device", type=int, default=0, help="RTL-SDR index")
-    s.add_argument("--rtl-biast", default="rtl_biast", help="rtl_biast executable")
-    s.add_argument("--repeat", type=int, default=1, help="send the frame N times")
-    s.add_argument("--timing", help="gap0,gap1,on,pre in ms (default 30,70,100,400)")
+    link_args(s)
     s.set_defaults(fn=cmd_send)
+
+    pnl = sub.add_parser("panel", help="lamp mode, kept in the box's flash")
+    pnl.add_argument("mode", choices=list(PANEL_MODES),
+                     help="full = every lamp, bands = F0..F7 only, off = PWR lamp only")
+    link_args(pnl)
+    pnl.set_defaults(fn=cmd_panel)
 
     a = ap.parse_args(argv)
     return a.fn(a)

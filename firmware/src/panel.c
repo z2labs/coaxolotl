@@ -9,7 +9,7 @@ static void on(uint8_t *img, uint8_t id)
     img[id >> 3] |= (uint8_t)(1u << (id & 7u));
 }
 
-void panel_render(const app_t *a, uint8_t *img)
+static void render_full(const app_t *a, uint8_t *img)
 {
     uint8_t i;
 
@@ -84,6 +84,17 @@ void panel_render(const app_t *a, uint8_t *img)
         on(img, L_GLT);
     if (a->st_rst)
         on(img, L_RST);
+}
+
+void panel_render(const app_t *a, uint8_t *img)
+{
+    uint8_t i;
+
+    render_full(a, img);
+    if (a->panel == PANEL_FULL)
+        return;
+    for (i = (a->panel == PANEL_BANDS) ? 1u : 0u; i < PANEL_BYTES; i++)
+        img[i] = 0;                      /* BANDS keeps U14 (F0..F7) only */
 }
 
 uint8_t panel_count(const uint8_t *img)

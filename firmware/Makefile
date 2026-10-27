@@ -18,10 +18,11 @@ BUILD    := build
 SRC_COMMON := src/decoder.c src/app.c src/panel.c
 SRC_TARGET := src/main.c src/hal_efm8bb2.c $(SRC_COMMON)
 
-# EFM8BB21F16G: 16 kB flash (last page holds the lock byte), 256 B IRAM, 2 kB XRAM.
+# EFM8BB21F16G: 16 kB flash (last page holds the lock byte, the page below it
+# is the panel-mode log, NV_PAGE), 256 B IRAM, 2 kB XRAM.
 # Large model: state lives in XRAM, IRAM stays free for the stack.
 SDCC_FLAGS := -mmcs51 --model-large --opt-code-size --std-sdcc11 \
-              --code-size 0x3E00 --iram-size 256 --xram-size 2048 \
+              --code-size 0x3C00 --iram-size 256 --xram-size 2048 \
               -Isrc -Iinclude -DCFG_SNOOZE=$(SNOOZE)
 
 HOST_FLAGS := -std=c99 -O2 -Wall -Wextra -Wno-unused-function -Isrc -Itest -DCFG_SNOOZE=1

@@ -4,9 +4,10 @@
  * The host switches the RTL-SDR bias-T off for a short gap per bit:
  *   short gap (30 ms) = 0, long gap (70 ms) = 1, 100 ms of power between.
  * Frame = 15 bits:  S S S | P5..P0 | C5..C0
- *   sync  = 1 0 1   (also calibrates the 0/1 threshold)
- *   P     = bank[2:0] lna quiet clr
+ *   sync  = 1 0 1   state frame:  P = bank[2:0] lna quiet clr
+ *   sync  = 0 1 0   config frame: P = panel[1:0] r r r r (r = reserved, send 0)
  *   C     = ~P (6-bit inverse check)
+ *   Either sync calibrates the 0/1 threshold (halfway between long and short).
  *
  * Pure C, no hardware access. Time is a free-running uint16_t tick count;
  * the caller must call dec_poll() at least once per 65536 ticks.
@@ -35,14 +36,21 @@
 
 /* error codes (dec_t.err) */
 #define ERR_NONE  0u
-#define ERR_SYNC  1u   /* sync was not long-short-long            */
+#define ERR_SYNC  1u   /* sync was not long-short-long / short-long-short */
 #define ERR_CHK   2u   /* check bits are not the inverse of data  */
 #define ERR_GAP   3u   /* gap between 130 ms and 300 ms            */
 #define ERR_RUNT  4u   /* power-on between bits too short          */
 #define ERR_TMO   5u   /* power-on inside a frame too long         */
 #define ERR_DROP  6u   /* bias lost (>300 ms) inside a frame       */
 
-/* payload fields */
+/* frame types (dec_t.ftype) */
+#define FT_STATE   0u   /* sync 1 0 1 */
+#define FT_CONFIG  1u   /* sync 0 1 0 */
+
+/* config payload fields */
+#define CF_PANEL(p) ((uint8_t)(((p) >> 4) & 3u))
+
+/* state payload fields */
 #define PL_BANK(p)  ((uint8_t)(((p) >> 3) & 7u))
 #define PL_LNA(p)   ((uint8_t)(((p) >> 2) & 1u))
 #define PL_QUIET(p) ((uint8_t)(((p) >> 1) & 1u))
@@ -57,6 +65,7 @@ typedef struct {
     uint8_t  last_bit;
     uint8_t  err;       /* ERR_* of the last failed frame                */
     uint8_t  payload;   /* 6-bit payload of the last good frame          */
+    uint8_t  ftype;     /* FT_* of the current/last frame                */
     uint16_t bits;      /* bit k = k-th received bit (k = 0 first)       */
     uint16_t t_fall;    /* start of current/last gap                     */
     uint16_t t_rise;    /* start of current/last on-period               */

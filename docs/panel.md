@@ -69,6 +69,27 @@ is LED D(7+n) with its 2.2 kΩ in array RN(1 + n/4).
 | 46 | GLT | yellow | sticky: rail crackle (< 5 ms dips) was seen |
 | 47 | RST | red | sticky: the last reset was a watchdog, missing-clock or flash-error reset |
 
+## Panel modes
+
+The lamps can be dimmed down in software with a config frame
+(`coaxolotl.py panel full|bands|off`, see `docs/protocol.md`). The box keeps
+the mode in flash.
+
+| Mode | Lamps lit | Use |
+|---|---|---|
+| full | everything below | bench, demo, debugging the link |
+| bands | the bank row F0–F7 only | normal use: shows the band, nothing blinks |
+| off | none (OE_N high, outputs Hi-Z); the PWR lamp stays, it is hard-wired | dark mast, lowest current |
+
+* Outside full, nothing blinks: no ERR blinks, no RUN heartbeat, no HOLD
+  blink and no chaser. The MCU then only wakes for frames and
+  housekeeping. In bands, the bank lamp still walks to a new band unless
+  QUIET is set.
+* The decoder, the health checks and the sticky lamps keep running in
+  every mode. Switch back to full to read them.
+* Saving the mode costs one flash byte; the 512 B log page is erased only
+  after 512 changes.
+
 ## Behaviour
 
 **Power-up**

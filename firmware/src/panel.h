@@ -5,6 +5,9 @@
  * scan noise in the receiver). Lamp n sits on U(n/8 + 1).Q(n % 8),
  * U1 being the register nearest the MCU. Outputs sink: LOW = lamp on.
  * The PWR lamp is hard-wired to VCOAX and is not in the chain.
+ *
+ * Panel modes (config frame): FULL = every lamp, BANDS = F0..F7 only,
+ * OFF = all 48 dark (OE_N high), PWR still lit.
  */
 #ifndef COAX_PANEL_H
 #define COAX_PANEL_H

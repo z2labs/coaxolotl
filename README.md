@@ -50,7 +50,8 @@ flowchart LR
   running.
 * **Panel.** 48 lamps on 6×74HC595 plus a hard-wired PWR lamp. It shows bank,
   received bits, decoder errors, LNA path and current, trip, hold-up, rail
-  voltage and sticky dropout/glitch/reset flags. → [docs/panel.md](docs/panel.md)
+  voltage and sticky dropout/glitch/reset flags. Software modes: full, bands
+  only, or off (PWR lamp only), kept in flash. → [docs/panel.md](docs/panel.md)
 
 ## Quick start
 
@@ -71,6 +72,7 @@ make -C firmware SNOOZE=0   # bring-up build, classic registers only
 python3 host/coaxolotl.py bands
 python3 host/coaxolotl.py send --band 2m --lna                 # pyrtlsdr
 python3 host/coaxolotl.py send --bank 3 --backend rtl_biast    # rtl-sdr-blog tool
+python3 host/coaxolotl.py panel bands                          # lamps: full | bands | off
 ```
 
 ## Repository
@@ -90,12 +92,12 @@ python3 host/coaxolotl.py send --bank 3 --backend rtl_biast    # rtl-sdr-blog to
 
 ## Status (v0.1)
 
-* ✅ Decoder, app logic and panel pass 150 host checks. That includes all 64
+* ✅ Decoder, app logic and panel pass 179 host checks. That includes all 64
   payloads, 1800 randomised frames at ±10 % clock skew, 0–10 ms fall delay
   and ±3 ms jitter, every error path and the LED power budget.
 * ✅ Host encoder → firmware decoder, end to end, through the simulator.
-* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 12 kB of 15.5 kB
-  flash) in both the Snooze and the bring-up build.
+* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 13.5 kB of 15 kB
+  flash; the page below the lock byte holds the panel-mode log) in both the Snooze and the bring-up build.
 * ⚠️ The firmware has **not run on silicon yet**. Three EFM8BB2 register
   details (Snooze bit, Timer 4 LFOSC clock select, Snooze wake on a Timer 4
   wrap) and the ADC setup are marked VERIFY. `docs/bringup.md` has a test

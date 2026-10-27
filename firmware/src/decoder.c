@@ -14,6 +14,7 @@ void dec_init(dec_t *d, uint8_t level, uint16_t now)
     d->last_bit = 0;
     d->err      = ERR_NONE;
     d->payload  = 0;
+    d->ftype    = FT_STATE;
     d->bits     = 0;
     d->t_fall   = now;
     d->t_rise   = now;
@@ -47,13 +48,22 @@ static uint8_t take_bit(dec_t *d, uint16_t gap)
     d->nbits = (uint8_t)(k + 1u);
 
     if (k == 2u) {
-        /* sync must be long-short-long; derive the threshold from it */
-        uint16_t lo = d->g[1];
-        uint16_t hi = (d->g[0] < d->g[2]) ? d->g[0] : d->g[2];
-        if ((uint32_t)hi * SYNC_RATIO_DEN < (uint32_t)lo * SYNC_RATIO_NUM)
+        /* sync: long-short-long = state frame, short-long-short = config
+         * frame. The middle gap must differ from both outer ones by 1.5x.
+         * Either way the threshold sits halfway between long and short. */
+        uint16_t mid = d->g[1];
+        uint16_t omin = (d->g[0] < d->g[2]) ? d->g[0] : d->g[2];
+        uint16_t omax = (d->g[0] < d->g[2]) ? d->g[2] : d->g[0];
+        if ((uint32_t)omin * SYNC_RATIO_DEN >= (uint32_t)mid * SYNC_RATIO_NUM) {
+            d->ftype = FT_STATE;
+            d->bits  = (uint16_t)((d->bits & ~7u) | 5u);   /* show 1 0 1 */
+        } else if ((uint32_t)mid * SYNC_RATIO_DEN >= (uint32_t)omax * SYNC_RATIO_NUM) {
+            d->ftype = FT_CONFIG;
+            d->bits  = (uint16_t)((d->bits & ~7u) | 2u);   /* show 0 1 0 */
+        } else {
             return fail(d, ERR_SYNC);
-        d->thr  = (uint16_t)(((uint32_t)d->g[0] + d->g[2] + 2u * (uint32_t)lo) / 4u);
-        d->bits = (uint16_t)((d->bits & ~7u) | 5u);   /* show 1 0 1 */
+        }
+        d->thr = (uint16_t)(((uint32_t)d->g[0] + d->g[2] + 2u * (uint32_t)mid) / 4u);
     }
 
     if (d->nbits == DEC_NBITS) {

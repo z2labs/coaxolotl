@@ -885,6 +885,8 @@ def sheet_panel(lib) -> DSheet:
              66.04, 225.43)
     s.intent("Lamp test lights all 48 (48 mA) with the LNA still off. Outside it, at most 23 lamps.",
              66.04, 228.6)
+    s.intent("Panel modes (config frame, kept in flash): full / bands = U14 only / off = OE_N high.",
+             66.04, 231.78)
     return s
 
 

@@ -89,3 +89,13 @@ When it works:
   lights. A `--clr` frame clears it.
 * With the supercap removed, the same test causes a power-on reset, and the
   box comes back in THRU and bypass.
+
+## Panel modes and the flash log
+
+* Send `coaxolotl.py panel bands`, then `panel off`, then power-cycle the
+  bias. The box must come back in the stored mode (PWR lamp only for off).
+* **VERIFY** the flash write path in `hal_efm8bb2.c` (PSCTL/FLKEY
+  addresses, VDD monitor as reset source) with a debugger: the byte at
+  0x3C00 must read 0x51, then 0x52 at 0x3C01 after the two commands.
+* `panel full` brings everything back.
+

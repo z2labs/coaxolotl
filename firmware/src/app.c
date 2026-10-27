@@ -7,6 +7,9 @@
 
 #define ELAPSED(now, t, dur) ((uint16_t)((now) - (t)) >= (dur))
 
+/* full panel with animations (ERR blinks, RUN heartbeat, HOLD blink, sweep) */
+#define SHOW(a) (!(a)->quiet && (a)->panel == PANEL_FULL)
+
 static void update_rf(app_t *a)
 {
     uint8_t lna_ok = (uint8_t)((BP_LNA_MASK >> a->bank) & 1u);
@@ -30,6 +33,7 @@ void app_init(app_t *a, uint16_t now, uint8_t rst_abnormal)
         p[i] = 0;
 
     a->quiet   = CFG_DEFAULT_QUIET;
+    a->panel   = CFG_DEFAULT_PANEL;
     a->st_rst  = rst_abnormal ? 1u : 0u;
     a->link    = 1;
     a->active  = 1;
@@ -45,7 +49,7 @@ void app_set_active(app_t *a, uint8_t active, uint16_t now)
     if (active == a->active)
         return;
     a->active = active;
-    if (!a->quiet) {
+    if (SHOW(a)) {
         if (active) {             /* heartbeat: keep RUN visible a moment */
             a->run_hb = 1;
             a->t_run = now;
@@ -71,13 +75,35 @@ static void apply_payload(app_t *a, uint8_t p, uint16_t now)
         if (a->boot == BOOT_DONE)
             a->lna_en = 1;        /* retry the LNA after a trip */
     }
-    if (!a->quiet && nb != a->bank) {
+    if (!a->quiet && a->panel != PANEL_OFF && nb != a->bank) {
         a->sw_active = 1;         /* lamp walks to the new bank */
         a->sw_pos = a->bank;
         a->t_sw = now;
     }
     a->bank = nb;
     update_rf(a);
+}
+
+void app_set_panel(app_t *a, uint8_t mode)
+{
+    if (mode > PANEL_OFF || mode == a->panel)
+        return;
+    a->panel = mode;
+    a->run_hb = 0;
+    a->hold_phase = 0;
+    a->err_blinks = 0;
+    if (mode == PANEL_OFF)
+        a->sw_active = 0;
+    a->dirty = 1;
+}
+
+static void apply_config(app_t *a, uint8_t p)
+{
+    uint8_t m = CF_PANEL(p);          /* 3 = reserved: no change */
+    if (m <= PANEL_OFF && m != a->panel) {
+        app_set_panel(a, m);
+        a->nv_dirty = 1;
+    }
 }
 
 void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
@@ -106,7 +132,10 @@ void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
         a->t_bit = now;
         a->rx = 0;
         a->result = RES_OK;
-        apply_payload(a, d->payload, now);
+        if (d->ftype == FT_CONFIG)
+            apply_config(a, d->payload);
+        else
+            apply_payload(a, d->payload, now);
         break;
     case EV_FRAME_ERR:
         a->frame_n = d->nbits;
@@ -114,7 +143,7 @@ void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
         a->rx = 0;
         a->result = RES_ERR;
         a->err = d->err;
-        a->err_blinks = a->quiet ? 0u : 6u;
+        a->err_blinks = SHOW(a) ? 6u : 0u;
         a->t_blink = now;
         if (d->err == ERR_DROP)
             a->st_drop = 1;
@@ -197,7 +226,7 @@ void app_tick(app_t *a, uint16_t now)
 {
     if (a->boot == BOOT_LAMPTEST) {
         if (ELAPSED(now, a->t_boot, T_LAMPTEST)) {
-            a->boot = a->quiet ? BOOT_DONE : BOOT_SWEEP;
+            a->boot = SHOW(a) ? BOOT_SWEEP : BOOT_DONE;
             a->boot_i = 0;
             a->t_boot = now;
             a->dirty = 1;
@@ -244,7 +273,7 @@ void app_tick(app_t *a, uint16_t now)
         a->run_hb = 0;
         a->dirty = 1;
     }
-    if (!a->scap_ok && !a->quiet && a->link) {
+    if (!a->scap_ok && SHOW(a) && a->link) {
         if (ELAPSED(now, a->t_hold, T_HOLDBLINK)) {
             a->hold_phase ^= 1u;
             a->t_hold = now;
@@ -260,5 +289,5 @@ uint8_t app_busy(const app_t *a)
 {
     return (uint8_t)(a->boot != BOOT_DONE || a->sw_active || a->err_blinks ||
                      a->bit_lamp || a->run_hb ||
-                     (!a->scap_ok && !a->quiet && a->link));
+                     (!a->scap_ok && SHOW(a) && a->link));
 }

@@ -16,6 +16,11 @@
 #define RES_OK   1u
 #define RES_ERR  2u
 
+/* panel modes (config frame, kept in flash) */
+#define PANEL_FULL  0u   /* every lamp                                  */
+#define PANEL_BANDS 1u   /* bank lamps F0..F7 only                      */
+#define PANEL_OFF   2u   /* all 48 dark; only the hard-wired PWR lamp   */
+
 #define I_NONE 0u
 #define I_LO   1u
 #define I_OK   2u
@@ -30,6 +35,8 @@ typedef struct {
     uint8_t fmn;         /* FM notch inserted                        */
     uint8_t auto_byp;    /* LNA asked for but branch forbids it      */
     uint8_t quiet;       /* no animations, no RUN lamp               */
+    uint8_t panel;       /* PANEL_* lamp mode                        */
+    uint8_t nv_dirty;    /* panel mode changed: save to flash        */
     uint8_t rf_dirty;    /* switches need updating                   */
 
     /* health */
@@ -75,6 +82,7 @@ void    app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now);
 void    app_tick(app_t *a, uint16_t now);
 void    app_measure(app_t *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma);
 void    app_fault(app_t *a);
+void    app_set_panel(app_t *a, uint8_t mode);   /* at boot, from flash */
 void    app_set_active(app_t *a, uint8_t active, uint16_t now);
 uint8_t app_busy(const app_t *a);   /* 1 = animation running, keep ticking */
 

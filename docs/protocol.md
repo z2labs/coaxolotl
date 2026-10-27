@@ -52,6 +52,37 @@ passes.
 | `QUIET` | 1 = no animations, no RUN lamp and no heartbeat. This gives the fewest MCU wake-ups and the least EMI |
 | `CLR` | clear the sticky lamps (DROP, GLT, RST) and re-arm a tripped LNA |
 
+## Config frame (sync 0 1 0)
+
+Settings that are not part of the RF state use the same 15-bit frame with
+the sync inverted:
+
+```
+ k:   0 1 2 | 3   4   5 6 7 8 | 9 .. 14
+      0 1 0 | PM1 PM0 0 0 0 0 | inverse of k=3..8
+```
+
+| `PM1 PM0` | Panel mode | Lamps |
+|---|---|---|
+| 00 | full | all 48 lamps, as in `docs/panel.md` |
+| 01 | bands | only the bank row F0–F7 |
+| 10 | off | all 48 dark (OE_N high); only the hard-wired PWR lamp |
+| 11 | reserved | frame accepted, mode unchanged |
+
+* A config frame never touches the switches, the LNA or the sticky lamps.
+* The box stores the mode in flash, so it survives a power cycle. The
+  lamp test at power-up follows the stored mode: 8 lamps in bands, none in
+  off. The chaser runs only in full.
+* The four reserved bits must be 0. They are kept for later settings, for
+  example lamp brightness via OE_N.
+* Short-long-short is told apart from long-short-long by the same 1.5×
+  ratio test, and the 0/1 threshold comes out the same way. Old hosts that
+  only send state frames keep working.
+
+Host: `coaxolotl.py panel full|bands|off`, or `ConfigFrame(panel=…)` in
+your own code.
+
+
 Because the check is the inverse of the payload, every valid frame has
 exactly 6 ones in P+C. The FRAME lamp row therefore never lights more than
 8 lamps.
@@ -64,7 +95,7 @@ follow an error are therefore ignored instead of producing a second error.
 
 | Lamp | Cause |
 |---|---|
-| SYNC | first three gaps are not long-short-long (≥ 1.5×) |
+| SYNC | first three gaps are neither long-short-long nor short-long-short (≥ 1.5×) |
 | CHK | check bits are not the inverse of the payload |
 | GAP | a gap of 130–300 ms |
 | RUNT | bias came back for < 30 ms (a spike inside a gap) |

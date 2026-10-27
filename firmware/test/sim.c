@@ -64,9 +64,10 @@ int main(int argc, char **argv)
     }
 
     sim_run(&S, E, n, E[n - 1].t + tail);
-    printf("\nstate after %.0f ms: bank F%u, %s%s%s\n", E[n - 1].t + tail - E[0].t,
+    printf("\nstate after %.0f ms: bank F%u, %s%s%s, panel %s\n", E[n - 1].t + tail - E[0].t,
            S.app.bank, S.app.lna_path ? "LNA" : "bypass",
-           S.app.fmn ? " + FM notch" : "", S.app.quiet ? ", quiet" : "");
+           S.app.fmn ? " + FM notch" : "", S.app.quiet ? ", quiet" : "",
+           S.app.panel == PANEL_BANDS ? "bands" : S.app.panel == PANEL_OFF ? "off" : "full");
     panel_print(&S.app);
     return 0;
 }

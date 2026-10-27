@@ -66,6 +66,14 @@
 #define CFG_DEFAULT_QUIET 0     /* 0 = show mode after power-on */
 #endif
 
+#ifndef CFG_DEFAULT_PANEL
+#define CFG_DEFAULT_PANEL 0     /* PANEL_FULL until a config frame says otherwise */
+#endif
+
+/* panel mode log in flash: one 512 B page below the lock-byte page */
+#define NV_PAGE      0x3C00u
+#define NV_PAGE_SIZE 512u
+
 #define T_LAMPTEST   MS2T(700)  /* all 48 lamps on                       */
 #define T_BOOTSWEEP  MS2T(12)   /* per lamp, chaser over all 48 lamps    */
 #define T_BANKSTEP   MS2T(60)   /* bank lamp travel per step             */

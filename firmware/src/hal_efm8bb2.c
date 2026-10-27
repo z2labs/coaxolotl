@@ -39,6 +39,8 @@ SBIT(LED_RCK,  0xA2);   /* P2.2 */
 SBIT(LED_OE_N, 0xA3);   /* P2.3 */
 
 SFR(P2MDOUT, 0xA6);     /* page 0x00 */
+SFR(PSCTL,   0x8F);     /* VERIFY: program store control */
+SFR(FLKEY,   0xB7);     /* VERIFY: flash lock and key    */
 SFR(LFO0CN,  0xB1);
 
 /* SYSCLK/12 = 255.2 kHz -> 1 ms */
@@ -314,7 +316,58 @@ void hal_panel(const uint8_t *img)
     }
     LED_RCK = 1;
     LED_RCK = 0;
-    LED_OE_N = 0;
+    /* all dark (panel OFF): outputs Hi-Z, not just high */
+    LED_OE_N = (img[0] | img[1] | img[2] | img[3] | img[4] | img[5]) ? 0 : 1;
+}
+
+/* ---- panel mode log in flash ---------------------------------------
+ * One page (NV_PAGE, 512 B). Each change appends a record 0x50 | mode;
+ * the last record wins. The page is erased only when it is full, so a
+ * mode change costs one byte write (~40 us), not an erase (~20 ms).
+ * Flash writes need the VDD monitor on and enabled as a reset source
+ * (hal_init does both); they run with interrupts off.            VERIFY */
+#define NV_REC(v)   ((uint8_t)(0x50u | ((v) & 3u)))
+#define NV_IS_REC(b) (((b) & 0xFCu) == 0x50u)
+
+static void nv_op(uint16_t addr, uint8_t v, uint8_t erase)
+{
+    uint8_t ea = EA;
+    EA = 0;
+    VDM0CN = VDM0CN_VDMEN;
+    RSTSRC = RSTSRC_PORSF;
+    FLKEY = 0xA5u;
+    FLKEY = 0xF1u;
+    PSCTL = erase ? 0x03u : 0x01u;      /* PSEE | PSWE, or PSWE */
+    *(__xdata uint8_t *)addr = v;
+    PSCTL = 0x00u;
+    EA = ea;
+}
+
+uint8_t hal_nv_load(uint8_t dflt)
+{
+    uint16_t i;
+    uint8_t b, v = dflt;
+    for (i = 0; i < NV_PAGE_SIZE; i++) {
+        b = *(const __code uint8_t *)(NV_PAGE + i);
+        if (b == 0xFFu)
+            break;
+        if (NV_IS_REC(b))
+            v = (uint8_t)(b & 3u);
+    }
+    return v;
+}
+
+void hal_nv_save(uint8_t v)
+{
+    uint16_t i;
+    for (i = 0; i < NV_PAGE_SIZE; i++)
+        if (*(const __code uint8_t *)(NV_PAGE + i) == 0xFFu)
+            break;
+    if (i == NV_PAGE_SIZE) {             /* page full: start over */
+        nv_op(NV_PAGE, 0xFFu, 1);
+        i = 0;
+    }
+    nv_op((uint16_t)(NV_PAGE + i), NV_REC(v), 0);
 }
 
 void hal_wdt_kick(void)

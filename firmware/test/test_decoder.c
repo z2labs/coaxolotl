@@ -205,6 +205,76 @@ static void test_app(void)
     CHECK(S.app.quiet && !app_busy(&S.app), "quiet mode settles (MCU may snooze)");
 }
 
+static int lit(void)
+{
+    uint8_t img[PANEL_BYTES];
+    panel_render(&S.app, img);
+    return panel_count(img);
+}
+
+static void test_panel_modes(void)
+{
+    int n, m;
+    double t;
+    uint8_t img[PANEL_BYTES];
+    static const double scale[] = { 0.9, 1.1 };
+
+    /* every config frame decodes as CONFIG and leaves the RF state alone */
+    for (m = 0; m < 4; m++) {
+        sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+        t = add_frame(E, &n, 1500, (6 << 3) | 4, G0, G1, ON);
+        t = add_config(E, &n, t + 400, (uint8_t)m, G0, G1, ON);
+        sim_run(&S, E, n, t + 800);
+        CHECK(count_ev(EV_FRAME_OK) == 2 && count_ev(EV_FRAME_ERR) == 0, "config %d: ok=%d err=%d",
+              m, count_ev(EV_FRAME_OK), count_ev(EV_FRAME_ERR));
+        CHECK(last_ev(EV_FRAME_OK)->ftype == FT_CONFIG, "config %d decoded as config", m);
+        CHECK(S.app.bank == 6 && S.app.lna_path, "config %d keeps bank and LNA", m);
+        CHECK(S.app.panel == (m == 3 ? 0 : m), "config %d -> panel %u", m, S.app.panel);
+        CHECK(S.app.nv_dirty == (m == 1 || m == 2), "config %d: flash save request %u", m, S.app.nv_dirty);
+    }
+
+    /* clock skew on config frames */
+    for (m = 0; m < 2; m++) {
+        sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+        t = add_config(E, &n, 1500, PANEL_OFF, G0 * scale[m], G1 * scale[m], ON * scale[m]);
+        sim_run(&S, E, n, t + 800);
+        CHECK(S.app.panel == PANEL_OFF, "config frame at %.0f %% clock", scale[m] * 100);
+    }
+
+    /* BANDS: only the bank lamp, even with errors and stickies around */
+    sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+    E[n++] = (edge_t){ 200, 0 }; E[n++] = (edge_t){ 202, 1 };            /* GLT sticky */
+    t = add_config(E, &n, 1500, PANEL_BANDS, G0, G1, ON);
+    t = add_frame(E, &n, t + 400, (5 << 3) | 4, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    panel_render(&S.app, img);
+    CHECK(S.app.st_glt && lit() == 1 && img[0] == (1u << 5), "BANDS shows F5 only (lit=%d)", lit());
+
+    /* OFF: nothing, and no animation keeps the MCU awake */
+    sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+    S.scap_mv = 2000;                                                   /* HOLD would blink */
+    t = add_config(E, &n, 1500, PANEL_OFF, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    CHECK(lit() == 0 && !app_busy(&S.app), "OFF: dark and idle (lit=%d busy=%d)", lit(), app_busy(&S.app));
+
+    /* back to FULL */
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    S.init_panel = PANEL_OFF; S.scap_mv = 3900;
+    t = add_config(E, &n, 1500, PANEL_FULL, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    CHECK(S.app.panel == PANEL_FULL && lit() >= 3, "FULL again (lit=%d)", lit());
+
+    /* boot with a stored mode: lamp test is masked too */
+    sim_defaults();
+    app_init(&S.app, 0, 0); app_set_panel(&S.app, PANEL_BANDS);
+    CHECK(S.app.boot == BOOT_LAMPTEST && lit() == 8, "BANDS lamp test lights F0..F7 only");
+    app_set_panel(&S.app, PANEL_OFF);
+    CHECK(lit() == 0, "OFF lamp test is dark");
+    app_tick(&S.app, MS2T(800));
+    CHECK(S.app.boot == BOOT_DONE, "no chaser sweep outside FULL");
+    CHECK(S.app.nv_dirty == 0, "boot-time mode does not rewrite flash");
+}
+
 static void test_budget(void)
 {
     /* worst plausible panel: every sticky, errors, LNA lamps, show mode */
@@ -234,6 +304,7 @@ int main(void)
     test_robustness();
     test_errors();
     test_app();
+    test_panel_modes();
     test_budget();
     printf("%s: %d/%d checks passed\n", fails ? "FAILED" : "OK", checks - fails, checks);
     return fails ? 1 : 0;

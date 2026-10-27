@@ -37,6 +37,14 @@ class FrameTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             cx.Frame(bank=0).edges(cx.Timing(gap0=30, gap1=40))
 
+    def test_config_frame(self):
+        f = cx.ConfigFrame(panel=2)
+        self.assertEqual(f.payload, 0b100000)
+        self.assertEqual(f.bits()[:3], [0, 1, 0])
+        self.assertEqual([x ^ 1 for x in f.bits()[3:9]], f.bits()[9:])
+        with self.assertRaises(ValueError):
+            cx.ConfigFrame(panel=3).bits()
+
     def test_bandplan(self):
         self.assertEqual(cx.find_band("2m")["id"], 6)
         self.assertEqual(cx.find_band("thru")["id"], 0)
@@ -47,8 +55,8 @@ class FrameTest(unittest.TestCase):
 class EndToEndTest(unittest.TestCase):
     """host encoder -> real firmware decoder/app, through the simulator"""
 
-    def run_sim(self, send_args, sim_args=()):
-        dry = subprocess.run([sys.executable, str(ROOT / "host" / "coaxolotl.py"), "send",
+    def run_sim(self, send_args, sim_args=(), cmd="send"):
+        dry = subprocess.run([sys.executable, str(ROOT / "host" / "coaxolotl.py"), cmd,
                               *send_args, "--backend", "dry-run"],
                              capture_output=True, text=True, check=True).stdout
         return subprocess.run([str(SIM), *sim_args], input=dry,
@@ -64,6 +72,15 @@ class EndToEndTest(unittest.TestCase):
         out = self.run_sim(["--band", "2m", "--lna"], ["--fall-delay", "9", "--jitter", "3"])
         self.assertIn("FRAME_OK", out)
         self.assertIn("bank F6, LNA + FM notch", out)
+
+
+    def test_panel_modes(self):
+        for mode in ("bands", "off", "full"):
+            out = self.run_sim([mode], cmd="panel")
+            self.assertIn(f"CONFIG payload=0x{cx.PANEL_MODES[mode] << 4:02X} panel={mode}", out)
+            self.assertIn(f"panel {mode}", out)
+        out = self.run_sim(["off"], ["--fall-delay", "9", "--jitter", "3"], cmd="panel")
+        self.assertIn("( 0 lamps lit)", out)
 
 
 if __name__ == "__main__":

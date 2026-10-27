@@ -18,7 +18,7 @@
 typedef struct { double t; int lvl; } edge_t;     /* t in ms */
 
 #define MAXEV 4096
-typedef struct { uint8_t ev; uint8_t err; uint8_t payload; double t; } evrec_t;
+typedef struct { uint8_t ev; uint8_t err; uint8_t payload; uint8_t ftype; double t; } evrec_t;
 
 typedef struct {
     dec_t   dec;
@@ -30,6 +30,7 @@ typedef struct {
     uint16_t vc_mv, scap_mv, i_ma;
     double   fault_at;          /* ms, <0 = never (one-shot) */
     int      verbose;
+    uint8_t  init_panel;        /* panel mode "loaded from flash" at boot */
 } sim_t;
 
 static const char *ev_name(uint8_t e)
@@ -56,12 +57,17 @@ static void sim_pump(sim_t *s, uint8_t ev, uint16_t now, double t_ms)
         if (s->nev < MAXEV) {
             evrec_t *r = &s->ev[s->nev++];
             r->ev = ev; r->err = s->dec.err; r->payload = s->dec.payload; r->t = t_ms;
+            r->ftype = s->dec.ftype;
         }
         if (s->verbose && ev != EV_BIT) {
             printf("[%9.1f ms] %-11s", t_ms, ev_name(ev));
             if (ev == EV_FRAME_ERR)
                 printf(" err=%s after %u bits", err_name(s->dec.err), s->dec.nbits);
-            if (ev == EV_FRAME_OK) {
+            if (ev == EV_FRAME_OK && s->dec.ftype == FT_CONFIG) {
+                static const char *pm[4] = { "full", "bands", "off", "reserved" };
+                uint8_t p = s->dec.payload;
+                printf(" CONFIG payload=0x%02X panel=%s", p, pm[CF_PANEL(p)]);
+            } else if (ev == EV_FRAME_OK) {
                 uint8_t p = s->dec.payload;
                 printf(" payload=0x%02X bank=%u lna=%u quiet=%u clr=%u",
                        p, PL_BANK(p), PL_LNA(p), PL_QUIET(p), PL_CLR(p));
@@ -85,6 +91,7 @@ static void sim_run(sim_t *s, const edge_t *e, int n, double t_end)
     s->max_lamps = 0;
     dec_init(&s->dec, 1, ms2tick(0));
     app_init(&s->app, ms2tick(0), 0);
+    app_set_panel(&s->app, s->init_panel);
     next_meas = 0;
 
     for (t = 0; t <= t_end - t0; t += 1.0) {
@@ -123,20 +130,22 @@ static void sim_run(sim_t *s, const edge_t *e, int n, double t_end)
 
 /* ---- frame builder (mirror of host/coaxolotl.py) ------------------ */
 
-static int frame_bits(uint8_t p, int *b)
+static int frame_bits_t(int cfg, uint8_t p, int *b)
 {
     int k = 0, i;
-    b[k++] = 1; b[k++] = 0; b[k++] = 1;
+    b[k++] = !cfg; b[k++] = cfg; b[k++] = !cfg;      /* 1 0 1 or 0 1 0 */
     for (i = 5; i >= 0; i--) b[k++] = (p >> i) & 1;
     for (i = 5; i >= 0; i--) b[k++] = ((~p) >> i) & 1;
     return k;
 }
 
+static int frame_bits(uint8_t p, int *b) { return frame_bits_t(0, p, b); }
+
 /* appends one frame starting with a falling edge at t; returns end time */
-static double add_frame(edge_t *e, int *n, double t, uint8_t p,
-                        double g0, double g1, double on)
+static double add_frame_t(edge_t *e, int *n, double t, int cfg, uint8_t p,
+                          double g0, double g1, double on)
 {
-    int b[16], k = frame_bits(p, b), i;
+    int b[16], k = frame_bits_t(cfg, p, b), i;
     for (i = 0; i < k; i++) {
         e[(*n)++] = (edge_t){ t, 0 };
         t += b[i] ? g1 : g0;
@@ -144,6 +153,17 @@ static double add_frame(edge_t *e, int *n, double t, uint8_t p,
         t += on;
     }
     return t;
+}
+
+static double add_frame(edge_t *e, int *n, double t, uint8_t p, double g0, double g1, double on)
+{
+    return add_frame_t(e, n, t, 0, p, g0, g1, on);
+}
+
+/* config frame: panel mode in P5..P4 */
+static double add_config(edge_t *e, int *n, double t, uint8_t panel, double g0, double g1, double on)
+{
+    return add_frame_t(e, n, t, 1, (uint8_t)(panel << 4), g0, g1, on);
 }
 
 /* ---- ASCII front panel -------------------------------------------- */

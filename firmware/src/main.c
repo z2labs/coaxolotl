@@ -29,6 +29,10 @@ static void pump(uint8_t ev, uint16_t now)
 
 static void refresh(void)
 {
+    if (app.nv_dirty) {
+        app.nv_dirty = 0;
+        hal_nv_save(app.panel);
+    }
     if (app.rf_dirty) {
         app.rf_dirty = 0;
         hal_rf(app.bank, app.lna_path, app.fmn, app.lna_en);
@@ -48,6 +52,7 @@ void main(void)
     hal_init();
     now = hal_now();
     app_init(&app, now, hal_reset_abnormal());
+    app_set_panel(&app, hal_nv_load(CFG_DEFAULT_PANEL));
     dec_init(&dec, hal_sense(), now);
     t_meas = now;
     refresh();
