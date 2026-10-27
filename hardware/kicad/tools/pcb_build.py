@@ -886,7 +886,7 @@ json.dump(pj, open(pro, "w", encoding="utf-8"), indent=2)
 open(os.path.join(PRJ, "coaxolotl.kicad_dru"), "w", encoding="utf-8").write(
     "(version 1)\n"
     "# edge-mount SMA: the centre and ground pads run to the board edge by design\n"
-    "(rule \"SMA edge\"\n  (condition \"A.memberOfFootprint('J2') || A.memberOfFootprint('J3')\")\n"
+    "(rule \"SMA edge\"\n  (condition \"A.memberOfFootprint('J2') || A.memberOfFootprint('J3') || B.memberOfFootprint('J2') || B.memberOfFootprint('J3')\")\n"
     "  (constraint edge_clearance (min 0mm)))\n")
 json.dump({r: list(v) for r, v in where.items()}, open(os.path.join(PRJ, "placement.json"), "w"), indent=0)
 print("RF nets:", len(RF_NETS))
