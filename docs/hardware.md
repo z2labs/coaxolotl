@@ -114,7 +114,8 @@ clock (Stop exits only through reset). The BB2 also has 21 I/O on QSOP24.
 | 21 | P0.7 | LNA_PATH | out | both SPDTs; 1 = through LNA; 10 k pull-down = bypass |
 | 20–18 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 in parallel; 10 k pull-downs = branch 0 (THRU) |
 | 17 | P1.3 | FMN | out | FM-notch SPDTs (DNP option); 10 k pull-down |
-| 16–13 | P1.4–P1.7 | — | out | spare, driven low; test pads |
+| 16 | P1.4 | LNA_PATH_OUT | out | output SPDT U7 (its own line, same polarity as LNA_PATH); 10 k pull-down = bypass |
+| 15–13 | P1.5–P1.7 | — | out | spare, driven low; test pads |
 | 12 | P2.0 | LED_SER | out | 595 chain data |
 | 11 | P2.1 | LED_SCK | out | |
 | 10 | P2.2 | LED_RCK | out | |

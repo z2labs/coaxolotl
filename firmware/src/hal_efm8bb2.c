@@ -12,7 +12,8 @@
  *   P0.7 LNA_PATH  out  SPDT pair, 1=LNA  (10k pull-down: bypass in reset)
  *   P1.0..2 SW_V1..3   both PE42582      (10k pull-downs: THRU in reset)
  *   P1.3 FMN       out  FM notch SPDTs   (10k pull-down: out in reset)
- *   P1.4..7        spare, driven low (test points)
+ *   P1.4 LNA_PATH_OUT out output SPDT U7 (own line, same polarity; 10k pull-down)
+ *   P1.5..7        spare, driven low (test points)
  *   P2.0 LED_SER, P2.1 LED_SCK, P2.2 LED_RCK, P2.3 LED_OE_N (10k pull-up)
  *
  * Pin sides follow the placement: QSOP pins 1-12 (analog, power, debug,
@@ -33,6 +34,7 @@
 
 SBIT(LNA_EN,   0x86);   /* P0.6 */
 SBIT(LNA_PATH, 0x87);   /* P0.7 */
+SBIT(LNA_PATH_OUT, 0x94);   /* P1.4 */
 SBIT(LED_SER,  0xA0);   /* P2.0 */
 SBIT(LED_SCK,  0xA1);   /* P2.1 */
 SBIT(LED_RCK,  0xA2);   /* P2.2 */
@@ -294,14 +296,14 @@ void hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en)
 
     /* break before make: leave the LNA path first, enter it last */
     if (!lna_path)
-        LNA_PATH = 0;
+        LNA_PATH = LNA_PATH_OUT = 0;
     if (!lna_en)
         LNA_EN = 0;
     P1 = (uint8_t)((P1 & 0xF0u) | (code & 7u) | (fmn ? 0x08u : 0u));
     if (lna_en)
         LNA_EN = 1;
     if (lna_path)
-        LNA_PATH = 1;
+        LNA_PATH = LNA_PATH_OUT = 1;
 }
 
 void hal_panel(const uint8_t *img)

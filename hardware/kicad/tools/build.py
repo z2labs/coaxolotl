@@ -449,7 +449,7 @@ def sheet_mcu(lib) -> DSheet:
                 "2": "SCAP_ADC", "4": "SENSE", "3": "SENSE", "24": "TP_TX",
                 "22": "LNA_EN", "21": "LNA_PATH", "20": "SW_V1", "19": "SW_V2", "18": "SW_V3", "17": "FMN",
                 "12": "LED_SER", "11": "LED_SCK", "10": "LED_RCK", "9": "LED_OE_N",
-                "16": None, "15": None, "14": None, "13": None},
+                "16": "LNA_PATH_OUT", "15": None, "14": None, "13": None},
                txt=(168.91, 176.53)))
     s.add(C("C15", "100nF/16V/10%", 172.72, 69.85, "+3V3", "GND", Place="U5.6 (closest)"))
     s.add(C("C14", "1uF/16V/10%", 193.04, 69.85, "+3V3", "GND", Place="U5.6"))
@@ -496,11 +496,11 @@ def sheet_mcu(lib) -> DSheet:
     s.gnd("C2", "2")
     s.w(s.pt("U5", "24"), s.pt("TP1", "1"))
     for num, net in [("22", "LNA_EN"), ("21", "LNA_PATH"), ("20", "SW_V1"), ("19", "SW_V2"),
-                     ("18", "SW_V3"), ("17", "FMN"), ("12", "LED_SER"), ("11", "LED_SCK"),
+                     ("18", "SW_V3"), ("17", "FMN"), ("16", "LNA_PATH_OUT"), ("12", "LED_SER"), ("11", "LED_SCK"),
                      ("10", "LED_RCK"), ("9", "LED_OE_N")]:
         end = s.pw("U5", num, (215.9, None))
         s.hlabel(net, *end, "R", "output")
-    for num in ("16", "15", "14", "13"):
+    for num in ("15", "14", "13"):
         s.nc("U5", num)
     s.intent("J1: 1=GND 2=C2D 3=C2CK 4=3V3", 86.36, 73.66)
     s.intent("Pinout follows placement: QSOP pins 1-12 (ADC, debug, lamp chain P2.x) face power/panel,",
@@ -689,27 +689,31 @@ def sheet_rf_fe(lib) -> DSheet:
         s.intent(t, 281.94, 131.45 + 3.18 * i)
     # LNA / bypass out -------------------------------------------------------
     s.frame(365.76, 45.72, 30.48, 58.42, "LNA/BYP OUT")
-    _pe42522(s, "U7", 381.0, 80.01, "RF_BANK", "LNA_PATH", "BYP_RF", "LNA_RF_SW", inv=True, mirror=True,
+    _pe42522(s, "U7", 381.0, 80.01, "RF_BANK", "LNA_PATH_OUT", "BYP_RF", "LNA_RF_SW", inv=True, mirror=True,
              txt=(381.0, 97.79, None))
     _sw_supply(s, "U7", "C37", right=False)
     s.w(s.pt("U6", "2"), s.pt("U7", "11"))
     s.pw("C31", "2", (363.22, None), (None, s.pt("U7", "2")[1]), s.pt("U7", "2"))
     s.pw("U7", "7", (401.32, None))
     s.hlabel("RF_BANK", 401.32, y0, "R", "bidirectional")
-    s.pw("U7", "14", (398.78, None), (None, yp))
+    s.pw("U7", "14", (398.78, None), (None, yp + 5.08))
     s.ctext("bypass: F1-F4 (HF/LF) always, LNA off or tripped", 243.84, y0 - 1.27, 1.27)
 
     # control ----------------------------------------------------------------
-    s.frame(15.24, 193.04, 388.62, 35.56, "Control inputs (reset-safe pull-downs)")
+    s.frame(15.24, 193.04, 388.62, 45.72, "Control inputs (reset-safe pull-downs)")
     s.add(R("R15", "10k/5%", 50.8, yp + 3.81, "LNA_PATH", "GND", Note="bypass while MCU in reset"))
     s.add(R("R19", "10k/5%", 203.2, yf + 3.81, "FMN", "GND", Note="notch out while MCU in reset"))
-    s.w((35.56, yp), (398.78, yp))
+    s.w((35.56, yp), (86.36, yp))
+    s.w((99.06, yp + 5.08), (398.78, yp + 5.08))
+    s.hlabel("LNA_PATH_OUT", 99.06, yp + 5.08, "L", "input")
+    s.add(R("R26", "10k/5%", 121.92, yp + 5.08 + 3.81, "LNA_PATH_OUT", "GND", Note="bypass while MCU in reset"))
+    s.gnd("R26", "2")
     s.w((190.5, yf), (297.18, yf))
     s.hlabel("LNA_PATH", 35.56, yp, "L", "input")
     s.hlabel("FMN", 190.5, yf, "L", "input")
     s.gnd("R15", "2")
     s.gnd("R19", "2")
-    s.intent("LNA_PATH 0 = bypass, 1 = LNA; FMN 0 = through. U7/U10 have LS = GND (RF ports swapped: one-layer ring).", 228.6, 206.38)
+    s.intent("LNA_PATH (U6) and LNA_PATH_OUT (U7, own GPIO): 0 = bypass, 1 = LNA. FMN 0 = through. U7/U10: LS = GND.", 228.6, 206.38)
     s.intent("PE42520 RF ports sit at 0 VDC: no blocking caps except around the LNA.", 228.6, 209.55)
     return s
 
@@ -1012,7 +1016,7 @@ def draw_block_diagram(r: DSheet):
         if b:
             r.block(xs[i], ym, bw, bh, b[0], [b[1]], b[2])
     for i, (t, l) in enumerate([("PRESELECTOR", "HPF 25M, LPF 2.2G"), ("FM NOTCH", "88-108 MHz, opt."),
-                                ("LNA", "~100 mA")]):
+                                ("LNA", "QPL9547 65 mA")]):
         r.block(xs[3 + i], yu, bw, bh, t, [l], RFC)
     c = ym + bh / 2
     cu = yu + bh / 2
@@ -1028,7 +1032,7 @@ def draw_block_diagram(r: DSheet):
     r.ctext("COAX", 390, c - 4.5, 1.6, bold=True)
     r.ctext("RF -> RTL-SDR V3", 390, c + 3.0, 1.1)
     r.ctext("<- DC 4.5 V + OOK", 390, c + 5.5, 1.1)
-    for i, tag in [(2, "LNA_PATH"), (6, "LNA_PATH"), (7, "SW_V1..3"), (9, "SW_V1..3")]:
+    for i, tag in [(2, "LNA_PATH"), (6, "LNA_PATH_OUT"), (7, "SW_V1..3"), (9, "SW_V1..3")]:
         r.ctext(tag, xs[i] + bw / 2, ym + bh + 2.5, 1.1)
     r.ctext("FMN", xs[4] + bw / 2, yu - 1.5, 1.1)
 
@@ -1096,12 +1100,12 @@ def main():
     root.heading("Sheets", 20.32, 168.91)
     power, mcu, fe, bank, panel = sheets
     left = ["SENSE", "SCAP_ADC", "ILNA", "FAULT_N", "LNA_EN"]
-    to_fe = ["LNA_PATH", "FMN"]
+    to_fe = ["LNA_PATH", "FMN", "LNA_PATH_OUT"]
     to_bank = ["SW_V1", "SW_V2", "SW_V3"]
     to_panel = ["LED_SER", "LED_SCK", "LED_RCK", "LED_OE_N"]
     ys = [180.34 + 5.08 * i for i in range(5)]
-    yf = [180.34, 185.42]
-    yb = [200.66 + 5.08 * i for i in range(3)]
+    yf = [180.34, 185.42, 190.5]
+    yb = [203.2 + 5.08 * i for i in range(3)]
     yl = [226.06 + 5.08 * i for i in range(4)]
     xp, xm, xr = 30.48, 139.7, 248.92
     w = 50.8
@@ -1113,18 +1117,18 @@ def main():
     fe.sheet_pins = ([(n, fe.hier[n], xr, y, "L") for n, y in zip(to_fe, yf)] +
                      [("RF_BANK", fe.hier["RF_BANK"], xr + w, 182.88, "R")])
     bank.sheet_pins = ([(n, bank.hier[n], xr, y, "L") for n, y in zip(to_bank, yb)] +
-                       [("RF_BANK", bank.hier["RF_BANK"], xr + w, 205.74, "R")])
+                       [("RF_BANK", bank.hier["RF_BANK"], xr + w, 208.28, "R")])
     panel.sheet_pins = [(n, panel.hier[n], xr, y, "L") for n, y in zip(to_panel, yl)]
     root.subsheet(power, xp, 175.26, w, 30.48)
     root.subsheet(mcu, xm, 175.26, w, 71.12)
-    root.subsheet(fe, xr, 175.26, w, 12.7)
-    root.subsheet(bank, xr, 195.58, w, 17.78)
+    root.subsheet(fe, xr, 175.26, w, 17.78)
+    root.subsheet(bank, xr, 198.12, w, 17.78)
     root.subsheet(panel, xr, 220.98, w, 22.86)
     for y in ys:
         root.w((xp + w, y), (xm, y))
     for y in yf + yb + yl:
         root.w((xm + w, y), (xr, y))
-    root.w((xr + w, 182.88), (xr + w + 10.16, 182.88), (xr + w + 10.16, 205.74), (xr + w, 205.74))
+    root.w((xr + w, 182.88), (xr + w + 10.16, 182.88), (xr + w + 10.16, 208.28), (xr + w, 208.28))
     root.intent("Power and ground cross sheets only as power symbols (VCOAX, VMAIN, VHOLD, VLED, LNA_VCC, "
                 "+3V3, GND).", 20.32, 251.46)
     root.intent("Signals cross sheets as hierarchical labels through the sheet pins above. "

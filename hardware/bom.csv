@@ -75,7 +75,7 @@ R8,1,1k/1%,R_0603_1608Metric,,,MCU,
 R9,1,100R/5%,R_0603_1608Metric,,,Power,
 R10 R24,2,220R/5%,R_0603_1608Metric,,,"Filter bank, Power",R24: damps the L6 self-resonance
 R11 R12,2,1M/1%,R_0603_1608Metric,,,Power,
-R13 R14 R15 R16 R17 R18 R19 R20,8,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write
+R13 R14 R15 R16 R17 R18 R19 R20 R26,9,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write; R26: bypass while MCU in reset
 R21 R22,2,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted
 R25,1,3k32/1%,R_0603_1608Metric,,,RF front end,R25: sets IDD = 65 mA (QPL9547 EVB R4)
 RN1 RN2 RN3 RN4 RN5 RN6 RN7 RN8 RN9 RN10 RN11 RN12,12,2k2x4/5%(CAY16),R_Array_Convex_4x0603,CAY16-222J4LF,,Panel,
