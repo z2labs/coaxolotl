@@ -438,8 +438,8 @@ lay(chain(pinnet[("U11", "22")], pinnet[("J3", "1")], bk), [(u11c[0] + 1.0, YC),
 
 # ------------------------------------------------------------ 3) lamp strip
 LAMP_X0, LAMP_DX = 4.0, 3.2
-ROW_Y = (8.2, 16.6)
-NAMES = ["THRU", "LF", "160/80", "60-30", "20-10", "6/4m", "2m/AIR", "70/23cm",
+ROW_Y = (8.0, 16.0)
+NAMES = ["THRU", "LF", "160/80", "60-30", "20-10", "6/4m", "2m/AIR", "70/23",
          "SYNC", "SYNC", "SYNC", "B2", "B1", "B0", "LNA", "QUIET", "CLR", "CHK", "CHK", "CHK", "CHK", "CHK", "CHK", "RX",
          "0", "1", "OK", "ERR", "SYNC", "CHK", "GAP", "RUNT", "TMO", "LNA", "BYP", "AUTO", "FMN", "I-LO", "I-OK",
          "I-HI", "TRIP", "RUN", "HOLD", "LOW", "QUIET", "DROP", "GLT", "RST"]
@@ -451,10 +451,11 @@ for n in range(48):
 REG_X = [LAMP_X0 + 1.5 * LAMP_DX + 4 * LAMP_DX * i for i in range(6)]
 REG_ORDER = ["U14", "U15", "U16", "U17", "U18", "U19"]
 for x, u in zip(REG_X, REG_ORDER):
-    put(u, x, 21.4, 0)
+    # arrays under the lamps, LED side (pins 5-8) up; the register below them, Q1-Q7 (pins 1-7) up
+    put(u, x, 25.0, orient(u, {"1": UP}))
     k = int(u[1:]) - 14
-    put(f"RN{1 + 2 * k}", x - 2.0, 26.6, 90)
-    put(f"RN{2 + 2 * k}", x + 2.0, 26.6, 90)
+    put(f"RN{1 + 2 * k}", x - 2.0, 19.4, orient(f"RN{1 + 2 * k}", {"8": UP}))
+    put(f"RN{2 + 2 * k}", x + 2.0, 19.4, orient(f"RN{2 + 2 * k}", {"8": UP}))
 rot_hdr = orient("J5", {"7": RIGHT})
 put("J5", 82.55, 27.0, rot_hdr)
 put("J4", 82.55, 35.0, rot_hdr)
@@ -728,7 +729,7 @@ def text(s, x, y, size=1.0, angle=0, th=0.15, layer=pcbnew.F_SilkS, just=None):
 
 for n in range(48):
     row, i = divmod(n, 24)
-    text(NAMES[n], LAMP_X0 + i * LAMP_DX, (3.6, 12.4)[row], 1.0, 90)
+    text(NAMES[n], LAMP_X0 + i * LAMP_DX, (3.5, 12.0)[row], 1.0, 90)
 text("COAXOLOTL", 90.0, 8.0, 2.0, 0, 0.3)
 text("rev 0.1  z2labs", 90.0, 11.5, 1.0)
 text("CERN-OHL-S-2.0", 90.0, 14.0, 1.0)
