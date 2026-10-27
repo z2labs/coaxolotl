@@ -32,7 +32,9 @@ the room.
 ```
 
 The physical rows are free. The chain order is fixed by `panel.h`: lamp
-`n` sits on `U(n/8+1).Q(n%8)`, and U1 is the register next to the MCU.
+`n` sits on register `n/8`, output `Q(n%8)`. In the schematic the registers
+are U14 (first after the MCU, lamps 0–7) to U19 (lamps 40–47), and lamp `n`
+is LED D(7+n) with its 2.2 kΩ in array RN(1 + n/4).
 
 ## Lamp reference
 

@@ -221,6 +221,7 @@ class Part:
     dnp: bool = False
     txt: Optional[Tuple[float, float]] = None   # explicit Reference position (Value 2.54 below)
     mirror: bool = False                         # mirror about the Y axis (only with rot 0)
+    vtxt: Optional[Tuple] = None                 # explicit Value position (x, y[, justify])
 
 
 class Sheet:
@@ -428,6 +429,9 @@ class Sheet:
             tx, ty = p.txt[0], p.txt[1]
             just = p.txt[2] if len(p.txt) > 2 else "left"
             place = {"Reference": (tx, ty, just), "Value": (tx, ty + 2.54, just)}
+        if p.vtxt:
+            place = dict(place or {})
+            place["Value"] = (p.vtxt[0], p.vtxt[1], p.vtxt[2] if len(p.vtxt) > 2 else "left")
         self._instance(p.lib_id, p.ref, p.value, p.x, p.y, p.rot, p.footprint, dict(p.fields),
                        pins=list(pins), dnp=p.dnp, place=place, mirror=p.mirror)
         if not getattr(self, "stubs", True):

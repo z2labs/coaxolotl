@@ -195,6 +195,17 @@ def build_library(path: pathlib.Path):
             top_pins=[("1", "VBIAS")], bottom_pins=[("9,4,5,8", "GND")],
             pin_types={"2": "input", "7": "output", "6": "input", "1": "input", "9,4,5,8": "power_in"}),
         ic_symbol(
+            "74HC595", "U", "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
+            "https://www.ti.com/lit/ds/symlink/sn74hc595.pdf",
+            "8-bit shift register with output latches (pin order arranged for this design: ~SRCLR on top)",
+            left=[("14", "SER"), None, ("11", "SRCLK"), ("12", "RCLK"), ("13", "~{OE}")],
+            right=[("15", "QA"), ("1", "QB"), ("2", "QC"), ("3", "QD"), ("4", "QE"), ("5", "QF"),
+                   ("6", "QG"), ("7", "QH"), None, ("9", "QH'")],
+            top_pins=[("16", "VCC"), ("10", "~{SRCLR}")], bottom_pins=[("8", "GND")],
+            pin_types={"14": "input", "11": "input", "12": "input", "13": "input", "10": "input",
+                       "16": "power_in", "8": "power_in", "9": "output",
+                       **{n: "tri_state" for n in ("15", "1", "2", "3", "4", "5", "6", "7")}}),
+        ic_symbol(
             "RF_FILTER", "FL", "coaxolotl:FILTER_TBD",
             "~", "Placeholder for an LC filter network (designed in the filter review)",
             left=[("1", "IN")], right=[("2", "OUT")], bottom_pins=[("3", "GND")],
@@ -771,17 +782,109 @@ def sheet_bank(lib) -> DSheet:
     return s
 
 
+LAMP_COL = {"A": "AMBER(0603)", "Y": "YELLOW(0603)", "G": "GREEN(0603)", "R": "RED(0603)"}
+# lamp n: (name, colour) - order fixed by firmware/src/panel.h (lamp n on register n/8, output n%8)
+LAMPS = ([(f"F{k} {n}", "A") for k, n in enumerate(
+            ["THRU", "LF", "160/80", "60-30", "20-10", "6/4m", "2m/AIR", "70/23cm"])] +
+         [(f"FR{k} {n}", "A") for k, n in enumerate(
+            ["SYNC", "SYNC", "SYNC", "B2", "B1", "B0", "LNA", "QUIET", "CLR",
+             "CHK", "CHK", "CHK", "CHK", "CHK", "CHK"])] +
+         [("RX", "A"), ("0", "Y"), ("1", "Y"), ("OK", "G"), ("ERR", "R"), ("SYNC", "R"), ("CHK", "R"),
+          ("GAP", "R"), ("RUNT", "R"), ("TMO", "R"), ("LNA", "G"), ("BYP", "Y"), ("AUTO", "Y"), ("FMN", "A"),
+          ("I-LO", "Y"), ("I-OK", "G"), ("I-HI", "R"), ("TRIP", "R"), ("RUN", "G"), ("HOLD", "G"),
+          ("LOW", "R"), ("QUIET", "Y"), ("DROP", "R"), ("GLT", "Y"), ("RST", "R")])
+assert len(LAMPS) == 48
+REG_TITLE = ["BANK (lamps 0-7)", "FRAME (lamps 8-15)", "FRAME + RX (lamps 16-23)",
+             "DECODE (lamps 24-31)", "DECODE + RF (lamps 32-39)", "RF + SYSTEM (lamps 40-47)"]
+
+
+def _register(s, k, X, Y):
+    """one 74HC595 + 8 lamps. Q pins sink: VLED -> LED -> 2k2 -> Q."""
+    u, ref = 14 + k, f"U{14 + k}"
+    s.frame(X - 35.56, Y - 43.18, 124.46, 73.66, REG_TITLE[k])
+    ser = "LED_SER" if k == 0 else f"LED_CH{k}"
+    nets = {"14": ser, "11": "LED_SCK", "12": "LED_RCK", "13": "LED_OE_N", "16": "+3V3", "10": "+3V3",
+            "8": "GND", "9": f"LED_CH{k + 1}" if k < 5 else None}
+    qpins = ["15", "1", "2", "3", "4", "5", "6", "7"]
+    nets.update({q: f"LAMP{8 * k + i}_Q" for i, q in enumerate(qpins)})
+    s.add(Part(ref, "coaxolotl:74HC595", "74HC595PW(TSSOP16)", X, Y, 0, "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
+               nets, txt=(X - 2.54, Y + 19.05, "right")))
+    # inputs
+    for pin, net in (("14", ser), ("11", "LED_SCK"), ("12", "LED_RCK"), ("13", "LED_OE_N")):
+        end = s.pw(ref, pin, (X - 15.24, None))
+        if net.startswith("LED_CH"):
+            s.label(net, *end, "L")
+        else:
+            s.hlabel(net, *end, "L", "input")
+    # supply: VCC and ~SRCLR to +3V3, 100 nF at the VCC riser
+    vx, vy = s.pt(ref, "16")
+    cx_, cy_ = s.pt(ref, "10")
+    s.w((vx, vy), (vx, Y - 31.75))
+    s.rail("+3V3", vx, Y - 31.75)
+    s.w((cx_, cy_), (cx_, Y - 21.59), (vx, Y - 21.59))
+    s.w((vx, Y - 29.21), (X - 12.7, Y - 29.21))
+    cref = f"C{41 + k}"
+    s.add(C(cref, "100nF/16V/10%", X - 12.7, Y - 25.4, "+3V3", "GND", Place=f"{ref}.16",
+            txt=(X - 15.24, Y - 26.67, "right")))
+    s.gnd(cref, "2")
+    s.gnd(ref, "8")
+    # chain out
+    if k < 5:
+        end = s.pw(ref, "9", (X + 12.7, None), (None, Y + 16.51))
+        s.label(f"LED_CH{k + 1}", *end, "R")
+    else:
+        s.nc(ref, "9")
+    # resistor packs: pins 1-4 on the left, 8-5 on the right, 2.54 mm pitch = Q pitch
+    for h in range(2):
+        rn = f"RN{1 + 2 * k + h}"
+        qa = s.pt(ref, qpins[4 * h])[1]
+        rnets = {}
+        for j in range(4):
+            n = 8 * k + 4 * h + j
+            rnets[str(1 + j)] = f"LAMP{n}_Q"
+            rnets[str(8 - j)] = f"LAMP{n}_K"
+        tt = (X + 20.32, qa - 5.08, None) if h == 0 else (X + 20.32, qa + 10.16, None)
+        s.add(Part(rn, "Device:R_Pack04", "2k2x4/5%(CAY16)", X + 20.32, qa + 5.08, 270,
+                   "Resistor_SMD:R_Array_Convex_4x0603", rnets, {"MPN": "CAY16-222J4LF"}, txt=tt))
+        for j in range(4):
+            s.w(s.pt(ref, qpins[4 * h + j]), s.pt(rn, str(1 + j)))
+    # lamps
+    xl = X + 46.99
+    xv = xl + 6.35
+    rows = [Y - 2.54 + (i - 3.5) * 7.62 for i in range(8)]
+    for i in range(8):
+        n = 8 * k + i
+        name, col = LAMPS[n]
+        rn, pin = f"RN{1 + 2 * k + i // 4}", str(8 - i % 4)
+        d = f"D{7 + n}"
+        s.add(Part(d, "Device:LED", LAMP_COL[col], xl, rows[i], 0, LED0603,
+                   {"1": f"LAMP{n}_K", "2": "VLED"}, txt=(xv + 2.54, rows[i] + 0.64),
+                   vtxt=(xv + 8.89, rows[i] + 0.64)))
+        colx = X + 30.48 + 2.54 * (i if i < 4 else 7 - i)
+        s.pw(rn, pin, (colx, None), (None, rows[i]), s.pt(d, "1"))
+        s.w(s.pt(d, "2"), (xv, rows[i]))
+        s.intent(f"{n:2d}  {name}", xv + 21.59, rows[i] + 1.27)
+    s.w((xv, rows[7]), (xv, rows[0] - 5.08))
+    s.rail("VLED", xv, rows[0] - 5.08)
+
+
 def sheet_panel(lib) -> DSheet:
-    s = sheet(lib, "Panel", "panel.kicad_sch", "48-lamp front panel - placeholder (next review)")
+    s = sheet(lib, "Panel", "panel.kicad_sch", "48-lamp front panel: 6x 74HC595 sinking, 2k2 arrays, VLED")
     s.zone = "DIGITAL"
-    s.frame(25.4, 45.72, 111.76, 50.8, "Lamp chain inputs")
-    for i, net in enumerate(["LED_SER", "LED_SCK", "LED_RCK"]):
-        s.hlabel(net, 40.64, 60.96 + i * 5.08, "L", "input")
-    s.add(R("R20", "10k/5%", 76.2, 73.66, "+3V3", "LED_OE_N", Note="lamps dark until first write"))
-    s.w((40.64, 77.47), s.pt("R20", "2"))
-    s.hlabel("LED_OE_N", 40.64, 77.47, "L", "input")
+    for k in range(6):
+        _register(s, k, 50.8 + 127.0 * (k % 3), 78.74 + 88.9 * (k // 3))
+    # OE_N pull-up: lamps dark until the first write
+    s.frame(15.24, 213.36, 45.72, 33.02, "OE_N pull-up")
+    s.add(R("R20", "10k/5%", 40.64, 227.33, "+3V3", "LED_OE_N", Note="lamps dark until first write"))
+    s.w(s.pt("R20", "2"), (40.64, 233.68), (25.4, 233.68))
+    s.hlabel("LED_OE_N", 25.4, 233.68, "L", "input")
     s.rail_pin("R20", "1", "+3V3")
-    s.intent("NEXT REVIEW: 6x 74HC595 (sinking), 48 lamps on VLED, 2.2k arrays.", 27.94, 91.44)
+    s.intent("Lamp n: register n/8 (U14 = first after the MCU), output Q(n%8) - firmware/src/panel.h.",
+             66.04, 222.25)
+    s.intent("Q low = lamp on (sink). 1 mA per lamp: (VLED - 2 V - 0.1 V) / 2k2. Use 2 V LEDs only.",
+             66.04, 225.43)
+    s.intent("Lamp test lights all 48 (48 mA) with the LNA still off. Outside it, at most 23 lamps.",
+             66.04, 228.6)
     return s
 
 

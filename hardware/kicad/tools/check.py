@@ -22,7 +22,7 @@ import schgen as g  # noqa: E402
 
 KICAD = build.OUT
 # nets that legitimately end on a sheet not drawn yet
-PENDING = {"LED_SER", "LED_SCK", "LED_RCK", "VLED_TODO"}
+PENDING: set = set()
 
 
 def main() -> int:

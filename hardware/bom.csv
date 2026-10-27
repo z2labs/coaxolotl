@@ -1,5 +1,5 @@
 refs,qty,value,footprint,mpn,dnp,sheet,note
-C1 C6 C7 C11 C15 C36 C37 C38 C39,9,100nF/16V/10%,C_0603_1608Metric,,,"Filter bank, MCU, Power, RF front end",
+C1 C6 C7 C11 C15 C36 C37 C38 C39 C41 C42 C43 C44 C45 C46,15,100nF/16V/10%,C_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",
 C2,1,10nF/50V/10%,C_0603_1608Metric,,,MCU,
 C3,1,10uF/10V/20%,C_0805_2012Metric,,,Power,
 C4 C5 C12 C13 C14,5,1uF/16V/10%,C_0603_1608Metric,,,"MCU, Power",
@@ -17,6 +17,10 @@ D1,1,SMF5.0A(SOD123F),D_SOD-123F,,,Power,
 D2,1,LED/GREEN(0603),LED_0603_1608Metric,,,Power,"D2: PWR lamp, works without MCU"
 D3 D4 D5,3,BAT54WS(SOD323),D_SOD-323,,,Power,
 D6,1,BAV99W(SOT323),SOT-323_SC-70,,,RF front end,"D6: clamp +-0.7 V, ~1.5 pF"
+D7 D8 D9 D10 D11 D12 D13 D14 D15 D16 D17 D18 D19 D20 D21 D22 D23 D24 D25 D26 D27 D28 D29 D30 D43,25,AMBER(0603),LED_0603_1608Metric,,,Panel,
+D31 D32 D41 D42 D44 D51 D53,7,YELLOW(0603),LED_0603_1608Metric,,,Panel,
+D33 D40 D45 D48 D49,5,GREEN(0603),LED_0603_1608Metric,,,Panel,
+D34 D35 D36 D37 D38 D39 D46 D47 D50 D52 D54,11,RED(0603),LED_0603_1608Metric,,,Panel,
 FB1 FB2,2,FB0603/600R/1.3A,L_0603_1608Metric,BLM18KG601SN1D,,"Power, RF front end",
 FL1,1,F1 LPF 550 kHz,FILTER_TBD,,,Filter bank,FL1: LC network: filter review
 FL2,1,F2 BPF 1.6-4 MHz,FILTER_TBD,,,Filter bank,FL2: LC network: filter review
@@ -49,6 +53,7 @@ R11 R12,2,1M/1%,R_0603_1608Metric,,,Power,
 R13 R14 R15 R16 R17 R18 R19 R20,8,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write
 R21 R22,2,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted
 R25,1,3k32/1%,R_0603_1608Metric,,,RF front end,R25: sets IDD (SWL434: 3k32 @ 5 V)
+RN1 RN2 RN3 RN4 RN5 RN6 RN7 RN8 RN9 RN10 RN11 RN12,12,2k2x4/5%(CAY16),R_Array_Convex_4x0603,CAY16-222J4LF,,Panel,
 TP1,1,TP/TX,TestPoint_Pad_D1.0mm,,,MCU,
 TP6,1,TP/SENSE,TestPoint_Pad_D1.0mm,,,MCU,
 U1,1,LM66100DCKR(SC70-6),SOT-363_SC-70-6,,,Power,
@@ -61,3 +66,4 @@ U8 U11,2,PE42582A(QFN24),QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm,,,Filter bank,
 U9 U10,2,NA(PE42522B),PE42522_LGA-29_4x4mm,,DNP,RF front end,
 U12,1,LFCN-2250+(FV1206),MiniCircuits_FV1206,,,RF front end,
 U13,1,QPL9547TR7(DFN8-2x2),Qorvo_DFN-8-1EP_2x2mm_P0.5mm,,,RF front end,
+U14 U15 U16 U17 U18 U19,6,74HC595PW(TSSOP16),TSSOP-16_4.4x5mm_P0.65mm,,,Panel,

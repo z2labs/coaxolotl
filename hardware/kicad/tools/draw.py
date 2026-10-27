@@ -103,6 +103,14 @@ class DSheet(g.Sheet):
                        place={"Value": (x, y - 3.81, None)})
 
     # -- labels -----------------------------------------------------------
+    def label(self, net, x, y, side="R"):
+        """local net label (same sheet only); text reads away from the wire end."""
+        self.items.append([Sym("label"), net, [Sym("at"), x, y, 0 if side == "R" else 180],
+                           [Sym("fields_autoplaced")],
+                           [Sym("effects"), [Sym("font"), [Sym("size"), 1.27, 1.27]],
+                            [Sym("justify"), Sym("left" if side == "R" else "right"), Sym("bottom")]],
+                           [Sym("uuid"), uid()]])
+
     def hlabel(self, net, x, y, side="R", shape="bidirectional"):
         """side R: label to the right of (x,y), text reads away from the wire."""
         self.hier[net] = shape

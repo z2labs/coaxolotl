@@ -32,7 +32,7 @@ kicad-cli sch export pdf -o hardware/kicad/coaxolotl-schematic.pdf hardware/kica
 | 3 | MCU | v0.2 for review |
 | 4 | RF front end: protection, LNA/bypass SPDTs, preselector, FM notch (DNP), LNA | v0.2 for review |
 | 5 | Filter bank: 2× PE42582, F0–F7, bias-T, coax | v0.2 for review; F1–F7 are placeholders |
-| 6 | Panel | placeholder: lamp-chain inputs, OE_N pull-up |
+| 6 | Panel: 6× 74HC595, 48 lamps, 2k2 arrays, OE_N pull-up | v0.2 for review |
 
 ## Checks and limits
 
