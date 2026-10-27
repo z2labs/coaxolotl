@@ -616,47 +616,50 @@ def sheet_rf_fe(lib) -> DSheet:
     s.intent("tank 56 nH || 47 pF: f0 = 98 MHz", 218.44, 186.69)
 
     # LNA (one stage of the SWL434 / Spacewalker LNA) -------------------------
-    s.frame(306.07, 81.28, 54.61, 71.12, "LNA")
-    s.add(C("C28", "1nF/50V/C0G", 309.88, yl, "FMN_OUT", "LNA_RFIN", rot=90, txt=(309.88, yl - 6.35, None)))
+    s.frame(279.4, 81.28, 81.28, 62.23, "LNA")
+    s.add(C("C28", "1nF/50V/C0G", 309.88, yl, "FMN_OUT", "LNA_RFIN", rot=90, txt=(309.88, yl + 3.81, None)))
     s.w(s.pt("R22", "2"), s.pt("C28", "1"))
     s.add(Part("U13", "coaxolotl:QPL9547", "QPL9547TR7(DFN8-2x2)", 327.66, yl + 5.08, 0,
                "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.6mm",
                {"2": "LNA_RFIN", "7": "LNA_RFOUT", "1": "LNA_VBIAS", "6": "GND",
                 **{n: "GND" for n in ("9", "4", "5", "8")}},
                {"LCSC": "C5367093", "Note": "EP: 0.25 mm vias under the paddle (datasheet p.8)"},
-               txt=(331.47, 139.7)))
+               txt=(339.09, 132.08)))
     s.w(s.pt("C28", "2"), s.pt("U13", "2"))
     s.gnd("U13", "9")
     s.gnd("U13", "6")
-    # VBIAS: 3k32 from VDD, 100 pF at the VDD end
-    s.add(R("R25", "3k32/1%", 327.66, 110.49, "LNA_VCC", "LNA_VBIAS", Note="sets IDD (SWL434: 3k32 @ 5 V)",
-            txt=(330.2, 109.22)))
-    s.w(s.pt("R25", "2"), s.pt("U13", "1"))
-    s.w(s.pt("R25", "1"), (327.66, 99.06))
-    s.rail("LNA_VCC", 327.66, 99.06)
-    s.add(C("C32", "100pF/C0G", 320.04, 105.41, "LNA_VCC", "GND", txt=(317.5, 104.14, "right")))
-    s.w((327.66, 101.6), s.pt("C32", "1"))
+    # supply row (y = yr): LNA_VCC -> FB2 -> 100 pF -> L4 560 nH -> L8 18 nH -> RF_OUT
+    yr, xb = 96.52, 340.36
+    s.w((299.72, yr), (299.72, 91.44))
+    s.rail("LNA_VCC", 299.72, 91.44)
+    s.add(C("C40", "100pF/C0G", 299.72, yr + 3.81, "LNA_VCC", "GND", txt=(297.18, yr + 3.81, "right")))
+    s.gnd("C40", "2")
+    s.add(C("C32", "100pF/C0G", 307.34, yr + 3.81, "LNA_VCC", "GND", txt=(307.34, yr + 16.51, None)))
     s.gnd("C32", "2")
-    # RF_OUT: 560 nH choke, 100 pF, ferrite bead, 100 pF, VDD
-    xb = 340.36
-    s.add(Part("L4", "Device:L", "560nH/5%", xb, yl - 7.62, 0, "Inductor_SMD:L_0603_1608Metric",
-               {"1": "LNA_BIAS", "2": "LNA_RFOUT"}, txt=(337.82, yl - 6.35, "right")))
-    s.add(C("C30", "100pF/C0G", xb + 7.62, 107.95, "LNA_BIAS", "GND"))
-    s.add(Part("FB2", "Device:FerriteBead_Small", "FB0603/600R/1.3A", xb, 91.44, 0, FB0603,
-               {"1": "LNA_VCC", "2": "LNA_BIAS"}, txt=(337.82, 90.17, "right")))
-    s.add(C("C40", "100pF/C0G", xb + 7.62, 92.71, "LNA_VCC", "GND"))
+    s.add(R("R25", "3k32/1%", 314.96, yr + 3.81, "LNA_VCC", "LNA_VBIAS", Note="sets IDD = 65 mA (QPL9547 EVB R4)",
+            txt=(317.5, yr + 5.08)))
+    s.add(Part("FB2", "Device:FerriteBead_Small", "FB0603/600R/1.3A", 325.12, yr, 90, FB0603,
+               {"1": "LNA_VCC", "2": "LNA_BIAS"}, txt=(325.12, 87.63, None)))
+    s.add(C("C30", "100pF/C0G", 330.2, yr + 3.81, "LNA_BIAS", "GND", txt=(330.2, yr + 16.51, None)))
+    s.gnd("C30", "2")
+    s.add(Part("L4", "Device:L", "560nH/5%", 335.28, yr, 90, "Inductor_SMD:L_0603_1608Metric",
+               {"1": "LNA_BIAS", "2": "LNA_BIAS2"}, {"Note": "low-band choke (SWL434)"},
+               txt=(335.28, 90.17, None)))
+    s.add(Part("L8", "Device:L", "18nH/2%", xb, yl - 3.81, 0, "Inductor_SMD:L_0603_1608Metric",
+               {"1": "LNA_BIAS2", "2": "LNA_RFOUT"}, {"Note": "high-band choke at the pin (QPL9547 EVB L1)"},
+               txt=(342.9, yl - 6.35)))
+    p_fb1, p_fb2 = s.pt("FB2", "1"), s.pt("FB2", "2")
+    if p_fb1[0] > p_fb2[0]:
+        p_fb1, p_fb2 = p_fb2, p_fb1
+    s.w((299.72, yr), p_fb1)
+    s.w(p_fb2, s.pt("L4", "1"))
+    s.w(s.pt("L4", "2"), (xb, yr), s.pt("L8", "1"))
+    s.w(s.pt("L8", "2"), (xb, yl))
+    s.w(s.pt("R25", "2"), (314.96, 116.84), s.pt("U13", "1"))
     s.add(C("C31", "1nF/50V/C0G", 350.52, yl, "LNA_RFOUT", "LNA_RF_SW", rot=90, txt=(350.52, yl + 3.81, None)))
     s.w(s.pt("U13", "7"), s.pt("C31", "1"))
-    s.w(s.pt("L4", "2"), (xb, yl))
-    s.w(s.pt("L4", "1"), s.pt("FB2", "2"))
-    s.w((xb, 104.14), s.pt("C30", "1"))
-    s.gnd("C30", "2")
-    s.w(s.pt("FB2", "1"), (xb, 86.36))
-    s.rail("LNA_VCC", xb, 86.36)
-    s.w(s.pt("FB2", "1"), s.pt("C40", "1"))
-    s.gnd("C40", "2")
-    s.intent("as SWL434 stage 1; DC blocks 1 nF for 25 MHz", 308.61, 151.13)
-
+    for i, t in enumerate(["SWL434 stage 1", "+ 18 nH (EVB L1)", "1 nF DC blocks"]):
+        s.intent(t, 281.94, 131.45 + 3.18 * i)
     # LNA / bypass out -------------------------------------------------------
     s.frame(365.76, 45.72, 30.48, 58.42, "LNA/BYP OUT")
     _pe42522(s, "U7", 381.0, 80.01, "RF_BANK", "LNA_PATH", "BYP_RF", "LNA_RF_SW", mirror=True,

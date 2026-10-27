@@ -1,7 +1,7 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "2cc60996-4767-45f9-af09-be99e2fa5fd9")
+  (uuid "4622de97-6f1e-40ba-abc6-38c71ad6b995")
   (paper "A3")
   (title_block
     (title "Coaxolotl")
@@ -23,7 +23,7 @@
       )
       (justify left bottom)
     )
-    (uuid "0e8c9f76-fa59-458d-825c-164fb033511e")
+    (uuid "346c8b8d-84e7-44a0-ac32-ac539ecd6c79")
   )
   (rectangle
     (start 18 60)
@@ -36,7 +36,7 @@
       (type color)
       (color 232 232 232 1)
     )
-    (uuid "99cd866e-94d8-44f3-a18a-0b6c749e6383")
+    (uuid "0ed8f779-ba74-4517-b892-65b3576b9c15")
   )
   (text "ANTENNA"
     (at 31 65.75 0)
@@ -47,7 +47,7 @@
         bold
       )
     )
-    (uuid "833b8474-7d4a-4246-bc03-3ba7e6bbbf9e")
+    (uuid "886701d9-ef91-46a0-8d7e-ddb9dad5f63f")
   )
   (text "20 kHz-2 GHz"
     (at 31 68.25 0)
@@ -57,7 +57,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "88c36b9b-4e2e-41e5-8de7-f40c887b6378")
+    (uuid "85f394ab-bf3f-4edb-8000-8ea409cf2b4e")
   )
   (rectangle
     (start 51 60)
@@ -70,7 +70,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "b57440ea-026d-4734-9968-fc3c25e797a1")
+    (uuid "5714c4bd-ec67-49e6-8145-12b2ce1d746d")
   )
   (text "PROTECTION"
     (at 64 65.75 0)
@@ -81,7 +81,7 @@
         bold
       )
     )
-    (uuid "15e2e213-072f-45cb-bcf7-1a23cfa419e7")
+    (uuid "d35d58cd-6e72-4c74-91ec-6604905edbc1")
   )
   (text "GDT, limiter"
     (at 64 68.25 0)
@@ -91,7 +91,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "3f1aa3e4-afe4-4acf-8ebe-981755408a26")
+    (uuid "4d22bb48-5f1d-42ce-956c-d7b30f87a7df")
   )
   (rectangle
     (start 84 60)
@@ -104,7 +104,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "7dce3128-cf0d-4886-8db2-3053f7f7e1c5")
+    (uuid "503c2d85-da5a-42e1-88eb-220015db1a71")
   )
   (text "SPDT"
     (at 97 65.75 0)
@@ -115,7 +115,7 @@
         bold
       )
     )
-    (uuid "f0b1e556-97ae-4e87-be68-a64321839052")
+    (uuid "a8bd3e60-9e67-43fe-b5fb-0a8dce4f7663")
   )
   (text "PE42520"
     (at 97 68.25 0)
@@ -125,7 +125,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "45a7dd6f-bf6e-4549-b977-dea39bd207d3")
+    (uuid "93e90050-4cf8-42ae-9521-5a626c2b0b9a")
   )
   (rectangle
     (start 216 60)
@@ -138,7 +138,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "4adc281d-ab89-459e-ba4f-d2a1d351447b")
+    (uuid "21980830-2bb6-437a-b76a-12eb92ae3852")
   )
   (text "SPDT"
     (at 229 65.75 0)
@@ -149,7 +149,7 @@
         bold
       )
     )
-    (uuid "18a196cd-5804-444b-9aa3-6c1abbadb17c")
+    (uuid "82b3633f-a816-406f-aa85-7fde5967d78a")
   )
   (text "PE42520"
     (at 229 68.25 0)
@@ -159,7 +159,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "2d213bbc-8eb9-4529-8dce-588c0e4e6670")
+    (uuid "fb7d0c7e-da7f-4abb-8aaa-0539b6f804e1")
   )
   (rectangle
     (start 249 60)
@@ -172,7 +172,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "cb59864f-7d08-4aeb-93d3-ed2a5c2a0bf6")
+    (uuid "9f2affcb-d2cb-4bac-8920-50720df9ac61")
   )
   (text "SP8T"
     (at 262 65.75 0)
@@ -183,7 +183,7 @@
         bold
       )
     )
-    (uuid "afef8b16-99f3-47d9-a006-1f5a87ee2de7")
+    (uuid "922dc934-4662-445b-a6ac-461273aa9ed6")
   )
   (text "PE42582"
     (at 262 68.25 0)
@@ -193,7 +193,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "74790bd6-1e94-4b35-a07e-4a81bbe1ac6e")
+    (uuid "7fafcaf3-f0f2-4998-a75b-5ba386bb21ac")
   )
   (rectangle
     (start 282 60)
@@ -206,7 +206,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "6257826c-ae2a-42c9-ad87-2d4c939222ac")
+    (uuid "e9768ef1-d782-4d2d-8351-57bdf6021ea7")
   )
   (text "8 FILTERS"
     (at 295 65.75 0)
@@ -217,7 +217,7 @@
         bold
       )
     )
-    (uuid "2c7c633d-95a2-4b9c-a4c7-4434867fc573")
+    (uuid "666d55c2-452d-44bc-9825-f87332772167")
   )
   (text "F0 THRU..F7"
     (at 295 68.25 0)
@@ -227,7 +227,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "add67cfd-c303-4752-90d9-e8b0da159111")
+    (uuid "0e60c13c-2a57-4605-b448-5e2b84299192")
   )
   (rectangle
     (start 315 60)
@@ -240,7 +240,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "4d189127-ff54-47b6-8176-b72c55e036ea")
+    (uuid "df1651dd-c9dd-4638-99c3-052c952e3c91")
   )
   (text "SP8T"
     (at 328 65.75 0)
@@ -251,7 +251,7 @@
         bold
       )
     )
-    (uuid "43707c70-8882-4f92-9e12-1a31eaaaecbb")
+    (uuid "69ef9c05-8d93-4321-bddb-b1a0090e871b")
   )
   (text "PE42582"
     (at 328 68.25 0)
@@ -261,7 +261,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "dcec7f0e-95be-40a6-80cd-5759322f2275")
+    (uuid "1b569d53-7816-4328-a95a-951f41e87cee")
   )
   (rectangle
     (start 348 60)
@@ -274,7 +274,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "e8b1ca03-103f-41d0-966a-479a0e788b0d")
+    (uuid "46176191-8173-4098-b101-364822350d48")
   )
   (text "BIAS-T"
     (at 361 65.75 0)
@@ -285,7 +285,7 @@
         bold
       )
     )
-    (uuid "b73a6239-eeb0-44c4-a32b-3a0dd66dc410")
+    (uuid "728b6dbf-9971-44a8-ab86-3b45cb2e6478")
   )
   (text "20 kHz-2 GHz"
     (at 361 68.25 0)
@@ -295,7 +295,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "79625581-2408-4318-846a-64749e4a7416")
+    (uuid "b96c6736-5dd5-4a92-96ed-710b8dfae6ed")
   )
   (rectangle
     (start 117 38)
@@ -308,7 +308,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "acdfb782-5510-44dc-9885-0f6f87685028")
+    (uuid "2e8060db-1837-42c1-bd55-8bf14bf09047")
   )
   (text "PRESELECTOR"
     (at 130 43.75 0)
@@ -319,7 +319,7 @@
         bold
       )
     )
-    (uuid "2ce360c5-ecd7-4a00-881a-767576512a79")
+    (uuid "adff0488-12d4-47c8-9ced-fc001e6d9cc9")
   )
   (text "HPF 25M, LPF 2.2G"
     (at 130 46.25 0)
@@ -329,7 +329,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "bed2cc36-6a72-4fe3-8f03-537d26ed9e75")
+    (uuid "c827f8e1-e8ca-48cd-9a69-69779209b990")
   )
   (rectangle
     (start 150 38)
@@ -342,7 +342,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "84f4d459-f770-4bb7-b5e1-d9d0d782eb74")
+    (uuid "59c57c16-6240-48bb-90c7-1a8f16f42d68")
   )
   (text "FM NOTCH"
     (at 163 43.75 0)
@@ -353,7 +353,7 @@
         bold
       )
     )
-    (uuid "1cf2df9e-9291-4f99-90d1-c40f7a844ab0")
+    (uuid "12c508f1-1b5b-40f6-854a-2618820fc4bf")
   )
   (text "88-108 MHz, opt."
     (at 163 46.25 0)
@@ -363,7 +363,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "a0ebb53a-6905-47f0-9956-300bf70d5e98")
+    (uuid "f59c8e68-f858-4945-9b5f-c8aa7cff8325")
   )
   (rectangle
     (start 183 38)
@@ -376,7 +376,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "317ff71a-d122-4c80-8a99-572a5e4960ad")
+    (uuid "9af5bfab-e728-4657-b29c-86e42355a461")
   )
   (text "LNA"
     (at 196 43.75 0)
@@ -387,7 +387,7 @@
         bold
       )
     )
-    (uuid "820d904b-cbc6-43c8-b4f8-63e845f40a4f")
+    (uuid "4980fa20-9269-423e-bb02-633b0a2c03cc")
   )
   (text "~100 mA"
     (at 196 46.25 0)
@@ -397,7 +397,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "dbe0777c-9e5f-4573-893b-b7199be73605")
+    (uuid "c8372900-359e-44d7-867d-3c1c863e4287")
   )
   (polyline
     (pts
@@ -411,7 +411,7 @@
     (fill
       (type none)
     )
-    (uuid "5eed8ca9-2bd5-4c6a-a85b-8593b39f9ffc")
+    (uuid "388543a6-95cb-4411-84ee-08b7fdc905cd")
   )
   (polyline
     (pts
@@ -427,7 +427,7 @@
     (fill
       (type outline)
     )
-    (uuid "c64f7132-387c-47e9-ae5d-9228ff4a8a60")
+    (uuid "1df2debc-b000-4603-b947-c088e75e8a38")
   )
   (polyline
     (pts
@@ -441,7 +441,7 @@
     (fill
       (type none)
     )
-    (uuid "1c3f3fab-c5fe-4009-845c-a8a8d0c983a7")
+    (uuid "3faf11bf-f0b0-4568-8119-593d42e3312a")
   )
   (polyline
     (pts
@@ -457,7 +457,7 @@
     (fill
       (type outline)
     )
-    (uuid "26810b7e-ae08-4bfb-ac19-354c39d82820")
+    (uuid "0e2e91c1-4940-4af2-a3e2-d62c8741eac2")
   )
   (polyline
     (pts
@@ -471,7 +471,7 @@
     (fill
       (type none)
     )
-    (uuid "360c3f48-c25d-441f-8496-19f402d535a7")
+    (uuid "7b2954f0-2000-4963-bfec-eba9542a0c6a")
   )
   (polyline
     (pts
@@ -487,7 +487,7 @@
     (fill
       (type outline)
     )
-    (uuid "8131751f-d468-439b-b0db-6814c3a2d770")
+    (uuid "906c0125-7439-4a5b-9678-1768ccff81fe")
   )
   (polyline
     (pts
@@ -501,7 +501,7 @@
     (fill
       (type none)
     )
-    (uuid "82dcc361-27d9-4815-8dac-4861f0452094")
+    (uuid "b24aa670-baa1-4bc2-b54b-6823aacf1c6d")
   )
   (polyline
     (pts
@@ -517,7 +517,7 @@
     (fill
       (type outline)
     )
-    (uuid "9d24d40f-5e18-4bbb-8d91-187496f5f359")
+    (uuid "e2f5a682-33ff-4511-9f2a-d0a4f3ce6a41")
   )
   (polyline
     (pts
@@ -531,7 +531,7 @@
     (fill
       (type none)
     )
-    (uuid "0c0d5c06-2979-4de5-bd87-614e3cc3611f")
+    (uuid "1d08aa66-7c68-4895-9dd1-7fe13f47df5d")
   )
   (polyline
     (pts
@@ -547,7 +547,7 @@
     (fill
       (type outline)
     )
-    (uuid "fd6e3da4-1d63-4eb9-a4b7-f343a474c343")
+    (uuid "a8f7af1b-cd8f-4630-8ae1-5f1a50059516")
   )
   (polyline
     (pts
@@ -561,7 +561,7 @@
     (fill
       (type none)
     )
-    (uuid "2897e238-13d3-4eda-a002-3dfc5e9af3d3")
+    (uuid "d6108180-62c6-47f5-a2aa-89c952bb4ce0")
   )
   (polyline
     (pts
@@ -577,7 +577,7 @@
     (fill
       (type outline)
     )
-    (uuid "574e6ef8-c9a9-4ddc-ad2c-ef1500efcbdf")
+    (uuid "3c105362-aadc-4a46-a15d-4378d5524110")
   )
   (polyline
     (pts
@@ -592,7 +592,7 @@
     (fill
       (type none)
     )
-    (uuid "65d380b6-877a-4506-95f5-42c862c22785")
+    (uuid "a56d0674-acd5-4569-8bb6-5c6df1c24ce4")
   )
   (polyline
     (pts
@@ -608,7 +608,7 @@
     (fill
       (type outline)
     )
-    (uuid "991b3a59-504b-4e33-9c1b-0ca35cbd3b81")
+    (uuid "7947d841-d444-4d3b-a6ad-5150e458eef6")
   )
   (polyline
     (pts
@@ -622,7 +622,7 @@
     (fill
       (type none)
     )
-    (uuid "21a985c1-6c5e-41e3-9e3a-b5e9d360ee7c")
+    (uuid "af9d9377-370a-4333-a88a-12da2be7b724")
   )
   (polyline
     (pts
@@ -638,7 +638,7 @@
     (fill
       (type outline)
     )
-    (uuid "d1779f9e-0a15-413c-9e2a-12119e647522")
+    (uuid "013dbbfd-0d75-4abe-aa0c-9522344557c9")
   )
   (polyline
     (pts
@@ -652,7 +652,7 @@
     (fill
       (type none)
     )
-    (uuid "8c6a3db7-acc7-4c32-9df4-aeb8489bdb70")
+    (uuid "74fb6973-1a1b-4595-b44d-67630c66365c")
   )
   (polyline
     (pts
@@ -668,7 +668,7 @@
     (fill
       (type outline)
     )
-    (uuid "0b8fcbc1-8853-4295-b386-85e2c3fc07e0")
+    (uuid "552ac1a3-d44d-45fe-afb5-03ee0c8bcf43")
   )
   (polyline
     (pts
@@ -683,7 +683,7 @@
     (fill
       (type none)
     )
-    (uuid "d3f2ec09-8991-43e7-ad98-35a35ee6262b")
+    (uuid "0f4ab352-40fd-4000-8dca-4bf74931f111")
   )
   (polyline
     (pts
@@ -699,7 +699,7 @@
     (fill
       (type outline)
     )
-    (uuid "8edf1ec2-1c0c-471f-9e2b-377ec37d62e5")
+    (uuid "8c4a8cf3-7e1f-4079-831a-5d147cf3f40f")
   )
   (polyline
     (pts
@@ -713,7 +713,7 @@
     (fill
       (type none)
     )
-    (uuid "7e5e1fb2-28b9-4b57-9802-2d0d4e61b641")
+    (uuid "a95f29e3-6da6-44cb-99c8-441642dfb72b")
   )
   (polyline
     (pts
@@ -729,7 +729,7 @@
     (fill
       (type outline)
     )
-    (uuid "41f6b1b7-6f5f-4ea2-93aa-96ee3caef90b")
+    (uuid "6b17c350-1d15-4cc5-b4de-f2353ff9ec39")
   )
   (text "bypass (F1-F4 force it: AUTO)"
     (at 128 65.2 0)
@@ -739,7 +739,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "b3e7892b-17d0-40ed-861a-aa135ca3f654")
+    (uuid "66c74978-83c7-472f-86eb-80a0855a40b4")
   )
   (polyline
     (pts
@@ -753,7 +753,7 @@
     (fill
       (type none)
     )
-    (uuid "f5542735-47ff-4340-9550-d61bb1f544d6")
+    (uuid "f5284485-9724-489d-ab8b-4923cf3b97f7")
   )
   (polyline
     (pts
@@ -769,7 +769,7 @@
     (fill
       (type outline)
     )
-    (uuid "2003e66c-8eab-4132-a67b-a16c1672cdf9")
+    (uuid "253e38c7-f9be-450e-b7d0-39c5b646cda1")
   )
   (text "COAX"
     (at 390 62.5 0)
@@ -780,7 +780,7 @@
         bold
       )
     )
-    (uuid "2cd52f84-d2b8-4dc5-ad46-747d742e21ee")
+    (uuid "89d06310-98e4-4fbe-9af6-fb39beeab8db")
   )
   (text "RF -> RTL-SDR V3"
     (at 390 70 0)
@@ -790,7 +790,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "8691dbad-5eb1-499c-8477-dd7ef1f8e7d6")
+    (uuid "bf8f3969-762a-43ca-8a15-6aba82c19330")
   )
   (text "<- DC 4.5 V + OOK"
     (at 390 72.5 0)
@@ -800,7 +800,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "74b6c99d-37ae-469b-982d-8ee7a414504d")
+    (uuid "ebd955dc-e7f8-4e64-80c1-5e909c2e89d1")
   )
   (text "LNA_PATH"
     (at 97 76.5 0)
@@ -810,7 +810,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "f96ec627-7ed1-4b1f-bf3e-85423ad04b8b")
+    (uuid "f9d84149-34e5-4a1a-8725-fb29cd9e0615")
   )
   (text "LNA_PATH"
     (at 229 76.5 0)
@@ -820,7 +820,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "802aab05-3132-4832-8722-333f932d6039")
+    (uuid "e77a3143-2fc6-4cc5-9a0e-ee5d76eab5c9")
   )
   (text "SW_V1..3"
     (at 262 76.5 0)
@@ -830,7 +830,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "49daa220-7687-40fa-8ff0-2bf0e1c18677")
+    (uuid "27945ff6-bfaf-49bc-b5e3-333d220d71bb")
   )
   (text "SW_V1..3"
     (at 328 76.5 0)
@@ -840,7 +840,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "046aa82a-7be9-4bda-b618-c89ada6e2995")
+    (uuid "d8c34e45-dfd2-48fe-953b-18fcc4141015")
   )
   (text "FMN"
     (at 163 36.5 0)
@@ -850,7 +850,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "f921e898-b35c-41e9-b5d6-e42765d6716a")
+    (uuid "b101d0a2-897e-4922-acdd-ba4a8e72b2b2")
   )
   (rectangle
     (start 348 98)
@@ -863,7 +863,7 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "1e6a1d09-8e10-4a85-aa55-3c0af7cda100")
+    (uuid "a160c1f4-6f8a-4f8d-b6bd-c3386e747da0")
   )
   (text "VCOAX TAP"
     (at 361 103.75 0)
@@ -874,7 +874,7 @@
         bold
       )
     )
-    (uuid "1014b106-078f-40ad-8fd6-1e51eb974702")
+    (uuid "9285d902-b4ce-4483-894d-abe8c2acd94f")
   )
   (text "SENSE, 680R, PWR"
     (at 361 106.25 0)
@@ -884,7 +884,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "106b81f5-076d-4a02-b9cc-5190c7bed1dc")
+    (uuid "e4903410-b32c-4fd5-895b-244f8cc8cb6b")
   )
   (rectangle
     (start 315 98)
@@ -897,7 +897,7 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "138244eb-1cea-44f0-9f0b-16b2080bcc61")
+    (uuid "6074b9d1-8858-448b-aac6-73fd5f865b62")
   )
   (text "IDEAL DIODE"
     (at 328 103.75 0)
@@ -908,7 +908,7 @@
         bold
       )
     )
-    (uuid "82129176-4f23-456e-8578-d3080ec9bdce")
+    (uuid "887aefcf-4ef2-412c-9702-dc7ca3fcf9e5")
   )
   (text "LM66100"
     (at 328 106.25 0)
@@ -918,7 +918,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "434bcc3f-ba3a-4790-9685-ee4cae313b99")
+    (uuid "ffec287a-f2e6-4044-9ddf-9f3efa38027c")
   )
   (rectangle
     (start 282 98)
@@ -931,7 +931,7 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "94977635-f06f-4e93-a476-9258edf46ec3")
+    (uuid "244c4402-5c31-42b3-874a-2b5c0cba8cac")
   )
   (text "LAMP RAIL"
     (at 295 103.75 0)
@@ -942,7 +942,7 @@
         bold
       )
     )
-    (uuid "35fb2ead-2963-4c60-adbe-a9b81ea81934")
+    (uuid "84d980a5-4275-4557-a9d5-3d42d968d5f2")
   )
   (text "FB + 47uF"
     (at 295 106.25 0)
@@ -952,7 +952,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "791b44bc-edee-4753-ac4b-b1f1bb40247c")
+    (uuid "607643e8-d8a0-455e-8142-37f63bfb5054")
   )
   (rectangle
     (start 183 98)
@@ -965,7 +965,7 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "62273b02-8878-4a61-8ebf-360ab04a3584")
+    (uuid "efa45b27-171c-4327-8e68-16e40f05452a")
   )
   (text "LNA SUPPLY"
     (at 196 103.75 0)
@@ -976,7 +976,7 @@
         bold
       )
     )
-    (uuid "a4a0df15-93e2-483c-8b3f-82166e6f057c")
+    (uuid "efaa8953-c49f-4f6f-b725-56dea52beecc")
   )
   (text "TPS2553+INA180"
     (at 196 106.25 0)
@@ -986,7 +986,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "4afc38bf-45ec-48d6-9917-755a14850d7e")
+    (uuid "e3ac16ed-2c99-4766-8bb9-7e28c17acf7a")
   )
   (rectangle
     (start 150 98)
@@ -999,7 +999,7 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "2fb70b15-7830-4d7e-a0a6-d3694c89aa62")
+    (uuid "c6d19fe5-9658-488f-aace-c47e5b87af2e")
   )
   (text "HOLD-UP"
     (at 163 103.75 0)
@@ -1010,7 +1010,7 @@
         bold
       )
     )
-    (uuid "c07272bb-35e1-4c01-8e39-a1907c1f61d3")
+    (uuid "708f8d66-ffbc-40bd-b7e5-db882b150c32")
   )
   (text "330uF || 0.1F"
     (at 163 106.25 0)
@@ -1020,7 +1020,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "942fb783-43f5-4912-8231-9ceadac4ab4a")
+    (uuid "4254120c-b6e9-4d49-b0a4-854a0bedb5f0")
   )
   (rectangle
     (start 117 98)
@@ -1033,7 +1033,7 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "90f6c7bf-a11f-49e3-8ef2-29b2c32759b5")
+    (uuid "d03dd9ff-fb04-47ca-999a-73b651cdfaa2")
   )
   (text "3V3 LDO"
     (at 130 103.75 0)
@@ -1044,7 +1044,7 @@
         bold
       )
     )
-    (uuid "6d8881ac-0aef-4f18-ae6a-39ebeec10f67")
+    (uuid "324a143c-432d-4072-b967-3495ae1451a0")
   )
   (text "MCP1700"
     (at 130 106.25 0)
@@ -1054,7 +1054,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "38e2bffc-0def-4487-8de9-8fef1b945095")
+    (uuid "2c0feeff-814b-49f1-89aa-ea689d1e405b")
   )
   (polyline
     (pts
@@ -1068,7 +1068,7 @@
     (fill
       (type none)
     )
-    (uuid "635b3603-7882-425d-a4a7-a05428f267e7")
+    (uuid "34e1b1dd-61ff-4260-af08-05d48483fdcf")
   )
   (polyline
     (pts
@@ -1084,7 +1084,7 @@
     (fill
       (type outline)
     )
-    (uuid "2208e6af-056c-4fb9-ac75-3ddfad25f052")
+    (uuid "7f9e9528-1c44-48c3-b1ca-1ee8d8d97228")
   )
   (text "VCOAX"
     (at 368 86 0)
@@ -1094,7 +1094,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "a8b1570a-a5f9-477e-ab81-305145e903ae")
+    (uuid "2b9c472c-8c7e-4255-aab8-25d99557a879")
   )
   (polyline
     (pts
@@ -1108,7 +1108,7 @@
     (fill
       (type none)
     )
-    (uuid "c5d9f996-e841-4b99-ad32-9f87e87ddd4e")
+    (uuid "231800eb-a1cb-49b4-b594-ef84ae85ee9d")
   )
   (polyline
     (pts
@@ -1124,7 +1124,7 @@
     (fill
       (type outline)
     )
-    (uuid "6c18f838-c8d3-494f-ae26-40b5142b21ff")
+    (uuid "ae38cf21-0489-4de3-81af-dc1644efcd2f")
   )
   (polyline
     (pts
@@ -1139,7 +1139,7 @@
     (fill
       (type none)
     )
-    (uuid "f31d8f97-26f6-497a-8d49-5f5f2f0095c9")
+    (uuid "6016e09b-1596-465f-aaef-ea5c1b5c71ee")
   )
   (text "VMAIN"
     (at 255 89.5 0)
@@ -1150,7 +1150,7 @@
         bold
       )
     )
-    (uuid "ba1c758e-ea5a-4ac5-8583-87f38318dcd4")
+    (uuid "354ffe9a-70ad-4b7b-b840-39397dbacd74")
   )
   (polyline
     (pts
@@ -1164,7 +1164,7 @@
     (fill
       (type none)
     )
-    (uuid "2b16bf8b-5a37-4edc-996a-0548fc6dc2f2")
+    (uuid "17130bc2-367c-47da-a678-3495b0657e5d")
   )
   (polyline
     (pts
@@ -1180,7 +1180,7 @@
     (fill
       (type outline)
     )
-    (uuid "1d29ab75-16e5-4f27-aa26-806373b15d7b")
+    (uuid "ecf54888-bfda-4b17-a9a6-3b75d1a308c9")
   )
   (polyline
     (pts
@@ -1194,7 +1194,7 @@
     (fill
       (type none)
     )
-    (uuid "79b987b3-1aa0-4988-b1f7-0e4db1f1a947")
+    (uuid "b23c37c1-9ac9-4163-a79e-b69623e8cf26")
   )
   (polyline
     (pts
@@ -1210,7 +1210,7 @@
     (fill
       (type outline)
     )
-    (uuid "039bf46c-5dd4-4797-beff-c5a0444f2f49")
+    (uuid "16b73aa6-6506-4f78-afd6-06e5c8988484")
   )
   (polyline
     (pts
@@ -1224,7 +1224,7 @@
     (fill
       (type none)
     )
-    (uuid "31a47fda-d98a-4a4a-8c07-44353fca5bb0")
+    (uuid "cfa9e059-44ba-497a-af57-448eb7f762a4")
   )
   (polyline
     (pts
@@ -1240,7 +1240,7 @@
     (fill
       (type outline)
     )
-    (uuid "df882859-c7b6-42d2-9a7f-cddfbf2eeca8")
+    (uuid "fbaf058a-c24b-4e82-8d35-dd3cc7a12239")
   )
   (polyline
     (pts
@@ -1254,7 +1254,7 @@
     (fill
       (type none)
     )
-    (uuid "83fba803-2780-40d8-982d-f7970780ab9e")
+    (uuid "a90d5032-239a-4f78-89a0-c69e95bb8415")
   )
   (polyline
     (pts
@@ -1270,7 +1270,7 @@
     (fill
       (type outline)
     )
-    (uuid "fd692f8c-ea01-4270-b2d1-d299840575c7")
+    (uuid "7b96b04f-b0c7-46a0-af5c-72fa45803b49")
   )
   (text "VHOLD"
     (at 146.5 103.4 0)
@@ -1280,7 +1280,7 @@
         (size 1 1)
       )
     )
-    (uuid "ac6895e2-bdda-496e-97d9-425ce076e47c")
+    (uuid "d66672ac-7f84-444a-abfc-fd8a265a180c")
   )
   (polyline
     (pts
@@ -1295,7 +1295,7 @@
     (fill
       (type none)
     )
-    (uuid "f1a1d7cc-00e9-4b9f-ba82-232dd79df771")
+    (uuid "f537e134-c3b0-491d-9a4c-3b29a58e4b37")
   )
   (polyline
     (pts
@@ -1312,7 +1312,7 @@
     (fill
       (type outline)
     )
-    (uuid "5a656c37-eaf2-45ba-81c3-300bd8ac7613")
+    (uuid "eb090703-9473-4e2f-b536-d5f415a34f91")
   )
   (text "LNA_VCC"
     (at 210 88 0)
@@ -1322,7 +1322,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "ab92572f-73db-497e-afee-228fb831d03e")
+    (uuid "7a8a155e-1769-4de2-b273-cc75b136e1c6")
   )
   (rectangle
     (start 183 128)
@@ -1335,7 +1335,7 @@
       (type color)
       (color 210 240 210 1)
     )
-    (uuid "5b6e052b-ad3b-4597-8f4c-03b5969eacac")
+    (uuid "d4146d40-2626-42ce-80cc-f16b161c1b7d")
   )
   (text "MCU  EFM8BB21"
     (at 213 134.5 0)
@@ -1346,7 +1346,7 @@
         bold
       )
     )
-    (uuid "74eed123-4cb4-4bd3-94a5-e42a7effc8a2")
+    (uuid "11c37999-9e7d-41ca-8c4b-3667a329c8cd")
   )
   (text "decodes OOK on SENSE, Snooze when idle"
     (at 213 137 0)
@@ -1356,7 +1356,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "76f241ea-a29a-4736-ad3c-4a36e1dfd41c")
+    (uuid "2fdb2b8a-9955-4119-b5d2-bdc70d869760")
   )
   (text "monitors SENSE, SCAP_ADC, ILNA, FAULT_N"
     (at 213 139.5 0)
@@ -1366,7 +1366,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "2ee7adb4-ff74-4b6d-b90c-6fb63c0732a0")
+    (uuid "34d35aae-4c6c-4d7d-bf0d-d2c4fecb73ff")
   )
   (rectangle
     (start 282 128)
@@ -1379,7 +1379,7 @@
       (type color)
       (color 255 245 180 1)
     )
-    (uuid "4c657536-5c1a-4b1f-b807-e7c5c1bcd6e4")
+    (uuid "448a9a08-3a36-4fdc-ba25-ed7ecd62d7fb")
   )
   (text "FRONT PANEL"
     (at 299 135.75 0)
@@ -1390,7 +1390,7 @@
         bold
       )
     )
-    (uuid "98343a42-ba02-4d4f-b861-5e193ed73c78")
+    (uuid "cd73a34d-2e94-45a3-a5ea-b8b8c8bfcbb2")
   )
   (text "6x 74HC595, 48 lamps"
     (at 299 138.25 0)
@@ -1400,7 +1400,7 @@
         (size 1.15 1.15)
       )
     )
-    (uuid "a79178b6-85df-44f4-8250-5a22c0ff798c")
+    (uuid "7e0e5ce2-9217-472e-8b3c-144150d362d4")
   )
   (polyline
     (pts
@@ -1414,7 +1414,7 @@
     (fill
       (type none)
     )
-    (uuid "0be4151d-6204-4ae0-bfb0-d04a64b28986")
+    (uuid "0e246202-2339-4357-ad0d-5664290f0a87")
   )
   (polyline
     (pts
@@ -1430,7 +1430,7 @@
     (fill
       (type outline)
     )
-    (uuid "f7d9be76-6bca-4d0c-8309-c90b281a3b8f")
+    (uuid "f03a3fa7-66d9-405a-8e9a-5f5ae8e83056")
   )
   (text "VLED"
     (at 300 120 0)
@@ -1440,7 +1440,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "60b93929-877b-4614-b1f5-4d497f8841ff")
+    (uuid "7c6058fc-30a4-4dd2-84de-0ba0234105fe")
   )
   (polyline
     (pts
@@ -1455,7 +1455,7 @@
     (fill
       (type none)
     )
-    (uuid "63b1e2d9-8b51-4b21-ba7e-19d903b4bba6")
+    (uuid "85ca1929-e2b7-4761-ae06-9305351f3b3b")
   )
   (polyline
     (pts
@@ -1472,7 +1472,7 @@
     (fill
       (type outline)
     )
-    (uuid "a219c2c8-93b7-44d4-9303-dd0320372807")
+    (uuid "a858868e-92a3-45c9-ae8c-6f2bd25fef93")
   )
   (text "LED bus"
     (at 262 135.2 0)
@@ -1482,7 +1482,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "00ac8d72-39ac-410e-aede-414ebb3e99ab")
+    (uuid "27bc2bcb-8082-43ef-a92f-dfd9ff91a875")
   )
   (polyline
     (pts
@@ -1497,7 +1497,7 @@
     (fill
       (type none)
     )
-    (uuid "b7c4d7b2-84c9-447e-b201-d4e66a3c643f")
+    (uuid "2242f41c-a5d7-452a-9d29-a0fa1ab4d0b7")
   )
   (polyline
     (pts
@@ -1513,7 +1513,7 @@
     (fill
       (type outline)
     )
-    (uuid "965d3df2-4327-4829-bedc-58c9433c6aaa")
+    (uuid "d72482bb-8e56-4bc8-aac9-0e79c2e2c81b")
   )
   (text "+3V3"
     (at 140 135.2 0)
@@ -1523,7 +1523,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "2cf6ea34-f796-4b07-917c-01425e4cb14a")
+    (uuid "927f0949-a098-4361-a3f4-c80de31282cf")
   )
   (polyline
     (pts
@@ -1538,7 +1538,7 @@
     (fill
       (type none)
     )
-    (uuid "6812f04f-958a-48f3-9740-c9c9ab8b832c")
+    (uuid "70687bf5-2c82-498e-b930-af10f71928a6")
   )
   (polyline
     (pts
@@ -1553,7 +1553,7 @@
     (fill
       (type none)
     )
-    (uuid "5201627f-7e91-47cf-91a3-b6695649e3f6")
+    (uuid "e2851d36-4323-4edf-a2f3-81d280e0fe67")
   )
   (polyline
     (pts
@@ -1568,7 +1568,7 @@
     (fill
       (type none)
     )
-    (uuid "b6f45c01-aff0-4ca1-adc0-1c83db808ba6")
+    (uuid "eba62bad-a5b4-4a8f-ad89-468e48c20470")
   )
   (polyline
     (pts
@@ -1585,7 +1585,7 @@
     (fill
       (type outline)
     )
-    (uuid "e12c2766-7d98-440a-bb63-28c840f31771")
+    (uuid "3f3c9a52-3e7d-43bd-a421-1842779994ba")
   )
   (polyline
     (pts
@@ -1600,7 +1600,7 @@
     (fill
       (type none)
     )
-    (uuid "d8fcd299-8dec-4571-9677-82713bca1bb6")
+    (uuid "f92a38e1-6f77-4d3a-ade6-63fb6276404a")
   )
   (polyline
     (pts
@@ -1617,7 +1617,7 @@
     (fill
       (type outline)
     )
-    (uuid "3c4686cd-e308-4f1d-85b8-df83e4833d13")
+    (uuid "47e80b0b-b909-4597-9442-30115e9bd08b")
   )
   (polyline
     (pts
@@ -1632,7 +1632,7 @@
     (fill
       (type none)
     )
-    (uuid "1252c603-4b7e-4e42-acd3-01316d132dac")
+    (uuid "877d46af-a177-4a7e-9d9d-b1d64bba9bc7")
   )
   (polyline
     (pts
@@ -1649,7 +1649,7 @@
     (fill
       (type outline)
     )
-    (uuid "141b84ea-3f2e-4c97-b761-ebd94287cc8a")
+    (uuid "a3b040f5-f084-4d11-b149-b4e1e48e42e0")
   )
   (polyline
     (pts
@@ -1664,7 +1664,7 @@
     (fill
       (type none)
     )
-    (uuid "daca61c8-a0db-43bd-afd1-735f7d7c85c5")
+    (uuid "4792a8dd-7551-485f-be05-f8c22bd8c04b")
   )
   (polyline
     (pts
@@ -1681,7 +1681,7 @@
     (fill
       (type outline)
     )
-    (uuid "4390a0e2-b70a-49b1-9c8f-e007d6cd5cc6")
+    (uuid "65e9c52b-7ee0-4d45-bdfe-af6904274f99")
   )
   (polyline
     (pts
@@ -1696,7 +1696,7 @@
     (fill
       (type none)
     )
-    (uuid "b56f7418-ec54-4a25-9781-0f3e9186aa92")
+    (uuid "ed485b74-ae29-47f8-8042-9ec5bccbb3df")
   )
   (polyline
     (pts
@@ -1713,7 +1713,7 @@
     (fill
       (type outline)
     )
-    (uuid "ec53e150-b4ec-486c-91e8-654a7b71920d")
+    (uuid "9782e2b2-3957-49bc-a18c-0678d8d71cbb")
   )
   (polyline
     (pts
@@ -1728,7 +1728,7 @@
     (fill
       (type none)
     )
-    (uuid "5218d323-f3e8-4519-96be-20df05009b5d")
+    (uuid "0508eed3-1260-43e1-bf14-8b38499b6b4d")
   )
   (polyline
     (pts
@@ -1745,7 +1745,7 @@
     (fill
       (type outline)
     )
-    (uuid "0625be42-46cb-483b-a6a4-074beebab32b")
+    (uuid "92efc4fc-75bf-4573-8920-020d4a105424")
   )
   (text "control (blue, dashed): LNA_PATH, SW_V1..3, FMN, LNA_EN"
     (at 120 84.4 0)
@@ -1755,7 +1755,7 @@
         (size 1.1 1.1)
       )
     )
-    (uuid "d58f694c-869f-4b5b-93d9-d995a749ee95")
+    (uuid "bac5a490-e5df-4a4c-8627-b870f15473f8")
   )
   (rectangle
     (start 18 126)
@@ -1768,7 +1768,7 @@
       (type color)
       (color 205 225 255 1)
     )
-    (uuid "a58e985d-b574-4164-9127-e0b2a412352a")
+    (uuid "0511a563-dd2c-4681-bafb-a0279f896e66")
   )
   (text ""
     (at 21 128 0)
@@ -1779,7 +1779,7 @@
         bold
       )
     )
-    (uuid "4dec5d10-c47f-4c3c-85ab-94f504af1250")
+    (uuid "8d289478-07ed-4539-b467-893a19edfe0e")
   )
   (text "RF signal path (sheets 4, 5)"
     (at 26 128.6 0)
@@ -1790,7 +1790,7 @@
       )
       (justify left)
     )
-    (uuid "fd9f9088-e6ef-4fff-b183-62b70fe42f76")
+    (uuid "55d271df-1c30-40e0-817f-4609c67d1860")
   )
   (rectangle
     (start 18 132)
@@ -1803,7 +1803,7 @@
       (type color)
       (color 255 228 196 1)
     )
-    (uuid "c10d2549-a1da-4fa6-99b2-9cccd4ac07bc")
+    (uuid "08c2a46b-3c31-4cee-9dcb-51acf42234fa")
   )
   (text ""
     (at 21 134 0)
@@ -1814,7 +1814,7 @@
         bold
       )
     )
-    (uuid "d5f1ae8a-b9de-462e-8a27-792b7f383464")
+    (uuid "f0d3136e-71e1-4b93-8e02-c6620ebb8ac7")
   )
   (text "power (sheet 2)"
     (at 26 134.6 0)
@@ -1825,7 +1825,7 @@
       )
       (justify left)
     )
-    (uuid "3eb87959-03da-4b31-9270-197d57c5b598")
+    (uuid "e2ca0766-7e61-401e-9b6d-e2cc4665a750")
   )
   (rectangle
     (start 18 138)
@@ -1838,7 +1838,7 @@
       (type color)
       (color 210 240 210 1)
     )
-    (uuid "2491d134-0dfc-44cc-bdcb-0b614629052b")
+    (uuid "2e46ed85-c204-40d2-9fcd-09d657db2fa1")
   )
   (text ""
     (at 21 140 0)
@@ -1849,7 +1849,7 @@
         bold
       )
     )
-    (uuid "32cc5e90-ff05-4939-bf24-8453a7032411")
+    (uuid "979e573a-5b58-4bec-84c1-da960362a886")
   )
   (text "MCU (sheet 3)"
     (at 26 140.6 0)
@@ -1860,7 +1860,7 @@
       )
       (justify left)
     )
-    (uuid "47862f14-31b4-42fb-a0f7-7da79259b06a")
+    (uuid "bf3cb305-a33b-4335-87cc-150b4d006309")
   )
   (rectangle
     (start 18 144)
@@ -1873,7 +1873,7 @@
       (type color)
       (color 255 245 180 1)
     )
-    (uuid "cccc35f7-2d68-49f1-a767-00f009024052")
+    (uuid "8a4992cd-a710-4c36-a9c1-2f5987c5bb48")
   )
   (text ""
     (at 21 146 0)
@@ -1884,7 +1884,7 @@
         bold
       )
     )
-    (uuid "55d09ed9-921a-43e9-9898-989d189905c0")
+    (uuid "29f9a2b5-d1e4-44ca-8fe8-26d6328ef8d9")
   )
   (text "panel (sheet 6)"
     (at 26 146.6 0)
@@ -1895,7 +1895,7 @@
       )
       (justify left)
     )
-    (uuid "d2c134a0-57f0-449c-a129-ac125b97dae9")
+    (uuid "2df9baff-a079-4027-8ffe-3e4d48a40898")
   )
   (text "Sheets"
     (at 20.32 168.91 0)
@@ -1908,7 +1908,7 @@
       )
       (justify left bottom)
     )
-    (uuid "8f7a555f-41f0-495d-9b17-330b23e575c0")
+    (uuid "bcf1ee00-9be3-4bd3-a596-d190502a09a1")
   )
   (text "Power and ground cross sheets only as power symbols (VCOAX, VMAIN, VHOLD, VLED, LNA_VCC, +3V3, GND)."
     (at 20.32 251.46 0)
@@ -1921,7 +1921,7 @@
       )
       (justify left bottom)
     )
-    (uuid "6509f905-1ecf-4357-89d2-69b2f9eb9082")
+    (uuid "5a59b52c-8704-4de2-91a7-d58a3739f58b")
   )
   (text "Signals cross sheets as hierarchical labels through the sheet pins above. Firmware pin map: firmware/src/hal_efm8bb2.c"
     (at 20.32 254.64 0)
@@ -1934,7 +1934,7 @@
       )
       (justify left bottom)
     )
-    (uuid "c56487eb-fe8c-423e-86ea-f44d2d73d0cb")
+    (uuid "462a25e9-ebe0-470c-8d18-714658eea216")
   )
   (wire
     (pts
@@ -1945,7 +1945,7 @@
       (width 0)
       (type default)
     )
-    (uuid "31932083-e53e-43db-9398-dbf9b5929b97")
+    (uuid "aca32eb0-ce15-4926-88f5-5278f4e98ad0")
   )
   (wire
     (pts
@@ -1956,7 +1956,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a92a3468-b9a3-44e8-9b19-0dd608ef6e5a")
+    (uuid "899bc295-7d4a-4a20-adb1-f5ee5eed7afc")
   )
   (wire
     (pts
@@ -1967,7 +1967,7 @@
       (width 0)
       (type default)
     )
-    (uuid "72f8ac54-de53-4c32-be54-4bf7c22f04bb")
+    (uuid "99394319-e1a1-44aa-89db-6df6e95a26de")
   )
   (wire
     (pts
@@ -1978,7 +1978,7 @@
       (width 0)
       (type default)
     )
-    (uuid "193abe1a-10bc-4323-af47-876c05630337")
+    (uuid "e6ed3c93-fd50-415c-a099-9a149fece7bf")
   )
   (wire
     (pts
@@ -1989,7 +1989,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a7d630d6-5726-4111-8574-ffc195c2acfd")
+    (uuid "ad68227d-9bdb-411b-94f1-7a9c8863044c")
   )
   (wire
     (pts
@@ -2000,7 +2000,7 @@
       (width 0)
       (type default)
     )
-    (uuid "7b6a8864-b469-440d-8b29-d85ecff0b492")
+    (uuid "f84872e6-f2e5-45c9-a454-f5a0e49ed8ae")
   )
   (wire
     (pts
@@ -2011,7 +2011,7 @@
       (width 0)
       (type default)
     )
-    (uuid "c6aaaf5e-f49b-4353-ad63-95033198514c")
+    (uuid "a5597f16-289b-4979-ac1f-fd7cd9759dd8")
   )
   (wire
     (pts
@@ -2022,7 +2022,7 @@
       (width 0)
       (type default)
     )
-    (uuid "69d0f7bf-04b3-4695-ba83-907d424f6ecc")
+    (uuid "a17f922d-7816-4a6f-9d49-2c6e6262e576")
   )
   (wire
     (pts
@@ -2033,7 +2033,7 @@
       (width 0)
       (type default)
     )
-    (uuid "d380ce43-14da-4280-b19c-d7f4932772a3")
+    (uuid "0b07850f-5ead-4da6-a47a-eb4b5c329181")
   )
   (wire
     (pts
@@ -2044,7 +2044,7 @@
       (width 0)
       (type default)
     )
-    (uuid "3e14bfa4-994e-4f0d-9942-ed2af900ae81")
+    (uuid "da81527b-b6ae-4987-b0cb-34c47644e99a")
   )
   (wire
     (pts
@@ -2055,7 +2055,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f6219cce-979d-4a07-8490-c9b7db433ee2")
+    (uuid "e0509dc0-bea3-4600-966a-fbaf8b83ee04")
   )
   (wire
     (pts
@@ -2066,7 +2066,7 @@
       (width 0)
       (type default)
     )
-    (uuid "ab6e636f-f28a-4a1b-a3ca-399fab70bcaa")
+    (uuid "cb555f78-08f4-47d4-857e-0b00302031f5")
   )
   (wire
     (pts
@@ -2077,7 +2077,7 @@
       (width 0)
       (type default)
     )
-    (uuid "7d2c5cdc-c1c3-45af-b10e-5a5e2f45a567")
+    (uuid "32bc3a11-8f17-4608-be39-6a1ea2be9b12")
   )
   (wire
     (pts
@@ -2088,7 +2088,7 @@
       (width 0)
       (type default)
     )
-    (uuid "e35de6b4-5d95-4304-9e0f-69c5a57bb819")
+    (uuid "e0216180-d2c8-4ff4-9bc9-0b00a32877ec")
   )
   (wire
     (pts
@@ -2099,7 +2099,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a86722a7-6eeb-4145-b717-57d6667da4e2")
+    (uuid "98aa57bf-5c06-46fe-b4df-e38072b8a9e6")
   )
   (wire
     (pts
@@ -2110,7 +2110,7 @@
       (width 0)
       (type default)
     )
-    (uuid "372454de-90fb-445b-a0e5-2f5621320edf")
+    (uuid "90cd4c8b-af32-4ab9-ae4c-7a3e1aecab7d")
   )
   (wire
     (pts
@@ -2121,7 +2121,7 @@
       (width 0)
       (type default)
     )
-    (uuid "d512f64a-1a13-4a97-b561-d97f99c0e386")
+    (uuid "763906dd-20cc-47cd-8c82-1f0a8732f9da")
   )
   (sheet
     (at 30.48 175.26)
@@ -2134,7 +2134,7 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "2c63f449-5a37-48de-87a8-cdc15ad10952")
+    (uuid "5282c011-7ec1-4382-a357-835b6d03e55a")
     (property "Sheetname" "Power"
       (at 30.48 174.56 0)
       (effects
@@ -2164,7 +2164,7 @@
         )
         (justify right)
       )
-      (uuid "bc7e4bc3-baae-4452-ac01-adac466ab021")
+      (uuid "6fbeb69b-3919-4b74-a5bc-2787cdcd087e")
     )
     (pin "SCAP_ADC" output
       (at 81.28 185.42 0)
@@ -2175,7 +2175,7 @@
         )
         (justify right)
       )
-      (uuid "ce97038d-d062-45b6-b45b-d9a06ed97a3e")
+      (uuid "33b02308-6b3c-4a9e-ac78-04ca06ead556")
     )
     (pin "ILNA" output
       (at 81.28 190.5 0)
@@ -2186,7 +2186,7 @@
         )
         (justify right)
       )
-      (uuid "4db83e2d-d748-436f-ba1c-261eb065965b")
+      (uuid "fa766e91-a11b-4d1d-a308-801e9f528a69")
     )
     (pin "FAULT_N" output
       (at 81.28 195.58 0)
@@ -2197,7 +2197,7 @@
         )
         (justify right)
       )
-      (uuid "fba574b2-2834-465e-baec-fd78d42d7c56")
+      (uuid "476b9408-22c3-4638-8848-8be2e444501c")
     )
     (pin "LNA_EN" input
       (at 81.28 200.66 0)
@@ -2208,11 +2208,11 @@
         )
         (justify right)
       )
-      (uuid "fc80562f-da55-4173-b6cb-a08af5a44d26")
+      (uuid "121b059f-e444-4f2c-86d3-7ecfce59ad9a")
     )
     (instances
       (project "coaxolotl"
-        (path "/2cc60996-4767-45f9-af09-be99e2fa5fd9"
+        (path "/4622de97-6f1e-40ba-abc6-38c71ad6b995"
           (page "2")
         )
       )
@@ -2229,7 +2229,7 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "0b79efad-a8b1-4c5d-9e58-bab8f6ce854e")
+    (uuid "86c34017-ef70-4bb1-ae5e-d987c6864012")
     (property "Sheetname" "MCU"
       (at 139.7 174.56 0)
       (effects
@@ -2259,7 +2259,7 @@
         )
         (justify left)
       )
-      (uuid "e3cb298d-def8-401f-9a93-8fae3d2a6795")
+      (uuid "4d513f66-b3d7-40c5-8978-7590e4c7b029")
     )
     (pin "SCAP_ADC" input
       (at 139.7 185.42 180)
@@ -2270,7 +2270,7 @@
         )
         (justify left)
       )
-      (uuid "8eb67a35-b86f-4ecb-8f97-a6677de8c26a")
+      (uuid "2dcda6dd-03ad-4438-a381-2fd36cb6420f")
     )
     (pin "ILNA" input
       (at 139.7 190.5 180)
@@ -2281,7 +2281,7 @@
         )
         (justify left)
       )
-      (uuid "800b7163-1c5f-4402-8ba8-87c2e3c07f0e")
+      (uuid "c9bc6799-b162-49ed-a48d-b7357d98ea45")
     )
     (pin "FAULT_N" input
       (at 139.7 195.58 180)
@@ -2292,7 +2292,7 @@
         )
         (justify left)
       )
-      (uuid "0af5cee1-2f65-4b08-88ee-00074ffd28a5")
+      (uuid "d3bd4df2-d8cd-493b-826b-29c25aee3d8e")
     )
     (pin "LNA_EN" output
       (at 139.7 200.66 180)
@@ -2303,7 +2303,7 @@
         )
         (justify left)
       )
-      (uuid "aedaf494-aefa-4cbb-885a-862a55727b22")
+      (uuid "e6616de0-da9f-47ed-a953-b34481a6507c")
     )
     (pin "LNA_PATH" output
       (at 190.5 180.34 0)
@@ -2314,7 +2314,7 @@
         )
         (justify right)
       )
-      (uuid "50a0ad89-4f08-4974-89f2-b09f6adeb207")
+      (uuid "38e6eccc-4257-40c5-8b0d-346b35da9c2e")
     )
     (pin "FMN" output
       (at 190.5 185.42 0)
@@ -2325,7 +2325,7 @@
         )
         (justify right)
       )
-      (uuid "f0d18d9d-1eb4-4cc9-97b3-ad6ba5b9b06f")
+      (uuid "5febd1d1-5f71-460e-aecf-7a5cbfba50ed")
     )
     (pin "SW_V1" output
       (at 190.5 200.66 0)
@@ -2336,7 +2336,7 @@
         )
         (justify right)
       )
-      (uuid "7ac15df8-1ce5-4288-8618-8b884358b226")
+      (uuid "2432567a-4e0c-43e6-a734-2e0043f2e270")
     )
     (pin "SW_V2" output
       (at 190.5 205.74 0)
@@ -2347,7 +2347,7 @@
         )
         (justify right)
       )
-      (uuid "711bf748-225f-4d23-a0d3-ccba0ba24463")
+      (uuid "e096a73e-af3f-4e6e-93c8-ff4d08cf3827")
     )
     (pin "SW_V3" output
       (at 190.5 210.82 0)
@@ -2358,7 +2358,7 @@
         )
         (justify right)
       )
-      (uuid "76e705b0-a822-4116-9a2e-9132e6310356")
+      (uuid "20745530-5afb-4748-8aa3-8d3057d403a0")
     )
     (pin "LED_SER" output
       (at 190.5 226.06 0)
@@ -2369,7 +2369,7 @@
         )
         (justify right)
       )
-      (uuid "ac9d4605-c740-4312-8f75-ba6c471dc25e")
+      (uuid "d5f76f87-d386-42d6-ad6b-92ede3b38dcb")
     )
     (pin "LED_SCK" output
       (at 190.5 231.14 0)
@@ -2380,7 +2380,7 @@
         )
         (justify right)
       )
-      (uuid "82c8d847-e91b-4359-9020-e602942f25ab")
+      (uuid "abf74c67-988a-4fa9-beab-9f466dcc2092")
     )
     (pin "LED_RCK" output
       (at 190.5 236.22 0)
@@ -2391,7 +2391,7 @@
         )
         (justify right)
       )
-      (uuid "ce4581c8-ee9f-4d5d-89bc-52880f085a46")
+      (uuid "346c4484-6a9a-442d-a4a8-56c5a2485183")
     )
     (pin "LED_OE_N" output
       (at 190.5 241.3 0)
@@ -2402,11 +2402,11 @@
         )
         (justify right)
       )
-      (uuid "f6ef02a5-5e10-4708-a68f-1c13ee63e176")
+      (uuid "026185f2-70bb-40ae-b555-1f835a10ad14")
     )
     (instances
       (project "coaxolotl"
-        (path "/2cc60996-4767-45f9-af09-be99e2fa5fd9"
+        (path "/4622de97-6f1e-40ba-abc6-38c71ad6b995"
           (page "3")
         )
       )
@@ -2423,7 +2423,7 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "caa6c823-e945-40e8-9d34-eb8e8e3b6898")
+    (uuid "a534daea-0025-4a70-b89f-23eda06bd7b6")
     (property "Sheetname" "RF front end"
       (at 248.92 174.56 0)
       (effects
@@ -2453,7 +2453,7 @@
         )
         (justify left)
       )
-      (uuid "64ebadf1-6435-4622-bc55-aa461a8a9c29")
+      (uuid "79dad28f-9d3c-4023-84de-808ade15339c")
     )
     (pin "FMN" input
       (at 248.92 185.42 180)
@@ -2464,7 +2464,7 @@
         )
         (justify left)
       )
-      (uuid "89a8d7e8-0fad-4787-9e09-6a5e14329bf0")
+      (uuid "47c30920-6269-4233-8477-e577a325db1a")
     )
     (pin "RF_BANK" bidirectional
       (at 299.72 182.88 0)
@@ -2475,11 +2475,11 @@
         )
         (justify right)
       )
-      (uuid "1e086159-e526-4847-aa90-33ff383d9876")
+      (uuid "d49be1a3-57cf-4f06-958e-9d1745475d7a")
     )
     (instances
       (project "coaxolotl"
-        (path "/2cc60996-4767-45f9-af09-be99e2fa5fd9"
+        (path "/4622de97-6f1e-40ba-abc6-38c71ad6b995"
           (page "4")
         )
       )
@@ -2496,7 +2496,7 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "0b8383a7-0c2a-4516-9688-27903cad6ba3")
+    (uuid "17d61925-5077-497a-827d-ba65ce9a25d5")
     (property "Sheetname" "Filter bank"
       (at 248.92 194.88 0)
       (effects
@@ -2526,7 +2526,7 @@
         )
         (justify left)
       )
-      (uuid "0c795298-5913-416b-b741-9753d9691176")
+      (uuid "8b0493e3-886f-4fa4-acc9-8452c30d6430")
     )
     (pin "SW_V2" input
       (at 248.92 205.74 180)
@@ -2537,7 +2537,7 @@
         )
         (justify left)
       )
-      (uuid "ecb02dba-c29d-4624-8239-65690e8ee222")
+      (uuid "20ab211b-9668-4648-9b97-a609a1c60ae5")
     )
     (pin "SW_V3" input
       (at 248.92 210.82 180)
@@ -2548,7 +2548,7 @@
         )
         (justify left)
       )
-      (uuid "b47c877d-3e37-444b-903f-741bc1f4e759")
+      (uuid "f7eddda8-a531-4598-911d-e02763e9a363")
     )
     (pin "RF_BANK" bidirectional
       (at 299.72 205.74 0)
@@ -2559,11 +2559,11 @@
         )
         (justify right)
       )
-      (uuid "d0064475-3c28-47b2-83cc-1f3b5b6645a4")
+      (uuid "130c83f7-6823-4e9f-add0-6bcedf472300")
     )
     (instances
       (project "coaxolotl"
-        (path "/2cc60996-4767-45f9-af09-be99e2fa5fd9"
+        (path "/4622de97-6f1e-40ba-abc6-38c71ad6b995"
           (page "5")
         )
       )
@@ -2580,7 +2580,7 @@
     (fill
       (color 0 0 0 0)
     )
-    (uuid "1b93e11b-3638-4ebf-b113-338877006009")
+    (uuid "82fbfb79-6923-40c5-9c3a-ad772670f4d1")
     (property "Sheetname" "Panel"
       (at 248.92 220.28 0)
       (effects
@@ -2610,7 +2610,7 @@
         )
         (justify left)
       )
-      (uuid "0d6c68cf-4b9f-4f68-9e78-3d27bd628db3")
+      (uuid "e6ed9bfe-8be4-4cf6-941e-a82675e388da")
     )
     (pin "LED_SCK" input
       (at 248.92 231.14 180)
@@ -2621,7 +2621,7 @@
         )
         (justify left)
       )
-      (uuid "83b84f12-4b32-44ca-92b0-f0a3b1013700")
+      (uuid "c52cb234-0d4c-4245-a9ee-c3ad3811b7f5")
     )
     (pin "LED_RCK" input
       (at 248.92 236.22 180)
@@ -2632,7 +2632,7 @@
         )
         (justify left)
       )
-      (uuid "f763b90f-dfd1-4732-b2b9-6e5807ee7a5f")
+      (uuid "52b6d386-5f55-4d19-81d8-77cee687ed68")
     )
     (pin "LED_OE_N" input
       (at 248.92 241.3 180)
@@ -2643,11 +2643,11 @@
         )
         (justify left)
       )
-      (uuid "8fd95bd5-8bec-4272-8001-3d69376ee23e")
+      (uuid "c7e33528-661b-4f17-abbc-83f09de5390f")
     )
     (instances
       (project "coaxolotl"
-        (path "/2cc60996-4767-45f9-af09-be99e2fa5fd9"
+        (path "/4622de97-6f1e-40ba-abc6-38c71ad6b995"
           (page "6")
         )
       )

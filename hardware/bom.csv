@@ -49,10 +49,11 @@ J3,1,SMA/EDGE(RTL-SDR),SMA_Amphenol_132289_EdgeMount,,,Filter bank,
 J4 J5,2,NA(HDR1x7/2.54),PinHeader_1x07_P2.54mm_Vertical,,DNP,Panel,
 L1 L2 L501 L502,4,220nH/5%,L_0603_1608Metric,,,"Filter bank, RF front end",
 L3,1,NA(56nH/2%),L_0603_1608Metric,,DNP,RF front end,
-L4,1,560nH/5%,L_0603_1608Metric,,,RF front end,
+L4,1,560nH/5%,L_0603_1608Metric,,,RF front end,L4: low-band choke (SWL434)
 L5,1,100nH/0603,L_0603_1608Metric,,,Filter bank,
 L6,1,10uH/0805,L_0805_2012Metric,,,Filter bank,
 L7,1,1mH/0.2A,L_Bourns_SRR1260,SRR1260-102M,,Filter bank,
+L8,1,18nH/2%,L_0603_1608Metric,,,RF front end,L8: high-band choke at the pin (QPL9547 EVB L1)
 L101 L102,2,18uH/5%,L_1210_3225Metric,,,Filter bank,
 L201 L202,2,4.7uH/5%,L_0805_2012Metric,,,Filter bank,
 L203 L204,2,2.2uH/5%,L_0805_2012Metric,,,Filter bank,
@@ -76,7 +77,7 @@ R10 R24,2,220R/5%,R_0603_1608Metric,,,"Filter bank, Power",R24: damps the L6 sel
 R11 R12,2,1M/1%,R_0603_1608Metric,,,Power,
 R13 R14 R15 R16 R17 R18 R19 R20,8,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write
 R21 R22,2,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted
-R25,1,3k32/1%,R_0603_1608Metric,,,RF front end,R25: sets IDD (SWL434: 3k32 @ 5 V)
+R25,1,3k32/1%,R_0603_1608Metric,,,RF front end,R25: sets IDD = 65 mA (QPL9547 EVB R4)
 RN1 RN2 RN3 RN4 RN5 RN6 RN7 RN8 RN9 RN10 RN11 RN12,12,2k2x4/5%(CAY16),R_Array_Convex_4x0603,CAY16-222J4LF,,Panel,
 TP1,1,TP/TX,TestPoint_Pad_D1.0mm,,,MCU,
 TP6,1,TP/SENSE,TestPoint_Pad_D1.0mm,,,MCU,
