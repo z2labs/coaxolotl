@@ -704,6 +704,16 @@ for k in range(1, 8):
     if net == "GND":
         add_track(padpos[("J5", str(k))], padpos[("J4", str(k))], w, net, layer=pcbnew.B_Cu)
 
+# lamp cathodes: each drops to the inner layers through its own via, half a column to the right of the lamp, on the
+# same spot in every column (never under a lamp name), so the strip wiring stays off the label rows
+for n in range(48):
+    d = f"D{7 + n}"
+    q = padpos[(d, "1")]
+    v = (q[0] + LAMP_DX / 2, q[1] + 0.35)
+    add_track(q, (q[0] + 0.35, q[1] + 0.35), 0.25, pinnet[(d, "1")])
+    add_track((q[0] + 0.35, q[1] + 0.35), v, 0.25, pinnet[(d, "1")])
+    add_via(*v, net=pinnet[(d, "1")])
+
 for ref, a_, b_ in TIE:
     add_track(padpos[(ref, a_)], padpos[(ref, b_)], 0.2, pinnet[(ref, a_)])
 
@@ -891,7 +901,7 @@ pj["net_settings"] = json.loads(json.dumps(PRO_ORIG.get("net_settings", {})))
 ns = pj["net_settings"]
 classes = ns.setdefault("classes", [])
 base = next(c for c in classes if c["name"] == "Default")
-base.update(clearance=0.2, track_width=0.2, via_diameter=0.6, via_drill=0.3)
+base.update(clearance=0.15, track_width=0.2, via_diameter=0.6, via_drill=0.3)   # 0.15: JLC-safe, the post-route tools work to it
 rf = next((c for c in classes if c["name"] == "RF"), None)
 if rf is None:
     rf = dict(base); rf["name"] = "RF"; classes.append(rf)
