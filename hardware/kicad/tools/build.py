@@ -172,15 +172,15 @@ def build_library(path: pathlib.Path):
             pin_types={"8": "power_in", "3,5,14,16,18,20,21,23,25": "power_in", "9": "input", "10": "input",
                        "11": "input", "12": "input", "1": "input", "7": "passive"}),
         ic_symbol(
-            "PE42522", "U", "coaxolotl:PE42522_LGA-29_4x4mm",
-            "https://www.psemi.com/pdf/datasheets/pe42522ds.pdf",
-            "SPDT absorptive 9 kHz-26.5 GHz, 3.3 V, RF ports at 0 VDC. V1=0: RFC-RF1, V1=1: RFC-RF2. "
-            "VSS_EXT (29) tied to GND = internal negative generator",
-            left=[("12", "RFC"), None, ("28", "V1")], right=[("22", "RF1"), None, ("2", "RF2")],
-            width=20.32, top_pins=[("24", "VDD")],
-            bottom_pins=[("1,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,23,25,26,27,29,30", "GND")],
-            pin_types={"24": "power_in", "28": "input",
-                       "1,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,23,25,26,27,29,30": "power_in"}),
+            "PE42520", "U", "Package_DFN_QFN:QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
+            "https://www.lcsc.com/datasheet/C500478.pdf",
+            "SPDT absorptive 9 kHz-13 GHz, 2.3-5.5 V, RF ports at 0 VDC. LS=1: CTRL=0 RFC-RF1, CTRL=1 RFC-RF2 "
+            "(datasheet table 5). VSS_EXT (13) to GND = internal negative generator",
+            left=[("7", "RFC"), None, ("14", "CTRL")], right=[("2", "RF1"), None, ("11", "RF2")],
+            width=20.32, top_pins=[("16", "VDD"), ("15", "LS")],
+            bottom_pins=[("1,3,4,5,6,8,9,10,12,13,17", "GND")],
+            pin_types={"16": "power_in", "14": "input", "15": "input",
+                       "1,3,4,5,6,8,9,10,12,13,17": "power_in"}),
         ic_symbol(
             "LTCC_LPF", "U", "coaxolotl:MiniCircuits_FV1206",
             "https://www.minicircuits.com/pdfs/LFCN-2250+.pdf",
@@ -508,18 +508,27 @@ def _sw_supply(s, ref, cap_ref, right=True, up=17.78):
     s.w((x, y - up + 2.54), (cxc, y - up + 2.54))
     s.add(C(cap_ref, "100nF/16V/10%", cxc, y - up + 6.35, "+3V3", "GND", Place=f"{ref}.{s.vdd[ref]}"))
     s.gnd(cap_ref, "2")
+    _ls_tie(s, ref, y - up + 12.7)
 
 
-PE42522_GND = "1,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,23,25,26,27,29,30".split(",")
+PE42520_GND = "1,3,4,5,6,8,9,10,12,13,17".split(",")
 
 
 def _pe42522(s, ref, x, y, rfc, v1, rf1, rf2, **kw):
-    s.add(Part(ref, "coaxolotl:PE42522", kw.pop("value", "PE42522B(LGA29)"), x, y, 0,
-               "coaxolotl:PE42522_LGA-29_4x4mm",
-               {"12": rfc, "28": v1, "22": rf1, "2": rf2, "24": "+3V3", **{n: "GND" for n in PE42522_GND}},
-               **kw))
-    s.vdd[ref] = "24"
+    """PE42520 SPDT (name kept for the call sites). LS = VDD: CTRL 0 = RF1."""
+    s.add(Part(ref, "coaxolotl:PE42520", kw.pop("value", "PE42520C-Z(QFN16)"), x, y, 0,
+               "Package_DFN_QFN:QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
+               {"7": rfc, "14": v1, "2": rf1, "11": rf2, "16": "+3V3", "15": "+3V3",
+                **{n: "GND" for n in PE42520_GND}}, **kw))
+    s.vdd[ref] = "16"
     s.gnd(ref, "1")
+
+
+def _ls_tie(s, ref, ytop):
+    """LS (top pin) joins the VDD riser at ytop"""
+    lx, ly = s.pt(ref, "15")
+    vx, _ = s.pt(ref, "16")
+    s.w((lx, ly), (lx, ytop), (vx, ytop))
 
 
 def sheet_rf_fe(lib) -> DSheet:
@@ -552,8 +561,8 @@ def sheet_rf_fe(lib) -> DSheet:
     s.frame(88.9, 45.72, 27.94, 58.42, "LNA/BYP IN")
     _pe42522(s, "U6", 104.14, 80.01, "ANT", "LNA_PATH", "BYP_RF", "PRE_A", txt=(104.14, 97.79, None))
     _sw_supply(s, "U6", "C36")
-    s.w(s.pt("J2", "1"), s.pt("U6", "12"))
-    s.pw("U6", "28", (86.36, None), (None, yp))
+    s.w(s.pt("J2", "1"), s.pt("U6", "7"))
+    s.pw("U6", "14", (86.36, None), (None, yp))
 
     # preselector ------------------------------------------------------------
     s.frame(114.3, 109.22, 101.6, 30.48, "Preselector (LNA path only)")
@@ -569,7 +578,7 @@ def sheet_rf_fe(lib) -> DSheet:
         s.gnd(ref, "2")
     s.add(Part("U12", "coaxolotl:LTCC_LPF", "LFCN-2250+(FV1206)", 203.2, yl, 0, "coaxolotl:MiniCircuits_FV1206",
                {"1": "PRE_D", "3": "FMN_IN", "2": "GND", "4": "GND"}, txt=(203.2, yl - 7.62, None)))
-    s.pw("U6", "2", (119.38, None), (None, yl), s.pt("C24", "1"))
+    s.pw("U6", "11", (119.38, None), (None, yl), s.pt("C24", "1"))
     s.w(s.pt("C24", "2"), s.pt("C25", "1"))
     s.w(s.pt("C25", "2"), s.pt("C26", "1"))
     s.w(s.pt("C26", "2"), s.pt("U12", "1"))
@@ -582,27 +591,28 @@ def sheet_rf_fe(lib) -> DSheet:
     s.add(R("R22", "0R/0603", 226.06, yl, "FMN_IN", "FMN_OUT", rot=90, Note="fit when the notch is not fitted",
             txt=(226.06, yl - 6.35, None)))
     s.w(s.pt("U12", "3"), s.pt("R22", "1"))
-    _pe42522(s, "U9", 231.14, yn, "FMN_IN", "FMN", "FMN_THRU", "FMN_TANK_A", value="NA(PE42522B)",
+    _pe42522(s, "U9", 231.14, yn, "FMN_IN", "FMN", "FMN_THRU", "FMN_TANK_A", value="NA(PE42520C-Z)",
              dnp=True, txt=(231.14, 177.8, None))
-    _pe42522(s, "U10", 281.94, yn, "FMN_OUT", "FMN", "FMN_THRU", "FMN_TANK_B", value="NA(PE42522B)",
+    _pe42522(s, "U10", 281.94, yn, "FMN_OUT", "FMN", "FMN_THRU", "FMN_TANK_B", value="NA(PE42520C-Z)",
              dnp=True, mirror=True, txt=(281.94, 177.8, None))
     for ref in ("U9", "U10"):
-        x, y = s.pt(ref, "24")
-        s.w((x, y), (x, y - 2.54))
-        s.rail("+3V3", x, y - 2.54)
+        x, y = s.pt(ref, "16")
+        s.w((x, y), (x, y - 5.08))
+        s.rail("+3V3", x, y - 5.08)
+        _ls_tie(s, ref, y - 2.54)
     s.add(Part("L3", "Device:L", "NA(56nH/2%)", 256.54, yn + 2.54, 90, "Inductor_SMD:L_0603_1608Metric",
                {"1": "FMN_TANK_A", "2": "FMN_TANK_B"}, dnp=True, txt=(256.54, 175.26, None)))
     s.add(C("C27", "NA(47pF/C0G)", 256.54, yn + 10.16, "FMN_TANK_A", "FMN_TANK_B", rot=90, dnp=True,
             txt=(256.54, 180.34, None)))
-    s.w((213.36, yl), (213.36, yn - 2.54), s.pt("U9", "12"))
-    s.w(s.pt("U9", "22"), s.pt("U10", "22"))
-    s.w(s.pt("U9", "2"), s.pt("L3", "1"), )
+    s.w((213.36, yl), (213.36, yn - 2.54), s.pt("U9", "7"))
+    s.w(s.pt("U9", "2"), s.pt("U10", "2"))
+    s.w(s.pt("U9", "11"), s.pt("L3", "1"), )
     s.w(s.pt("L3", "1"), s.pt("C27", "1"))
-    s.w(s.pt("L3", "2"), s.pt("U10", "2"))
+    s.w(s.pt("L3", "2"), s.pt("U10", "11"))
     s.w(s.pt("L3", "2"), s.pt("C27", "2"))
-    s.pw("U10", "12", (299.72, None), (None, yl))
-    s.pw("U9", "28", (215.9, None), (None, yf))
-    s.pw("U10", "28", (297.18, None), (None, yf))
+    s.pw("U10", "7", (299.72, None), (None, yl))
+    s.pw("U9", "14", (215.9, None), (None, yf))
+    s.pw("U10", "14", (297.18, None), (None, yf))
     s.intent("tank 56 nH || 47 pF: f0 = 98 MHz", 218.44, 186.69)
 
     # LNA (one stage of the SWL434 / Spacewalker LNA) -------------------------
@@ -650,11 +660,11 @@ def sheet_rf_fe(lib) -> DSheet:
     _pe42522(s, "U7", 381.0, 80.01, "RF_BANK", "LNA_PATH", "BYP_RF", "LNA_RF_SW", mirror=True,
              txt=(381.0, 97.79, None))
     _sw_supply(s, "U7", "C37", right=False)
-    s.w(s.pt("U6", "22"), s.pt("U7", "22"))
-    s.pw("C31", "2", (363.22, None), (None, s.pt("U7", "2")[1]), s.pt("U7", "2"))
-    s.pw("U7", "12", (401.32, None))
+    s.w(s.pt("U6", "2"), s.pt("U7", "2"))
+    s.pw("C31", "2", (363.22, None), (None, s.pt("U7", "11")[1]), s.pt("U7", "11"))
+    s.pw("U7", "7", (401.32, None))
     s.hlabel("RF_BANK", 401.32, y0, "R", "bidirectional")
-    s.pw("U7", "28", (398.78, None), (None, yp))
+    s.pw("U7", "14", (398.78, None), (None, yp))
     s.ctext("bypass: F1-F4 (HF/LF) always, LNA off or tripped", 243.84, y0 - 1.27, 1.27)
 
     # control ----------------------------------------------------------------
@@ -668,7 +678,7 @@ def sheet_rf_fe(lib) -> DSheet:
     s.gnd("R15", "2")
     s.gnd("R19", "2")
     s.intent("LNA_PATH: 0 = RF1 = bypass, 1 = RF2 = LNA.   FMN: 0 = RF1 = through, 1 = RF2 = notch.", 228.6, 206.38)
-    s.intent("PE42522 RF ports sit at 0 VDC: no blocking caps except around the LNA.", 228.6, 209.55)
+    s.intent("PE42520 RF ports sit at 0 VDC: no blocking caps except around the LNA.", 228.6, 209.55)
     return s
 
 
@@ -955,8 +965,8 @@ def draw_block_diagram(r: DSheet):
     bw, bh = 26.0, 14.0
     xs = [18, 51, 84, 117, 150, 183, 216, 249, 282, 315, 348]
     ym, yu = 60.0, 38.0
-    rf = [("ANTENNA", "20 kHz-2 GHz", OFF), ("PROTECTION", "GDT, limiter", RFC), ("SPDT", "PE42522", RFC),
-          None, None, None, ("SPDT", "PE42522", RFC), ("SP8T", "PE42582", RFC),
+    rf = [("ANTENNA", "20 kHz-2 GHz", OFF), ("PROTECTION", "GDT, limiter", RFC), ("SPDT", "PE42520", RFC),
+          None, None, None, ("SPDT", "PE42520", RFC), ("SP8T", "PE42582", RFC),
           ("8 FILTERS", "F0 THRU..F7", RFC), ("SP8T", "PE42582", RFC), ("BIAS-T", "20 kHz-2 GHz", RFC)]
     for i, b in enumerate(rf):
         if b:

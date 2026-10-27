@@ -1507,7 +1507,7 @@
       )
     )
   )
-  (symbol "PE42522"
+  (symbol "PE42520"
     (in_bom yes)
     (on_board yes)
     (property "Reference" "U"
@@ -1518,7 +1518,7 @@
         )
       )
     )
-    (property "Value" "PE42522"
+    (property "Value" "PE42520"
       (at 0 -6.35 0)
       (effects
         (font
@@ -1526,7 +1526,7 @@
         )
       )
     )
-    (property "Footprint" "coaxolotl:PE42522_LGA-29_4x4mm"
+    (property "Footprint" "Package_DFN_QFN:QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm"
       (at 0 0 0)
       (effects
         (font
@@ -1535,7 +1535,7 @@
         hide
       )
     )
-    (property "Datasheet" "https://www.psemi.com/pdf/datasheets/pe42522ds.pdf"
+    (property "Datasheet" "https://www.lcsc.com/datasheet/C500478.pdf"
       (at 0 0 0)
       (effects
         (font
@@ -1544,7 +1544,7 @@
         hide
       )
     )
-    (property "Description" "SPDT absorptive 9 kHz-26.5 GHz, 3.3 V, RF ports at 0 VDC. V1=0: RFC-RF1, V1=1: RFC-RF2. VSS_EXT (29) tied to GND = internal negative generator"
+    (property "Description" "SPDT absorptive 9 kHz-13 GHz, 2.3-5.5 V, RF ports at 0 VDC. LS=1: CTRL=0 RFC-RF1, CTRL=1 RFC-RF2 (datasheet table 5). VSS_EXT (13) to GND = internal negative generator"
       (at 0 0 0)
       (effects
         (font
@@ -1553,7 +1553,7 @@
         hide
       )
     )
-    (symbol "PE42522_0_1"
+    (symbol "PE42520_0_1"
       (rectangle
         (start -10.16 5.08)
         (end 10.16 -5.08)
@@ -1566,7 +1566,7 @@
         )
       )
     )
-    (symbol "PE42522_1_1"
+    (symbol "PE42520_1_1"
       (pin bidirectional line
         (at -12.7 2.54 0)
         (length 2.54)
@@ -1577,7 +1577,7 @@
             )
           )
         )
-        (number "12"
+        (number "7"
           (effects
             (font
               (size 1.27 1.27)
@@ -1588,14 +1588,14 @@
       (pin input line
         (at -12.7 -2.54 0)
         (length 2.54)
-        (name "V1"
+        (name "CTRL"
           (effects
             (font
               (size 1.27 1.27)
             )
           )
         )
-        (number "28"
+        (number "14"
           (effects
             (font
               (size 1.27 1.27)
@@ -1613,7 +1613,7 @@
             )
           )
         )
-        (number "22"
+        (number "2"
           (effects
             (font
               (size 1.27 1.27)
@@ -1631,7 +1631,7 @@
             )
           )
         )
-        (number "2"
+        (number "11"
           (effects
             (font
               (size 1.27 1.27)
@@ -1640,7 +1640,7 @@
         )
       )
       (pin power_in line
-        (at 0 7.62 270)
+        (at -2.54 7.62 270)
         (length 2.54)
         (name "VDD"
           (effects
@@ -1649,7 +1649,25 @@
             )
           )
         )
-        (number "24"
+        (number "16"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin input line
+        (at 2.54 7.62 270)
+        (length 2.54)
+        (name "LS"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "15"
           (effects
             (font
               (size 1.27 1.27)
@@ -1762,25 +1780,6 @@
             )
           )
         )
-        (number "7"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
         (number "8"
           (effects
             (font
@@ -1838,7 +1837,7 @@
             )
           )
         )
-        (number "11"
+        (number "12"
           (effects
             (font
               (size 1.27 1.27)
@@ -1876,254 +1875,7 @@
             )
           )
         )
-        (number "14"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "15"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "16"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
         (number "17"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "18"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "19"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "20"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "21"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "23"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "25"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "26"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "27"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "29"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin passive line
-        (at 0 -7.62 90)
-        (length 2.54)
-        hide
-        (name "GND"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "30"
           (effects
             (font
               (size 1.27 1.27)
