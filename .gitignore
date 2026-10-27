@@ -7,3 +7,4 @@ __pycache__/
 hardware/kicad/route/
 hardware/kicad/*-backups/
 hardware/kicad/fp-info-cache
+hardware/kicad/*.kicad_prl
