@@ -94,7 +94,7 @@ void panel_render(const app_t *a, uint8_t *img)
     if (a->panel == PANEL_FULL)
         return;
     for (i = (a->panel == PANEL_BANDS) ? 1u : 0u; i < PANEL_BYTES; i++)
-        img[i] = 0;                      /* BANDS keeps U14 (F0..F7) only */
+        img[i] = 0;                      /* BANDS keeps lamps F0..F7 only */
 }
 
 uint8_t panel_count(const uint8_t *img)

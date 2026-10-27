@@ -2,8 +2,11 @@
  * Coaxolotl - 48-lamp front panel.
  *
  * Six 74HC595 in one chain, statically driven (no multiplexing, so no
- * scan noise in the receiver). Lamp n sits on U(n/8 + 1).Q(n % 8),
- * U1 being the register nearest the MCU. Outputs sink: LOW = lamp on.
+ * scan noise in the receiver). Lamps sit in two rows of 24: lamp n in
+ * row n/24, column n%24. Register k (k = 0 nearest the MCU) sits under
+ * columns 4k..4k+3: QA-QD row 1, QE-QH row 2. The lamp image here is in
+ * lamp order; hal_panel() shifts it out in chain order.
+ * Outputs sink: LOW = lamp on.
  * The PWR lamp is hard-wired to VCOAX and is not in the chain.
  *
  * Panel modes (config frame): FULL = every lamp, BANDS = F0..F7 only,

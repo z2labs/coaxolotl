@@ -308,9 +308,12 @@ void hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en)
 
 void hal_panel(const uint8_t *img)
 {
-    uint8_t id = 48u, b;
+    uint8_t p = 48u, id, b;
 
-    while (id--) {                       /* lamp 47 first, lamp 0 ends in U1.QA */
+    /* chain position p = 8 * register + output (U14 = register 0, nearest the MCU). Register k sits under strip
+     * columns 4k..4k+3: QA-QD drive row 1 (lamps 0-23), QE-QH row 2 (lamps 24-47) - docs/panel.md */
+    while (p--) {                        /* U19.QH first, U14.QA last */
+        id = (uint8_t)(((p & 4u) ? 24u : 0u) + ((p >> 3) << 2) + (p & 3u));
         b = (uint8_t)((img[id >> 3] >> (id & 7u)) & 1u);
         LED_SER = b ? 0 : 1;             /* sink outputs: 0 = lamp on */
         LED_SCK = 1;

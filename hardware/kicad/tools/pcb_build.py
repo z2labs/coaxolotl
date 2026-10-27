@@ -447,8 +447,9 @@ rot_led = orient("D7", {"1": DOWN})
 for n in range(48):
     row, i = divmod(n, 24)
     put(f"D{7 + n}", LAMP_X0 + i * LAMP_DX, ROW_Y[row], rot_led)
-REG_X = [7.5 + 13.0 * i for i in range(6)]
-REG_ORDER = ["U14", "U17", "U15", "U18", "U16", "U19"]
+# register k sits under the 4 lamp columns it drives (both rows): U14 .. U19 left to right
+REG_X = [LAMP_X0 + 1.5 * LAMP_DX + 4 * LAMP_DX * i for i in range(6)]
+REG_ORDER = ["U14", "U15", "U16", "U17", "U18", "U19"]
 for x, u in zip(REG_X, REG_ORDER):
     put(u, x, 21.4, 0)
     k = int(u[1:]) - 14

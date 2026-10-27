@@ -871,7 +871,8 @@ def sheet_bank(lib) -> DSheet:
 
 
 LAMP_COL = {"A": "AMBER(0603)", "Y": "YELLOW(0603)", "G": "GREEN(0603)", "R": "RED(0603)"}
-# lamp n: (name, colour) - order fixed by firmware/src/panel.h (lamp n on register n/8, output n%8)
+# lamp n: (name, colour) - order fixed by firmware/src/panel.h. Lamp n sits in row n/24, column n%24 of the strip;
+# register k (U14 + k) drives the 4 columns above it: output i -> lamp lamp_of(k, i) (firmware hal_panel shifts the same)
 LAMPS = ([(f"F{k} {n}", "A") for k, n in enumerate(
             ["THRU", "LF", "160/80", "60-30", "20-10", "6/4m", "2m/AIR", "70/23cm"])] +
          [(f"FR{k} {n}", "A") for k, n in enumerate(
@@ -882,8 +883,14 @@ LAMPS = ([(f"F{k} {n}", "A") for k, n in enumerate(
           ("I-LO", "Y"), ("I-OK", "G"), ("I-HI", "R"), ("TRIP", "R"), ("RUN", "G"), ("HOLD", "G"),
           ("LOW", "R"), ("QUIET", "Y"), ("DROP", "R"), ("GLT", "Y"), ("RST", "R")])
 assert len(LAMPS) == 48
-REG_TITLE = ["BANK (lamps 0-7)", "FRAME (lamps 8-15)", "FRAME + RX (lamps 16-23)",
-             "DECODE (lamps 24-31)", "DECODE + RF (lamps 32-39)", "RF + SYSTEM (lamps 40-47)"]
+
+
+def lamp_of(k, i):
+    """register k, output i (QA..QH) -> lamp: QA-QD row 1, QE-QH row 2, columns 4k..4k+3"""
+    return 24 * (i // 4) + 4 * k + i % 4
+
+
+REG_TITLE = [f"columns {4 * k}-{4 * k + 3} (lamps {4 * k}-{4 * k + 3}, {24 + 4 * k}-{27 + 4 * k})" for k in range(6)]
 
 
 def _register(s, k, X, Y):
@@ -894,7 +901,7 @@ def _register(s, k, X, Y):
     nets = {"14": ser, "11": "LED_SCK", "12": "LED_RCK", "13": "LED_OE_N", "16": "+3V3", "10": "+3V3",
             "8": "GND", "9": f"LED_CH{k + 1}" if k < 5 else None}
     qpins = ["15", "1", "2", "3", "4", "5", "6", "7"]
-    nets.update({q: f"LAMP{8 * k + i}_Q" for i, q in enumerate(qpins)})
+    nets.update({q: f"LAMP{lamp_of(k, i)}_Q" for i, q in enumerate(qpins)})
     s.add(Part(ref, "coaxolotl:74HC595", "74HC595PW(TSSOP16)", X, Y, 0, "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
                nets, txt=(X - 2.54, Y + 19.05, "right")))
     # inputs
@@ -928,7 +935,7 @@ def _register(s, k, X, Y):
         qa = s.pt(ref, qpins[4 * h])[1]
         rnets = {}
         for j in range(4):
-            n = 8 * k + 4 * h + j
+            n = lamp_of(k, 4 * h + j)
             rnets[str(1 + j)] = f"LAMP{n}_Q"
             rnets[str(8 - j)] = f"LAMP{n}_K"
         tt = (X + 20.32, qa - 5.08, None) if h == 0 else (X + 20.32, qa + 10.16, None)
@@ -941,7 +948,7 @@ def _register(s, k, X, Y):
     xv = xl + 6.35
     rows = [Y - 2.54 + (i - 3.5) * 7.62 for i in range(8)]
     for i in range(8):
-        n = 8 * k + i
+        n = lamp_of(k, i)
         name, col = LAMPS[n]
         rn, pin = f"RN{1 + 2 * k + i // 4}", str(8 - i % 4)
         d = f"D{7 + n}"
@@ -987,10 +994,10 @@ def sheet_panel(lib) -> DSheet:
             s.hlabel(net, *end, "L", "input")
         s.pw(ref, "7", (x - 7.62, None), (None, y + 10.16))
         s.rail("GND", x - 7.62, y + 10.16)
-    for i, t in enumerate(["Lamp n: register n/8 (U14 = first after the MCU), output Q(n%8) - firmware/src/panel.h.",
+    for i, t in enumerate(["Lamp n: row n/24, column n%24; register (n%24)/4 (U14 first), output (n%4) + 4*(n/24) - hal_panel.",
                            "Q low = lamp on (sink). 1 mA per lamp: (VLED - 2 V - 0.1 V) / 2k2. Use 2 V LEDs only.",
                            "Lamp test lights all 48 (48 mA) with the LNA still off. Outside it, at most 23 lamps.",
-                           "Panel modes (config frame, kept in flash): full / bands = U14 only / off = OE_N high.",
+                           "Panel modes (config frame, kept in flash): full / bands = F0-F7 only / off = OE_N high.",
                            "U14-U19, RN1-RN12, D7-D54, C41-C46 and J5 sit on the snap-off strip; J4 on the main board."]):
         s.intent(t, 177.8, 222.25 + 3.18 * i)
     return s

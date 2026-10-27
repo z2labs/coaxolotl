@@ -31,10 +31,13 @@ the room.
  └──────────────────────────────────────────────────────────────────────────┘
 ```
 
-The physical rows are free. The chain order is fixed by `panel.h`: lamp
-`n` sits on register `n/8`, output `Q(n%8)`. In the schematic the registers
-are U14 (first after the MCU, lamps 0–7) to U19 (lamps 40–47), and lamp `n`
-is LED D(7+n) with its 2.2 kΩ in array RN(1 + n/4).
+The strip has two rows of 24 lamps: lamp `n` sits in row `n/24`, column
+`n%24`, under its printed name. Each register drives the 4 columns right
+above it, so its wiring stays local: register `k` (U14 + k, U14 first after
+the MCU) drives columns `4k…4k+3`, QA–QD the row-1 lamps and QE–QH the
+row-2 lamps (output `(n%4) + 4·(n/24)`). The firmware keeps the lamp image
+in lamp order and `hal_panel()` shifts it out in chain order. Lamp `n` is LED
+D(7+n); its 2.2 kΩ is in array RN(1 + 2k) for row 1 and RN(2 + 2k) for row 2.
 
 ## Lamp reference
 
