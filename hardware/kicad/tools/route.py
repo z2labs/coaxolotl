@@ -26,7 +26,8 @@ pro = json.load(open(os.path.join(PRJ, "coaxolotl.kicad_pro"), encoding="utf-8")
 PATS = pro["net_settings"]["netclass_patterns"]
 RF = [p["pattern"] for p in PATS if p["netclass"] == "RF"]
 POWER = [p["pattern"] for p in PATS if p["netclass"] == "POWER"]
-RF_W, RF_CLR = 0.35, 0.2
+RF_W, RF_CLR = 0.25, 0.2       # routed at the QFN pin width, widened to RF_FAT afterwards
+RF_FAT = 0.35                  # 50 ohm CPWG on JLC04161H-7628 (0.21 mm to In1) with the 0.25 mm pour gap
 PWR_W = 0.4
 VIA_PAD_INSET = 0.17
 
@@ -104,7 +105,8 @@ def main():
     for name, only, closed, args in PASSES:
         dsn, ses, rep, rj = (os.path.join(OUT, name + e) for e in (".dsn", ".ses", "_report.json", "_rules.json"))
         export_dsn(b, dsn, closed)
-        json.dump({"ignore_nets": ["GND"], "nets": rules_nets, "only": "|".join(only), "smooth": True,
+        ign = ["GND"] + (RF if name != "pass1_rf" else [])
+        json.dump({"ignore_nets": ign, "nets": rules_nets, "only": "|".join(only), "smooth": True,
                    "style": "oct", "pad_entry": True}, open(rj, "w"), indent=1)
         cmd = [SR, "-de", dsn, "-do", ses, "-rules", rj, "-report", rep] + args
         print(">>", " ".join(cmd), flush=True)
@@ -123,9 +125,100 @@ def main():
         summary.append((name, len(bad)))
         pcbnew.SaveBoard(BOARD, b)
         b = pcbnew.LoadBoard(BOARD)
+    print("RF widened:", fatten_rf(b))
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
     pcbnew.SaveBoard(BOARD, b)
     print("routed ->", BOARD, summary)
+
+
+# ------------------------------------------------------------ RF tracks to 50 ohm width where the clearance allows
+def _d_pt_seg(p, a, b):
+    vx, vy = b[0] - a[0], b[1] - a[1]
+    L = vx * vx + vy * vy
+    k = 0 if L == 0 else max(0, min(1, ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / L))
+    return ((a[0] + k * vx - p[0]) ** 2 + (a[1] + k * vy - p[1]) ** 2) ** 0.5
+
+
+def _d_seg_seg(a, b, c, d):
+    def cross(o, p, q):
+        return (p[0] - o[0]) * (q[1] - o[1]) - (p[1] - o[1]) * (q[0] - o[0])
+    if (cross(a, b, c) * cross(a, b, d) < 0) and (cross(c, d, a) * cross(c, d, b) < 0):
+        return 0.0
+    return min(_d_pt_seg(a, c, d), _d_pt_seg(b, c, d), _d_pt_seg(c, a, b), _d_pt_seg(d, a, b))
+
+
+def _d_seg_rect(a, b, r):
+    x0, y0, x1, y1 = r
+    if (x0 <= a[0] <= x1 and y0 <= a[1] <= y1) or (x0 <= b[0] <= x1 and y0 <= b[1] <= y1):
+        return 0.0
+    cs = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+    return min(_d_seg_seg(a, b, cs[i], cs[(i + 1) % 4]) for i in range(4))
+
+
+def fatten_rf(b, clr=RF_CLR + 0.01, end=0.7):
+    T = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
+    rf = set(RF)
+    obst = []          # (net, kind, geom, half width)
+    for fp in b.GetFootprints():
+        for p in fp.Pads():
+            if not p.IsOnLayer(pcbnew.F_Cu):
+                continue
+            bb = p.GetBoundingBox()
+            obst.append((p.GetNetname(), "r", (pcbnew.ToMM(bb.GetX()), pcbnew.ToMM(bb.GetY()),
+                                               pcbnew.ToMM(bb.GetRight()), pcbnew.ToMM(bb.GetBottom())), 0))
+    tr = []
+    for t in b.GetTracks():
+        if t.GetClass() == "PCB_VIA":
+            obst.append((t.GetNetname(), "c", T(t.GetPosition()), pcbnew.ToMM(t.GetWidth(pcbnew.F_Cu)) / 2))
+        elif t.GetLayer() == pcbnew.F_Cu:
+            obst.append((t.GetNetname(), "s", (T(t.GetStart()), T(t.GetEnd())), pcbnew.ToMM(t.GetWidth()) / 2))
+            if t.GetNetname() in rf:
+                tr.append(t)
+
+    def ok(net, a, c, hw):
+        for (n, k, g, h) in obst:
+            if n == net:
+                continue
+            if k == "r":
+                d = _d_seg_rect(a, c, g)
+            elif k == "c":
+                d = _d_pt_seg(g, a, c) - h
+            else:
+                d = _d_seg_seg(a, c, g[0], g[1]) - h
+            if d < hw + clr:
+                return False
+        return True
+
+    n_full = n_part = 0
+    for t in tr:
+        net = t.GetNetname(); a, c = T(t.GetStart()), T(t.GetEnd())
+        if pcbnew.ToMM(t.GetWidth()) >= RF_FAT - 1e-3:
+            continue
+        L = ((c[0] - a[0]) ** 2 + (c[1] - a[1]) ** 2) ** 0.5
+        if L < 2 * end + 0.3:
+            pieces = [(a, c)]
+        else:          # pin escapes stay thin where they must, the middle goes wide
+            u = ((c[0] - a[0]) / L, (c[1] - a[1]) / L)
+            p1 = (a[0] + u[0] * end, a[1] + u[1] * end); p2 = (c[0] - u[0] * end, c[1] - u[1] * end)
+            pieces = [(a, p1), (p1, p2), (p2, c)]
+        fat = [ok(net, x, y, RF_FAT / 2) for x, y in pieces]
+        if not any(fat):
+            continue
+        for (x, y), f in zip(pieces, fat):
+            if f:
+                obst.append((net, "s", (x, y), RF_FAT / 2))     # other RF nets see the new copper
+        if all(fat) or len(pieces) == 1:
+            t.SetWidth(pcbnew.FromMM(RF_FAT)); n_full += 1
+            continue
+        lay = t.GetLayer(); w0 = t.GetWidth(); ni = t.GetNet()
+        b.Remove(t)
+        for (x, y), f in zip(pieces, fat):
+            s = pcbnew.PCB_TRACK(b)
+            s.SetStart(pcbnew.VECTOR2I(pcbnew.FromMM(x[0]), pcbnew.FromMM(x[1])))
+            s.SetEnd(pcbnew.VECTOR2I(pcbnew.FromMM(y[0]), pcbnew.FromMM(y[1])))
+            s.SetWidth(pcbnew.FromMM(RF_FAT) if f else w0); s.SetLayer(lay); s.SetNet(ni); b.Add(s)
+        n_part += 1
+    return f"{n_full} segments full width, {n_part} with thin ends"
 
 
 if __name__ == "__main__":
