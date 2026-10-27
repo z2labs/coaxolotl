@@ -546,8 +546,8 @@ def sheet_rf_fe(lib) -> DSheet:
     s.add(Part("J2", "Connector:Conn_Coaxial", "SMA/EDGE(ANT)", 25.4, y0, 0,
                "Connector_Coaxial:SMA_Amphenol_132289_EdgeMount", {"1": "ANT", "2": "GND"},
                {"Place": "edge"}, mirror=True, txt=(25.4, 66.04, None)))
-    s.add(Part("GDT1", "Device:GDT_2Pin", "GDT/90V", 40.64, 82.55, 0, "coaxolotl:GDT_SMD_VERIFY",
-               {"3": "ANT", "1": "GND"}, {"MPN": "2027-09-SM-RPLF", "Place": "J2, shortest GND"},
+    s.add(Part("GDT1", "Device:GDT_2Pin", "4532-090V(1812)", 40.64, 82.55, 0, "coaxolotl:GDT_SMD_1812",
+               {"3": "ANT", "1": "GND"}, {"MPN": "4532-090V", "LCSC": "C476204", "Note": "90 V, 0.5 pF", "Place": "J2, shortest GND"},
                txt=(40.64, 96.52, None)))
     s.add(Part("D6", "Diode:BAV99", "BAV99W(SOT323)", 58.42, 82.55, 180, "Package_TO_SOT_SMD:SOT-323_SC-70",
                {"3": "ANT", "1": "GND", "2": "GND"}, {"Note": "clamp +-0.7 V, ~1.5 pF"}, txt=(58.42, 96.52, None)))

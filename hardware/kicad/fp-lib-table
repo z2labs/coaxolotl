@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "coaxolotl")(type "KiCad")(uri "${KIPRJMOD}/coaxolotl.pretty")(options "")(descr "Coaxolotl project footprints"))
+)
