@@ -1,0 +1,82 @@
+[
+ {
+  "branch": "F0",
+  "band_mhz": [
+   0.02,
+   2000.0
+  ],
+  "il_max_db": 0.0,
+  "il_min_db": 0.0,
+  "rl_min_db": 100.0
+ },
+ {
+  "branch": "F1",
+  "band_mhz": [
+   0.02,
+   0.55
+  ],
+  "il_max_db": 0.07,
+  "il_min_db": 0.0,
+  "rl_min_db": 17.8
+ },
+ {
+  "branch": "F2",
+  "band_mhz": [
+   1.6,
+   4.0
+  ],
+  "il_max_db": 0.27,
+  "il_min_db": 0.12,
+  "rl_min_db": 12.2
+ },
+ {
+  "branch": "F3",
+  "band_mhz": [
+   4.0,
+   12.0
+  ],
+  "il_max_db": 0.25,
+  "il_min_db": 0.01,
+  "rl_min_db": 12.6
+ },
+ {
+  "branch": "F4",
+  "band_mhz": [
+   12.0,
+   30.0
+  ],
+  "il_max_db": 0.2,
+  "il_min_db": 0.01,
+  "rl_min_db": 13.5
+ },
+ {
+  "branch": "F5",
+  "band_mhz": [
+   30.0,
+   80.0
+  ],
+  "il_max_db": 0.46,
+  "il_min_db": 0.0,
+  "rl_min_db": 10.0
+ },
+ {
+  "branch": "F6",
+  "band_mhz": [
+   108.0,
+   174.0
+  ],
+  "il_max_db": 0.12,
+  "il_min_db": 0.0,
+  "rl_min_db": 15.6
+ },
+ {
+  "branch": "F7",
+  "band_mhz": [
+   380.0,
+   2000.0
+  ],
+  "il_max_db": 0.1,
+  "il_min_db": 0.0,
+  "rl_min_db": 16.5
+ }
+]
