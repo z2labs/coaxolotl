@@ -123,7 +123,8 @@
   "construction": "wire-wound, ferrite core, 0603 (LQW18CA = audio-line choke series)",
   "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18ca-00-s-v45.ashx?la=en&cvid=20260803054048000000",
   "datasheet_url": "https://fi.farnell.com/en-FI/murata/lqw18car33j00d/inductor-330nh-970mhz-0603/dp/3639612",
-  "notes": "LQW18CA_00 is marketed as an audio-line choke: Murata specifies NO Q (series datasheet sister part LQW18CAR12J00 lists L@10 MHz, no Q). Values from Farnell parametric page; maker PDF (farnell.com/datasheets/3177795.pdf) not fetchable here. Ferrite core -> expect lower Q than LQW18AN; use the s2p. Branch F4."
+  "notes": "LQW18CA_00 is marketed as an audio-line choke: Murata specifies NO Q (series datasheet sister part LQW18CAR12J00 lists L@10 MHz, no Q). Values from Farnell parametric page; maker PDF (farnell.com/datasheets/3177795.pdf) not fetchable here. Ferrite core -> expect lower Q than LQW18AN; use the s2p. Branch F4.",
+  "s2p": "s2p/LQW18CAR33J00.s2p"
  },
  {
   "value": "220nH/5%",
@@ -189,7 +190,8 @@
   "construction": "wire-wound, non-magnetic (ceramic) core, 0603",
   "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-00-s-v45.ashx?la=en&cvid=20260803054047000000",
   "datasheet_url": "https://cdn.eicom.ru/media/PDF/1443725.pdf",
-  "notes": "MPN suffix G = +/-2%. L test 100 MHz. Murata ref spec JELF243A_0024. No Q-vs-f curve in spec; use s2p. Branch F5."
+  "notes": "MPN suffix G = +/-2%. L test 100 MHz. Murata ref spec JELF243A_0024. No Q-vs-f curve in spec; use s2p. Branch F5.",
+  "s2p": "s2p/LQW18ANR15G00.s2p"
  },
  {
   "value": "56nH/2%",
@@ -222,7 +224,8 @@
   "construction": "wire-wound, non-magnetic (ceramic) core, 0603 (_80 = low-Rdc/high-current variant)",
   "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-80-s-v45.ashx?la=en&cvid=20260803054048000000",
   "datasheet_url": "https://pim.murata.com/asset/pim4/inductor/JELF243A-0102_PDF_INDUCTOR",
-  "notes": "L test 100 MHz. Rated current at 40 C rise. Branch F6 (100-185 MHz)."
+  "notes": "L test 100 MHz. Rated current at 40 C rise. Branch F6 (100-185 MHz).",
+  "s2p": "s2p/LQW18AN56NG80.s2p"
  },
  {
   "value": "15nH/5%",
@@ -303,7 +306,8 @@
   "construction": "wire-wound, non-magnetic (ceramic) core, 0603",
   "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-00-s-v45.ashx?la=en&cvid=20260803054047000000",
   "datasheet_url": "https://cdn.eicom.ru/media/PDF/1443725.pdf",
-  "notes": "L test 100 MHz. Not a filter-branch ref."
+  "notes": "L test 100 MHz. Not a filter-branch ref.",
+  "s2p": "s2p/LQW18ANR10J00.s2p"
  },
  {
   "value": "18nH/2%",
@@ -336,7 +340,8 @@
   "construction": "wire-wound, non-magnetic (ceramic) core, 0603",
   "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-00-s-v45.ashx?la=en&cvid=20260803054047000000",
   "datasheet_url": "https://cdn.eicom.ru/media/PDF/1443725.pdf",
-  "notes": "L test 100 MHz. Not a filter-branch ref."
+  "notes": "L test 100 MHz. Not a filter-branch ref.",
+  "s2p": "s2p/LQW18AN18NG00.s2p"
  },
  {
   "value": "560nH/5% 0603",
@@ -363,7 +368,8 @@
   "construction": "wire-wound, ferrite core, 0603 (choke series)",
   "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18cn-00-s-v45.ashx?la=en&cvid=20260803054048000000",
   "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2004021732_Murata-Electronics-LQW18CNR16J00D_C437367.pdf",
-  "notes": "L test 10 MHz. LQW18CN_00 spec has no Q spec. Not a filter-branch ref."
+  "notes": "L test 10 MHz. LQW18CN_00 spec has no Q spec. Not a filter-branch ref.",
+  "s2p": "s2p/LQW18CNR56J00.s2p"
  },
  {
   "value": "10uH/0.45A(1210)",

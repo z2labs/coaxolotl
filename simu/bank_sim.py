@@ -120,6 +120,27 @@ def z_part(kind, val, m, f, ideal=False):
     return zl
 
 
+_S2P = {}
+
+
+def z_s2p(path, f, m):
+    """series impedance from a maker's series-mode Touchstone file; below its first point the part is
+    extrapolated as L (from that point) + R ~ sqrt(f), not below the DC resistance"""
+    if path not in _S2P:
+        nt = rf.Network(os.path.join(HERE, "models", path))
+        s21 = nt.s[:, 1, 0]
+        _S2P[path] = (nt.f, 2 * Z0 * (1 - s21) / s21)
+    fm, zm = _S2P[path]
+    zr = np.interp(f, fm, zm.real); zi = np.interp(f, fm, zm.imag)
+    lo = f < fm[0]
+    if lo.any():
+        l0 = zm[0].imag / (2 * np.pi * fm[0])
+        rdc = ((m.get("rdc_ohm") or {}).get("typ") or (m.get("rdc_ohm") or {}).get("max") or 0.0) * 0.7
+        zr = np.where(lo, np.maximum(zm[0].real * np.sqrt(f / fm[0]), rdc), zr)
+        zi = np.where(lo, 2 * np.pi * f * l0, zi)
+    return zr + 1j * zi
+
+
 def series_ntwk(z, freq, name):
     s = np.zeros((len(freq.f), 2, 2), dtype=complex)
     s[:, 0, 0] = s[:, 1, 1] = z / (z + 2 * Z0)
@@ -157,9 +178,8 @@ def build(k, comps, pins, by_ref, models, freq, ideal=False, vals=None, scale=No
         kind = "R" if r.startswith("R") else r[0]
         mpn = by_ref.get(r, {}).get("mpn", "")
         m = (models.get(mpn) if mpn else None) or models.get(comps[r]["value"]) or {}
-        if not ideal and m.get("s2p") and not (vals and r in vals) and not scale:
-            nt = rf.Network(os.path.join(HERE, "models", m["s2p"])).interpolate(freq, kind="cubic")
-            nt.name = r
+        if not ideal and m.get("s2p") and not (vals and r in vals):
+            nt = series_ntwk(z_s2p(m["s2p"], freq.f, m) * (scale.get(r, 1.0) if scale else 1.0), freq, r)
         else:
             nt = series_ntwk(z_part(kind, v, m, freq.f, ideal), freq, r)
         for p, n in sorted(pins[r].items()):

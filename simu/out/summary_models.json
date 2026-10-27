@@ -45,9 +45,9 @@
    12.0,
    30.0
   ],
-  "il_max_db": 1.9,
-  "il_min_db": 0.87,
-  "rl_min_db": 14.7
+  "il_max_db": 2.71,
+  "il_min_db": 2.0,
+  "rl_min_db": 14.1
  },
  {
   "branch": "F5",
@@ -55,9 +55,9 @@
    30.0,
    80.0
   ],
-  "il_max_db": 2.59,
-  "il_min_db": 1.24,
-  "rl_min_db": 11.4
+  "il_max_db": 2.24,
+  "il_min_db": 1.1,
+  "rl_min_db": 11.7
  },
  {
   "branch": "F6",
@@ -65,9 +65,9 @@
    108.0,
    174.0
   ],
-  "il_max_db": 1.32,
-  "il_min_db": 0.94,
-  "rl_min_db": 16.7
+  "il_max_db": 1.03,
+  "il_min_db": 0.72,
+  "rl_min_db": 16.6
  },
  {
   "branch": "F7",
