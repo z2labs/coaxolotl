@@ -1176,7 +1176,9 @@ def write_project(root):
             "classes": [cls("Default", 0.2), cls("POWER", 0.4)],
             "meta": {"version": 3},
             "netclass_patterns": [{"netclass": "POWER", "pattern": p} for p in
-                                  RAILS + ["LNA_SW", "+3V3", "HU_FAST", "SC_CHG", "VSCAP"]],
+                                  RAILS + ["LNA_SW", "?3V3", "HU_FAST", "SC_CHG", "VSCAP"]],
+            # "?3V3", not "+3V3": a leading "+" is not a valid regular expression, and tools that try a pattern
+            # as a regex when it has no wildcard (srouter via_rescue) stop on it
         },
     }
     (OUT / f"{PROJECT}.kicad_pro").write_text(json.dumps(pro, indent=2) + "\n")
