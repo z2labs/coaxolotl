@@ -30,7 +30,7 @@ assert RF and POWER, "net classes missing in coaxolotl.kicad_pro: run pcb_build.
 RF_W, RF_CLR = 0.25, 0.2       # routed at the QFN pin width, widened to RF_FAT afterwards
 RF_FAT = 0.35                  # 50 ohm CPWG on JLC04161H-7628 (0.21 mm to In1) with the 0.25 mm pour gap
 PWR_W = 0.4
-VIA_PAD_INSET = -0.12          # keep-out = pad grown by 0.12 mm: the via ring ends >= 0.15 mm off the pad (JLC DFM)
+VIA_PAD_INSET = -0.05          # keep-out = pad grown by 0.05 mm: the via ring ends ~0.1 mm off the pad (JLC DFM)
 
 
 def pad_min():

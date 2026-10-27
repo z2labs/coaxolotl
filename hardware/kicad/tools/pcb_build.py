@@ -24,8 +24,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PRJ = os.path.normpath(os.path.join(HERE, ".."))
 FPDIR = os.environ.get("KICAD_FP", r"C:\Program Files\KiCad\10.0\share\kicad\footprints")
 OX, OY = 50.0, 40.0          # board origin on the KiCad page
-W, H = 100.0, 102.0
-STRIP_Y1, SLOT_Y0, SLOT_Y1 = 30.0, 30.0, 32.0
+W, H = 100.0, 104.0
+STRIP_Y1, SLOT_Y0, SLOT_Y1 = 32.0, 32.0, 34.0   # 2 mm under the registers for the lamp bus
 SLOT_X0, SLOT_X1 = 5.0, 79.0  # slot centre-line ends (radius 1 mm)
 YC = 64.0                    # RF axis
 EDGE = 0.8                   # parts keep this far from the board edge
@@ -483,12 +483,12 @@ for x, u in zip(REG_X, REG_ORDER):
     put(f"RN{1 + 2 * k}", x - 2.0, 19.4, orient(f"RN{1 + 2 * k}", {p: UP for p in "5678"}))
     put(f"RN{2 + 2 * k}", x + 2.0, 19.4, orient(f"RN{2 + 2 * k}", {p: UP for p in "5678"}))
 rot_hdr = orient("J5", {"7": RIGHT})
-put("J5", 82.55, 27.0, rot_hdr)
-put("J4", 82.55, 35.0, rot_hdr)
-BLOCK.append((80.5, 26.0, 99.5, 36.0))                 # the J5 -> J4 link traces
+put("J5", 82.55, 29.0, rot_hdr)
+put("J4", 82.55, 37.0, rot_hdr)
+BLOCK.append((80.5, 28.0, 99.5, 38.0))                 # the J5 -> J4 link traces
 
 # ------------------------------------------------------------ 4) holes: mounting + mouse bites
-HOLES = [(3.5, 35.5), (3.5, 98.5), (96.5, 98.5), (96.5, 41.0)]
+HOLES = [(3.5, 37.5), (3.5, 100.5), (96.5, 100.5), (96.5, 43.0)]
 for i, (x, y) in enumerate(HOLES):
     fp = load_fp("MountingHole:MountingHole_3.2mm_M3")
     fp.SetReference(f"H{i + 1}"); fp.SetPosition(P(x, y)); fp.SetBoardOnly(True)
