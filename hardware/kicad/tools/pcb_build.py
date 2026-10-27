@@ -456,7 +456,7 @@ lay(chain(pinnet[("U11", "22")], pinnet[("J3", "1")], bk), [(u11c[0] + 1.0, YC),
     lambda d: (0, 1), name="OUT")
 
 # ------------------------------------------------------------ 3) lamp strip
-LAMP_X0, LAMP_DX = 4.0, 3.2
+LAMP_X0, LAMP_DX = 5.0, 3.2
 ROW_Y = (8.0, 16.0)
 NAMES = ["THRU", "LF", "160/80", "60-30", "20-10", "6/4m", "2m/AIR", "70/23",
          "SYNC", "SYNC", "SYNC", "B2", "B1", "B0", "LNA", "QUIET", "CLR", "CHK", "CHK", "CHK", "CHK", "CHK", "CHK", "RX",
