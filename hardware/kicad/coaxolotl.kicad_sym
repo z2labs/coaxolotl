@@ -2039,7 +2039,7 @@
         )
       )
     )
-    (property "Footprint" "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm"
+    (property "Footprint" "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.6mm"
       (at 0 0 0)
       (effects
         (font
@@ -2048,7 +2048,7 @@
         hide
       )
     )
-    (property "Datasheet" "https://www.qorvo.com/products/p/QPL9547"
+    (property "Datasheet" "https://www.lcsc.com/datasheet/C5367093.pdf"
       (at 0 0 0)
       (effects
         (font

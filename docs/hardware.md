@@ -203,7 +203,7 @@ firmware runs.
 
 ## Open items before layout
 
-1. PE42522 custom footprint (LGA-29); QPL9547 footprint; filter LC networks F1–F7.
+1. PE42522 custom footprint (LGA-29); QPL9547 VDD choke above 400 MHz (560 nH 0603 is past its SRF: consider 18 nH at the pin + 560 nH); filter LC networks F1–F7.
 2. TPS2553 ILIM resistor. Allowed range 15–232 kΩ, and ILIM tied to IN gives
    75 mA typical, which is too low. R5 = 150 kΩ is a placeholder: read IOS(min)
    > 130 mA off Eq. 1 / Fig. 22 in the PDF. FAULT deglitch is 8 ms.

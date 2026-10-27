@@ -89,5 +89,5 @@ U6 U7,2,PE42520C-Z(QFN16),QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm,,,RF front end,
 U8 U11,2,PE42582A(QFN24),QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm,,,Filter bank,
 U9 U10,2,NA(PE42520C-Z),QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm,,DNP,RF front end,
 U12,1,LFCN-2250+(FV1206),MiniCircuits_FV1206,,,RF front end,
-U13,1,QPL9547TR7(DFN8-2x2),Qorvo_DFN-8-1EP_2x2mm_P0.5mm,,,RF front end,
+U13,1,QPL9547TR7(DFN8-2x2),DFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.6mm,,,RF front end,U13: EP: 0.25 mm vias under the paddle (datasheet p.8)
 U14 U15 U16 U17 U18 U19,6,74HC595PW(TSSOP16),TSSOP-16_4.4x5mm_P0.65mm,,,Panel,

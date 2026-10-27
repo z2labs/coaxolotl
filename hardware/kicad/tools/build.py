@@ -188,8 +188,8 @@ def build_library(path: pathlib.Path):
             left=[("1", "IN")], right=[("3", "OUT")], bottom_pins=[("2,4", "GND")],
             pin_types={"1": "passive", "3": "passive", "2,4": "power_in"}),
         ic_symbol(
-            "QPL9547", "U", "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm",
-            "https://www.qorvo.com/products/p/QPL9547",
+            "QPL9547", "U", "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.6mm",
+            "https://www.lcsc.com/datasheet/C5367093.pdf",
             "Qorvo 0.1-6 GHz ultra-low-noise LNA, 3.3-5 V, DFN-8 2x2. VDD through RF_OUT; "
             "NC pins 4, 5, 8 grounded (stacked on GND, as on SWL434), pin 3 open",
             left=[("2", "RF_IN"), None, None, None, ("6", "SHDN")], right=[("7", "RF_OUT")], width=20.32,
@@ -620,9 +620,11 @@ def sheet_rf_fe(lib) -> DSheet:
     s.add(C("C28", "1nF/50V/C0G", 309.88, yl, "FMN_OUT", "LNA_RFIN", rot=90, txt=(309.88, yl - 6.35, None)))
     s.w(s.pt("R22", "2"), s.pt("C28", "1"))
     s.add(Part("U13", "coaxolotl:QPL9547", "QPL9547TR7(DFN8-2x2)", 327.66, yl + 5.08, 0,
-               "coaxolotl:Qorvo_DFN-8-1EP_2x2mm_P0.5mm",
+               "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.6mm",
                {"2": "LNA_RFIN", "7": "LNA_RFOUT", "1": "LNA_VBIAS", "6": "GND",
-                **{n: "GND" for n in ("9", "4", "5", "8")}}, txt=(331.47, 139.7)))
+                **{n: "GND" for n in ("9", "4", "5", "8")}},
+               {"LCSC": "C5367093", "Note": "EP: 0.25 mm vias under the paddle (datasheet p.8)"},
+               txt=(331.47, 139.7)))
     s.w(s.pt("C28", "2"), s.pt("U13", "2"))
     s.gnd("U13", "9")
     s.gnd("U13", "6")
