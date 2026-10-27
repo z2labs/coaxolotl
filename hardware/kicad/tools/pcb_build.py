@@ -646,6 +646,21 @@ for ref, fp in fps.items():
             add_track(q, (tx, ty), 0.15)
 print("exposed-pad vias:", nep)
 
+# pins walled in by RF risers: U11 pin 1 (LS = VDD) sits between the RF2 riser and the RF1 riser round the corner.
+# A via straight out of the pin, shifted away from the RF neighbour, lets +3V3 come in from In2/B.Cu.
+for ref, pin, nb in (("U11", "1", "2"),):
+    q, r_ = padpos[(ref, pin)], padpos[(ref, nb)]
+    c = where[ref][:2]
+    n = (q[0] - c[0], q[1] - c[1])
+    n = (1.0, 0.0) if abs(n[0]) > abs(n[1]) else (0.0, 1.0)
+    n = (n[0] * (1 if q[0] > c[0] else -1), n[1] * (1 if q[1] > c[1] else -1))
+    lat = (q[0] - r_[0], q[1] - r_[1]); L = math.hypot(*lat); lat = (lat[0] / L, lat[1] / L)
+    v = (q[0] + n[0] * 1.15 + lat[0] * 0.45, q[1] + n[1] * 1.15 + lat[1] * 0.45)
+    add_track(q, (q[0] + n[0] * 0.55, q[1] + n[1] * 0.55), 0.25, pinnet[(ref, pin)])
+    add_track((q[0] + n[0] * 0.55, q[1] + n[1] * 0.55), v, 0.25, pinnet[(ref, pin)])
+    add_via(*v, net=pinnet[(ref, pin)], d=0.45, h=0.2)
+    print(f"escape via {ref}.{pin} at {v[0]:.2f}, {v[1]:.2f}")
+
 
 def via_ok(x, y, rv, ref, own=None, clr=0.25):
     if x < 0.6 or y < 0.6 or x > W - 0.6 or y > H - 0.6 or SLOT_Y0 - 0.6 < y < SLOT_Y1 + 0.6:
