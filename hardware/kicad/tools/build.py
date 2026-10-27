@@ -172,6 +172,17 @@ def build_library(path: pathlib.Path):
             pin_types={"8": "power_in", "3,5,14,16,18,20,21,23,25": "power_in", "9": "input", "10": "input",
                        "11": "input", "12": "input", "1": "input", "7": "passive"}),
         ic_symbol(
+            "PE42582R", "U", "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm",
+            "https://www.lcsc.com/datasheet/C500479.pdf",
+            "PE42582 drawn for LS = 1 (tied to VDD): code c selects RF(9 - port_LS0(c)), i.e. the mirror port of a "
+            "LS = 0 switch, so two facing switches pair up without crossings. RF ports listed RF8 .. RF1",
+            left=[("22", "RFC"), None, ("9", "V1"), ("10", "V2"), ("11", "V3"), ("12", "V4"), None, ("7", "VSS_EXT")],
+            right=[("19", "RF8"), ("17", "RF7"), ("15", "RF6"), ("13", "RF5"), ("6", "RF4"), ("4", "RF3"),
+                   ("2", "RF2"), ("24", "RF1")],
+            width=20.32, top_pins=[("8", "VDD"), ("1", "LS")], bottom_pins=[("3,5,14,16,18,20,21,23,25", "GND")],
+            pin_types={"8": "power_in", "3,5,14,16,18,20,21,23,25": "power_in", "9": "input", "10": "input",
+                       "11": "input", "12": "input", "1": "input", "7": "passive"}),
+        ic_symbol(
             "PE42520", "U", "Package_DFN_QFN:QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
             "https://www.lcsc.com/datasheet/C500478.pdf",
             "SPDT absorptive 9 kHz-13 GHz, 2.3-5.5 V, RF ports at 0 VDC. LS=1: CTRL=0 RFC-RF1, CTRL=1 RFC-RF2 "
@@ -749,11 +760,13 @@ def sheet_bank(lib) -> DSheet:
     xu8, xu11 = 40.64, 289.56
     yu = ROW0 + 8.89
     s.frame(12.7, 30.48, 299.72, 222.25, "Filter bank")
+    # U8: LS = 0, branch k on RF(k+1). U11: LS = 1, branch k on RF(8-k) (the mirror port): planar bank.
     for ref, x, mir, com in (("U8", xu8, False, "RF_BANK"), ("U11", xu11, True, "RF_COAX_SW")):
-        nets = {"22": com, "9": "SW_V1", "10": "SW_V2", "11": "SW_V3", "12": "GND", "1": "GND", "7": "GND",
-                "8": "+3V3", **{n: "GND" for n in PE42582_GND}}
-        nets.update({p: f"{ref}_RF{k + 1}" for k, p in enumerate(rfp)})
-        s.add(Part(ref, "coaxolotl:PE42582", "PE42582A(QFN24)", x, yu, 0,
+        u11 = ref == "U11"
+        nets = {"22": com, "9": "SW_V1", "10": "SW_V2", "11": "SW_V3", "12": "GND", "1": "+3V3" if u11 else "GND",
+                "7": "GND", "8": "+3V3", **{n: "GND" for n in PE42582_GND}}
+        nets.update({(rfp[7 - k] if u11 else rfp[k]): f"{ref}_RF{(8 - k) if u11 else k + 1}" for k in range(8)})
+        s.add(Part(ref, "coaxolotl:PE42582R" if u11 else "coaxolotl:PE42582", "PE42582A(QFN24)", x, yu, 0,
                    "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm", nets, mirror=mir,
                    txt=(x, yu + 22.86, None)))
     xs, xe = 76.2, 76.2 + 10 * FLT_PITCH
@@ -761,16 +774,17 @@ def sheet_bank(lib) -> DSheet:
         yr = ROW0 + ROW_PITCH * k
         xa = 55.88 + (7 - k) * 2.54
         xb = xe + 2.54 + k * 2.54
-        a, b = f"U8_RF{k + 1}", f"U11_RF{k + 1}"
+        a, b = f"U8_RF{k + 1}", f"U11_RF{8 - k}"
+        q = rfp[7 - k]                                          # U11 pin of this branch
         if k == 0:
             s.add(R("R21", "0R/0603", xs + FLT_PITCH / 2, yr, a, b, rot=90, Note="F0 = straight through",
                     txt=(xs + FLT_PITCH / 2, yr - 6.35, None)))
             s.w(s.pt("U8", p), s.pt("R21", "1"))
-            s.w(s.pt("R21", "2"), s.pt("U11", p))
+            s.w(s.pt("R21", "2"), s.pt("U11", q))
             continue
         s.pw("U8", p, (xa, None), (None, yr), (xs, yr))
         end = _ladder(s, k, xs, yr, a, b)
-        s.w((end, yr), (xb, yr), (xb, s.pt("U11", p)[1]), s.pt("U11", p))
+        s.w((end, yr), (xb, yr), (xb, s.pt("U11", q)[1]), s.pt("U11", q))
         s.ctext(filters.BRANCHES[k][0], xs - 2.54, yr - 15.24, 1.27, left=True)
     for ref, sgn in (("U8", -1), ("U11", 1)):
         x = s.byref[ref].x
@@ -779,23 +793,28 @@ def sheet_bank(lib) -> DSheet:
             end = s.pw(ref, pin, (side + sgn * (12.7 if sgn < 0 else 7.62), None))
             s.hlabel(net, *end, "L" if sgn < 0 else "R", "input")
         tie = side + sgn * 2.54
-        s.pw(ref, "12", (tie, None))
-        s.pw(ref, "1", (tie, None))
-        s.pw(ref, "7", (tie, None))
+        ties = ("12", "7") if ref == "U11" else ("12", "1", "7")
+        for pin in ties:
+            s.pw(ref, pin, (tie, None))
         s.w((tie, s.pt(ref, "12")[1]), (tie, s.pt(ref, "7")[1] + 2.54))
         s.rail("GND", tie, s.pt(ref, "7")[1] + 2.54)
         s.gnd(ref, "3")
-        top = s.pt(ref, "8")[1]
-        s.w(s.pt(ref, "8"), (x, top - 15.24))
-        s.rail("+3V3", x, top - 15.24)
-        cx = x + (7.62 if sgn < 0 else -7.62)
+        vx, top = s.pt(ref, "8")
+        s.w((vx, top), (vx, top - 15.24))
+        s.rail("+3V3", vx, top - 15.24)
+        if ref == "U11":                                       # LS = 1: joins the VDD riser
+            lx, ly = s.pt(ref, "1")
+            s.w((lx, ly), (lx, ly - 5.08), (vx, ly - 5.08))
+        x = vx
+        cx = x + (7.62 if sgn < 0 else -10.16)
         s.w((x, top - 12.7), (cx, top - 12.7))
         s.add(C(f"C{38 if ref == 'U8' else 39}", "100nF/16V/10%", cx, top - 8.89, "+3V3", "GND",
                 Place=f"{ref}.8", txt=(cx + (2.54 if sgn < 0 else -2.54), top - 10.16, "left" if sgn < 0 else "right")))
         s.gnd(f"C{38 if ref == 'U8' else 39}", "2")
     s.pw("U8", "22", (22.86, None))
     s.hlabel("RF_BANK", 22.86, ROW0, "L", "bidirectional")
-    for i, t in enumerate(["Branch k on RFk+1 of both switches. LS = 0 code (V3 V2 V1):",
+    for i, t in enumerate(["Branch k: U8 RF(k+1) (LS = 0), U11 RF(8-k) (LS = 1, mirror port).",
+                           "Same V lines on both. U8 code (V3 V2 V1):",
                            "RF1 000, RF2 100, RF3 010, RF4 110, RF5 001, RF6 101, RF7 011, RF8 111",
                            "(mapped in tools/gen_bandplan.py). V4 = LS = VSS_EXT = GND.",
                            "Filters: 5th-order Chebyshev 0.1 dB, 50 ohm, E12 values,",
