@@ -43,6 +43,9 @@ def main():
     ap.add_argument("--variant", default=None)
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--nf", type=int, default=601)
+    ap.add_argument("--lane-only", action="store_true",
+                    help="only the part pads (window = the lane itself, a fraction of the cells); the switch risers"
+                         " are then left to the circuit model")
     ap.add_argument("--coarse", type=float, default=1.0, help="mesh coarsening (kicad_sim): >1 faster")
     a = ap.parse_args()
     ks._setup_python()
@@ -60,12 +63,14 @@ def main():
         refs = given.get(str(k)) or lane_parts(k)
         assert refs, f"no parts for lane {k}"
         p8, p11 = SWITCH_PINS[k]
-        sel.append((("U8", p8), "switch"))
+        if not a.lane_only:
+            sel.append((("U8", p8), "switch"))
         for r in refs:
             for (rr, pn) in sorted(pads):
                 if rr == r:
                     sel.append(((rr, pn), "part"))
-        sel.append((("U11", p11), "switch"))
+        if not a.lane_only:
+            sel.append((("U11", p11), "switch"))
     pts = [pads[k].pts for k, _ in sel]
     import numpy as np
     allp = np.vstack(pts)
