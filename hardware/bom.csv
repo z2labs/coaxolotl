@@ -1,7 +1,7 @@
 refs,qty,value,footprint,mpn,dnp,sheet,note
 C1 C6 C7 C11 C15 C36 C37 C38 C39,9,100nF/16V/10%,C_0603_1608Metric,,,"Filter bank, MCU, Power, RF front end",
 C2,1,10nF/50V/10%,C_0603_1608Metric,,,MCU,
-C3 C30,2,10uF/10V/20%,C_0805_2012Metric,,,"Power, RF front end",
+C3,1,10uF/10V/20%,C_0805_2012Metric,,,Power,
 C4 C5 C12 C13 C14,5,1uF/16V/10%,C_0603_1608Metric,,,"MCU, Power",
 C8,1,47uF/10V/20%,C_1206_3216Metric,,,Power,
 C9,1,330uF/6.3V/20%,CP_EIA-7343-31_Kemet-D,T520D337M006ATE025,,Power,
@@ -9,9 +9,9 @@ C10,1,0.1F/5.5V,CP_Radial_D13.0mm_P5.00mm,KR-5R5V104-R,,Power,C10: VERIFY footpr
 C24 C26,2,200pF/50V/C0G,C_0603_1608Metric,,,RF front end,
 C25,1,68pF/50V/C0G,C_0603_1608Metric,,,RF front end,
 C27,1,NA(47pF/C0G),C_0603_1608Metric,,DNP,RF front end,
-C28 C31,2,100nF/16V/X7R,C_0603_1608Metric,,,RF front end,
+C28 C31 C34,3,1nF/50V/C0G,C_0603_1608Metric,,,"Filter bank, RF front end",
+C30 C32 C40,3,100pF/C0G,C_0603_1608Metric,,,RF front end,
 C33,1,2.2uF/16V/X7R,C_0805_2012Metric,,,Filter bank,
-C34,1,1nF/50V/C0G,C_0603_1608Metric,,,Filter bank,
 C35,1,22pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
 D1,1,SMF5.0A(SOD123F),D_SOD-123F,,,Power,
 D2,1,LED/GREEN(0603),LED_0603_1608Metric,,,Power,"D2: PWR lamp, works without MCU"
@@ -31,7 +31,7 @@ J2,1,SMA/EDGE(ANT),SMA_Amphenol_132289_EdgeMount,,,RF front end,
 J3,1,SMA/EDGE(RTL-SDR),SMA_Amphenol_132289_EdgeMount,,,Filter bank,
 L1 L2,2,220nH/5%,L_0603_1608Metric,,,RF front end,
 L3,1,NA(56nH/2%),L_0603_1608Metric,,DNP,RF front end,
-L4,1,1uH/BROADBAND,L_0805_2012Metric,,,RF front end,L4: VERIFY SRF > 2 GHz or conical
+L4,1,560nH/5%,L_0603_1608Metric,,,RF front end,
 L5,1,100nH/0603,L_0603_1608Metric,,,Filter bank,
 L6,1,10uH/0805,L_0805_2012Metric,,,Filter bank,
 L7,1,1mH/0.2A,L_Bourns_SRR1260,SRR1260-102M,,Filter bank,
@@ -46,8 +46,9 @@ R8,1,1k/1%,R_0603_1608Metric,,,MCU,
 R9,1,100R/5%,R_0603_1608Metric,,,Power,
 R10 R24,2,220R/5%,R_0603_1608Metric,,,"Filter bank, Power",R24: damps the L6 self-resonance
 R11 R12,2,1M/1%,R_0603_1608Metric,,,Power,
-R13 R14 R15 R16 R17 R18 R19 R20 R26,9,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write; R26: SHDN low = on (VERIFY polarity)
-R21 R22 R25,3,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted; R25: Rbias: sets IDD (65 mA default)
+R13 R14 R15 R16 R17 R18 R19 R20,8,10k/5%,R_0603_1608Metric,,,"Filter bank, MCU, Panel, Power, RF front end",R14: LNA off while MCU in reset; R15: bypass while MCU in reset; R16: F0 THRU while MCU in reset; R17: F0 THRU while MCU in reset; R18: F0 THRU while MCU in reset; R19: notch out while MCU in reset; R20: lamps dark until first write
+R21 R22,2,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted
+R25,1,3k32/1%,R_0603_1608Metric,,,RF front end,R25: sets IDD (SWL434: 3k32 @ 5 V)
 TP1,1,TP/TX,TestPoint_Pad_D1.0mm,,,MCU,
 TP6,1,TP/SENSE,TestPoint_Pad_D1.0mm,,,MCU,
 U1,1,LM66100DCKR(SC70-6),SOT-363_SC-70-6,,,Power,
@@ -59,4 +60,4 @@ U6 U7,2,PE42522B(LGA29),PE42522_LGA-29_4x4mm,,,RF front end,
 U8 U11,2,PE42582A(QFN24),QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm,,,Filter bank,
 U9 U10,2,NA(PE42522B),PE42522_LGA-29_4x4mm,,DNP,RF front end,
 U12,1,LFCN-2250+(FV1206),MiniCircuits_FV1206,,,RF front end,
-U13,1,QPL9547TR7(DFN8-2x2),Qorvo_DFN-8-1EP_2x2mm_P0.5mm,,,RF front end,U13: VERIFY Rbias / SHDN polarity / RF_OUT choke against the datasheet
+U13,1,QPL9547TR7(DFN8-2x2),Qorvo_DFN-8-1EP_2x2mm_P0.5mm,,,RF front end,

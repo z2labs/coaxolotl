@@ -2305,7 +2305,7 @@
         hide
       )
     )
-    (property "Description" "Qorvo 0.1-6 GHz ultra-low-noise LNA, 3.3-5 V, 65 mA (adjustable), DFN-8 2x2. VDD through RF_OUT; pins 3, 4, 5, 8 NC (no symbol pin)"
+    (property "Description" "Qorvo 0.1-6 GHz ultra-low-noise LNA, 3.3-5 V, DFN-8 2x2. VDD through RF_OUT; NC pins 4, 5, 8 grounded (stacked on GND, as on SWL434), pin 3 open"
       (at 0 0 0)
       (effects
         (font
@@ -2411,6 +2411,63 @@
           )
         )
         (number "9"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin passive line
+        (at 0 -10.16 90)
+        (length 2.54)
+        hide
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "4"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin passive line
+        (at 0 -10.16 90)
+        (length 2.54)
+        hide
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "5"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin passive line
+        (at 0 -10.16 90)
+        (length 2.54)
+        hide
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "8"
           (effects
             (font
               (size 1.27 1.27)

@@ -156,11 +156,16 @@ firmware runs.
   next revision. **VERIFY** the custom LGA-29 footprint against the
   datasheet land pattern.
 * **LNA: Qorvo QPL9547** (0.1–6 GHz, NF 0.3 dB and OIP3 about +39 dBm at
-  1.9 GHz, 3.3–5 V, 65 mA adjustable, DFN-8 2×2 mm). VDD goes in through the
-  RF_OUT choke (L4 1 µH, FB2, C30). R25 sets the bias current at VBIAS, and
-  R26 holds SHDN low. **VERIFY** R25, the SHDN polarity and the choke against
-  the datasheet application circuit. It is specified from 100 MHz, while the
-  LNA branch opens at 25 MHz (HPF); measure the 25–100 MHz gain and match.
+  1.9 GHz, 3.3–5 V, DFN-8 2×2 mm). The stage copies one stage of the SWL434
+  (Spacewalker LNA, 434 MHz):
+  * VBIAS through 3.32 kΩ (R25) from LNA_VCC, with 100 pF at the VCC end;
+  * VDD into RF_OUT through 560 nH (L4), 100 pF to GND, then a ferrite bead
+    (FB2) and another 100 pF;
+  * SHDN and the NC pins 4, 5 and 8 go to GND, pin 3 stays open.
+  * The DC blocks are 1 nF C0G instead of the SWL434's 100 pF, because the
+    branch has to work from 25 MHz (100 pF is 64 Ω there).
+  * **VERIFY** the 25–100 MHz gain and match: the part is specified from
+    100 MHz, and 560 nH is only about 90 Ω at 25 MHz.
 * **The preselector sits only in the LNA branch.** It is an HPF at 25 MHz
   (5–7th order LC) plus an LTCC LPF at about 2.2 GHz, so the HF/LF branches
   stay untouched. Branches F1–F4 force bypass and light **AUTO**. Below
@@ -198,8 +203,7 @@ firmware runs.
 
 ## Open items before layout
 
-1. PE42522 custom footprint (LGA-29); QPL9547 footprint, Rbias (R25), SHDN polarity
-   and RF_OUT choke from the datasheet; filter LC networks F1–F7.
+1. PE42522 custom footprint (LGA-29); QPL9547 footprint; filter LC networks F1–F7.
 2. TPS2553 ILIM resistor. Allowed range 15–232 kΩ, and ILIM tied to IN gives
    75 mA typical, which is too low. R5 = 150 kΩ is a placeholder: read IOS(min)
    > 130 mA off Eq. 1 / Fig. 22 in the PDF. FAULT deglitch is 8 ms.

@@ -1,7 +1,7 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "c2d65c0e-4de9-4e9d-9e07-9d22af32d00d")
+  (uuid "bf81a811-2bb0-4538-9be0-01ef310d4c74")
   (paper "A3")
   (title_block
     (title "Panel")
@@ -285,7 +285,7 @@
     (fill
       (type none)
     )
-    (uuid "bc344f9b-29c2-434d-94e6-312a55f975cc")
+    (uuid "be91e287-a336-447a-84d2-795bd0252cb0")
   )
   (text "Lamp chain inputs"
     (at 26.67 44.45 0)
@@ -298,7 +298,7 @@
       )
       (justify left bottom)
     )
-    (uuid "bbeae321-1e95-49b5-b26d-73692e7a15bd")
+    (uuid "3cb69cf1-e3c5-4a60-9784-6958dd0fd834")
   )
   (hierarchical_label "LED_SER"
     (shape input)
@@ -311,7 +311,7 @@
       )
       (justify right)
     )
-    (uuid "8dbd078d-0984-48b5-89e3-e2fabb06c3ab")
+    (uuid "cc3e6213-a83c-4aaf-8f1a-83433ce72d6d")
   )
   (hierarchical_label "LED_SCK"
     (shape input)
@@ -324,7 +324,7 @@
       )
       (justify right)
     )
-    (uuid "e215ca10-4c85-412f-867c-943728f74557")
+    (uuid "e7247ba7-4726-4c0f-b141-c8dd4a533974")
   )
   (hierarchical_label "LED_RCK"
     (shape input)
@@ -337,7 +337,7 @@
       )
       (justify right)
     )
-    (uuid "ba3c2029-e9c0-4cb7-84ab-b1df646db7df")
+    (uuid "9c903e81-44bf-4a1c-a9cb-57d5378e2545")
   )
   (symbol
     (lib_id "Device:R")
@@ -346,7 +346,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "a9131c6f-1e4f-4ff5-8d46-cd99c1b3f191")
+    (uuid "21bf65fa-12a0-428d-ba52-b786bfc76143")
     (property "Reference" "R20"
       (at 78.74 72.39 0)
       (effects
@@ -408,14 +408,14 @@
       )
     )
     (pin "1"
-      (uuid "2e6daf1e-ab96-48b7-9f00-51f004105d51")
+      (uuid "a45f1f80-45c8-4e61-b91b-0321355c3414")
     )
     (pin "2"
-      (uuid "b9201533-05db-4c25-9f9e-6a160cebc4ef")
+      (uuid "961a2bac-2545-4b60-a745-84031e981aee")
     )
     (instances
       (project "coaxolotl"
-        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/02428aa8-a1c8-4140-a619-fd4410a29de9"
+        (path "/99f24526-8e0f-43fa-a1a3-071130eb6988/ba65d491-0acc-417b-9482-170ad8356d1b"
           (reference "R20")
           (unit 1)
         )
@@ -433,7 +433,7 @@
       )
       (justify right)
     )
-    (uuid "40ad3f47-4619-4329-936c-748bab1cc2ad")
+    (uuid "5d759245-8703-4e87-ad23-43eb6624a13e")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -442,7 +442,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "eabf662c-4ae0-4b40-a630-fe55c177efea")
+    (uuid "17a025bf-1968-471c-96c7-5972d72b896f")
     (property "Reference" "#PWR001"
       (at 80.01 69.85 0)
       (effects
@@ -483,11 +483,11 @@
       )
     )
     (pin "1"
-      (uuid "3feb3f57-6129-44d1-9ea2-1d7ab580730f")
+      (uuid "1e400de8-1007-493b-88aa-064992891f6d")
     )
     (instances
       (project "coaxolotl"
-        (path "/537fb7bf-acab-43d0-bff7-5de850ba4b04/02428aa8-a1c8-4140-a619-fd4410a29de9"
+        (path "/99f24526-8e0f-43fa-a1a3-071130eb6988/ba65d491-0acc-417b-9482-170ad8356d1b"
           (reference "#PWR001")
           (unit 1)
         )
@@ -505,7 +505,7 @@
       )
       (justify left bottom)
     )
-    (uuid "c1e97d59-b00e-4f18-b6f1-f4505d16de4a")
+    (uuid "a141d9c5-61a8-4917-85df-6525bbd434a6")
   )
   (wire
     (pts
@@ -516,7 +516,7 @@
       (width 0)
       (type default)
     )
-    (uuid "3112a16a-6f32-420b-a7ee-17b4a414a5e3")
+    (uuid "0f3a80fa-239f-4e8d-a872-716231267084")
   )
   (wire
     (pts
@@ -527,6 +527,6 @@
       (width 0)
       (type default)
     )
-    (uuid "53b798f2-298d-4663-8847-aed4e94bcbdf")
+    (uuid "abf8a793-f109-45ba-ab85-aa19805871e7")
   )
 )
