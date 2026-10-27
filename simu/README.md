@@ -26,6 +26,7 @@ Output in `simu/out/`: `bank*.png` (S21/S11 of all branches, band shaded), `summ
 | step | state |
 |---|---|
 | netlist -> branch circuits, ideal check | done |
-| part models (datasheet RLC, vendor s2p) | in progress: `models/parts.json` |
+| part models from datasheets (`models/parts.json`, Q min, SRF min: pessimistic) | done, first run `out/bank_models.png` |
+| vendor s2p (Murata LQW18/GRM, TDK NLV32 zips) | to do: download on a machine with web access |
 | PE42582 switch S-parameters in the chain | to do (pSemi model) |
 | openEMS layout N-ports F5–F7, THRU | to do (office-z170) |

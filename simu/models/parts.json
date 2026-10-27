@@ -1,0 +1,1658 @@
+[
+ {
+  "value": "18uH/5%",
+  "refs": "L101 L102",
+  "lcsc": "C250177",
+  "mpn": "NLV32T-180J-PF",
+  "maker": "TDK",
+  "kind": "L",
+  "nominal": 1.8e-05,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 2520000.0,
+    "q": 30,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 20000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 3.3,
+   "typ": null
+  },
+  "irated_a": 0.12,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, ferrite core, 1210 (NLV32 series)",
+  "s2p_url": "https://product.tdk.com/system/files/dam/technicalsupport/tvcl/spara/inductor_smd_com_general_nlv32-ef_spara.zip",
+  "datasheet_url": "https://www.arrow.com/en/products/nlv32t-180j-pf/tdk",
+  "notes": "L & Q test 2.52 MHz. Values from Arrow parametric page (TDK maker PDF not reachable here). Arrow lists part as obsolete. TDK S-param library lists only NLV32-EF (not -PF); EF zip given as nearest \u2014 verify 180J inside and that EF matches PF electrically. Branch F1 (<0.6 MHz)."
+ },
+ {
+  "value": "820nH/5%",
+  "refs": "L303 L304",
+  "lcsc": "C280467",
+  "mpn": "CS0805-R82J-S",
+  "maker": "Chilisin",
+  "kind": "L",
+  "nominal": 8.2e-07,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 50000000.0,
+    "q": 23,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 215000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 2.35,
+   "typ": null
+  },
+  "irated_a": 0.18,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound on ceramic core, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://static.chipdip.ru/lib/665/DOC012665502.pdf",
+  "notes": "L test 25 MHz, Q test 50 MHz. Irms = 15 C rise. Chilisin marks CS series as legacy (new designs -> BWCS). No vendor s2p found. Branch F3."
+ },
+ {
+  "value": "560nH/5% 0805",
+  "refs": "L401 L402",
+  "lcsc": "C108274",
+  "mpn": "CS0805-R56J-S",
+  "maker": "Chilisin",
+  "kind": "L",
+  "nominal": 5.6e-07,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 50000000.0,
+    "q": 23,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 340000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 1.9,
+   "typ": null
+  },
+  "irated_a": 0.23,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound on ceramic core, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://static.chipdip.ru/lib/665/DOC012665502.pdf",
+  "notes": "L test 25 MHz, Q test 50 MHz. No vendor s2p found. Branch F4 (11-34 MHz)."
+ },
+ {
+  "value": "330nH/5%",
+  "refs": "L403 L404",
+  "lcsc": "C1330902",
+  "mpn": "LQW18CAR33J00D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 3.3e-07,
+  "tol": 0.05,
+  "q": [],
+  "srf_hz": {
+   "min": 970000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.2,
+   "typ": null
+  },
+  "irated_a": 0.78,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, ferrite core, 0603 (LQW18CA = audio-line choke series)",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18ca-00-s-v45.ashx?la=en&cvid=20260803054048000000",
+  "datasheet_url": "https://fi.farnell.com/en-FI/murata/lqw18car33j00d/inductor-330nh-970mhz-0603/dp/3639612",
+  "notes": "LQW18CA_00 is marketed as an audio-line choke: Murata specifies NO Q (series datasheet sister part LQW18CAR12J00 lists L@10 MHz, no Q). Values from Farnell parametric page; maker PDF (farnell.com/datasheets/3177795.pdf) not fetchable here. Ferrite core -> expect lower Q than LQW18AN; use the s2p. Branch F4."
+ },
+ {
+  "value": "220nH/5%",
+  "refs": "L1 L2 L501 L502",
+  "lcsc": "C280284",
+  "mpn": "CS0603-R22G-S",
+  "maker": "Chilisin",
+  "kind": "L",
+  "nominal": 2.2e-07,
+  "tol": 0.02,
+  "q": [
+   {
+    "f_hz": 100000000.0,
+    "q": 25,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 900000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 2.1,
+   "typ": null
+  },
+  "irated_a": 0.2,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound on ceramic core, 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://static.chipdip.ru/lib/665/DOC012665502.pdf",
+  "notes": "MPN suffix G = +/-2% (CSV says 5%). CS0603 table has one test-freq column (100 MHz) taken as L and Q test freq. No vendor s2p found. L501/L502 = F5 (27-80 MHz); L1/L2 not in a filter branch."
+ },
+ {
+  "value": "150nH/5%",
+  "refs": "L503 L504",
+  "lcsc": "C113131",
+  "mpn": "LQW18ANR15G00D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 1.5e-07,
+  "tol": 0.02,
+  "q": [
+   {
+    "f_hz": 150000000.0,
+    "q": 32,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 1400000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 1.5,
+   "typ": null
+  },
+  "irated_a": 0.16,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, non-magnetic (ceramic) core, 0603",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-00-s-v45.ashx?la=en&cvid=20260803054047000000",
+  "datasheet_url": "https://cdn.eicom.ru/media/PDF/1443725.pdf",
+  "notes": "MPN suffix G = +/-2%. L test 100 MHz. Murata ref spec JELF243A_0024. No Q-vs-f curve in spec; use s2p. Branch F5."
+ },
+ {
+  "value": "56nH/2%",
+  "refs": "L601 L602 L603 L604",
+  "lcsc": "C3223399",
+  "mpn": "LQW18AN56NG80D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 5.6e-08,
+  "tol": 0.02,
+  "q": [
+   {
+    "f_hz": 200000000.0,
+    "q": 38,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 2600000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.26,
+   "typ": null
+  },
+  "irated_a": 0.77,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, non-magnetic (ceramic) core, 0603 (_80 = low-Rdc/high-current variant)",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-80-s-v45.ashx?la=en&cvid=20260803054048000000",
+  "datasheet_url": "https://pim.murata.com/asset/pim4/inductor/JELF243A-0102_PDF_INDUCTOR",
+  "notes": "L test 100 MHz. Rated current at 40 C rise. Branch F6 (100-185 MHz)."
+ },
+ {
+  "value": "15nH/5%",
+  "refs": "L701 L702",
+  "lcsc": "C23651",
+  "mpn": "SDCL1608C15NJTDF",
+  "maker": "Sunlord",
+  "kind": "L",
+  "nominal": 1.5e-08,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 100000000.0,
+    "q": 12,
+    "type": "min"
+   },
+   {
+    "f_hz": 100000000.0,
+    "q": 18,
+    "type": "typ"
+   },
+   {
+    "f_hz": 800000000.0,
+    "q": 48,
+    "type": "typ"
+   },
+   {
+    "f_hz": 1000000000.0,
+    "q": 50,
+    "type": "typ"
+   }
+  ],
+  "srf_hz": {
+   "min": 2300000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.5,
+   "typ": null
+  },
+  "irated_a": 0.3,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ceramic (non-magnetic), 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.sunlordinc.com//uploads/files/20221116/SDCL-D%20Series%20of%20Multilayer%20Chip%20Ceramic%20Inductor.pdf",
+  "notes": "L/Q test 100 MHz. Typical Q points from the datasheet table. No vendor s2p found. Branch F7 (>360 MHz)."
+ },
+ {
+  "value": "100nH/0603",
+  "refs": "L5",
+  "lcsc": "C98089",
+  "mpn": "LQW18ANR10J00D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 1e-07,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 150000000.0,
+    "q": 34,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 1800000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.68,
+   "typ": null
+  },
+  "irated_a": 0.22,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, non-magnetic (ceramic) core, 0603",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-00-s-v45.ashx?la=en&cvid=20260803054047000000",
+  "datasheet_url": "https://cdn.eicom.ru/media/PDF/1443725.pdf",
+  "notes": "L test 100 MHz. Not a filter-branch ref."
+ },
+ {
+  "value": "18nH/2%",
+  "refs": "L8",
+  "lcsc": "C86133",
+  "mpn": "LQW18AN18NG00D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 1.8e-08,
+  "tol": 0.02,
+  "q": [
+   {
+    "f_hz": 250000000.0,
+    "q": 40,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 5500000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.16,
+   "typ": null
+  },
+  "irated_a": 0.55,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, non-magnetic (ceramic) core, 0603",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18an-00-s-v45.ashx?la=en&cvid=20260803054047000000",
+  "datasheet_url": "https://cdn.eicom.ru/media/PDF/1443725.pdf",
+  "notes": "L test 100 MHz. Not a filter-branch ref."
+ },
+ {
+  "value": "560nH/5% 0603",
+  "refs": "L4",
+  "lcsc": "C91630",
+  "mpn": "LQW18CNR56J00D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 5.6e-07,
+  "tol": 0.05,
+  "q": [],
+  "srf_hz": {
+   "min": 540000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.48,
+   "typ": null
+  },
+  "irated_a": 0.45,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, ferrite core, 0603 (choke series)",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/inductor/v45/lqw18cn-00-s-v45.ashx?la=en&cvid=20260803054048000000",
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2004021732_Murata-Electronics-LQW18CNR16J00D_C437367.pdf",
+  "notes": "L test 10 MHz. LQW18CN_00 spec has no Q spec. Not a filter-branch ref."
+ },
+ {
+  "value": "10uH/0.45A(1210)",
+  "refs": "L6",
+  "lcsc": "C86069",
+  "mpn": "LQH32CN100K33L",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 1e-05,
+  "tol": 0.1,
+  "q": [],
+  "srf_hz": {
+   "min": 26000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.39,
+   "typ": 0.3
+  },
+  "irated_a": 0.45,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, ferrite drum core, 1210, unshielded",
+  "s2p_url": null,
+  "datasheet_url": "https://extranet.mandieselturbo.com/electronics/datasheets/muRata/LQxx%20Series/LQH32CN100K33.pdf",
+  "notes": "L test 1 MHz. No Q spec (power-line inductor). SRF listed without min/typ qualifier in the Murata sheet; stored as min. LQH32CN not on Murata's signal-inductor S-param page; no s2p URL found. Not a filter-branch ref."
+ },
+ {
+  "value": "1mH/0.2A",
+  "refs": "L7",
+  "lcsc": "C1329362",
+  "mpn": "SRR1260-102K",
+  "maker": "BOURNS",
+  "kind": "L",
+  "nominal": 0.001,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 252000.0,
+    "q": 30,
+    "type": "typ"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": 1800000.0
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": 1.7
+  },
+  "irated_a": 0.68,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "wire-wound, shielded ferrite drum (DR) + ring (RI) core power inductor",
+  "s2p_url": null,
+  "datasheet_url": "https://static.chipdip.ru/lib/073/DOC012073368.pdf",
+  "notes": "L test 100 kHz. Isat 0.60 A typ. Irms 0.68 A (CSV says 0.2 A). Q/SRF are typ values; column mapping in the extracted PDF was slightly ambiguous. No vendor s2p. Not a filter-branch ref."
+ },
+ {
+  "value": "4.7uH 0805 (candidate)",
+  "refs": "L201 L202",
+  "lcsc": null,
+  "mpn": "LQM21NN4R7K10L",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 4.7e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 45,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 47000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 1.0,
+   "typ": null
+  },
+  "irated_a": 0.03,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://www.komponenten.es.aau.dk/fileadmin/komponenten/Data_Sheet/SMD_Data/Spoler/LQM21N.pdf",
+  "notes": "CANDIDATE. LCSC C113097 exists but showed 0 stock (not available). Second Murata source (cdn.components.ru/1448320.pdf) garbled for 4R7: Q min 30 or 45 uncertain; JLCPCB lists 45@10 MHz. LQM21NN not on Murata S-param page."
+ },
+ {
+  "value": "4.7uH 0805 (candidate)",
+  "refs": "L201 L202",
+  "lcsc": null,
+  "mpn": "SDFL2012Q4R7KTF",
+  "maker": "Sunlord",
+  "kind": "L",
+  "nominal": 4.7e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 45,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 35000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 1.0,
+   "typ": null
+  },
+  "irated_a": 0.03,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://media.digikey.com/pdf/Data%20Sheets/Shenzhen%20Sunlord/SDFL_Series.pdf",
+  "notes": "CANDIDATE. LCSC code/stock NOT verified (an LCSC URL slug C74314 '4.7uH 10%' Sunlord exists but MPN unconfirmed). Alternative: Chilisin CS0805-4R7J-S (wire-wound ceramic, 5%, Q>=15@7.9 MHz, SRF>=40 MHz, Rdc<=6.4 ohm, 90 mA) - higher Rdc."
+ },
+ {
+  "value": "2.2uH 0805 (candidate)",
+  "refs": "L203 L204",
+  "lcsc": "C1043",
+  "mpn": "CMI201209U2R2KT",
+  "maker": "FH (Fenghua)",
+  "kind": "L",
+  "nominal": 2.2e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 35,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 50000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.6,
+   "typ": null
+  },
+  "irated_a": 0.05,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://www.lcsc.com/de/product-detail/C1043.html",
+  "notes": "CANDIDATE, in stock (~47k at LCSC, JLC extended/promotional). Values from LCSC parametric page (FH PDF lcsc.com/datasheet/C1043.pdf not fetchable here); Q type (min/typ) not stated."
+ },
+ {
+  "value": "2.2uH 0805 (candidate)",
+  "refs": "L203 L204",
+  "lcsc": null,
+  "mpn": "LQM21NN2R2K10D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 2.2e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 45,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 71000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.63,
+   "typ": null
+  },
+  "irated_a": 0.03,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://www.komponenten.es.aau.dk/fileadmin/komponenten/Data_Sheet/SMD_Data/Spoler/LQM21N.pdf",
+  "notes": "CANDIDATE. LCSC stock not verified. Rated current 30 mA (aau sheet) vs 50 mA (garbled Murata ref spec)."
+ },
+ {
+  "value": "1.5uH 0805 (candidate)",
+  "refs": "L301 L302",
+  "lcsc": null,
+  "mpn": "LQM21NN1R5K10D",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 1.5e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 45,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 87000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.5,
+   "typ": null
+  },
+  "irated_a": 0.05,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://www.komponenten.es.aau.dk/fileadmin/komponenten/Data_Sheet/SMD_Data/Spoler/LQM21N.pdf",
+  "notes": "CANDIDATE. LCSC stock not verified."
+ },
+ {
+  "value": "1.5uH 0805 (candidate)",
+  "refs": "L301 L302",
+  "lcsc": null,
+  "mpn": "SDFL2012Q1R5KTF",
+  "maker": "Sunlord",
+  "kind": "L",
+  "nominal": 1.5e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 45,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 60000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.5,
+   "typ": null
+  },
+  "irated_a": 0.05,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://media.digikey.com/pdf/Data%20Sheets/Shenzhen%20Sunlord/SDFL_Series.pdf",
+  "notes": "CANDIDATE. LCSC code/stock not verified. P-material variant SDFL2012P1R5KTF has SRF>=80 MHz. Wire-wound alt Murata LQW21HN1R5J00L (Q>=35@100 MHz, SRF>=350 MHz, Rdc<=5.33 ohm) - high Rdc limits Q below ~20 MHz."
+ },
+ {
+  "value": "1.2nF/50V/C0G",
+  "refs": "C202",
+  "lcsc": "C68659",
+  "mpn": "0603CG122J500NT",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 1.2e-09,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "FH general MLCC spec: DF<=0.1% for C>=30 pF, 1.0 Vrms; spec table lists 1 MHz for DF (cap measured at 1 kHz for C>1000 pF - DF test freq for >1 nF ambiguous). No ESR/ESL/SRF published. No vendor s2p."
+ },
+ {
+  "value": "1.5nF/50V/C0G",
+  "refs": "C205",
+  "lcsc": "C162204",
+  "mpn": "GRM1885C1H152JA01D",
+  "maker": "Murata",
+  "kind": "C",
+  "nominal": 1.5000000000000002e-09,
+  "tol": 0.05,
+  "q": [],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/mlcc/v78/grm-s-v78.ashx?la=en-us&cvid=20260803022735000000",
+  "datasheet_url": "https://static.chipdip.ru/lib/282/DOC029282693.pdf",
+  "notes": "Murata product data sheets fetched contain no Q/DF/ESR/ESL values (refer to approval spec). Vendor s2p: whole-GRM zip (95.7 MB); per-part also via SimSurfing."
+ },
+ {
+  "value": "100pF/50V/C0G",
+  "refs": "C404 C406 C501 C503",
+  "lcsc": "C14858",
+  "mpn": "CL10C101JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 1e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "100pF/C0G",
+  "refs": "C30 C32 C40",
+  "lcsc": "C14858",
+  "mpn": "CL10C101JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 1e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "10nF/50V/C0G",
+  "refs": "C102",
+  "lcsc": "C2215227",
+  "mpn": "GRM1885C1H103JA01J",
+  "maker": "Murata",
+  "kind": "C",
+  "nominal": 1e-08,
+  "tol": 0.05,
+  "q": [],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/mlcc/v78/grm-s-v78.ashx?la=en-us&cvid=20260803022735000000",
+  "datasheet_url": "https://static.chipdip.ru/lib/282/DOC029282693.pdf",
+  "notes": "Murata product data sheets fetched contain no Q/DF/ESR/ESL values (refer to approval spec). Vendor s2p: whole-GRM zip (95.7 MB); per-part also via SimSurfing."
+ },
+ {
+  "value": "150pF/50V/C0G",
+  "refs": "C402",
+  "lcsc": "C107038",
+  "mpn": "CC0603JRNPO9BN151",
+  "maker": "YAGEO",
+  "kind": "C",
+  "nominal": 1.5e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/605410.pdf",
+  "notes": "Yageo CC NP0 spec: DF<=10e-4 for C>=10 pF; 1 Vrms, 1 MHz (C<=1000 pF) / 1 kHz (C>1000 pF). No ESR/ESL/SRF in datasheet (Yageo Y-SIM tool exists; no direct s2p URL found)."
+ },
+ {
+  "value": "15pF/50V/C0G",
+  "refs": "C602",
+  "lcsc": "C1644",
+  "mpn": "CL10C150JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 1.5e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 700,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.0014285714285714286,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://pccomponents.com/datasheets/SAMS-CL.pdf",
+  "notes": "Samsung Class I: Q>=400+20C for C<30 pF @1 MHz (formula from Samsung HF MLCC sheet; general CL10C sheet for <30 pF not fetched). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "180pF/50V/C0G",
+  "refs": "C405",
+  "lcsc": "C17096",
+  "mpn": "CL10C181JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 1.8e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "18pF/50V/C0G",
+  "refs": "C604 C606",
+  "lcsc": "C1647",
+  "mpn": "CL10C180JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 1.8e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 760,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.0013157894736842105,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://pccomponents.com/datasheets/SAMS-CL.pdf",
+  "notes": "Samsung Class I: Q>=400+20C for C<30 pF @1 MHz (formula from Samsung HF MLCC sheet; general CL10C sheet for <30 pF not fetched). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "1nF/50V/C0G",
+  "refs": "C28 C31 C34",
+  "lcsc": "C1636",
+  "mpn": "0603CG102J500NT",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 1e-09,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "FH general MLCC spec: DF<=0.1% for C>=30 pF, 1.0 Vrms; spec table lists 1 MHz for DF (cap measured at 1 kHz for C>1000 pF - DF test freq for >1 nF ambiguous). No ESR/ESL/SRF published. No vendor s2p."
+ },
+ {
+  "value": "2.2nF/50V/C0G",
+  "refs": "C201 C203",
+  "lcsc": "C107043",
+  "mpn": "CC0603JRNPO9BN222",
+  "maker": "YAGEO",
+  "kind": "C",
+  "nominal": 2.2000000000000003e-09,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/605410.pdf",
+  "notes": "Yageo CC NP0 spec: DF<=10e-4 for C>=10 pF; 1 Vrms, 1 MHz (C<=1000 pF) / 1 kHz (C>1000 pF). No ESR/ESL/SRF in datasheet (Yageo Y-SIM tool exists; no direct s2p URL found)."
+ },
+ {
+  "value": "2.2uF/16V/X7R",
+  "refs": "C33",
+  "lcsc": "C19110",
+  "mpn": "CL21B225KAFNNNE",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 2.2e-06,
+  "tol": 0.1,
+  "q": [],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "MLCC X7R 0805",
+  "s2p_url": null,
+  "datasheet_url": null,
+  "notes": "Not an RF filter part; Q/DF not looked up. No s2p URL found (Samsung library, see notes on CL10C)."
+ },
+ {
+  "value": "200pF/50V/C0G",
+  "refs": "C24 C26",
+  "lcsc": "C1649",
+  "mpn": "0603CG201J500NT",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 2e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "FH general MLCC spec: DF<=0.1% for C>=30 pF, 1.0 Vrms; spec table lists 1 MHz for DF (cap measured at 1 kHz for C>1000 pF - DF test freq for >1 nF ambiguous). No ESR/ESL/SRF published. No vendor s2p."
+ },
+ {
+  "value": "22pF/50V/C0G",
+  "refs": "C35",
+  "lcsc": "C1653",
+  "mpn": "CL10C220JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 2.1999999999999998e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 840,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.0011904761904761906,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://pccomponents.com/datasheets/SAMS-CL.pdf",
+  "notes": "Samsung Class I: Q>=400+20C for C<30 pF @1 MHz (formula from Samsung HF MLCC sheet; general CL10C sheet for <30 pF not fetched). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "270pF/50V/C0G",
+  "refs": "C304 C306 C401 C403",
+  "lcsc": "C1657",
+  "mpn": "CL10C271JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 2.7e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "27pF/50V/C0G",
+  "refs": "C601 C603",
+  "lcsc": "C1656",
+  "mpn": "CL10C270JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 2.7e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 940,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.0010638297872340426,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://pccomponents.com/datasheets/SAMS-CL.pdf",
+  "notes": "Samsung Class I: Q>=400+20C for C<30 pF @1 MHz (formula from Samsung HF MLCC sheet; general CL10C sheet for <30 pF not fetched). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "33pF/50V/C0G",
+  "refs": "C605",
+  "lcsc": "C1663",
+  "mpn": "CL10C330JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 3.3e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "4.7pF/50V/C0G",
+  "refs": "C702",
+  "lcsc": "C1669",
+  "mpn": "0603CG4R7C500NT",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 4.7e-12,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 494,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.0020242914979757085,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "FH general MLCC spec: DF<=1/(400+20C) for C<30 pF @1 MHz, 1.0 Vrms. No ESR/ESL/SRF published. No vendor s2p."
+ },
+ {
+  "value": "470pF/50V/C0G",
+  "refs": "C302 C305",
+  "lcsc": "C27694",
+  "mpn": "CL10C471JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 4.7e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "47pF/50V/C0G",
+  "refs": "C504 C506",
+  "lcsc": "C1671",
+  "mpn": "CL10C470JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 4.7e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "5.6nF/50V/C0G",
+  "refs": "C101 C103",
+  "lcsc": "C440183",
+  "mpn": "GRM1885C1H562JA01D",
+  "maker": "Murata",
+  "kind": "C",
+  "nominal": 5.6e-09,
+  "tol": 0.05,
+  "q": [],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": "https://www.murata.com/-/media/webrenewal/tool/sparameter/mlcc/v78/grm-s-v78.ashx?la=en-us&cvid=20260803022735000000",
+  "datasheet_url": "https://static.chipdip.ru/lib/282/DOC029282693.pdf",
+  "notes": "Murata product data sheets fetched contain no Q/DF/ESR/ESL values (refer to approval spec). Vendor s2p: whole-GRM zip (95.7 MB); per-part also via SimSurfing."
+ },
+ {
+  "value": "56pF/50V/C0G",
+  "refs": "C502",
+  "lcsc": "C39148",
+  "mpn": "CL10C560JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 5.6e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "68pF/50V/C0G",
+  "refs": "C25",
+  "lcsc": "C28262",
+  "mpn": "CL10C680JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 6.8e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "Samsung Class I: Q>=1000 @1 MHz (C>=30 pF; per CL10C 100 pF spec). ESR/ESL/SRF not published in the datasheet. Samsung offers MLCC S2P via its Software Library (product.samsungsem.com > Support > Software Library, 'MLCC_Simple_S2P'); no direct per-part/zip URL found."
+ },
+ {
+  "value": "8.2pF/50V/C0G",
+  "refs": "C701 C703",
+  "lcsc": "C1685",
+  "mpn": "0603CG8R2C500NT",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 8.2e-12,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 564,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.0017730496453900709,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "FH general MLCC spec: DF<=1/(400+20C) for C<30 pF @1 MHz, 1.0 Vrms. No ESR/ESL/SRF published. No vendor s2p."
+ },
+ {
+  "value": "82pF/50V/C0G",
+  "refs": "C505",
+  "lcsc": "C1683",
+  "mpn": "0603CG820J500NT",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 8.2e-11,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "FH general MLCC spec: DF<=0.1% for C>=30 pF, 1.0 Vrms; spec table lists 1 MHz for DF (cap measured at 1 kHz for C>1000 pF - DF test freq for >1 nF ambiguous). No ESR/ESL/SRF published. No vendor s2p."
+ },
+ {
+  "value": "820pF/50V/C0G (candidate)",
+  "refs": "C204 C206 C301 C303",
+  "lcsc": null,
+  "mpn": "CL10C821JB8NNNC",
+  "maker": "Samsung",
+  "kind": "C",
+  "nominal": 8.2e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/4788228.pdf",
+  "notes": "CANDIDATE. LCSC code/stock NOT verified (search found only CL10C821JB8NFNC C377767, stock N/A). Same family as most BOM caps."
+ },
+ {
+  "value": "820pF/50V/C0G (candidate)",
+  "refs": "C204 C206 C301 C303",
+  "lcsc": null,
+  "mpn": "CC0603JRNPO9BN821",
+  "maker": "YAGEO",
+  "kind": "C",
+  "nominal": 8.2e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://www.farnell.com/datasheets/605410.pdf",
+  "notes": "CANDIDATE. LCSC code/stock NOT verified (search found only CL10C821JB8NFNC C377767, stock N/A). "
+ },
+ {
+  "value": "820pF/50V/C0G (candidate)",
+  "refs": "C204 C206 C301 C303",
+  "lcsc": null,
+  "mpn": "0603CG821J500NT",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 8.2e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "CANDIDATE (FH series used elsewhere in BOM, e.g. 0603CG102J500NT C1636). LCSC code/stock NOT verified."
+ },
+ {
+  "value": "4.7uH/5%",
+  "refs": "L201 L202",
+  "lcsc": null,
+  "mpn": "",
+  "maker": "Sunlord",
+  "kind": "L",
+  "nominal": 4.7e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 45,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 35000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 1.0,
+   "typ": null
+  },
+  "irated_a": 0.03,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://media.digikey.com/pdf/Data%20Sheets/Shenzhen%20Sunlord/SDFL_Series.pdf",
+  "notes": "stand-in until a part is chosen: SDFL2012Q4R7KTF. CANDIDATE. LCSC code/stock NOT verified (an LCSC URL slug C74314 '4.7uH 10%' Sunlord exists but MPN unconfirmed). Alternative: Chilisin CS0805-4R7J-S (wire-wound ceramic, 5%, Q>=15@7.9 MHz, SRF>=40 MHz, Rdc<=6.4 ohm, 90 mA) - higher Rdc."
+ },
+ {
+  "value": "2.2uH/5%",
+  "refs": "L203 L204",
+  "lcsc": "C1043",
+  "mpn": "",
+  "maker": "FH (Fenghua)",
+  "kind": "L",
+  "nominal": 2.2e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 35,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 50000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.6,
+   "typ": null
+  },
+  "irated_a": 0.05,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://www.lcsc.com/de/product-detail/C1043.html",
+  "notes": "stand-in until a part is chosen: CMI201209U2R2KT. CANDIDATE, in stock (~47k at LCSC, JLC extended/promotional). Values from LCSC parametric page (FH PDF lcsc.com/datasheet/C1043.pdf not fetchable here); Q type (min/typ) not stated."
+ },
+ {
+  "value": "1.5uH/5%",
+  "refs": "L301 L302",
+  "lcsc": null,
+  "mpn": "",
+  "maker": "Murata",
+  "kind": "L",
+  "nominal": 1.5e-06,
+  "tol": 0.1,
+  "q": [
+   {
+    "f_hz": 10000000.0,
+    "q": 45,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": 87000000.0,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": 0.5,
+   "typ": null
+  },
+  "irated_a": 0.05,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": null,
+  "construction": "multilayer ferrite, 0805",
+  "s2p_url": null,
+  "datasheet_url": "https://www.komponenten.es.aau.dk/fileadmin/komponenten/Data_Sheet/SMD_Data/Spoler/LQM21N.pdf",
+  "notes": "stand-in until a part is chosen: LQM21NN1R5K10D. CANDIDATE. LCSC stock not verified."
+ },
+ {
+  "value": "820pF/50V/C0G",
+  "refs": "C204 C206 C301 C303",
+  "lcsc": null,
+  "mpn": "",
+  "maker": "FH (Fenghua)",
+  "kind": "C",
+  "nominal": 8.2e-10,
+  "tol": 0.05,
+  "q": [
+   {
+    "f_hz": 1000000.0,
+    "q": 1000,
+    "type": "min"
+   }
+  ],
+  "srf_hz": {
+   "min": null,
+   "typ": null
+  },
+  "rdc_ohm": {
+   "max": null,
+   "typ": null
+  },
+  "irated_a": null,
+  "esl_h": null,
+  "esr_ohm": null,
+  "df": 0.001,
+  "construction": "MLCC C0G/NP0 0603",
+  "s2p_url": null,
+  "datasheet_url": "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2401231443_FH--Guangdong-Fenghua-Advanced-Tech-0603X475M100NT_C2857987.pdf",
+  "notes": "stand-in until a part is chosen: 0603CG821J500NT. CANDIDATE (FH series used elsewhere in BOM, e.g. 0603CG102J500NT C1636). LCSC code/stock NOT verified."
+ }
+]

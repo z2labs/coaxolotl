@@ -95,7 +95,8 @@ def z_part(kind, val, m, f, ideal=False):
         return 1j * w * val if kind == "L" else 1 / (1j * w * val)
     if kind == "C":
         esl = m.get("esl_h") or 0.5e-9                       # 0603 MLCC typical when the maker gives none
-        df = m.get("df") or 1e-3                             # C0G: DF <= 0.1 %
+        qc = [x["q"] for x in (m.get("q") or []) if x.get("q")]
+        df = m.get("df") or (1.0 / min(qc) if qc else 1e-3)  # C0G: Q >= 1000 (DF <= 0.1 %) at 1 MHz
         esr = (m.get("esr_ohm") or 0.05) + df / (w * val)
         return esr + 1j * w * esl + 1 / (1j * w * val)
     # inductor: L + R(f) in series, the winding capacitance across (SRF)
@@ -155,7 +156,7 @@ def build(k, comps, pins, by_ref, models, freq, ideal=False, vals=None, scale=No
             v *= scale.get(r, 1.0)
         kind = "R" if r.startswith("R") else r[0]
         mpn = by_ref.get(r, {}).get("mpn", "")
-        m = models.get(mpn) or models.get(comps[r]["value"]) or {}
+        m = (models.get(mpn) if mpn else None) or models.get(comps[r]["value"]) or {}
         if not ideal and m.get("s2p") and not (vals and r in vals) and not scale:
             nt = rf.Network(os.path.join(HERE, "models", m["s2p"])).interpolate(freq, kind="cubic")
             nt.name = r
