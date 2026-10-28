@@ -660,7 +660,7 @@ def d_seg_rect(a, b, r):
 
 def ep_pads(fp):
     pads = list(fp.Pads())
-    if len(pads) < 6:
+    if len(pads) < 6 or fp.GetReference().startswith("J"):     # connectors: GND legs are not an exposed pad
         return []
     big = max(pads, key=lambda p: p.GetBoundingBox().GetWidth() * p.GetBoundingBox().GetHeight())
     num = big.GetNumber()
