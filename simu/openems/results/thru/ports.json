@@ -14,5 +14,10 @@
   "R21.1",
   "R21.2",
   "U11.19"
- ]
+ ],
+ "simulator": {
+  "path": "/home/rf/z2/twin/kicad_sim.py",
+  "mtime": "2026-10-21 18:03",
+  "md5": "e7dd71be3ca91bb01b0919d5eb308006"
+ }
 }
