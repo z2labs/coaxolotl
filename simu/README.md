@@ -32,4 +32,7 @@ Output in `simu/out/`: `bank*.png` (S21/S11 of all branches, band shaded), `summ
 | vendor s2p (Murata LQW18, `models/s2p/`) | done for the 6 LQW18 parts |
 | PE42582 switch S-parameters in the chain | to do (pSemi model) |
 | openEMS layout N-port F6 (`openems/results/f6/`, 20 pad ports, 10 MHz-1.5 GHz, copper as PEC sheet, no mask; 20 excitations x 18 min on the GTX 1080) | done: passband IL +0.1 dB, RL 16.0 dB (was 16.6), -3 dB band 92-215 MHz (93-220); stopband above 700 MHz limited to about -45...-60 dB by pad-to-pad coupling (`out/f6_layout.png`) |
-| openEMS layout N-ports F5, F7, THRU | to do (office-z170) |
+| openEMS layout N-port F7 (`openems/results/f7/`, X99, 10 MHz-2.5 GHz, routed board 6cacac4) | done: every lane node carries 0.4-0.9 pF of pad capacitance to In1 (0603 pads over 0.2 mm prepreg); RL drops to 5.8 dB and IL rises to 1.5 dB above 1 GHz (`out/f7_layout.png`). Retune 12p/6.8p/12p, 10n/10n (`f7_retune.py`, `out/f7_retune.png`): 70 cm IL 1.0 dB RL 10.2 dB, ADS-B IL 0.27 dB RL 20.3 dB, 23 cm IL 0.40 dB RL 13.4 dB |
+| F7 with In1/In2 cleared under the signal pads (`void_pads.py`, `openems/results/f7void/`) | ran, not conclusive: the ports then reference B.Cu 1.5 mm below and their own ~1 nH path enters the series parts |
+| openEMS THRU (U8/U11 pins + R21) | first run invalid: 45 deg tracks, kicad_sim meshes only their bounding box, the coarse mesh lost them (all ports open); re-run with --coarse 0.12 |
+| openEMS layout N-port F5 | running (office-z170) |

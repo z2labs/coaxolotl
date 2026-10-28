@@ -30,7 +30,7 @@ for x, lim in ((ax[0], zoom + (-6, 0.5)), (ax[1], (10, fmax, -80, 2))):
 ax[0].set_title(f"passband {lo:g}-{hi:g} MHz"); ax[1].set_title(f"10 MHz - {fmax:g} MHz")
 ax[1].set_xscale("log"); ax[0].legend(fontsize=8, loc="lower center")
 fig.suptitle(f"F{k} {bp['name']}: openEMS layout N-port ({nt.nports} ports, copper as PEC sheet, no mask) + datasheet/s2p part models")
-fig.tight_layout(); fig.savefig(os.path.join(HERE, "out", f"f{k}_layout.png"), dpi=110)
+fig.tight_layout(); fig.savefig(os.path.join(HERE, "out", f"{os.path.basename(d.rstrip("/"))}_layout.png"), dpi=110)
 ib = (f >= max(lo, 10)) & (f <= min(hi, fmax))
 for nm, n in (("parts", a), ("parts+layout", b)):
     s21 = n.s_db[:, 1, 0]
