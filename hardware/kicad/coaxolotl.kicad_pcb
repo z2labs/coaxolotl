@@ -2450,7 +2450,7 @@
 				)
 			)
 		)
-		(property "Value" "15nH/5%"
+		(property "Value" "10nH/5%"
 			(at 0 1.43 90)
 			(layer "F.Fab")
 			(uuid "45bb64de-f316-4dc2-a1c9-72efb5aad96a")
@@ -7380,7 +7380,7 @@
 				)
 			)
 		)
-		(attr exclude_from_pos_files)
+		(attr exclude_from_pos_files dnp)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
@@ -11527,7 +11527,7 @@
 				)
 			)
 		)
-		(attr exclude_from_pos_files)
+		(attr exclude_from_pos_files dnp)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
@@ -16428,7 +16428,7 @@
 				)
 			)
 		)
-		(attr through_hole)
+		(attr through_hole dnp)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -1.38 -1.38)
@@ -19280,7 +19280,7 @@
 				)
 			)
 		)
-		(property "Value" "8.2pF/50V/C0G"
+		(property "Value" "12pF/50V/C0G"
 			(at 0 1.43 0)
 			(layer "F.Fab")
 			(uuid "84dedc68-84c0-454e-8300-e39832b10494")
@@ -26865,7 +26865,7 @@
 				)
 			)
 		)
-		(property "Value" "4.7pF/50V/C0G"
+		(property "Value" "6.8pF/50V/C0G"
 			(at 0 1.43 0)
 			(layer "F.Fab")
 			(uuid "ea5652fc-02b2-4ae5-b96a-a6ca1b0b541e")
@@ -33645,7 +33645,7 @@
 				)
 			)
 		)
-		(property "Note" "VERIFY footprint vs chosen coin supercap"
+		(property "Note" "VERIFY footprint vs chosen coin supercap; hand-soldered (no LCSC part)"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -33669,7 +33669,7 @@
 				)
 			)
 		)
-		(attr through_hole)
+		(attr through_hole dnp)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -4.584569 -3.715)
@@ -37609,7 +37609,7 @@
 				)
 			)
 		)
-		(property "Value" "15nH/5%"
+		(property "Value" "10nH/5%"
 			(at 0 1.43 90)
 			(layer "F.Fab")
 			(uuid "5ea2ef35-eedf-47f9-86d0-526acdd08b26")
@@ -44150,7 +44150,7 @@
 				)
 			)
 		)
-		(property "Value" "8.2pF/50V/C0G"
+		(property "Value" "12pF/50V/C0G"
 			(at 0 1.43 0)
 			(layer "F.Fab")
 			(uuid "55ee35f3-ec34-483b-9151-e8060d64c707")

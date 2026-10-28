@@ -1,7 +1,11 @@
 Designator,Value,Footprint,Why
+C10,0.1F/5.5V,CP_Radial_D13.0mm_P5.00mm,DNP
 C27,NA(47pF/C0G),C_0603_1608Metric,DNP
+J1,C2_DEBUG,PinHeader_1x04_P2.54mm_Vertical,DNP
 J4,NA(HDR1x7/2.54),PinHeader_1x07_P2.54mm_Vertical,DNP
 J5,NA(HDR1x7/2.54),PinHeader_1x07_P2.54mm_Vertical,DNP
 L3,NA(56nH/2%),L_0603_1608Metric,DNP
+TP1,TP/TX,TestPoint_Pad_D1.0mm,DNP
+TP6,TP/SENSE,TestPoint_Pad_D1.0mm,DNP
 U9,NA(PE42520C-Z),QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm,DNP
 U10,NA(PE42520C-Z),QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm,DNP
