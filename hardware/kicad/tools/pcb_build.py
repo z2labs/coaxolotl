@@ -931,9 +931,10 @@ bd.update(min_through_hole_diameter=0.2, min_via_diameter=0.4, min_via_annular_w
 json.dump(pj, open(pro, "w", encoding="utf-8"), indent=2)
 open(os.path.join(PRJ, "coaxolotl.kicad_dru"), "w", encoding="utf-8").write(
     "(version 1)\n"
-    "# edge-mount SMA: the centre and ground pads run to the board edge by design\n"
-    "(rule \"SMA edge\"\n  (condition \"A.memberOfFootprint('J2') || A.memberOfFootprint('J3') || B.memberOfFootprint('J2') || B.memberOfFootprint('J3')\")\n"
-    "  (constraint edge_clearance (min 0mm)))\n")
+    "# edge SMA: only the connector's own pads may touch the board edge and the milled notch (legs from x = 0, signal\n"
+    "# pad from the notch bottom); pours, tracks and vias keep the normal 0.3 mm from every edge, notch walls included\n"
+    "(rule \"SMA edge pads\"\n  (condition \"(A.Type == 'Pad' && (A.memberOfFootprint('J2') || A.memberOfFootprint('J3'))) || (B.Type == 'Pad' && (B.memberOfFootprint('J2') || B.memberOfFootprint('J3')))\")\n"
+    "  (constraint edge_clearance (min 0mm))\n  (severity ignore))\n")
 json.dump({r: list(v) for r, v in where.items()}, open(os.path.join(PRJ, "placement.json"), "w"), indent=0)
 print("RF nets:", len(RF_NETS))
 print("placed", len(where), "of", len(fps), "footprints ->", out)
