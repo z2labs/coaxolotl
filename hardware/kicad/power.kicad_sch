@@ -6822,7 +6822,7 @@
     (unit 1)
     (in_bom yes)
     (on_board yes)
-    (dnp no)
+    (dnp yes)
     (uuid "14296a6a-ce97-4648-81dc-005a3a7783e3")
     (property "Reference" "C10"
       (at 78.74 154.94 0)
@@ -6874,7 +6874,7 @@
         hide
       )
     )
-    (property "Note" "VERIFY footprint vs chosen coin supercap"
+    (property "Note" "VERIFY footprint vs chosen coin supercap; hand-soldered (no LCSC part)"
       (at 80.01 156.21 0)
       (effects
         (font

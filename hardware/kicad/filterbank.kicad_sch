@@ -8246,7 +8246,7 @@
         )
       )
     )
-    (property "Value" "8.2pF/50V/C0G"
+    (property "Value" "12pF/50V/C0G"
       (at 83.82 234.95 90)
       (effects
         (font
@@ -8318,7 +8318,7 @@
         (justify left)
       )
     )
-    (property "Value" "15nH/5%"
+    (property "Value" "10nH/5%"
       (at 101.6 245.11 0)
       (effects
         (font
@@ -8449,7 +8449,7 @@
         )
       )
     )
-    (property "Value" "4.7pF/50V/C0G"
+    (property "Value" "6.8pF/50V/C0G"
       (at 114.3 234.95 90)
       (effects
         (font
@@ -8521,7 +8521,7 @@
         (justify left)
       )
     )
-    (property "Value" "15nH/5%"
+    (property "Value" "10nH/5%"
       (at 132.08 245.11 0)
       (effects
         (font
@@ -8652,7 +8652,7 @@
         )
       )
     )
-    (property "Value" "8.2pF/50V/C0G"
+    (property "Value" "12pF/50V/C0G"
       (at 144.78 234.95 90)
       (effects
         (font

@@ -50,11 +50,20 @@ def hpf(fc):
     return out
 
 
+# values retuned with the layout (openEMS lane N-port + part models, simu/f7_retune.py): the pad capacitance of the
+# 0603 parts over In1 (0.4-0.9 pF per lane node) detunes the UHF high-pass; E12 grid search for the best worst-case
+# return loss 380-2000 MHz with >= 20 dB below 230 MHz. Element order as in design().
+LAYOUT_TUNED = {
+    7: [12e-12, 10e-9, 6.8e-12, 10e-9, 12e-12],     # C701, L701, C702, L702, C703 (was 8.2p, 15n, 4.7p, 15n, 8.2p)
+}
+
+
 def design(k):
-    """list of (topo 'S'/'P', kind 'C'/'L', exact value, E12 value)"""
+    """list of (topo 'S'/'P', kind 'C'/'L', exact value, E12 value or the layout-tuned value)"""
     _, fh, fl = BRANCHES[k]
     els = (hpf(fh) if fh else []) + (lpf(fl) if fl else [])
-    return [(t, kind, v, e12(v)) for t, kind, v in els]
+    tuned = LAYOUT_TUNED.get(k)
+    return [(t, kind, v, tuned[i] if tuned else e12(v)) for i, (t, kind, v) in enumerate(els)]
 
 
 def fmt(kind, v):

@@ -1976,7 +1976,7 @@
     (unit 1)
     (in_bom yes)
     (on_board yes)
-    (dnp no)
+    (dnp yes)
     (uuid "e5dc3acb-cbe9-4973-8b8e-8e7d4fdb8f00")
     (property "Reference" "J1"
       (at 101.6 76.2 0)
@@ -2808,7 +2808,7 @@
     (unit 1)
     (in_bom yes)
     (on_board yes)
-    (dnp no)
+    (dnp yes)
     (uuid "c9921ab1-57c7-417d-a558-0c7a0f23d6f7")
     (property "Reference" "TP6"
       (at 111.76 149.86 0)
@@ -2878,7 +2878,7 @@
     (unit 1)
     (in_bom yes)
     (on_board yes)
-    (dnp no)
+    (dnp yes)
     (uuid "8852f12d-aa10-4488-843b-73b258e2ec11")
     (property "Reference" "TP1"
       (at 124.46 167.64 0)

@@ -247,8 +247,9 @@ def R(ref, val, x, y, a, b, rot=0, fp=R0603, txt=None, **f):
 
 
 def C(ref, val, x, y, a, b, rot=0, fp=C0603, pol=False, txt=None, **f):
+    dnp = bool(f.pop("dnp", False))
     return Part(ref, "Device:C_Polarized" if pol else "Device:C", val, x, y, rot, fp, {"1": a, "2": b},
-                dict(f), txt=txt)
+                dict(f), txt=txt, dnp=dnp)
 
 
 def D(ref, val, x, y, anode, cathode, rot=180, fp=SOD323, lib="Device:D_Schottky", txt=None, **f):
@@ -388,7 +389,7 @@ def sheet_power(lib) -> DSheet:
             fp="Capacitor_Tantalum_SMD:CP_EIA-7343-31_Kemet-D", MPN="T520D337M006ATE025"))
     s.add(C("C10", "0.1F/5.5V", 76.2, 156.21, "VSCAP", "GND", pol=True,
             fp="Capacitor_THT:CP_Radial_D13.0mm_P5.00mm", MPN="KR-5R5V104-R",
-            Note="VERIFY footprint vs chosen coin supercap"))
+            Note="VERIFY footprint vs chosen coin supercap; hand-soldered (no LCSC part)", dnp=True))
     s.zone = "ANALOG"
     s.add(R("R11", "1M/1%", 60.96, 156.21, "VSCAP", "SCAP_ADC"))
     s.add(R("R12", "1M/1%", 60.96, 168.91, "SCAP_ADC", "GND"))
@@ -461,7 +462,7 @@ def sheet_mcu(lib) -> DSheet:
     s.gnd("U5", "5")
     s.add(Part("J1", "Connector_Generic:Conn_01x04", "C2_DEBUG", 101.6, 86.36, 180,
                "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-               {"1": "GND", "2": "C2D", "3": "RST_N", "4": "+3V3"}, {"Place": "edge"}))
+               {"1": "GND", "2": "C2D", "3": "RST_N", "4": "+3V3"}, {"Place": "edge"}, dnp=True))
     s.add(R("R13", "10k/5%", 139.7, 76.2, "+3V3", "RST_N", Place="U5.7"))
     s.w(s.pt("J1", "3"), s.pt("U5", "7"))
     s.w(s.pt("J1", "2"), s.pt("U5", "8"))
@@ -479,9 +480,9 @@ def sheet_mcu(lib) -> DSheet:
     s.add(C("C7", "100nF/16V/10%", 137.16, 125.73, "ILNA_ADC", "GND", Place="U5.1"))
     s.add(C("C11", "100nF/16V/10%", 137.16, 140.97, "SCAP_ADC", "GND", Place="U5.2"))
     s.add(C("C2", "10nF/50V/10%", 134.62, 156.21, "SENSE", "GND", Place="U5.4"))
-    s.add(Part("TP6", "Connector:TestPoint", "TP/SENSE", 111.76, 152.4, 0, TP, {"1": "SENSE"}))
+    s.add(Part("TP6", "Connector:TestPoint", "TP/SENSE", 111.76, 152.4, 0, TP, {"1": "SENSE"}, dnp=True))
     s.zone = "DIGITAL"
-    s.add(Part("TP1", "Connector:TestPoint", "TP/TX", 124.46, 170.18, 0, TP, {"1": "TP_TX"}))
+    s.add(Part("TP1", "Connector:TestPoint", "TP/TX", 124.46, 170.18, 0, TP, {"1": "TP_TX"}, dnp=True))
     s.w(s.pt("R8", "2"), s.pt("U5", "1"))
     s.pw("R8", "1", (99.06, None))
     s.hlabel("ILNA", 99.06, 121.92, "L", "input")
