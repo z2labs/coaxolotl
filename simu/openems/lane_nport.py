@@ -16,6 +16,8 @@ copy the excN folders together and run --collect --log <plain run log>.
 """
 import argparse, json, os, sys
 sys.path.insert(0, os.path.expanduser("~/z2/twin"))
+if os.environ.get("Z2_TWIN"):            # a newer kicad_sim.py than the machine's own (all machines on one version)
+    sys.path.insert(0, os.path.expanduser(os.environ["Z2_TWIN"]))
 import kicad_sim as ks
 
 # lane k: parts (refs) and the switch pins at its ends (U8 RF(k+1), U11 RF(8-k)) - from the netlist (bank_sim.py)
