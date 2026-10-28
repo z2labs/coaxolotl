@@ -11,6 +11,8 @@ Runs on office-z170 (openEMS z2 build, ~/z2/env.sh):
     . ~/z2/env.sh && python3 lane_nport.py coaxolotl.kicad_pcb --lanes 6 --out f6 [--fmax 1.5e9] [--variant ...]
 
 Writes <out>/<board>.s<N>p (kicad_sim) and <out>/ports.json (port number -> "REF.PAD").
+Two machines on one N-port: the plain run on one (excitations 1, 2, ...), --exc 20-11 on the other into its own <out>;
+copy the excN folders together and run --collect --log <plain run log>.
 """
 import argparse, json, os, sys
 sys.path.insert(0, os.path.expanduser("~/z2/twin"))
@@ -47,6 +49,11 @@ def main():
                     help="only the part pads (window = the lane itself, a fraction of the cells); the switch risers"
                          " are then left to the circuit model")
     ap.add_argument("--coarse", type=float, default=1.0, help="mesh coarsening (kicad_sim): >1 faster")
+    ap.add_argument("--exc", help="split run: only these excitations, in this order (e.g. 20-11 on a second machine);"
+                                  " each finished one leaves <out>/excN/done")
+    ap.add_argument("--collect", action="store_true",
+                    help="no simulation: S-matrix from the finished excN/sim folders (done marker, or rc=0 in --log)")
+    ap.add_argument("--log", help="with --collect: the log of a plain run in the same <out> (excitations 1..k finished)")
     a = ap.parse_args()
     ks._setup_python()
     from CSXCAD.KiCadImport import KiCadBoard
@@ -103,8 +110,70 @@ def main():
     json.dump(dict(board=os.path.basename(a.board), lanes=lanes, window=[float(x0), float(y0), float(x1), float(y1)],
                    ports=names), open(os.path.join(a.out, "ports.json"), "w"), indent=1)
     print(f"{len(ports)} ports, window {x1 - x0:.1f} x {y1 - y0:.1f} mm", flush=True)
-    ks.simulate(a.board, None, a.fmin, a.fmax, a.out, ports=ports, board_obj=b, variant=a.variant,
-                threads=a.threads, nf=a.nf, coarse=a.coarse)
+    if a.exc or a.collect:
+        split(a, b, ports)
+    else:
+        ks.simulate(a.board, None, a.fmin, a.fmax, a.out, ports=ports, board_obj=b, variant=a.variant,
+                    threads=a.threads, nf=a.nf, coarse=a.coarse)
+
+
+def _excs(spec, n):
+    out = []
+    for part in spec.split(","):
+        if "-" in part:
+            i, j = (int(x) for x in part.split("-"))
+            out += list(range(i, j + 1)) if i <= j else list(range(i, j - 1, -1))
+        else:
+            out.append(int(part))
+    assert all(1 <= e <= n for e in out), out
+    return out
+
+
+def split(a, b, ports):
+    """Excitations of ks.simulate one by one (same mesh: the model is deterministic), so two machines can share one
+    N-port; --collect rebuilds the port objects and reads the finished runs."""
+    import numpy as np
+    n = len(ports)
+    for i, p in enumerate(ports):
+        p["number"] = i + 1
+        p.setdefault("z0", 50.0)
+    f = np.linspace(a.fmin, a.fmax, a.nf)
+    if not a.collect:
+        for e in _excs(a.exc, n):
+            cdir = os.path.join(a.out, "exc%d" % e)
+            if os.path.exists(os.path.join(cdir, "done")):
+                continue
+            FDTD, CSX, pobj, meta = ks.build(b, ports, a.fmin, a.fmax, e, coarse=a.coarse)
+            os.makedirs(cdir, exist_ok=True)
+            xml = os.path.join(cdir, "model.xml")
+            FDTD.Write2XML(xml)
+            print("excitation %d/%d: mesh %s (%.2f MCells), engine %s" % (e, n, meta["mesh"], meta["mcells"], a.variant), flush=True)
+            r = ks.run_engine(xml, os.path.join(cdir, "sim"), a.variant, a.threads)
+            print("  rc=%s %.1f s, %s timesteps" % (r["rc"], r["wall_s"], r["timesteps"]), flush=True)
+            if r["rc"] != 0:
+                raise RuntimeError("openEMS failed in " + cdir)
+            open(os.path.join(cdir, "done"), "w").write("rc=0\n")
+        return
+    k = sum(1 for line in open(a.log) if "rc=0" in line) if a.log else 0
+    S = np.zeros((len(f), n, n), complex)
+    missing = []
+    for e in range(1, n + 1):
+        cdir = os.path.join(a.out, "exc%d" % e)
+        if not (e <= k or os.path.exists(os.path.join(cdir, "done"))):
+            missing.append(e); continue
+        _, _, pobj, _ = ks.build(b, ports, a.fmin, a.fmax, e, coarse=a.coarse)
+        for p, pd in zip(pobj, ports):
+            p.CalcPort(os.path.join(cdir, "sim"), f, ref_impedance=pd.get("z0", 50.0))
+        inc = pobj[e - 1].uf_inc
+        for i, p in enumerate(pobj):
+            S[:, i, e - 1] = p.uf_ref / inc
+    if missing:
+        sys.exit("not finished: excitations %s" % missing)
+    src = os.path.splitext(os.path.basename(a.board))[0]
+    ks.write_touchstone(os.path.join(a.out, "%s.s%dp" % (src, n)), f, S,
+                        comment="openEMS-z2labs kicad_sim via lane_nport --collect, %s\nports: %s" % (
+                            os.path.basename(a.board), ", ".join("%d=%s" % (p["number"], p["ref"]) for p in ports)))
+    print("wrote", os.path.join(a.out, "%s.s%dp" % (src, n)))
 
 
 if __name__ == "__main__":
