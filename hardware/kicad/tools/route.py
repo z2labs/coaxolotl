@@ -17,7 +17,7 @@ import pcbnew
 HERE = os.path.dirname(os.path.abspath(__file__))
 PRJ = os.path.normpath(os.path.join(HERE, ".."))
 OUT = os.path.join(PRJ, "route")
-SR = os.environ.get("SROUTER", r"C:\Users\RF\Documents\GitHub\srouter-feat\target\release\srouter.exe")
+SR = os.environ.get("SROUTER", r"C:\Users\RF\Documents\GitHub\_claude_tmp\srouter-coax\target\release\srouter.exe")   # feat/cuda-wavefront build (-stall, H/V congestion)
 BOARD = os.path.join(PRJ, "coaxolotl.kicad_pcb")
 PLACED = os.path.join(PRJ, "coaxolotl_placed.kicad_pcb")
 os.makedirs(OUT, exist_ok=True)
@@ -60,8 +60,8 @@ def net_rules():
 PASSES = [
     ("pass1_rf", RF, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "80"]),
     ("pass2_power", POWER, [], ["-top", "F.Cu:3", "-via", "3000", "-it", "60"]),
-    ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*", "/MCU/LED_*", "Net-(J1-*"], [], ["-top", "F.Cu:2", "-via", "1200", "-it", "70"]),
-    ("pass4_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "25"]),
+    ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*", "/MCU/LED_*", "Net-(J1-*"], [], ["-top", "F.Cu:2", "-via", "1200", "-it", "70", "-stall", "15"]),
+    ("pass4_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "40", "-stall", "10"]),
 ]
 
 
