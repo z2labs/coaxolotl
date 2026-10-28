@@ -209,8 +209,10 @@ def build(k, comps, pins, by_ref, models, freq, ideal=False, vals=None, scale=No
     if lports:
         for nm, i in lports.items():
             nodes.setdefault(nm, []).append((lnt, i))
-        pad_on = lambda net: next(f"{r}.{p}" for r in parts for p, n in sorted(pins[r].items()) if n == net)
-        nodes[pad_on(start)].append((p1, 0)); nodes[pad_on(end)].append((p2, 0))
+        def pad_on(net, sw):          # the switch pin when the N-port has it (no --lane-only), else the lane's end pad
+            return next((nm for nm in lports if nm.startswith(sw + ".")), None) or \
+                next(f"{r}.{p}" for r in parts for p, n in sorted(pins[r].items()) if n == net)
+        nodes[pad_on(start, "U8")].append((p1, 0)); nodes[pad_on(end, "U11")].append((p2, 0))
     else:
         nodes[start].append((p1, 0)); nodes[end].append((p2, 0))
     cnx = []
