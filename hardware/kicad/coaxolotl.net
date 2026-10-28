@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\RF\\Documents\\GitHub\\coaxolotl\\hardware\\kicad\\coaxolotl.kicad_sch")
-		(date "2026-10-28T23:01:13")
+		(date "2026-10-28T23:05:08")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
