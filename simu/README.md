@@ -16,6 +16,8 @@ Two levels, combined in Python (scikit-rf); QucsStudio can read every Touchstone
 python3 simu/bank_sim.py --ideal --tag _ideal     # the design check (ideal L/C)
 python3 simu/bank_sim.py --mc 300                 # part models + Monte Carlo over the tolerances
 python3 simu/bank_sim.py --set L401=680n --tag _l401   # what-if
+python3 simu/bank_sim.py --layout 6=openems/results/f6 --tag _layout   # F6 with the openEMS layout N-port
+python3 simu/f6_layout_plot.py                    # F6 parts vs parts + layout, out/f6_layout.png
 ```
 
 Output in `simu/out/`: `bank*.png` (S21/S11 of all branches, band shaded), `summary*.json`
@@ -27,6 +29,7 @@ Output in `simu/out/`: `bank*.png` (S21/S11 of all branches, band shaded), `summ
 |---|---|
 | netlist -> branch circuits, ideal check | done |
 | part models from datasheets (`models/parts.json`, Q min, SRF min: pessimistic) | done, first run `out/bank_models.png` |
-| vendor s2p (Murata LQW18/GRM, TDK NLV32 zips) | to do: download on a machine with web access |
+| vendor s2p (Murata LQW18, `models/s2p/`) | done for the 6 LQW18 parts |
 | PE42582 switch S-parameters in the chain | to do (pSemi model) |
-| openEMS layout N-ports F5–F7, THRU | to do (office-z170) |
+| openEMS layout N-port F6 (`openems/results/f6/`, 20 pad ports, 10 MHz-1.5 GHz, copper as PEC sheet, no mask; 20 excitations x 18 min on the GTX 1080) | done: passband IL +0.1 dB, RL 16.0 dB (was 16.6), -3 dB band 92-215 MHz (93-220); stopband above 700 MHz limited to about -45...-60 dB by pad-to-pad coupling (`out/f6_layout.png`) |
+| openEMS layout N-ports F5, F7, THRU | to do (office-z170) |

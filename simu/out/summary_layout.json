@@ -1,0 +1,88 @@
+[
+ {
+  "branch": "F0",
+  "band_mhz": [
+   0.02,
+   2000.0
+  ],
+  "il_max_db": 0.0,
+  "il_min_db": 0.0,
+  "rl_min_db": 100.0
+ },
+ {
+  "branch": "F1",
+  "band_mhz": [
+   0.02,
+   0.55
+  ],
+  "il_max_db": 1.45,
+  "il_min_db": 0.63,
+  "rl_min_db": 17.5
+ },
+ {
+  "branch": "F2",
+  "band_mhz": [
+   1.6,
+   4.0
+  ],
+  "il_max_db": 1.52,
+  "il_min_db": 1.08,
+  "rl_min_db": 13.1
+ },
+ {
+  "branch": "F3",
+  "band_mhz": [
+   4.0,
+   12.0
+  ],
+  "il_max_db": 2.04,
+  "il_min_db": 1.27,
+  "rl_min_db": 12.3
+ },
+ {
+  "branch": "F4",
+  "band_mhz": [
+   12.0,
+   30.0
+  ],
+  "il_max_db": 2.71,
+  "il_min_db": 2.0,
+  "rl_min_db": 14.1
+ },
+ {
+  "branch": "F5",
+  "band_mhz": [
+   30.0,
+   80.0
+  ],
+  "il_max_db": 2.24,
+  "il_min_db": 1.1,
+  "rl_min_db": 11.7
+ },
+ {
+  "branch": "F6",
+  "band_mhz": [
+   108.0,
+   174.0
+  ],
+  "il_max_db": 1.03,
+  "il_min_db": 0.72,
+  "rl_min_db": 16.6,
+  "with_layout": {
+   "il_max_db": 1.11,
+   "il_min_db": 0.85,
+   "rl_min_db": 16.0,
+   "layout": "openems/results/f6"
+  }
+ },
+ {
+  "branch": "F7",
+  "band_mhz": [
+   380.0,
+   2000.0
+  ],
+  "il_max_db": 0.78,
+  "il_min_db": 0.1,
+  "rl_min_db": 17.3
+ }
+]

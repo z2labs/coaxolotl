@@ -168,8 +168,29 @@ def branch_parts(k, comps, pins):
     return start, end, sorted(parts)
 
 
-def build(k, comps, pins, by_ref, models, freq, ideal=False, vals=None, scale=None):
+def load_layout(d, freq):
+    """openEMS N-port of one lane (lane_nport.py): ports on every part pad, in ports.json order.
+    Returns (network on freq, ["REF.pad", ...]); below the simulated band the lowest point is held."""
+    names = json.load(open(os.path.join(d, "ports.json"), encoding="utf-8"))["ports"]
+    nt = rf.Network(os.path.join(d, next(f for f in os.listdir(d) if re.match(r".*\.s\d+p$", f))))
+    f = np.clip(freq.f, nt.f[0], nt.f[-1])
+    s = np.empty((len(f),) + nt.s.shape[1:], dtype=complex)
+    for i in range(nt.nports):
+        for j in range(nt.nports):
+            s[:, i, j] = np.interp(f, nt.f, nt.s[:, i, j].real) + 1j * np.interp(f, nt.f, nt.s[:, i, j].imag)
+    return rf.Network(frequency=freq, s=s, z0=nt.z0[0, 0], name="layout"), names
+
+
+def build(k, comps, pins, by_ref, models, freq, ideal=False, vals=None, scale=None, layout=None):
+    """layout: (N-port, ["REF.pad"]) - the parts then join the layout ports at their pads instead of the net nodes;
+    the lane's ends are the pads on the switch nets."""
     start, end, parts = branch_parts(k, comps, pins)
+    lports = {}
+    if layout:
+        lnt, lnames = layout
+        lports = {nm: i for i, nm in enumerate(lnames)}
+        missing = [f"{r}.{p}" for r in parts for p in pins[r] if f"{r}.{p}" not in lports]
+        assert not missing, f"F{k}: layout has no port at {missing}"
     nodes = {}
     for r in parts:
         v = (vals or {}).get(r, value_of(comps[r]["value"]))
@@ -183,9 +204,15 @@ def build(k, comps, pins, by_ref, models, freq, ideal=False, vals=None, scale=No
         else:
             nt = series_ntwk(z_part(kind, v, m, freq.f, ideal), freq, r)
         for p, n in sorted(pins[r].items()):
-            nodes.setdefault(n, []).append((nt, int(p) - 1))
+            nodes.setdefault(f"{r}.{p}" if lports else n, []).append((nt, int(p) - 1))
     p1, p2 = rf.circuit.Circuit.Port(freq, "P1", z0=Z0), rf.circuit.Circuit.Port(freq, "P2", z0=Z0)
-    nodes[start].append((p1, 0)); nodes[end].append((p2, 0))
+    if lports:
+        for nm, i in lports.items():
+            nodes.setdefault(nm, []).append((lnt, i))
+        pad_on = lambda net: next(f"{r}.{p}" for r in parts for p, n in sorted(pins[r].items()) if n == net)
+        nodes[pad_on(start)].append((p1, 0)); nodes[pad_on(end)].append((p2, 0))
+    else:
+        nodes[start].append((p1, 0)); nodes[end].append((p2, 0))
     cnx = []
     for n, lst in nodes.items():
         if n == "GND":
@@ -220,6 +247,8 @@ def main():
     ap.add_argument("--mc", type=int, default=0)
     ap.add_argument("--set", action="append", default=[], help="REF=value, e.g. L401=680n")
     ap.add_argument("--tag", default="")
+    ap.add_argument("--layout", action="append", default=[], metavar="K=DIR",
+                    help="branch K with the openEMS lane N-port in DIR, e.g. 6=openems/results/f6")
     a = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
     comps, pins = load_netlist()
@@ -233,6 +262,11 @@ def main():
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    lay, lay_dir, lay_sum = {}, {}, {}
+    for s_ in a.layout:
+        kk, d = s_.split("=", 1)
+        d = d if os.path.isabs(d) else os.path.join(HERE, d)
+        lay[int(kk)] = load_layout(d, freq); lay_dir[int(kk)] = os.path.relpath(d, HERE)
     fig, axs = plt.subplots(4, 2, figsize=(14, 15))
     summary = []
     for k in range(8):
@@ -241,6 +275,16 @@ def main():
         lo, hi = b["lo_hz"], b["hi_hz"]
         ideal, parts = build(k, comps, pins, by_ref, models, freq, ideal=True)
         real, _ = build(k, comps, pins, by_ref, models, freq, ideal=a.ideal, vals=vals)
+        if k in lay:
+            lnet, _ = build(k, comps, pins, by_ref, models, freq, ideal=a.ideal, vals=vals, layout=lay[k])
+            ax.semilogx(freq.f / 1e6, lnet.s_db[:, 1, 0], "tab:purple", lw=1.6, label="S21 parts + layout (openEMS)")
+            ax.semilogx(freq.f / 1e6, lnet.s_db[:, 0, 0], "tab:pink", lw=1, label="S11 parts + layout")
+            lnet.write_touchstone(os.path.join(OUT, f"F{k}{a.tag}_openems"))
+            inb = (freq.f >= max(bp[k]["lo_hz"], 0.1e6)) & (freq.f <= bp[k]["hi_hz"])
+            lay_sum[k] = dict(il_max_db=round(float(-lnet.s_db[inb, 1, 0].min()), 2),
+                              il_min_db=round(float(-lnet.s_db[inb, 1, 0].max()), 2),
+                              rl_min_db=round(float(-lnet.s_db[inb, 0, 0].max()), 1), layout=lay_dir[k])
+            ax.legend(fontsize=8, loc="lower left")
         f = freq.f
         if a.mc:
             rng = np.random.default_rng(1)
@@ -262,6 +306,8 @@ def main():
         il = -real.s_db[inb, 1, 0]; rl = -real.s_db[inb, 0, 0]
         summary.append(dict(branch=f"F{k}", band_mhz=[lo / 1e6, hi / 1e6], il_max_db=round(float(il.max()), 2),
                             il_min_db=round(float(il.min()), 2), rl_min_db=round(float(rl.min()), 1)))
+        if k in lay_sum:
+            summary[-1]["with_layout"] = lay_sum[k]
         real.write_touchstone(os.path.join(OUT, f"F{k}{a.tag}"))
         if k == 0:
             ax.legend(fontsize=8, loc="lower left")
