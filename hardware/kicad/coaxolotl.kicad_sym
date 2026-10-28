@@ -1,7 +1,7 @@
 (kicad_symbol_lib
   (version 20220914)
   (generator coaxolotl_build)
-  (symbol "EFM8BB21F16G-C-QSOP24"
+  (symbol "EFM8BB21F16G-C-QFN20"
     (in_bom yes)
     (on_board yes)
     (property "Reference" "U"
@@ -12,7 +12,7 @@
         )
       )
     )
-    (property "Value" "EFM8BB21F16G-C-QSOP24"
+    (property "Value" "EFM8BB21F16G-C-QFN20"
       (at 0 -46.99 0)
       (effects
         (font
@@ -20,7 +20,7 @@
         )
       )
     )
-    (property "Footprint" "Package_SO:QSOP-24_3.9x8.7mm_P0.635mm"
+    (property "Footprint" "coaxolotl:EFM8_QFN-20-1EP_3x3mm_P0.5mm_EP1.7x1.7mm"
       (at 0 0 0)
       (effects
         (font
@@ -38,7 +38,7 @@
         hide
       )
     )
-    (property "Description" "EFM8 Busy Bee 8051 MCU, 16 kB flash. Pins grouped: inputs left, outputs right"
+    (property "Description" "EFM8 Busy Bee 8051 MCU, 16 kB flash, QFN20 (the QSOP24 is end of life). Inputs left, outputs right"
       (at 0 0 0)
       (effects
         (font
@@ -47,7 +47,7 @@
         hide
       )
     )
-    (symbol "EFM8BB21F16G-C-QSOP24_0_1"
+    (symbol "EFM8BB21F16G-C-QFN20_0_1"
       (rectangle
         (start -15.24 45.72)
         (end 15.24 -45.72)
@@ -60,7 +60,7 @@
         )
       )
     )
-    (symbol "EFM8BB21F16G-C-QSOP24_1_1"
+    (symbol "EFM8BB21F16G-C-QFN20_1_1"
       (pin input line
         (at -17.78 43.18 0)
         (length 2.54)
@@ -71,7 +71,7 @@
             )
           )
         )
-        (number "7"
+        (number "5"
           (effects
             (font
               (size 1.27 1.27)
@@ -82,14 +82,14 @@
       (pin bidirectional line
         (at -17.78 40.64 0)
         (length 2.54)
-        (name "P3.0/C2D"
+        (name "P2.0/C2D"
           (effects
             (font
               (size 1.27 1.27)
             )
           )
         )
-        (number "8"
+        (number "6"
           (effects
             (font
               (size 1.27 1.27)
@@ -107,7 +107,7 @@
             )
           )
         )
-        (number "23"
+        (number "17"
           (effects
             (font
               (size 1.27 1.27)
@@ -125,7 +125,7 @@
             )
           )
         )
-        (number "1"
+        (number "19"
           (effects
             (font
               (size 1.27 1.27)
@@ -143,7 +143,7 @@
             )
           )
         )
-        (number "2"
+        (number "20"
           (effects
             (font
               (size 1.27 1.27)
@@ -161,7 +161,7 @@
             )
           )
         )
-        (number "4"
+        (number "2"
           (effects
             (font
               (size 1.27 1.27)
@@ -179,25 +179,7 @@
             )
           )
         )
-        (number "3"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin bidirectional line
-        (at -17.78 -43.18 0)
-        (length 2.54)
-        (name "P0.4/TX"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "24"
+        (number "1"
           (effects
             (font
               (size 1.27 1.27)
@@ -215,7 +197,7 @@
             )
           )
         )
-        (number "22"
+        (number "16"
           (effects
             (font
               (size 1.27 1.27)
@@ -233,7 +215,7 @@
             )
           )
         )
-        (number "21"
+        (number "15"
           (effects
             (font
               (size 1.27 1.27)
@@ -251,7 +233,7 @@
             )
           )
         )
-        (number "20"
+        (number "14"
           (effects
             (font
               (size 1.27 1.27)
@@ -269,7 +251,7 @@
             )
           )
         )
-        (number "19"
+        (number "13"
           (effects
             (font
               (size 1.27 1.27)
@@ -287,7 +269,7 @@
             )
           )
         )
-        (number "18"
+        (number "11"
           (effects
             (font
               (size 1.27 1.27)
@@ -305,7 +287,7 @@
             )
           )
         )
-        (number "17"
+        (number "10"
           (effects
             (font
               (size 1.27 1.27)
@@ -316,61 +298,7 @@
       (pin bidirectional line
         (at 17.78 25.4 180)
         (length 2.54)
-        (name "P2.0"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "12"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin bidirectional line
-        (at 17.78 22.86 180)
-        (length 2.54)
-        (name "P2.1"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "11"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin bidirectional line
-        (at 17.78 20.32 180)
-        (length 2.54)
-        (name "P2.2"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "10"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin bidirectional line
-        (at 17.78 17.78 180)
-        (length 2.54)
-        (name "P2.3"
+        (name "P1.4"
           (effects
             (font
               (size 1.27 1.27)
@@ -386,25 +314,7 @@
         )
       )
       (pin bidirectional line
-        (at 17.78 12.7 180)
-        (length 2.54)
-        (name "P1.4"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-        (number "16"
-          (effects
-            (font
-              (size 1.27 1.27)
-            )
-          )
-        )
-      )
-      (pin bidirectional line
-        (at 17.78 10.16 180)
+        (at 17.78 22.86 180)
         (length 2.54)
         (name "P1.5"
           (effects
@@ -413,7 +323,7 @@
             )
           )
         )
-        (number "15"
+        (number "8"
           (effects
             (font
               (size 1.27 1.27)
@@ -422,7 +332,7 @@
         )
       )
       (pin bidirectional line
-        (at 17.78 7.62 180)
+        (at 17.78 20.32 180)
         (length 2.54)
         (name "P1.6"
           (effects
@@ -431,7 +341,7 @@
             )
           )
         )
-        (number "14"
+        (number "7"
           (effects
             (font
               (size 1.27 1.27)
@@ -440,16 +350,16 @@
         )
       )
       (pin bidirectional line
-        (at 17.78 5.08 180)
+        (at 17.78 17.78 180)
         (length 2.54)
-        (name "P1.7"
+        (name "P0.4"
           (effects
             (font
               (size 1.27 1.27)
             )
           )
         )
-        (number "13"
+        (number "18"
           (effects
             (font
               (size 1.27 1.27)
@@ -467,7 +377,25 @@
             )
           )
         )
-        (number "6"
+        (number "4"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin power_in line
+        (at -5.08 -48.26 90)
+        (length 2.54)
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "3"
           (effects
             (font
               (size 1.27 1.27)
@@ -485,7 +413,25 @@
             )
           )
         )
-        (number "5"
+        (number "12"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin power_in line
+        (at 5.08 -48.26 90)
+        (length 2.54)
+        (name "EP"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "21"
           (effects
             (font
               (size 1.27 1.27)

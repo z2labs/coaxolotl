@@ -19,7 +19,7 @@ flowchart LR
   BT -- VCOAX --> ID[LM66100<br/>ideal diode] -- VMAIN --> LSW[TPS2553<br/>load switch] --> SH[0.39R + INA180] --> LNA
   ID -- VMAIN --> LEDV[ferrite + 47uF] --> LAMPS[48 lamps]
   ID -- VMAIN --> HOLD[100R/BAT54/330uF<br/>220R/BAT54/0.1F SCAP] --> LDO[MCP1700 3V3]
-  LDO --> MCU[EFM8BB21<br/>QSOP24]
+  LDO --> MCU[EFM8BB21<br/>QFN20]
   MCU --> SR[6x 74HC595] --> LAMPS
   MCU --> SW1 & SW2 & S1 & S2 & FMN & LSW
 ```
@@ -93,41 +93,39 @@ about 0.2 V, so VCOAX ≈ 4.2–4.3 V. The LOW lamp lights below 3.9 V.
 **VERIFY** that the QPL9547 still meets its gain and OIP3 at about 4.2 V
 (it is specified for 3.3–5 V).
 
-## MCU: EFM8BB21F16G-C-QSOP24
+## MCU: EFM8BB21F16G-C-QFN20
 
 The EFM8BB2 replaces the BB1 in the original sketch. The BB2 has a
 **Snooze** mode (about 26 µA) with the high-frequency oscillator stopped. It
 wakes on a port-match edge or a Timer 4 event, and Timer 4 runs from the
 80 kHz LFOSC. While the box sits on a band, no MCU clock runs at all, so
 there are no MCU spurs in the receiver. The BB1 can only Idle with a running
-clock (Stop exits only through reset). The BB2 also has 21 I/O on QSOP24.
+clock (Stop exits only through reset).
+
+The QSOP24 package is end of life (Silicon Labs PCN 2402211513, last order
+2024-08-27); its successor is the QFN20 (3 × 3 mm, 16 port pins). All 16 are
+used: the old TP_TX test point is gone and FMN shares P2.0 with the C2 debug
+data line through R30 (1 kΩ), so the debugger can override it.
 
 | Pin | Port | Net | Dir | Note |
 |---|---|---|---|---|
-| 4 | P0.0 | SENSE | in | VCOAX divider; port-match wake on both edges |
-| 3 | P0.1 | VC_ADC | ana | same divider node |
-| 2 | P0.2 | SCAP_ADC | ana | 1 M / 1 M + 100 nF |
-| 1 | P0.3 | ILNA_ADC | ana | INA180A2 out (19.5 mV/mA) |
-| 24 | P0.4 | TP_TX | out | test point (UART0 TX if ever needed) |
-| 23 | P0.5 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up to 3V3, port-match wake |
-| 22 | P0.6 | LNA_EN | out | 10 k pull-down: LNA off during reset |
-| 21 | P0.7 | LNA_PATH | out | both SPDTs; 1 = through LNA; 10 k pull-down = bypass |
-| 20–18 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 in parallel; 10 k pull-downs = branch 0 (THRU) |
-| 17 | P1.3 | FMN | out | FM-notch SPDTs (DNP option); 10 k pull-down |
-| 16 | P1.4 | LNA_PATH_OUT | out | output SPDT U7 (its own line, same polarity as LNA_PATH); 10 k pull-down = bypass |
-| 15–13 | P1.5–P1.7 | — | out | spare, driven low; test pads |
-| 12 | P2.0 | LED_SER | out | 595 chain data |
-| 11 | P2.1 | LED_SCK | out | |
-| 10 | P2.2 | LED_RCK | out | |
-| 9 | P2.3 | LED_OE_N | out | 10 k pull-up: lamps dark until the first write |
-
-The pins are assigned by package side. Pins 1–12 carry the analog inputs,
-power, debug and the lamp chain, and face the power and panel area. Pins
-13–24 carry RF switch control, LNA_EN and FAULT_N, and face the RF chain. No
-control line crosses under the MCU. (Co-designing placement and pinout cut
-ratsnest crossings by about 20 % on an earlier board.)
-| 8 | P3.0/C2D | C2D | — | debug |
-| 7 | RSTb/C2CK | C2CK | — | debug, 1 k series + 10 k pull-up |
+| 2 | P0.0 | SENSE | in | VCOAX divider; port-match wake on both edges |
+| 1 | P0.1 | VC_ADC | ana | same divider node |
+| 20 | P0.2 | SCAP_ADC | ana | 1 M / 1 M + 100 nF |
+| 19 | P0.3 | ILNA_ADC | ana | INA180A2 out (19.5 mV/mA) |
+| 18 | P0.4 | LED_OE_N | out | 10 k pull-up: lamps dark until the first write |
+| 17 | P0.5 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up to 3V3, port-match wake |
+| 16 | P0.6 | LNA_EN | out | 10 k pull-down: LNA off during reset |
+| 15 | P0.7 | LNA_PATH | out | both SPDTs; 1 = through LNA; 10 k pull-down = bypass |
+| 14, 13, 11 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 in parallel; 10 k pull-downs = branch 0 (THRU) |
+| 10 | P1.3 | LNA_PATH_OUT | out | output SPDT U7 (its own line, same polarity as LNA_PATH); 10 k pull-down = bypass |
+| 9 | P1.4 | LED_SER | out | 595 chain data |
+| 8 | P1.5 | LED_SCK | out | |
+| 7 | P1.6 | LED_RCK | out | |
+| 6 | P2.0 / C2D | FMN | out | FM-notch SPDTs (DNP option); through R30 1 k; 10 k pull-down |
+| 5 | RSTb / C2CK | RST_N | | 10 k pull-up, C2 clock |
+| 3, 12, EP | GND | | | |
+| 4 | VDD | +3V3 | | |
 
 During reset and boot the pull-downs give a safe state: THRU, bypass, LNA
 unpowered, lamps off. The box then behaves like a plain cable until the

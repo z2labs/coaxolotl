@@ -1,25 +1,22 @@
 /*
- * Coaxolotl - EFM8BB21F16G (QSOP24) hardware layer, SDCC.
+ * Coaxolotl - EFM8BB21F16G (QFN20) hardware layer, SDCC.
  *
  * Pin map (docs/hardware.md):
  *   P0.0 SENSE     in   VCOAX divider, port-match wake (both edges)
  *   P0.1 VC_ADC    ana  same divider node
  *   P0.2 SCAP_ADC  ana  supercap / 2
  *   P0.3 ILNA_ADC  ana  INA180A2 output
- *   P0.4 TP_TX     out  spare / UART0 TX test point (driven low)
+ *   P0.4 LED_OE_N  out  lamp chain output enable (10k pull-up: dark in reset)
  *   P0.5 FAULT_N   in   TPS2553 FAULT, port-match wake
  *   P0.6 LNA_EN    out  TPS2553 EN        (10k pull-down: off in reset)
  *   P0.7 LNA_PATH  out  SPDT pair, 1=LNA  (10k pull-down: bypass in reset)
  *   P1.0..2 SW_V1..3   both PE42582      (10k pull-downs: THRU in reset)
- *   P1.3 FMN       out  FM notch SPDTs   (10k pull-down: out in reset)
- *   P1.4 LNA_PATH_OUT out output SPDT U7 (own line, same polarity; 10k pull-down)
- *   P1.5..7        spare, driven low (test points)
- *   P2.0 LED_SER, P2.1 LED_SCK, P2.2 LED_RCK, P2.3 LED_OE_N (10k pull-up)
+ *   P1.3 LNA_PATH_OUT out output SPDT U7 (own line, same polarity; 10k pull-down)
+ *   P1.4 LED_SER, P1.5 LED_SCK, P1.6 LED_RCK
+ *   P2.0 FMN       out  FM notch SPDTs (10k pull-down: out in reset); shares the pin
+ *                       with C2D: R30 (1k) lets the debugger override the line
  *
- * Pin sides follow the placement: QSOP pins 1-12 (analog, power, debug,
- * lamp chain) face the power/panel area, pins 13-24 (RF switch control,
- * LNA_EN/FAULT_N) face the RF chain - no control line crosses the MCU.
- *   P3.0 C2D       debug
+ * QFN20 (the QSOP24 is end of life): all 16 port pins are used.
  *
  * SYSCLK stays at the reset default, HFOSC0/8 = 3.0625 MHz.
  */
@@ -34,11 +31,12 @@
 
 SBIT(LNA_EN,   0x86);   /* P0.6 */
 SBIT(LNA_PATH, 0x87);   /* P0.7 */
-SBIT(LNA_PATH_OUT, 0x94);   /* P1.4 */
-SBIT(LED_SER,  0xA0);   /* P2.0 */
-SBIT(LED_SCK,  0xA1);   /* P2.1 */
-SBIT(LED_RCK,  0xA2);   /* P2.2 */
-SBIT(LED_OE_N, 0xA3);   /* P2.3 */
+SBIT(LED_OE_N, 0x84);   /* P0.4 */
+SBIT(LNA_PATH_OUT, 0x93);   /* P1.3 */
+SBIT(LED_SER,  0x94);   /* P1.4 */
+SBIT(LED_SCK,  0x95);   /* P1.5 */
+SBIT(LED_RCK,  0x96);   /* P1.6 */
+SBIT(FMN,      0xA0);   /* P2.0 (C2D) */
 
 SFR(P2MDOUT, 0xA6);     /* page 0x00 */
 SFR(PSCTL,   0x8F);     /* VERIFY: program store control */
@@ -136,14 +134,14 @@ void hal_init(void)
     RSTSRC = RSTSRC_PORSF;              /* ... and make it a reset source */
 
     /* latches first: safe RF state, LEDs dark */
-    P0 = 0x2Fu;                         /* LNA_EN=0, LNA_PATH=0, TP=0, inputs 1 */
-    P1 = 0x00u;                         /* V=000 (THRU), FMN=0, spares low      */
-    P2 = 0x08u;                         /* lamp chain idle, OE_N=1              */
+    P0 = 0x3Fu;                         /* LNA_EN=0, LNA_PATH=0, OE_N=1, inputs 1 */
+    P1 = 0x00u;                         /* V=000 (THRU), LNA_PATH_OUT=0, lamp chain idle */
+    P2 = 0x00u;                         /* FMN=0                                 */
     P0MDIN  = 0xF1u;                    /* P0.1..P0.3 analog                    */
-    P0MDOUT = 0xD0u;                    /* P0.4, P0.6, P0.7 push-pull           */
+    P0MDOUT = 0xD0u;                    /* P0.4 (OE_N), P0.6, P0.7 push-pull    */
     P1MDIN  = 0xFFu;
     P1MDOUT = 0xFFu;
-    P2MDOUT = 0x0Fu;
+    P2MDOUT = 0x01u;                    /* P2.0 FMN push-pull                   */
     P0SKIP  = 0xFFu;                    /* no crossbar peripherals              */
     P1SKIP  = 0xFFu;
     XBR0 = 0x00u;
@@ -299,7 +297,8 @@ void hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en)
         LNA_PATH = LNA_PATH_OUT = 0;
     if (!lna_en)
         LNA_EN = 0;
-    P1 = (uint8_t)((P1 & 0xF0u) | (code & 7u) | (fmn ? 0x08u : 0u));
+    P1 = (uint8_t)((P1 & 0xF8u) | (code & 7u));
+    FMN = fmn ? 1 : 0;
     if (lna_en)
         LNA_EN = 1;
     if (lna_path)

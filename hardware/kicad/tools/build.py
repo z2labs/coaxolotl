@@ -125,17 +125,16 @@ def build_library(path: pathlib.Path):
     base = g.Library()
     syms = [
         ic_symbol(
-            "EFM8BB21F16G-C-QSOP24", "U", "Package_SO:QSOP-24_3.9x8.7mm_P0.635mm",
+            "EFM8BB21F16G-C-QFN20", "U", "coaxolotl:EFM8_QFN-20-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
             "https://www.silabs.com/documents/public/data-sheets/efm8bb2-datasheet.pdf",
-            "EFM8 Busy Bee 8051 MCU, 16 kB flash. Pins grouped: inputs left, outputs right",
-            left=[("7", "RSTb/C2CK"), ("8", "P3.0/C2D")] + [None] * 7 + [("23", "P0.5")] + [None] * 5 +
-                 [("1", "P0.3/ADC")] + [None] * 5 + [("2", "P0.2/ADC")] + [None] * 5 +
-                 [("4", "P0.0/PMATCH"), ("3", "P0.1/ADC")] + [None] * 5 + [("24", "P0.4/TX")],
-            right=[("22", "P0.6"), ("21", "P0.7"), ("20", "P1.0"), ("19", "P1.1"), ("18", "P1.2"),
-                   ("17", "P1.3"), None, ("12", "P2.0"), ("11", "P2.1"), ("10", "P2.2"), ("9", "P2.3"),
-                   None, ("16", "P1.4"), ("15", "P1.5"), ("14", "P1.6"), ("13", "P1.7")],
-            width=30.48, top_pins=[("6", "VDD")], bottom_pins=[("5", "GND")],
-            pin_types={"6": "power_in", "5": "power_in", "7": "input"}),
+            "EFM8 Busy Bee 8051 MCU, 16 kB flash, QFN20 (the QSOP24 is end of life). Inputs left, outputs right",
+            left=[("5", "RSTb/C2CK"), ("6", "P2.0/C2D")] + [None] * 7 + [("17", "P0.5")] + [None] * 5 +
+                 [("19", "P0.3/ADC")] + [None] * 5 + [("20", "P0.2/ADC")] + [None] * 5 +
+                 [("2", "P0.0/PMATCH"), ("1", "P0.1/ADC")] + [None] * 6,          # same height as the QSOP24 symbol
+            right=[("16", "P0.6"), ("15", "P0.7"), ("14", "P1.0"), ("13", "P1.1"), ("11", "P1.2"),
+                   ("10", "P1.3"), None, ("9", "P1.4"), ("8", "P1.5"), ("7", "P1.6"), ("18", "P0.4")],
+            width=30.48, top_pins=[("4", "VDD")], bottom_pins=[("3", "GND"), ("12", "GND"), ("21", "EP")],
+            pin_types={"4": "power_in", "3": "power_in", "12": "power_in", "21": "power_in", "5": "input"}),
         ic_symbol(
             "LM66100DCK", "U", "Package_TO_SOT_SMD:SOT-363_SC-70-6",
             "https://www.ti.com/lit/ds/symlink/lm66100.pdf",
@@ -441,72 +440,76 @@ def sheet_power(lib) -> DSheet:
 
 
 def sheet_mcu(lib) -> DSheet:
-    s = sheet(lib, "MCU", "mcu.kicad_sch", "EFM8BB21F16G, C2 debug, ADC input conditioning")
+    s = sheet(lib, "MCU", "mcu.kicad_sch", "EFM8BB21F16G (QFN20), C2 debug, ADC input conditioning")
     s.zone = "DIGITAL"
     s.frame(76.2, 53.34, 167.64, 142.24, "MCU")
-    s.add(Part("U5", "coaxolotl:EFM8BB21F16G-C-QSOP24", "EFM8BB21F16G-C(QSOP24)", 165.1, 127.0, 0,
-               "Package_SO:QSOP-24_3.9x8.7mm_P0.635mm",
-               {"6": "+3V3", "5": "GND", "7": "RST_N", "8": "C2D", "23": "FAULT_N", "1": "ILNA_ADC",
-                "2": "SCAP_ADC", "4": "SENSE", "3": "SENSE", "24": "TP_TX",
-                "22": "LNA_EN", "21": "LNA_PATH", "20": "SW_V1", "19": "SW_V2", "18": "SW_V3", "17": "FMN",
-                "12": "LED_SER", "11": "LED_SCK", "10": "LED_RCK", "9": "LED_OE_N",
-                "16": "LNA_PATH_OUT", "15": None, "14": None, "13": None},
+    # QFN20: 16 port pins, all used. FMN shares P2.0 with C2D (through R30: the debugger overrides it).
+    s.add(Part("U5", "coaxolotl:EFM8BB21F16G-C-QFN20", "EFM8BB21F16G-C(QFN20)", 165.1, 127.0, 0,
+               "coaxolotl:EFM8_QFN-20-1EP_3x3mm_P0.5mm_EP1.7x1.7mm",
+               {"4": "+3V3", "3": "GND", "12": "GND", "21": "GND", "5": "RST_N", "6": "C2D", "17": "FAULT_N",
+                "19": "ILNA_ADC", "20": "SCAP_ADC", "2": "SENSE", "1": "SENSE",
+                "16": "LNA_EN", "15": "LNA_PATH", "14": "SW_V1", "13": "SW_V2", "11": "SW_V3",
+                "10": "LNA_PATH_OUT", "9": "LED_SER", "8": "LED_SCK", "7": "LED_RCK", "18": "LED_OE_N"},
                txt=(168.91, 176.53)))
-    s.add(C("C15", "100nF/16V/10%", 172.72, 69.85, "+3V3", "GND", Place="U5.6 (closest)"))
-    s.add(C("C14", "1uF/16V/10%", 193.04, 69.85, "+3V3", "GND", Place="U5.6"))
-    s.w(s.pt("U5", "6"), (165.1, 63.5))
+    s.add(C("C15", "100nF/16V/10%", 172.72, 69.85, "+3V3", "GND", Place="U5.4 (closest)"))
+    s.add(C("C14", "1uF/16V/10%", 193.04, 69.85, "+3V3", "GND", Place="U5.4"))
+    s.w(s.pt("U5", "4"), (165.1, 63.5))
     s.rail("+3V3", 165.1, 63.5)
     s.w((165.1, 66.04), (193.04, 66.04))
     s.gnd("C15", "2")
     s.gnd("C14", "2")
-    s.gnd("U5", "5")
+    for g_ in ("3", "12", "21"):
+        s.gnd("U5", g_)
     s.add(Part("J1", "Connector_Generic:Conn_01x04", "C2_DEBUG", 101.6, 86.36, 180,
                "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
                {"1": "GND", "2": "C2D", "3": "RST_N", "4": "+3V3"}, {"Place": "edge"}, dnp=True))
-    s.add(R("R13", "10k/5%", 139.7, 76.2, "+3V3", "RST_N", Place="U5.7"))
-    s.w(s.pt("J1", "3"), s.pt("U5", "7"))
-    s.w(s.pt("J1", "2"), s.pt("U5", "8"))
+    s.add(R("R13", "10k/5%", 139.7, 76.2, "+3V3", "RST_N", Place="U5.5"))
+    s.w(s.pt("J1", "3"), s.pt("U5", "5"))
+    s.w(s.pt("J1", "2"), s.pt("U5", "6"))
+    s.label("C2D", *s.pt("U5", "6"), 180)
     s.rail_pin("J1", "4", "+3V3")
     s.gnd("J1", "1")
     s.rail_pin("R13", "1", "+3V3")
     s.w(s.pt("R13", "2"), (139.7, 83.82))
-    s.add(R("R6", "100k/5%", 129.54, 99.06, "+3V3", "FAULT_N", Place="U5.23"))
-    s.pw("U5", "23", (99.06, None))
+    s.add(R("R6", "100k/5%", 129.54, 99.06, "+3V3", "FAULT_N", Place="U5.17"))
+    s.pw("U5", "17", (99.06, None))
     s.hlabel("FAULT_N", 99.06, 106.68, "L", "input")
     s.rail_pin("R6", "1", "+3V3")
     s.w(s.pt("R6", "2"), (129.54, 106.68))
     s.zone = "ANALOG"
-    s.add(R("R8", "1k/1%", 124.46, 121.92, "ILNA", "ILNA_ADC", rot=90, Place="U5.1"))
-    s.add(C("C7", "100nF/16V/10%", 137.16, 125.73, "ILNA_ADC", "GND", Place="U5.1"))
-    s.add(C("C11", "100nF/16V/10%", 137.16, 140.97, "SCAP_ADC", "GND", Place="U5.2"))
-    s.add(C("C2", "10nF/50V/10%", 134.62, 156.21, "SENSE", "GND", Place="U5.4"))
+    s.add(R("R8", "1k/1%", 124.46, 121.92, "ILNA", "ILNA_ADC", rot=90, Place="U5.19"))
+    s.add(C("C7", "100nF/16V/10%", 137.16, 125.73, "ILNA_ADC", "GND", Place="U5.19"))
+    s.add(C("C11", "100nF/16V/10%", 137.16, 140.97, "SCAP_ADC", "GND", Place="U5.20"))
+    s.add(C("C2", "10nF/50V/10%", 134.62, 156.21, "SENSE", "GND", Place="U5.2"))
     s.add(Part("TP6", "Connector:TestPoint", "TP/SENSE", 111.76, 152.4, 0, TP, {"1": "SENSE"}, dnp=True))
     s.zone = "DIGITAL"
-    s.add(Part("TP1", "Connector:TestPoint", "TP/TX", 124.46, 170.18, 0, TP, {"1": "TP_TX"}, dnp=True))
-    s.w(s.pt("R8", "2"), s.pt("U5", "1"))
+    s.add(R("R30", "1k/1%", 200.66, 170.18, "C2D", "FMN", rot=90, Place="U5.6",
+            Note="FMN shares P2.0 with C2D: the debugger overrides the line through this resistor"))
+    s.w(s.pt("R8", "2"), s.pt("U5", "19"))
     s.pw("R8", "1", (99.06, None))
     s.hlabel("ILNA", 99.06, 121.92, "L", "input")
     s.gnd("C7", "2")
-    s.pw("U5", "2", (99.06, None))
+    s.pw("U5", "20", (99.06, None))
     s.hlabel("SCAP_ADC", 99.06, 137.16, "L", "input")
     s.gnd("C11", "2")
-    s.pw("U5", "4", (142.24, None))
-    s.pw("U5", "3", (142.24, None), (None, 152.4))
+    s.pw("U5", "2", (142.24, None))
+    s.pw("U5", "1", (142.24, None), (None, 152.4))
     s.w((142.24, 152.4), (99.06, 152.4))
     s.hlabel("SENSE", 99.06, 152.4, "L", "input")
     s.gnd("C2", "2")
-    s.w(s.pt("U5", "24"), s.pt("TP1", "1"))
-    for num, net in [("22", "LNA_EN"), ("21", "LNA_PATH"), ("20", "SW_V1"), ("19", "SW_V2"),
-                     ("18", "SW_V3"), ("17", "FMN"), ("16", "LNA_PATH_OUT"), ("12", "LED_SER"), ("11", "LED_SCK"),
-                     ("10", "LED_RCK"), ("9", "LED_OE_N")]:
+    for num, net in [("16", "LNA_EN"), ("15", "LNA_PATH"), ("14", "SW_V1"), ("13", "SW_V2"),
+                     ("11", "SW_V3"), ("10", "LNA_PATH_OUT"), ("9", "LED_SER"), ("8", "LED_SCK"),
+                     ("7", "LED_RCK"), ("18", "LED_OE_N")]:
         end = s.pw("U5", num, (215.9, None))
         s.hlabel(net, *end, "R", "output")
-    for num in ("15", "14", "13"):
-        s.nc("U5", num)
+    s.w(s.pt("R30", "1"), (s.pt("R30", "1")[0] - 2.54, s.pt("R30", "1")[1]))
+    s.label("C2D", s.pt("R30", "1")[0] - 2.54, s.pt("R30", "1")[1], 180)
+    end = s.pw("R30", "2", (215.9, None))
+    s.hlabel("FMN", *end, "R", "output")
     s.intent("J1: 1=GND 2=C2D 3=C2CK 4=3V3", 86.36, 73.66)
-    s.intent("Pinout follows placement: QSOP pins 1-12 (ADC, debug, lamp chain P2.x) face power/panel,",
+    s.intent("QFN20 (QSOP24 end of life): all 16 port pins used; the old TP_TX test point is gone,",
              78.74, 184.15)
-    s.intent("pins 13-24 (switch control, LNA_EN, FAULT_N) face the RF chain: no line crosses the MCU.",
+    s.intent("LED_OE_N moved to P0.4, the lamp chain to P1.4-P1.6, FMN to P2.0/C2D through R30.",
              78.74, 187.33)
     s.intent("SYSCLK = HFOSC0/8 = 3.0625 MHz, Snooze when idle (no clock, no spurs). ILNA RC: fc = 1.6 kHz",
              78.74, 190.5)
@@ -571,10 +574,10 @@ def sheet_rf_fe(lib) -> DSheet:
     # protection -------------------------------------------------------------
     s.frame(15.24, 45.72, 68.58, 58.42, "Antenna input + protection")
     s.add(Part("J2", "Connector:Conn_Coaxial", "SMA/EDGE(ANT)", 25.4, y0, 0,
-               "Connector_Coaxial:SMA_Amphenol_132289_EdgeMount", {"1": "ANT", "2": "GND"},
+               "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001", {"1": "ANT", "2": "GND"},
                {"Place": "edge"}, mirror=True, txt=(25.4, 66.04, None)))
-    s.add(Part("GDT1", "Device:GDT_2Pin", "4532-090V(1812)", 40.64, 82.55, 0, "coaxolotl:GDT_SMD_1812",
-               {"3": "ANT", "1": "GND"}, {"MPN": "4532-090V", "LCSC": "C476204", "Note": "90 V, 0.5 pF", "Place": "J2, shortest GND"},
+    s.add(Part("GDT1", "Device:GDT_2Pin", "4532-091-LF(1812)", 40.64, 82.55, 0, "coaxolotl:GDT_SMD_1812",
+               {"3": "ANT", "1": "GND"}, {"MPN": "4532-091-LF", "LCSC": "C78323", "Note": "90 V, Brightking 4532 series", "Place": "J2, shortest GND"},
                txt=(40.64, 96.52, None)))
     s.add(Part("D6", "Diode:BAV99", "BAV99W(SOT323)", 58.42, 82.55, 180, "Package_TO_SOT_SMD:SOT-323_SC-70",
                {"3": "ANT", "1": "GND", "2": "GND"}, {"Note": "clamp +-0.7 V, ~1.5 pF"}, txt=(58.42, 96.52, None)))
@@ -844,7 +847,7 @@ def sheet_bank(lib) -> DSheet:
     s.add(Part("L7", "Device:L", "1mH/0.2A", xl, y1 - 26.67, 0, "Inductor_SMD:L_Bourns_SRR1260",
                {"1": "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
     s.add(Part("J3", "Connector:Conn_Coaxial", "SMA/EDGE(RTL-SDR)", X + 55.88, y1, 0,
-               "Connector_Coaxial:SMA_Amphenol_132289_EdgeMount", {"1": "COAX", "2": "GND"},
+               "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001", {"1": "COAX", "2": "GND"},
                {"Place": "edge"}, txt=(X + 58.42, y1 - 8.89)))
     s.pw("U11", "22", s.pt("C33", "1"))
     s.w(s.pt("C33", "2"), s.pt("J3", "1"))
