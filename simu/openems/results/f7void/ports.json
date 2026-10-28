@@ -20,5 +20,10 @@
   "L701.2",
   "L702.1",
   "L702.2"
- ]
+ ],
+ "simulator": {
+  "path": "/home/rf/coax_sim2/twin_z170/kicad_sim.py",
+  "mtime": "2026-10-28 16:29",
+  "md5": "e7dd71be3ca91bb01b0919d5eb308006"
+ }
 }
