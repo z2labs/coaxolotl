@@ -25,6 +25,14 @@ SWITCH_PINS = {0: ("24", "19"), 1: ("2", "17"), 2: ("4", "15"), 3: ("6", "13"), 
                6: ("17", "2"), 7: ("19", "24")}
 
 
+def twin_version():
+    """the kicad_sim.py actually imported: path, date, md5 - compare across machines before a run (and in results)"""
+    import hashlib, time
+    f = os.path.abspath(ks.__file__)
+    return dict(path=f, mtime=time.strftime("%Y-%m-%d %H:%M", time.localtime(os.path.getmtime(f))),
+                md5=hashlib.md5(open(f, "rb").read()).hexdigest())
+
+
 def lane_parts(k):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/..")
     try:
@@ -110,8 +118,9 @@ def main():
         names.append(f"{ref}.{pn}")
     os.makedirs(a.out, exist_ok=True)
     json.dump(dict(board=os.path.basename(a.board), lanes=lanes, window=[float(x0), float(y0), float(x1), float(y1)],
-                   ports=names), open(os.path.join(a.out, "ports.json"), "w"), indent=1)
+                   ports=names, simulator=twin_version()), open(os.path.join(a.out, "ports.json"), "w"), indent=1)
     print(f"{len(ports)} ports, window {x1 - x0:.1f} x {y1 - y0:.1f} mm", flush=True)
+    print("simulator:", twin_version(), flush=True)
     if a.exc or a.collect:
         split(a, b, ports)
     else:
