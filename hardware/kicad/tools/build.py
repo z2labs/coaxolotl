@@ -574,7 +574,7 @@ def sheet_rf_fe(lib) -> DSheet:
     # protection -------------------------------------------------------------
     s.frame(15.24, 45.72, 68.58, 58.42, "Antenna input + protection")
     s.add(Part("J2", "Connector:Conn_Coaxial", "SMA/EDGE(ANT)", 25.4, y0, 0,
-               "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001", {"1": "ANT", "2": "GND"},
+               "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001_Air", {"1": "ANT", "2": "GND"},
                {"Place": "edge"}, mirror=True, txt=(25.4, 66.04, None)))
     s.add(Part("GDT1", "Device:GDT_2Pin", "4532-091-LF(1812)", 40.64, 82.55, 0, "coaxolotl:GDT_SMD_1812",
                {"3": "ANT", "1": "GND"}, {"MPN": "4532-091-LF", "LCSC": "C78323", "Note": "90 V, Brightking 4532 series", "Place": "J2, shortest GND"},
@@ -847,7 +847,7 @@ def sheet_bank(lib) -> DSheet:
     s.add(Part("L7", "Device:L", "1mH/0.2A", xl, y1 - 26.67, 0, "Inductor_SMD:L_Bourns_SRR1260",
                {"1": "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
     s.add(Part("J3", "Connector:Conn_Coaxial", "SMA/EDGE(RTL-SDR)", X + 55.88, y1, 0,
-               "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001", {"1": "COAX", "2": "GND"},
+               "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001_Air", {"1": "COAX", "2": "GND"},
                {"Place": "edge"}, txt=(X + 58.42, y1 - 8.89)))
     s.pw("U11", "22", s.pt("C33", "1"))
     s.w(s.pt("C33", "2"), s.pt("J3", "1"))

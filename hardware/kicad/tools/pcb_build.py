@@ -94,7 +94,9 @@ def edge_arc(a, m, b):
     s.SetArcGeometry(P(*a), P(*m), P(*b)); s.SetLayer(pcbnew.Edge_Cuts); s.SetWidth(mm(0.1)); board.Add(s)
 
 
-for a, b in (((0, 0), (W, 0)), ((W, 0), (W, H)), ((W, H), (0, H)), ((0, H), (0, 0))):
+NOTCH = 0.95                 # SMA air-launch notches (J2 left, J3 right, on the RF axis): the footprints draw the
+for a, b in (((0, 0), (W, 0)), ((W, 0), (W, YC - NOTCH)), ((W, YC + NOTCH), (W, H)), ((W, H), (0, H)),
+             ((0, H), (0, YC + NOTCH)), ((0, YC - NOTCH), (0, 0))):           # notch walls, the outline leaves the mouth open
     edge_seg(a, b)
 ym = (SLOT_Y0 + SLOT_Y1) / 2
 edge_seg((SLOT_X0, SLOT_Y0), (SLOT_X1, SLOT_Y0))
@@ -359,8 +361,8 @@ def lay(items, poly, side, s0=0.0, s_end=0.0, name=""):
 # ------------------------------------------------------------ 1) RF anchors
 DOWN, UP, LEFT, RIGHT = (0, 1), (0, -1), (-1, 0), (1, 0)
 X_U6, X_U7, X_U8 = 18.0, 33.0, 42.0
-put("J2", 2.701, YC, 180)             # BWSMA-KE-P001: board edge at local x = +2.70; rot 180 puts it on the left edge (1 um in)
-put("J3", W - 2.701, YC, 0)
+put("J2", 0.0, YC, 0)                 # BWSMA-KE-P001 air launch: origin on the board edge, board inward +x
+put("J3", W, YC, 180)
 put("U6", X_U6, YC, orient("U6", {"7": LEFT, "11": DOWN}))     # RFC to the antenna, RF2 (LNA) down
 put("U7", X_U7, YC, orient("U7", {"7": RIGHT, "2": DOWN}))     # RFC to the bank, RF1 (LNA out) down
 put("U8", X_U8, YC, orient("U8", {"22": LEFT}))                 # RFC to U7, controls toward U11
