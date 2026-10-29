@@ -631,7 +631,7 @@ for (x0, y0, x1, y1) in LABEL_BOXES:
 text("COAXOLOTL", 90.0, 8.0, 2.0, 0, 0.3)
 text("ctrl rev 0.1  z2labs", 90.0, 11.5, 1.0)
 text("CERN-OHL-S-2.0", 90.0, 14.0, 1.0)
-text("RTL-SDR", 92.0, YJ - 7.0, 1.2)
+text("RTL-SDR", 97.5, YJ - 8.0, 0.8, 90)
 text("RF CTRL", padpos[("J6", "1")][0] - 1.0, H - 9.6, 0.8, just="left")
 for k, nm in enumerate(["3V3", "LNA", "V1", "V2", "V3", "PTH", "OUT", "FMN", "GND", "GND"]):
     q = padpos[("J6", str(k + 1))]
