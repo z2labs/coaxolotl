@@ -510,7 +510,7 @@ for n in range(48):
 nfan = 0
 for ref, pin, q, v in FAN:
     add_track(q, v, 0.15, pinnet[(ref, pin)])
-    add_via(*v, net=pinnet[(ref, pin)], d=0.4, h=0.2)
+    add_via(*v, net=pinnet[(ref, pin)], d=0.45, h=0.2)   # 0.4 = JLC annular-ring Danger
     nfan += 1
 print("fan-out vias (switch control, MCU):", nfan)
 
