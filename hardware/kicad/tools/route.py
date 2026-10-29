@@ -90,6 +90,10 @@ def export_dsn(board, path, closed):
     assert pcbnew.ExportSpecctraDSN(board, path), "DSN export failed"
     t = open(path, encoding="utf-8").read()
     t = t.replace("    (boundary", keepouts(board) + "\n    (boundary", 1)
+    # KiCad writes no-via rule areas as (via_keepout ... (polygon F.Cu ...)); srouter treats every keep-out kind as
+    # a full keep-out on its layers, so those would block tracks too. On a layer srouter does not route they block
+    # vias only (the RF board: In1 is closed anyway)
+    t = re.sub(r'\(via_keepout ("[^"]*") \(polygon [FB]\.Cu ', r'(keepout \1 (polygon In1.Cu ', t)
     for l in closed:
         t = re.sub(r"\(layer " + re.escape(l) + r"\s*\(type \w+\)", f"(layer {l} (type power)", t)
     open(path, "w", encoding="utf-8").write(t)
