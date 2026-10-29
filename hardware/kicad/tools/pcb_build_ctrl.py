@@ -617,6 +617,18 @@ for (x0, y0, x1, y1) in ((0.0, SLOT_Y0 - 0.6, 80.6, SLOT_Y1 + 0.6),):
         ol.Append(mm(OX + x), mm(OY + y))
     board.Add(ko)
 
+# J3 air-launch notch: srouter only sees the board outline, not the notch walls drawn in the footprint, so keep
+# tracks and vias out of the notch + the 0.3 mm edge clearance (the GND pass would cross it on B.Cu)
+ko = pcbnew.ZONE(board); ko.SetIsRuleArea(True)
+ko.SetDoNotAllowVias(True); ko.SetDoNotAllowTracks(True); ko.SetDoNotAllowPads(False)
+ko.SetDoNotAllowZoneFills(False); ko.SetDoNotAllowFootprints(False)
+ls_ = pcbnew.LSET(); [ls_.AddLayer(l) for l in (pcbnew.F_Cu, pcbnew.B_Cu)]
+ko.SetLayerSet(ls_); ko.SetZoneName("J3_NOTCH_KEEPOUT")
+ol = ko.Outline(); ol.NewOutline()
+for (x, y) in ((W - 2.8 - 0.35, YJ - NOTCH - 0.35), (W, YJ - NOTCH - 0.35), (W, YJ + NOTCH + 0.35), (W - 2.8 - 0.35, YJ + NOTCH + 0.35)):
+    ol.Append(mm(OX + x), mm(OY + y))
+board.Add(ko)
+
 # no via may land on a lamp name (silk_dfm would push the text off its grid)
 for (x0, y0, x1, y1) in LABEL_BOXES:
     ko = pcbnew.ZONE(board); ko.SetIsRuleArea(True)
