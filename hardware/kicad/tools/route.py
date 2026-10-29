@@ -68,7 +68,8 @@ PASSES = [
 
 def keepouts(board):
     """vias off SMD pads (JLC DFM): a via keep-out on the closed In1 GND plane over every SMD pad, inset so a
-    0.6 mm via ring ends clear of the pad - srouter blocks vias through every keep-out layer"""
+    0.6 mm via ring ends clear of the pad - srouter blocks vias through every keep-out layer. On the 2-layer
+    board In1.Cu does not exist: srouter maps the keep-out to no routing layer, so it blocks vias only"""
     out = []
     for fp in board.GetFootprints():
         for p in fp.Pads():
@@ -86,8 +87,7 @@ def keepouts(board):
 def export_dsn(board, path, closed):
     assert pcbnew.ExportSpecctraDSN(board, path), "DSN export failed"
     t = open(path, encoding="utf-8").read()
-    if not CTRL:          # 2 layers: no closed plane to carry the via keep-outs; via_dfm moves the vias afterwards
-        t = t.replace("    (boundary", keepouts(board) + "\n    (boundary", 1)
+    t = t.replace("    (boundary", keepouts(board) + "\n    (boundary", 1)
     for l in closed:
         t = re.sub(r"\(layer " + re.escape(l) + r"\s*\(type \w+\)", f"(layer {l} (type power)", t)
     open(path, "w", encoding="utf-8").write(t)
