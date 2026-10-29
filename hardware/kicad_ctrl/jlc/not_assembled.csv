@@ -1,0 +1,7 @@
+Designator,Value,Footprint,Why
+C10,0.1F/5.5V,CP_Radial_D13.0mm_P5.00mm,DNP
+J1,C2_DEBUG,PinHeader_1x04_P2.54mm_Vertical,DNP
+J4,NA(HDR1x7/2.54),PinHeader_1x07_P2.54mm_Vertical,DNP
+J5,NA(HDR1x7/2.54),PinHeader_1x07_P2.54mm_Vertical,DNP
+J6,RF_CTRL(via row),PinHeader_1x10_P2.54mm_Vertical,DNP
+TP6,TP/SENSE,TestPoint_Pad_D1.0mm,DNP
