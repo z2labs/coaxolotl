@@ -5,7 +5,7 @@
 Input : hardware/kicad/coaxolotl_placed.kicad_pcb (written by pcb_build.py)
 Output: hardware/kicad/coaxolotl.kicad_pcb (routed), hardware/kicad/route/<pass>.{dsn,ses,log,json}
 
-GND is never routed: In1 is the solid GND plane, F/In2/B carry GND fills, every GND pad has its own via.
+GND is not routed on the RF board (pass 5 wires it on the 2-layer control board): In1 is the solid GND plane, F/In2/B carry GND fills, every GND pad has its own via.
   pass 1 rf     the RF nets alone, F.Cu only (CPWG over the In1 plane), vias almost forbidden
   pass 2 power  coax DC, hold-up, LNA supply, +3V3: In2 + B.Cu open, F.Cu at a cost
   pass 3 rest   control and lamp nets: In2 + B.Cu open, F.Cu at a higher cost
@@ -63,7 +63,9 @@ PASSES = [
     ("pass2_power", POWER, [], ["-top", "F.Cu:3", "-via", "3000", "-it", "60"]),
     ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*", "/MCU/LED_*", "Net-(J1-*"], [], ["-top", "F.Cu:2", "-via", "1200", "-it", "70", "-stall", "15"]),
     ("pass4_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "40", "-stall", "10"]),
-]
+] + ([("pass5_gnd", ["GND"], [], ["-via", "800", "-it", "30", "-stall", "10"])] if CTRL else [])
+# 2 layers: no GND plane, and the F/B fills break into islands between the tracks; pass 5 wires every GND pad
+# into one tree so no island hangs on a pour that is cut off
 
 
 def keepouts(board):
@@ -217,7 +219,7 @@ def unconnected_nets():
     for u in d.get("unconnected_items", []):
         for it in u["items"]:
             m = re.search(r"\[([^\]]+)\]", it["description"])
-            if m and m.group(1) != "GND":
+            if m and (CTRL or m.group(1) != "GND"):
                 n = m.group(1)
                 if n.startswith("Net-("):          # DRC prints the unescaped name; the netlist keeps {slash}
                     n = n.replace("/", "{slash}")
@@ -229,7 +231,7 @@ def run_pass(b, name, only, closed, args, rules_nets, summary, ign_rf=None):
     if True:
         dsn, ses, rep, rj = (os.path.join(OUT, name + e) for e in (".dsn", ".ses", "_report.json", "_rules.json"))
         export_dsn(b, dsn, closed)
-        ign = ["GND"] + (RF if (name != "pass1_rf" if ign_rf is None else ign_rf) else [])
+        ign = ([] if "GND" in only else ["GND"]) + (RF if (name != "pass1_rf" if ign_rf is None else ign_rf) else [])
         json.dump({"ignore_nets": ign, "nets": rules_nets, "only": "|".join(only), "smooth": True,
                    "style": "oct", "pad_entry": True}, open(rj, "w"), indent=1)
         cmd = [SR, "-de", dsn, "-do", ses, "-rules", rj, "-report", rep] + args
