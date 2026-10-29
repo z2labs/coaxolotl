@@ -20,10 +20,10 @@ PRJ = os.path.normpath(os.path.join(HERE, "..", "..", "kicad_ctrl"))
 LIBDIR = os.path.normpath(os.path.join(HERE, ".."))            # coaxolotl.pretty lives with the RF board
 FPDIR = os.environ.get("KICAD_FP", r"C:\Program Files\KiCad\10.0\share\kicad\footprints")
 OX, OY = 50.0, 40.0
-W, H = 100.0, 76.0
+W, H = 100.0, 70.0
 STRIP_Y1, SLOT_Y0, SLOT_Y1 = 32.0, 32.0, 34.0
 SLOT_X0, SLOT_X1 = 5.0, 79.0
-YJ = 58.0                    # RTL-SDR SMA axis (right edge)
+YJ = 54.0                    # RTL-SDR SMA axis (right edge)
 EDGE = 0.8
 GAP = 0.5
 DOWN, UP, LEFT, RIGHT = (0, 1), (0, -1), (-1, 0), (1, 0)
@@ -246,7 +246,7 @@ def block_line(a, b, hw=0.6):
 put("J3", W, YJ, 180)                     # BWSMA-KE-P001 air launch, body out of the right edge
 # J6: the RF control hole row along the bottom-left, pin 1 left
 put("J6", 8.0, H - 5.0, orient("J6", {"10": RIGHT}))
-BLOCK.append((5.0, H - 7.5, 8.0 + 9 * 2.54 + 3.0, H - 2.5))
+BLOCK.append((5.0, H - 10.5, 8.0 + 9 * 2.54 + 3.0, H - 2.5))     # the hole row and its pin names
 
 # ------------------------------------------------------------ 2) lamp strip
 LAMP_X0, LAMP_DX = 5.0, 3.2
@@ -298,11 +298,11 @@ for i, x in enumerate(bites):
 FAN = []
 CLEAR_AROUND = {"U5": 2.4}
 SOFT = {
-    "L7": (86.0, 66.0, 0), "C10": (66.0, 66.0, 0),
-    "U5": (40.0, 48.0, 0), "J1": (30.0, 40.0, 90),
-    "U1": (50.0, 62.0, 0), "U4": (46.0, 70.0, 0), "U2": (60.0, 46.0, 0), "U3": (70.0, 46.0, 0),
-    "C9": (52.0, 70.0, 90), "R7": (66.0, 52.0, 0), "D1": (93.0, 52.0, 0),
-    "L6": (88.0, 54.0, 90), "L5": (93.0, 58.0, 0), "R24": (84.0, 54.0, 90),
+    "L7": (86.0, 61.0, 0), "C10": (67.0, 59.0, 0),
+    "U5": (40.0, 46.0, 0), "J1": (28.0, 40.0, 90),
+    "U1": (52.0, 56.0, 0), "U4": (46.0, 63.0, 0), "U2": (58.0, 43.0, 0), "U3": (68.0, 43.0, 0),
+    "C9": (53.0, 64.0, 90), "R7": (68.0, 48.0, 0), "D1": (93.0, 48.0, 0),
+    "L6": (88.0, 49.0, 90), "L5": (93.0, 54.0, 0), "R24": (84.0, 49.0, 90),
 }
 for ref, (x, y, r) in SOFT.items():
     if ref not in fps:
@@ -338,8 +338,7 @@ PARTNER = {
     "C46": ("U19", "16"), "C14": ("U5", "4"), "C15": ("U5", "4"), "C6": ("U4", "2"), "C13": ("U4", "2"),
     "C9": ("U4", "3"), "C12": ("U4", "3"), "C1": ("U1", "1"), "C3": ("U1", "3"), "C4": ("U2", "1"),
     "R1": ("U1", "1"), "D1": ("U1", "1"), "C8": ("FB1", "2"),
-    "R16": ("J6", "3"), "R17": ("J6", "4"), "R18": ("J6", "5"), "R15": ("J6", "6"), "R26": ("J6", "7"),
-    "R19": ("J6", "8"), "R30": ("U5", "6"), "R14": ("U2", "3"), "R20": ("U14", "13"),
+    "R30": ("U5", "6"), "R14": ("U2", "3"), "R20": ("U14", "13"),
     "R9": ("U1", "3"), "FB1": ("U1", "3"), "R2": ("U1", "1"), "D3": ("R9", "2"), "D2": ("R2", "2"),
 }
 PARTNER = {k: v for k, v in PARTNER.items() if k in fps}
@@ -633,7 +632,10 @@ text("COAXOLOTL", 90.0, 8.0, 2.0, 0, 0.3)
 text("ctrl rev 0.1  z2labs", 90.0, 11.5, 1.0)
 text("CERN-OHL-S-2.0", 90.0, 14.0, 1.0)
 text("RTL-SDR", 92.0, YJ - 7.0, 1.2)
-text("RF CTRL: 3V3 LNA V1 V2 V3 PATH OUT FMN GND GND", 8.0, H - 8.6, 0.8, just="left")
+text("RF CTRL", padpos[("J6", "1")][0] - 1.0, H - 9.6, 0.8, just="left")
+for k, nm in enumerate(["3V3", "LNA", "V1", "V2", "V3", "PTH", "OUT", "FMN", "GND", "GND"]):
+    q = padpos[("J6", str(k + 1))]
+    text(nm, q[0], q[1] - 2.0, 0.7, th=0.12)
 
 # ------------------------------------------------------------ save + project rules
 for ref, fp in fps.items():
