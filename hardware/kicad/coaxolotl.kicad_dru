@@ -1,5 +1,7 @@
 (version 1)
-# edge-mount SMA: the centre and ground pads run to the board edge by design
-(rule "SMA edge"
-  (condition "A.memberOfFootprint('J2') || A.memberOfFootprint('J3') || B.memberOfFootprint('J2') || B.memberOfFootprint('J3')")
-  (constraint edge_clearance (min 0mm)))
+# edge SMA: only the connector's own pads may touch the board edge and the milled notch (legs from x = 0, signal
+# pad from the notch bottom); pours, tracks and vias keep the normal 0.3 mm from every edge, notch walls included
+(rule "SMA edge pads"
+  (condition "(A.Type == 'Pad' && (A.memberOfFootprint('J2') || A.memberOfFootprint('J3'))) || (B.Type == 'Pad' && (B.memberOfFootprint('J2') || B.memberOfFootprint('J3')))")
+  (constraint edge_clearance (min 0mm))
+  (severity ignore))
