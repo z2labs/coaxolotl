@@ -124,6 +124,13 @@ def main(repair_only=False):
         print(f"repair {rnd + 1}: open nets {open_nets}", flush=True)
         if not open_nets:
             break
+        if bridge_gaps(b, open_nets):
+            pcbnew.SaveBoard(BOARD, b)
+            b = pcbnew.LoadBoard(BOARD)
+            open_nets = unconnected_nets()
+            print(f"repair {rnd + 1}: after gap bridging {open_nets}", flush=True)
+            if not open_nets:
+                break
         rf = [n for n in open_nets if n in RF]
         other = [n for n in open_nets if n not in RF]
         if rf:
@@ -212,6 +219,55 @@ def cleanup(b):
         removed += _delete_uuids(BOARD, kill)
     print(f"cleanup: {merged} duplicate vias, {removed} dangling items removed", flush=True)
     return pcbnew.LoadBoard(BOARD)
+
+
+def bridge_gaps(b, nets, gap=0.6):
+    """a track end that touches nothing gets a short segment to the nearest same-net copper on its layer within
+    `gap` mm (smoothing and the tidy leave sub-millimetre breaks srouter counts as connected, so repair never sees
+    them)"""
+    T = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
+    added = 0
+    for net in nets:
+        code = b.GetNetcodeFromNetname(net)
+        if code <= 0 or net == "GND":       # GND tracks end in the fills
+            continue
+        segs = [t for t in b.GetTracks() if t.GetNetCode() == code and t.GetClass() != "PCB_VIA"]
+        vias = [T(t.GetPosition()) for t in b.GetTracks() if t.GetNetCode() == code and t.GetClass() == "PCB_VIA"]
+        pads = [p for p in b.GetPads() if p.GetNetCode() == code]
+        for s in segs:
+            for e in (T(s.GetStart()), T(s.GetEnd())):
+                pe = pcbnew.VECTOR2I(pcbnew.FromMM(e[0]), pcbnew.FromMM(e[1]))
+                touch = any(o is not s and o.GetLayer() == s.GetLayer() and
+                            _d_pt_seg(e, T(o.GetStart()), T(o.GetEnd())) < 0.005 for o in segs)
+                touch = touch or any(abs(v[0] - e[0]) < 0.005 and abs(v[1] - e[1]) < 0.005 for v in vias)
+                touch = touch or any(p.IsOnLayer(s.GetLayer()) and p.HitTest(pe) for p in pads)
+                if touch:
+                    continue
+                best = None
+                for o in segs:
+                    if o is s or o.GetLayer() != s.GetLayer():
+                        continue
+                    a_, c_ = T(o.GetStart()), T(o.GetEnd())
+                    vx, vy = c_[0] - a_[0], c_[1] - a_[1]
+                    L = vx * vx + vy * vy
+                    k = 0 if L == 0 else max(0, min(1, ((e[0] - a_[0]) * vx + (e[1] - a_[1]) * vy) / L))
+                    q = (a_[0] + k * vx, a_[1] + k * vy)
+                    d = ((q[0] - e[0]) ** 2 + (q[1] - e[1]) ** 2) ** 0.5
+                    if d < gap and (best is None or d < best[0]):
+                        best = (d, q)
+                for p in pads:
+                    if p.IsOnLayer(s.GetLayer()):
+                        q = T(p.GetPosition())
+                        d = ((q[0] - e[0]) ** 2 + (q[1] - e[1]) ** 2) ** 0.5
+                        if d < gap + 0.5 and (best is None or d < best[0]):
+                            best = (d, q)
+                if best:
+                    n = pcbnew.PCB_TRACK(b)
+                    n.SetStart(pe); n.SetEnd(pcbnew.VECTOR2I(pcbnew.FromMM(best[1][0]), pcbnew.FromMM(best[1][1])))
+                    n.SetLayer(s.GetLayer()); n.SetWidth(s.GetWidth()); n.SetNetCode(code)
+                    b.Add(n); segs.append(n); added += 1
+                    print(f"   bridge {net} {s.GetLayer()} ({e[0]:.2f},{e[1]:.2f}) -> ({best[1][0]:.2f},{best[1][1]:.2f}) {best[0]:.2f} mm")
+    return added
 
 
 def unconnected_nets():
