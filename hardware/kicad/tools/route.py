@@ -61,7 +61,7 @@ def net_rules():
 PASSES = [
 ] + ([] if CTRL else [("pass1_rf", RF, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "80"])]) + [
     ("pass2_power", POWER, [], ["-top", "F.Cu:3", "-via", "3000", "-it", "60"]),
-    ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*", "/MCU/LED_*", "Net-(J1-*"], [], ["-top", "F.Cu:2", "-via", "1200", "-it", "70", "-stall", "15"]),
+    ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*", "/MCU/LED_*", "Net-(J1-*"], [], ["-top", "F.Cu:2", "-via", "1200"] + (["-it", "200", "-stall", "50"] if CTRL else ["-it", "70", "-stall", "15"])),
     ("pass4_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "40", "-stall", "10"]),
 ] + ([("pass5_gnd", ["GND"], [], ["-via", "800", "-it", "30", "-stall", "10"])] if CTRL else [])
 # 2 layers: no GND plane, and the F/B fills break into islands between the tracks; pass 5 wires every GND pad
