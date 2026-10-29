@@ -23,7 +23,7 @@ Qty,Comment,Designator,Footprint,LCSC Part #,MPN,Manufacturer,Basic/Extended,SMT
 1,22k/1%,R4,R_0603_1608Metric,C31850,0603WAF2202T5E,UNI-ROYAL,Basic,SMT,22k 1% 100mW,https://jlcpcb.com/partdetail/C31850,stock not shown; checked 2026-10-27
 1,150k/1%,R5,R_0603_1608Metric,C22807,0603WAF1503T5E,UNI-ROYAL,Basic,SMT,150k 1% 100mW,https://jlcpcb.com/partdetail/C22807,stock not shown; checked 2026-10-27
 1,100k/5%,R6,R_0603_1608Metric,C25803,0603WAF1003T5E,UNI-ROYAL,Basic,SMT,100k 1% 100mW,https://jlcpcb.com/partdetail/0603WAF1003T5E/C25803,stock not shown; checked 2026-10-27
-1,0R39/1%/0.25W,R7,R_1206_3216Metric,C343953,RS-06MR390FT,FH (Fenghua),Extended,SMT,390mR 1% 250mW thick film,https://jlcpcb.com/partdetail/320689-RS06MR390FT/C343953,ERJ-8BQFR39V not found on LCSC; nearest equivalent same 1206 package; stock not shown; checked 2026-10-27
+1,0R39/1%/0.25W,R7,R_1206_3216Metric,C25339,1206W4F390LT5E,UNI-ROYAL(Uniroyal Elec),Extended,SMT,390mR 1% 250mW thick film,https://jlcpcb.com/partdetail/C25339,RS-06MR390FT C343953 had 13 in stock; Uniroyal 1206 14296 in stock; checked 2026-10-29
 2,1k/1%,"R8,R30",R_0603_1608Metric,C21190,0603WAF1001T5E,UNI-ROYAL,Basic,SMT,1k 1% 100mW,https://jlcpcb.com/partdetail/0603WAF1001T5E/C21190,stock not shown; checked 2026-10-27
 1,100R/5%,R9,R_0603_1608Metric,C22775,0603WAF1000T5E,UNI-ROYAL,Basic,SMT,100R 1% 100mW,https://jlcpcb.com/partdetail/0603WAF1000T5E/C22775,"LCSC stock 2,781,900; checked 2026-10-27"
 2,220R/5%,"R10,R24",R_0603_1608Metric,C22962,0603WAF2200T5E,UNI-ROYAL,Basic,SMT,220R 1% 100mW,https://jlcpcb.com/partdetail/0603WAF2200T5E/C22962,stock not shown; checked 2026-10-27
