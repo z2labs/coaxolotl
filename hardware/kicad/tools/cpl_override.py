@@ -8,7 +8,8 @@ JLC body must point out of the board: J2 (left edge, ours rot 0) -> JLC rot 180;
 Diode polarity: jlc_rotfix fits the EasyEDA land pattern by pad NUMBER. KiCad diodes and LEDs have pad 1 = cathode,
 but some EasyEDA parts number the anode 1 (KT-0603R C2286 and KT-0603Y C2287 do, KT-0603G C12624 does not), so the
 fit turns those parts round. For every D* part whose EasyEDA symbol (easyeda_cache/<LCSC>.json) names pin 1 "A",
-the JLC rotation gets +180.
+the JLC rotation gets +180. CATHODE_NOT_PAD1 overrides parts whose symbol and land pattern disagree (the land
+pattern's cathode mark wins: JLC places by it).
 
     python3 cpl_override.py <jlc dir>        rewrites <name>_cpl_jlc*.csv in place (reads <name>_pos_kicad.csv)
 """
@@ -48,9 +49,14 @@ bomf = glob.glob(os.path.join(D, "*_bom_jlc.csv"))
 for row in (csv.DictReader(open(bomf[0], encoding="utf-8")) if bomf else []):
     for d in row["Designator"].split(","):
         lcsc_of[d.strip()] = row["LCSC Part #"]
+# EasyEDA parts whose symbol pin names disagree with their own land pattern: the cathode mark (chamfered silk
+# corner) of LED0603-R-RD_ORANGE (XL-1608UOC-06, C965800) sits at pad 2 although its symbol calls pin 1 K; the
+# identical land pattern of KT-0603Y (C2287) has the mark at pad 2 too and calls pin 2 K. JLC places by the land
+# pattern's mark, so the mark decides: value = True when the marked cathode is NOT pad 1.
+CATHODE_NOT_PAD1 = {"C965800": True}
 FLIP = set()
 for ref, code in lcsc_of.items():
-    if re.fullmatch(r"D\d+", ref) and pin1_is_anode(code):
+    if re.fullmatch(r"D\d+", ref) and CATHODE_NOT_PAD1.get(code, pin1_is_anode(code)):
         FLIP.add(ref)
 for f in glob.glob(os.path.join(D, "*_cpl_jlc*.csv")):
     rows = list(csv.reader(open(f, encoding="utf-8")))
@@ -63,4 +69,4 @@ for f in glob.glob(os.path.join(D, "*_cpl_jlc*.csv")):
         csv.writer(fh).writerows(rows)
 for k, v in OV.items():
     print(k, v)
-print("diode pin 1 = anode in EasyEDA, rotated 180:", ", ".join(sorted(FLIP, key=lambda s: int(s[1:]))) or "none")
+print("diode cathode mark not on pad 1 in EasyEDA, rotated 180:", ", ".join(sorted(FLIP, key=lambda s: int(s[1:]))) or "none")
