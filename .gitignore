@@ -12,3 +12,7 @@ hardware/kicad/*.kicad_prl
 # JLC: the zip holds the Gerbers; EasyEDA footprint downloads
 hardware/kicad/jlc/gerber/
 hardware/kicad/jlc/easyeda_cache/
+hardware/kicad_ctrl/route/
+hardware/kicad_ctrl/*-backups/
+hardware/kicad_ctrl/fp-info-cache
+hardware/kicad_ctrl/*.kicad_prl

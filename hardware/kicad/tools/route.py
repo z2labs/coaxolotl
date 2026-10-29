@@ -15,7 +15,8 @@ import os, sys, re, json, shutil, subprocess, time, fnmatch
 import pcbnew
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PRJ = os.path.normpath(os.path.join(HERE, ".."))
+CTRL = os.environ.get("COAX_VARIANT", "") == "ctrl"       # the 2-layer control board in hardware/kicad_ctrl
+PRJ = os.path.normpath(os.path.join(HERE, "..", "..", "kicad_ctrl") if CTRL else os.path.join(HERE, ".."))
 OUT = os.path.join(PRJ, "route")
 SR = os.environ.get("SROUTER", r"C:\Users\RF\Documents\GitHub\_claude_tmp\srouter-coax\target\release\srouter.exe")   # feat/cuda-wavefront build (-stall, H/V congestion)
 BOARD = os.path.join(PRJ, "coaxolotl.kicad_pcb")
@@ -26,7 +27,7 @@ pro = json.load(open(os.path.join(PRJ, "coaxolotl.kicad_pro"), encoding="utf-8")
 PATS = pro["net_settings"]["netclass_patterns"]
 RF = [p["pattern"] for p in PATS if p["netclass"] == "RF"]
 POWER = [p["pattern"] for p in PATS if p["netclass"] == "POWER"]
-assert RF and POWER, "net classes missing in coaxolotl.kicad_pro: run pcb_build.py first"
+assert (RF or CTRL) and POWER, "net classes missing in coaxolotl.kicad_pro: run pcb_build.py first"
 RF_W, RF_CLR = 0.25, 0.2       # routed at the QFN pin width, widened to RF_FAT afterwards
 RF_FAT = 0.35                  # 50 ohm CPWG on JLC04161H-7628 (0.21 mm to In1) with the 0.25 mm pour gap
 PWR_W = 0.4
@@ -58,7 +59,7 @@ def net_rules():
 
 
 PASSES = [
-    ("pass1_rf", RF, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "80"]),
+] + ([] if CTRL else [("pass1_rf", RF, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "80"])]) + [
     ("pass2_power", POWER, [], ["-top", "F.Cu:3", "-via", "3000", "-it", "60"]),
     ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*", "/MCU/LED_*", "Net-(J1-*"], [], ["-top", "F.Cu:2", "-via", "1200", "-it", "70", "-stall", "15"]),
     ("pass4_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "40", "-stall", "10"]),
@@ -85,7 +86,8 @@ def keepouts(board):
 def export_dsn(board, path, closed):
     assert pcbnew.ExportSpecctraDSN(board, path), "DSN export failed"
     t = open(path, encoding="utf-8").read()
-    t = t.replace("    (boundary", keepouts(board) + "\n    (boundary", 1)
+    if not CTRL:          # 2 layers: no closed plane to carry the via keep-outs; via_dfm moves the vias afterwards
+        t = t.replace("    (boundary", keepouts(board) + "\n    (boundary", 1)
     for l in closed:
         t = re.sub(r"\(layer " + re.escape(l) + r"\s*\(type \w+\)", f"(layer {l} (type power)", t)
     open(path, "w", encoding="utf-8").write(t)

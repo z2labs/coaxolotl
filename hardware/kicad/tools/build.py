@@ -25,7 +25,12 @@ import filters
 from draw import DSheet  # noqa: E402
 from schgen import Part, Sym  # noqa: E402
 
-OUT = pathlib.Path(__file__).resolve().parent.parent
+import os
+# COAX_VARIANT=ctrl: the 2-layer control board (no RF: bias-T + coax for power and OOK, MCU, lamp strip, and a via row
+# that carries the RF switch controls and supplies to a later RF board) -> hardware/kicad_ctrl
+VARIANT = os.environ.get("COAX_VARIANT", "")
+CTRL = VARIANT == "ctrl"
+OUT = pathlib.Path(__file__).resolve().parent.parent.parent / ("kicad_ctrl" if CTRL else "kicad")
 PROJECT = "coaxolotl"
 REV = "0.2"
 
@@ -875,6 +880,73 @@ def sheet_bank(lib) -> DSheet:
     return s
 
 
+def sheet_ctrl(lib) -> DSheet:
+    """control board only: bias-T + coax (power and OOK commands come over the coax), the pull-downs of the RF switch
+    control lines, and the via row J6 that hands the controls and supplies to a later RF board."""
+    s = sheet(lib, "Coax + RF control", "ctrl.kicad_sch", "Bias-T, coax, RF switch control via row (no RF on this board)")
+    s.zone = "POWER"
+    # bias-T: DC feed from the coax centre to VCOAX (same parts and values as the RF board; no RF DC block here)
+    X = 25.4
+    s.frame(X, 25.4, 101.6, 63.5, "Bias-T + coax to RTL-SDR (DC feed only)")
+    y1 = 71.12
+    xl = X + 50.8
+    s.add(Part("L5", "Device:L", "100nH/0603", xl, y1 - 3.81, 0, "Inductor_SMD:L_0603_1608Metric",
+               {"1": "BT_1", "2": "COAX"}, txt=(xl - 2.54, y1 - 5.08, "right")))
+    s.add(Part("L6", "Device:L", "10uH/0.45A(1210)", xl, y1 - 15.24, 0, "Inductor_SMD:L_1210_3225Metric",
+               {"1": "BT_2", "2": "BT_1"}, {"MPN": "LQH32CN100K33L"}, txt=(xl - 2.54, y1 - 16.51, "right")))
+    s.add(R("R24", "220R/5%", xl + 7.62, y1 - 15.24, "BT_2", "BT_1", Note="damps the L6 self-resonance"))
+    s.add(Part("L7", "Device:L", "1mH/0.2A", xl, y1 - 26.67, 0, "Inductor_SMD:L_Bourns_SRR1260",
+               {"1": "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
+    s.add(Part("J3", "Connector:Conn_Coaxial", "SMA/EDGE(RTL-SDR)", X + 81.28, y1, 0,
+               "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001_Air", {"1": "COAX", "2": "GND"},
+               {"Place": "edge"}, txt=(X + 83.82, y1 - 8.89)))
+    s.w(s.pt("L5", "2"), (xl, y1), (s.pt("J3", "1")[0], y1))
+    s.w(s.pt("L5", "1"), s.pt("L6", "2"))
+    s.w(s.pt("L6", "1"), s.pt("L7", "2"))
+    s.w((xl, s.pt("L6", "2")[1]), (xl + 7.62, s.pt("L6", "2")[1]))
+    s.w((xl, s.pt("L6", "1")[1]), (xl + 7.62, s.pt("L6", "1")[1]))
+    s.w(s.pt("L7", "1"), (xl, s.pt("L7", "1")[1] - 2.54))
+    s.rail("VCOAX", xl, s.pt("L7", "1")[1] - 2.54)
+    s.gnd("J3", "2")
+    s.intent("Coax DC feed 100 nH -> 10 uH || 220R -> 1 mH, as on the RF board. D1 (TVS) at J3 (power sheet).",
+             X + 2.54, 83.82)
+
+    # RF switch control lines: pull-downs (safe state while the MCU is in reset) and the via row to the RF board
+    s.zone = "DIGITAL"
+    X2 = 152.4
+    s.frame(X2, 25.4, 177.8, 127.0, "RF control via row J6 (to the later RF board)")
+    sigs = ["SW_V1", "SW_V2", "SW_V3", "LNA_PATH", "LNA_PATH_OUT", "FMN"]
+    notes = {"SW_V1": "F0 THRU while MCU in reset", "SW_V2": "F0 THRU while MCU in reset",
+             "SW_V3": "F0 THRU while MCU in reset", "LNA_PATH": "bypass while MCU in reset",
+             "LNA_PATH_OUT": "bypass while MCU in reset", "FMN": "notch out while MCU in reset"}
+    pd = {"SW_V1": "R16", "SW_V2": "R17", "SW_V3": "R18", "LNA_PATH": "R15", "LNA_PATH_OUT": "R26", "FMN": "R19"}
+    jx, jy = X2 + 137.16, 50.8
+    s.add(Part("J6", "Connector_Generic:Conn_01x10", "RF_CTRL(via row)", jx, jy + 11.43, 0,
+               "Connector_PinHeader_2.54mm:PinHeader_1x10_P2.54mm_Vertical",
+               {"1": "+3V3", "2": "LNA_VCC", "3": "SW_V1", "4": "SW_V2", "5": "SW_V3",
+                "6": "LNA_PATH", "7": "LNA_PATH_OUT", "8": "FMN", "9": "GND", "10": "GND"},
+               {"Note": "plated hole row only (no header): the RF board solders on here"}, dnp=True,
+               txt=(jx, jy - 3.81, None)))
+    for i, net in enumerate(sigs):
+        pin = str(3 + i)
+        yy = s.pt("J6", pin)[1]
+        s.add(R(pd[net], "10k/5%", X2 + 25.4 + 12.7 * i, jy + 76.2, net, "GND", Note=notes[net]))
+        s.pw("J6", pin, (X2 + 25.4 + 12.7 * i, None), (None, s.pt(pd[net], "1")[1]))
+        s.gnd(pd[net], "2")
+        s.w((X2 + 25.4 + 12.7 * i, yy), (X2 + 12.7, yy))
+        s.hlabel(net, X2 + 12.7, yy, "L", "input")
+    s.rail_pin("J6", "1", "+3V3")
+    p2 = s.pt("J6", "2")
+    s.rail("LNA_VCC", *s.w(p2, (p2[0] - 7.62, p2[1]), (p2[0] - 7.62, p2[1] - 7.62)))
+    s.gnd("J6", "10")
+    s.gnd("J6", "9")
+    s.intent("J6: 1 +3V3, 2 LNA_VCC (TPS2553-switched, INA180 current sense), 3-5 SW_V1..V3,",
+             X2 + 2.54, 140.97)
+    s.intent("6 LNA_PATH, 7 LNA_PATH_OUT, 8 FMN, 9-10 GND. A plated hole row, 2.54 mm: no header fitted.",
+             X2 + 2.54, 144.15)
+    return s
+
+
 LAMP_COL = {"A": "AMBER(0603)", "Y": "YELLOW(0603)", "G": "GREEN(0603)", "R": "RED(0603)"}
 # lamp n: (name, colour) - order fixed by firmware/src/panel.h. Lamp n sits in row n/24, column n%24 of the strip;
 # register k (U14 + k) drives the 4 columns above it: output i -> lamp lamp_of(k, i) (firmware hal_panel shifts the same)
@@ -1094,7 +1166,39 @@ def draw_block_diagram(r: DSheet):
         r.ctext(t, lx + 8, ly + i * 6 + 2.6, 1.2, left=True)
 
 
+def _root_ctrl(root, sheets):
+    power, mcu, ctrl, panel = sheets
+    left = ["SENSE", "SCAP_ADC", "ILNA", "FAULT_N", "LNA_EN"]
+    to_ctrl = ["LNA_PATH", "FMN", "LNA_PATH_OUT", "SW_V1", "SW_V2", "SW_V3"]
+    to_panel = ["LED_SER", "LED_SCK", "LED_RCK", "LED_OE_N"]
+    ys = [180.34 + 5.08 * i for i in range(5)]
+    yc = [180.34 + 5.08 * i for i in range(6)]
+    yl = [226.06 + 5.08 * i for i in range(4)]
+    xp, xm, xr = 30.48, 139.7, 248.92
+    w = 50.8
+    power.sheet_pins = [(n, power.hier[n], xp + w, y, "R") for n, y in zip(left, ys)]
+    mcu.sheet_pins = ([(n, mcu.hier[n], xm, y, "L") for n, y in zip(left, ys)] +
+                      [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_ctrl, yc)] +
+                      [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_panel, yl)])
+    ctrl.sheet_pins = [(n, ctrl.hier[n], xr, y, "L") for n, y in zip(to_ctrl, yc)]
+    panel.sheet_pins = [(n, panel.hier[n], xr, y, "L") for n, y in zip(to_panel, yl)]
+    root.subsheet(power, xp, 175.26, w, 30.48)
+    root.subsheet(mcu, xm, 175.26, w, 71.12)
+    root.subsheet(ctrl, xr, 175.26, w, 33.02)
+    root.subsheet(panel, xr, 220.98, w, 22.86)
+    for y in ys:
+        root.w((xp + w, y), (xm, y))
+    for y in yc + yl:
+        root.w((xm + w, y), (xr, y))
+    root.intent("Control board (2 layers): no RF. J6 hands the RF switch controls, +3V3 and LNA_VCC to a later "
+                "RF board.", 20.32, 251.46)
+    root.intent("Signals cross sheets as hierarchical labels through the sheet pins above. "
+                "Firmware pin map: firmware/src/hal_efm8bb2.c", 20.32, 254.64)
+
+
 def all_sheets(lib):
+    if CTRL:
+        return [sheet_power(lib), sheet_mcu(lib), sheet_ctrl(lib), sheet_panel(lib)]
     return [sheet_power(lib), sheet_mcu(lib), sheet_rf_fe(lib), sheet_bank(lib), sheet_panel(lib)]
 
 
@@ -1106,45 +1210,49 @@ def main():
     sheets = all_sheets(lib)
     pages = {sh.file: str(i + 2) for i, sh in enumerate(sheets)}
     root = sheet(lib, "Coaxolotl", f"{PROJECT}.kicad_sch",
+                 "Control board: bias-T powered, OOK commanded, RF switch control via row" if CTRL else
                  "Bias-T powered, OOK switched LNA + 8-way filter bank")
     draw_block_diagram(root)
 
     root.heading("Sheets", 20.32, 168.91)
-    power, mcu, fe, bank, panel = sheets
-    left = ["SENSE", "SCAP_ADC", "ILNA", "FAULT_N", "LNA_EN"]
-    to_fe = ["LNA_PATH", "FMN", "LNA_PATH_OUT"]
-    to_bank = ["SW_V1", "SW_V2", "SW_V3"]
-    to_panel = ["LED_SER", "LED_SCK", "LED_RCK", "LED_OE_N"]
-    ys = [180.34 + 5.08 * i for i in range(5)]
-    yf = [180.34, 185.42, 190.5]
-    yb = [203.2 + 5.08 * i for i in range(3)]
-    yl = [226.06 + 5.08 * i for i in range(4)]
-    xp, xm, xr = 30.48, 139.7, 248.92
-    w = 50.8
-    power.sheet_pins = [(n, power.hier[n], xp + w, y, "R") for n, y in zip(left, ys)]
-    mcu.sheet_pins = ([(n, mcu.hier[n], xm, y, "L") for n, y in zip(left, ys)] +
-                      [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_fe, yf)] +
-                      [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_bank, yb)] +
-                      [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_panel, yl)])
-    fe.sheet_pins = ([(n, fe.hier[n], xr, y, "L") for n, y in zip(to_fe, yf)] +
-                     [("RF_BANK", fe.hier["RF_BANK"], xr + w, 182.88, "R")])
-    bank.sheet_pins = ([(n, bank.hier[n], xr, y, "L") for n, y in zip(to_bank, yb)] +
-                       [("RF_BANK", bank.hier["RF_BANK"], xr + w, 208.28, "R")])
-    panel.sheet_pins = [(n, panel.hier[n], xr, y, "L") for n, y in zip(to_panel, yl)]
-    root.subsheet(power, xp, 175.26, w, 30.48)
-    root.subsheet(mcu, xm, 175.26, w, 71.12)
-    root.subsheet(fe, xr, 175.26, w, 17.78)
-    root.subsheet(bank, xr, 198.12, w, 17.78)
-    root.subsheet(panel, xr, 220.98, w, 22.86)
-    for y in ys:
-        root.w((xp + w, y), (xm, y))
-    for y in yf + yb + yl:
-        root.w((xm + w, y), (xr, y))
-    root.w((xr + w, 182.88), (xr + w + 10.16, 182.88), (xr + w + 10.16, 208.28), (xr + w, 208.28))
-    root.intent("Power and ground cross sheets only as power symbols (VCOAX, VMAIN, VHOLD, VLED, LNA_VCC, "
-                "+3V3, GND).", 20.32, 251.46)
-    root.intent("Signals cross sheets as hierarchical labels through the sheet pins above. "
-                "Firmware pin map: firmware/src/hal_efm8bb2.c", 20.32, 254.64)
+    if CTRL:
+        _root_ctrl(root, sheets)
+    else:
+        power, mcu, fe, bank, panel = sheets
+        left = ["SENSE", "SCAP_ADC", "ILNA", "FAULT_N", "LNA_EN"]
+        to_fe = ["LNA_PATH", "FMN", "LNA_PATH_OUT"]
+        to_bank = ["SW_V1", "SW_V2", "SW_V3"]
+        to_panel = ["LED_SER", "LED_SCK", "LED_RCK", "LED_OE_N"]
+        ys = [180.34 + 5.08 * i for i in range(5)]
+        yf = [180.34, 185.42, 190.5]
+        yb = [203.2 + 5.08 * i for i in range(3)]
+        yl = [226.06 + 5.08 * i for i in range(4)]
+        xp, xm, xr = 30.48, 139.7, 248.92
+        w = 50.8
+        power.sheet_pins = [(n, power.hier[n], xp + w, y, "R") for n, y in zip(left, ys)]
+        mcu.sheet_pins = ([(n, mcu.hier[n], xm, y, "L") for n, y in zip(left, ys)] +
+                          [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_fe, yf)] +
+                          [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_bank, yb)] +
+                          [(n, mcu.hier[n], xm + w, y, "R") for n, y in zip(to_panel, yl)])
+        fe.sheet_pins = ([(n, fe.hier[n], xr, y, "L") for n, y in zip(to_fe, yf)] +
+                         [("RF_BANK", fe.hier["RF_BANK"], xr + w, 182.88, "R")])
+        bank.sheet_pins = ([(n, bank.hier[n], xr, y, "L") for n, y in zip(to_bank, yb)] +
+                           [("RF_BANK", bank.hier["RF_BANK"], xr + w, 208.28, "R")])
+        panel.sheet_pins = [(n, panel.hier[n], xr, y, "L") for n, y in zip(to_panel, yl)]
+        root.subsheet(power, xp, 175.26, w, 30.48)
+        root.subsheet(mcu, xm, 175.26, w, 71.12)
+        root.subsheet(fe, xr, 175.26, w, 17.78)
+        root.subsheet(bank, xr, 198.12, w, 17.78)
+        root.subsheet(panel, xr, 220.98, w, 22.86)
+        for y in ys:
+            root.w((xp + w, y), (xm, y))
+        for y in yf + yb + yl:
+            root.w((xm + w, y), (xr, y))
+        root.w((xr + w, 182.88), (xr + w + 10.16, 182.88), (xr + w + 10.16, 208.28), (xr + w, 208.28))
+        root.intent("Power and ground cross sheets only as power symbols (VCOAX, VMAIN, VHOLD, VLED, LNA_VCC, "
+                    "+3V3, GND).", 20.32, 251.46)
+        root.intent("Signals cross sheets as hierarchical labels through the sheet pins above. "
+                    "Firmware pin map: firmware/src/hal_efm8bb2.c", 20.32, 254.64)
 
     errs = []
     for sh in sheets + [root]:

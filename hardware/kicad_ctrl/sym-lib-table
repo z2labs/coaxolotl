@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "coaxolotl")(type "KiCad")(uri "${KIPRJMOD}/coaxolotl.kicad_sym")(options "")(descr "Coaxolotl project symbols"))
+)

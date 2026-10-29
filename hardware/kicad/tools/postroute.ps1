@@ -3,7 +3,9 @@
 # SROUTER_TOOLS: srouter tools folder (default: the srouter-jlc checkout, feat/jlc-fab: silk_dfm also clears via holes)
 param([int]$From = 1)         # restart the pipeline at this step (e.g. -From 3 after a fix)
 $ErrorActionPreference = "Continue"
-$kd    = Resolve-Path "$PSScriptRoot\.."
+$ctrl  = $env:COAX_VARIANT -eq "ctrl"          # 2-layer control board in hardware/kicad_ctrl
+$kd    = if ($ctrl) { Resolve-Path "$PSScriptRoot\..\..\kicad_ctrl" } else { Resolve-Path "$PSScriptRoot\.." }
+$plane = if ($ctrl) { "B.Cu" } else { "In1.Cu" }
 $py    = "C:\Program Files\KiCad\10.0\bin\python.exe"
 $cli   = "C:\Program Files\KiCad\10.0\bin\kicad-cli.exe"
 $tools = if ($env:SROUTER_TOOLS) { $env:SROUTER_TOOLS } else { "C:\Users\RF\Documents\GitHub\srouter-jlc\tools" }
@@ -22,7 +24,7 @@ step "1 track_tidy"   { & $py "$tools\track_tidy.py" $board }
 step "1b repair"      { & $py "$PSScriptRoot\route.py" --repair }
 step "1c via_off_pad" { & $py "$bbt\via_off_pad.py" $board }
 step "2 zone fill"    { & $py -c "import pcbnew;b=pcbnew.LoadBoard(r'$board');pcbnew.ZONE_FILLER(b).Fill(b.Zones());pcbnew.SaveBoard(r'$board',b);print('filled')" }
-step "3 gnd_stitch"   { & $py "$tools\gnd_stitch.py" $board --plane In1.Cu }
+step "3 gnd_stitch"   { & $py "$tools\gnd_stitch.py" $board --plane $plane }
 step "4 via_rescue"   { & $py "$tools\via_rescue.py" $board --net GND }
 step "5 stitch_audit" { & $py "$tools\stitch_audit.py" $board }
 step "6 silk_dfm fix" { & $py "$tools\silk_dfm.py" $board --fix }
