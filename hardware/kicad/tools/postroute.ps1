@@ -32,6 +32,7 @@ step "6 silk_dfm"     { & $py "$tools\silk_dfm.py" $board }
 step "6a via_off_pad" { & $py "$bbt\via_off_pad.py" $board }
 step "6d via_dfm"      { & $py "$PSScriptRoot\via_dfm.py" $board }
 step "6c repair"      { & $py "$PSScriptRoot\route.py" --repair }
+step "6e silk_dfm fix" { & $py "$tools\silk_dfm.py" $board --fix }    # again: vias moved by 6a-6c
 step "6b zone refill" { & $py -c "import pcbnew;b=pcbnew.LoadBoard(r'$board');pcbnew.ZONE_FILLER(b).Fill(b.Zones());pcbnew.SaveBoard(r'$board',b);print('refilled')" }
 step "7 DRC"          { & $cli pcb drc --schematic-parity --severity-all --format json -o "$kd\route\drc.json" $board;
                         & $py -c "import json,collections;d=json.load(open(r'$kd\route\drc.json'));v=d['violations'];u=d.get('unconnected_items',[]);p=d.get('schematic_parity',[]);c=collections.Counter((x['severity'],x['type']) for x in v);print('violations',len(v),'unconnected',len(u),'parity',len(p));[print(' ',k,n) for k,n in c.most_common()]" }
