@@ -526,7 +526,7 @@ for ref, pins in FANOUT.items():
 
 # ------------------------------------------------------------ 5) soft anchors (nearest free spot)
 # fine-pitch ICs get a fan-out ring: their own passives keep this far off the courtyard so every pin can escape
-CLEAR_AROUND = {"U5": 1.6}
+CLEAR_AROUND = {"U5": 2.4}
 SOFT = {
     "L7": (88.0, 80.0, 0), "C10": (83.0, 94.0, 0),
     "U5": (87.0, 50.0, 0), "J1": (77.0, 40.0, 90),
@@ -539,6 +539,25 @@ for ref, (x, y, r) in SOFT.items():
         m = CLEAR_AROUND[ref]
         bx = occupied[owner.index(ref)]
         BLOCK.append((bx[0] - m, bx[1] - m, bx[2] + m, bx[3] + m))
+
+# QFN20 MCU (0.5 mm pitch, all 16 port pins used): every signal pin gets a staggered fan-out via, so the router
+# starts from a via ring instead of fighting for the 0.25 mm gaps between the pads
+FANOUT_LATE = {"U5": "1 2 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20"}
+for ref, pins in FANOUT_LATE.items():
+    c = where[ref][:2]
+    sides = {}
+    for pin in pins.split():
+        q = padpos[(ref, pin)]
+        dx, dy = q[0] - c[0], q[1] - c[1]
+        n = (1.0 if dx > 0 else -1.0, 0.0) if abs(dx) > abs(dy) else (0.0, 1.0 if dy > 0 else -1.0)
+        sides.setdefault(n, []).append((pin, q))
+    for n, lst in sides.items():
+        lst.sort(key=lambda t: t[1][0] * n[1] - t[1][1] * n[0])
+        for i, (pin, q) in enumerate(lst):
+            dist = 1.0 if i % 2 == 0 else 1.8
+            v = (q[0] + n[0] * dist, q[1] + n[1] * dist)
+            FAN.append((ref, pin, q, v))
+            BLOCK.append((v[0] - 0.45, v[1] - 0.45, v[0] + 0.45, v[1] + 0.45))
 
 # ------------------------------------------------------------ 6) everything else next to its partner pad
 PARTNER = {
@@ -753,7 +772,7 @@ for ref, pin, q, v in FAN:
     add_track(q, v, 0.15, pinnet[(ref, pin)])
     add_via(*v, net=pinnet[(ref, pin)], d=0.4, h=0.2)
     nfan += 1
-print("switch control fan-out vias:", nfan)
+print("fan-out vias (switch control, MCU):", nfan)
 
 # pins walled in by RF risers: U11 pin 1 (LS = VDD) sits between the RF2 riser and the RF1 riser round the corner.
 # A via straight out of the pin, shifted away from the RF neighbour, lets +3V3 come in from In2/B.Cu.
