@@ -45,8 +45,8 @@ python3 host/coaxolotl.py send --bank 6 --lna --backend rtl_biast
 
 * You should see the FRAME row fill bit by bit, and the 0/1 lamps flicker.
   Then OK lights, the bank lamp walks to 2m/AIR, and LNA and FMN light.
-* Put a logic analyzer on P1.0–P1.3 and P0.7. Check the PE42582 / PE42522
-  truth tables against the routing. If the branch order is wrong, edit the
+* Put a logic analyzer on P1.0–P1.3 and P0.7 (on the control board: J6
+  pins 3–7). Check the PE42582 / PE42520 truth tables against the routing. If the branch order is wrong, edit the
   `port` fields in `bandplan.json` (RF port index, 0 = RF1) and run
   `make -C firmware bandplan`.
 * For bad timing, the tool prints its own latency and jitter.

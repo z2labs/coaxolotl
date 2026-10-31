@@ -87,7 +87,9 @@ python3 host/coaxolotl.py panel bands                          # lamps: full | b
 | `firmware/include/efm8bb2_sfr.h` | minimal SDCC SFR map |
 | `firmware/test/` | unit tests and `sim` (edge replay + ASCII panel) |
 | `host/coaxolotl.py` | keyer: pyrtlsdr / rtl_biast / dry-run, plus library API |
-| `hardware/bom.csv` | first-pass BOM |
+| `hardware/kicad/` | 4-layer RF board: generated schematic (`tools/build.py`), layout, JLC package in `jlc/` |
+| `hardware/kicad_ctrl/` | 2-layer control board without RF (`COAX_VARIANT=ctrl`), JLC package in `jlc/` |
+| `hardware/bom.csv` | grouped BOM of the RF board schematic (`tools/bom.py`) |
 | `docs/` | protocol, hardware, panel, bring-up |
 
 ## Status (v0.1)
@@ -102,8 +104,9 @@ python3 host/coaxolotl.py panel bands                          # lamps: full | b
   details (Snooze bit, Timer 4 LFOSC clock select, Snooze wake on a Timer 4
   wrap) and the ADC setup are marked VERIFY. `docs/bringup.md` has a test
   for each, and the `SNOOZE=0` build avoids them.
-* ⚠️ No schematic or PCB yet. The open items before layout are listed in
-  `docs/hardware.md`.
+* ✅ Schematic and two routed layouts with JLC packages: the 4-layer RF board
+  (`hardware/kicad`) and the 2-layer control board without RF
+  (`hardware/kicad_ctrl`). Open items are listed in `docs/hardware.md`.
 
 ## License
 
