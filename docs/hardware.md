@@ -116,7 +116,7 @@ data line through R30 (1 kΩ), so the debugger can override it.
 | 18 | P0.4 | LED_OE_N | out | 10 k pull-up: lamps dark until the first write |
 | 17 | P0.5 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up to 3V3, port-match wake |
 | 16 | P0.6 | LNA_EN | out | 10 k pull-down: LNA off during reset |
-| 15 | P0.7 | LNA_PATH | out | both SPDTs; 1 = through LNA; 10 k pull-down = bypass |
+| 15 | P0.7 | LNA_PATH | out | input SPDT U6; 1 = through LNA; 10 k pull-down = bypass. hal_rf() switches it together with LNA_PATH_OUT (P1.3) |
 | 14, 13, 11 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 in parallel; 10 k pull-downs = branch 0 (THRU) |
 | 10 | P1.3 | LNA_PATH_OUT | out | output SPDT U7 (its own line, same polarity as LNA_PATH); 10 k pull-down = bypass |
 | 9 | P1.4 | LED_SER | out | 595 chain data |
