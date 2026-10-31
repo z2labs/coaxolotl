@@ -11,8 +11,12 @@
 
 #ifdef __SDCC
 #define CODE __code
+/* Large model: all state lives in XRAM. XRAM-typed pointers are 2 bytes and
+ * compile to MOVX instead of generic-pointer library calls (saves ~3 kB). */
+#define XPTR __xdata
 #else
 #define CODE
+#define XPTR
 #endif
 
 /* ------------------------------------------------------------------ */

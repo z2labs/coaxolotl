@@ -5,6 +5,7 @@
 #define COAX_HAL_H
 
 #include <stdint.h>
+#include "config.h"
 
 void     hal_init(void);
 uint8_t  hal_reset_abnormal(void);       /* WDT / missing clock / pin reset */
@@ -15,7 +16,7 @@ uint8_t  hal_take_fault(void);           /* TPS2553 FAULT seen since last   */
 uint8_t  hal_take_hk(void);              /* ~6.5 s housekeeping tick        */
 void     hal_measure(uint16_t *vc_mv, uint16_t *scap_mv, uint16_t *i_ma);
 void     hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en);
-void     hal_panel(const uint8_t *img);
+void     hal_panel(const uint8_t XPTR *img);
 uint8_t  hal_edge_pending(void);         /* bias edge queued, not popped    */
 void     hal_beacon_on(void);            /* SYSCLK 24.5 MHz, PCA clock on P0.4 */
 void     hal_beacon_key(uint8_t on);     /* carrier on / off                */

@@ -115,7 +115,7 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
   chip round-trip). Firmware packets go through the simulator into the Python
   and C++ demodulators, which decode synthetic captures with the carrier
   anywhere in ±0.75 MHz and chips ±10 %.
-* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 14.6 kB of
+* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 11.4 kB of
   15.5 kB flash) in both the Snooze and the bring-up build.
 * ⚠️ The SDR++ module compiles against the SDR++ headers but has not run in
   SDR++ yet. The beacon level (about −65 dBm) is calculated, not measured.

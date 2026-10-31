@@ -4,7 +4,7 @@
 #include "decoder.h"
 #include "config.h"
 
-void dec_init(dec_t *d, uint8_t level, uint16_t now)
+void dec_init(dec_t XPTR *d, uint8_t level, uint16_t now)
 {
     d->state    = DEC_IDLE;
     d->level    = level;
@@ -21,7 +21,7 @@ void dec_init(dec_t *d, uint8_t level, uint16_t now)
     d->g[0] = d->g[1] = d->g[2] = 0;
 }
 
-static uint8_t fail(dec_t *d, uint8_t err)
+static uint8_t fail(dec_t XPTR *d, uint8_t err)
 {
     d->state   = DEC_IDLE;
     d->idle_ok = 0;
@@ -30,7 +30,7 @@ static uint8_t fail(dec_t *d, uint8_t err)
 }
 
 /* one valid gap inside a frame */
-static uint8_t take_bit(dec_t *d, uint16_t gap)
+static uint8_t take_bit(dec_t XPTR *d, uint16_t gap)
 {
     uint8_t k = d->nbits;
     uint8_t b;
@@ -73,7 +73,7 @@ static uint8_t take_bit(dec_t *d, uint16_t gap)
     return EV_BIT;
 }
 
-uint8_t dec_edge(dec_t *d, uint8_t level, uint16_t t)
+uint8_t dec_edge(dec_t XPTR *d, uint8_t level, uint16_t t)
 {
     uint16_t gap, on_before;
     uint8_t ev, started = 0;
@@ -143,7 +143,7 @@ uint8_t dec_edge(dec_t *d, uint8_t level, uint16_t t)
     return ev;
 }
 
-uint8_t dec_poll(dec_t *d, uint16_t now)
+uint8_t dec_poll(dec_t XPTR *d, uint16_t now)
 {
     if (d->pend != EV_NONE) {
         uint8_t e = d->pend;
@@ -179,7 +179,7 @@ uint8_t dec_poll(dec_t *d, uint16_t now)
     return EV_NONE;
 }
 
-uint8_t dec_busy(const dec_t *d)
+uint8_t dec_busy(const dec_t XPTR *d)
 {
     if (d->pend != EV_NONE)
         return 1;

@@ -15,6 +15,7 @@
 #define COAX_DECODER_H
 
 #include <stdint.h>
+#include "config.h"
 
 #define DEC_NBITS 15u
 
@@ -64,9 +65,9 @@ typedef struct {
     uint16_t g[3];      /* sync gap lengths                              */
 } dec_t;
 
-void    dec_init(dec_t *d, uint8_t level, uint16_t now);
-uint8_t dec_edge(dec_t *d, uint8_t level, uint16_t t);   /* one event */
-uint8_t dec_poll(dec_t *d, uint16_t now);                /* call until EV_NONE */
-uint8_t dec_busy(const dec_t *d);  /* 1 = has a deadline, keep ticking */
+void    dec_init(dec_t XPTR *d, uint8_t level, uint16_t now);
+uint8_t dec_edge(dec_t XPTR *d, uint8_t level, uint16_t t);   /* one event */
+uint8_t dec_poll(dec_t XPTR *d, uint16_t now);                /* call until EV_NONE */
+uint8_t dec_busy(const dec_t XPTR *d);  /* 1 = has a deadline, keep ticking */
 
 #endif

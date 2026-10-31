@@ -4,7 +4,7 @@
 #include "beacon.h"
 #include "config.h"
 
-uint8_t bcn_crc8(const uint8_t *p, uint8_t n)
+uint8_t bcn_crc8(const uint8_t XPTR *p, uint8_t n)
 {
     uint8_t c = 0xFFu, i;
     while (n--) {
@@ -17,7 +17,7 @@ uint8_t bcn_crc8(const uint8_t *p, uint8_t n)
 
 /* a reply is pending and the host has gone quiet: the decoder is ready
  * for the next frame (T_IDLE_MIN of steady bias after the last gap) */
-uint8_t bcn_due(const app_t *a, const dec_t *d)
+uint8_t bcn_due(const app_t XPTR *a, const dec_t XPTR *d)
 {
     return (uint8_t)(a->reply != REPLY_NONE && a->boot == BOOT_DONE &&
                      d->state == DEC_IDLE && d->level && d->idle_ok);
@@ -28,7 +28,7 @@ static uint8_t sat8(uint16_t v)
     return (uint8_t)(v > 255u ? 255u : v);
 }
 
-void bcn_build(uint8_t *pkt, const app_t *a,
+void bcn_build(uint8_t XPTR *pkt, const app_t XPTR *a,
                uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma)
 {
     uint8_t err = (a->reply == REPLY_NAK) ? a->err : ERR_NONE;
@@ -47,7 +47,7 @@ void bcn_build(uint8_t *pkt, const app_t *a,
     pkt[6] = bcn_crc8(pkt, 6u);
 }
 
-uint8_t bcn_chip(const uint8_t *pkt, uint8_t i)
+uint8_t bcn_chip(const uint8_t XPTR *pkt, uint8_t i)
 {
     uint8_t k = (uint8_t)(i >> 1), b;
 

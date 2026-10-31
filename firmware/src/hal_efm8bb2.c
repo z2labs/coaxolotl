@@ -301,7 +301,7 @@ void hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en)
         LNA_PATH = 1;
 }
 
-void hal_panel(const uint8_t *img)
+void hal_panel(const uint8_t XPTR *img)
 {
     uint8_t id = 48u, b;
 

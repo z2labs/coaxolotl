@@ -7,7 +7,7 @@
 
 #define ELAPSED(now, t, dur) ((uint16_t)((now) - (t)) >= (dur))
 
-static void update_rf(app_t *a)
+static void update_rf(app_t XPTR *a)
 {
     uint8_t lna_ok = (uint8_t)((BP_LNA_MASK >> a->bank) & 1u);
     uint8_t path   = (uint8_t)(a->lna_req && lna_ok && a->lna_en && !a->trip);
@@ -22,9 +22,9 @@ static void update_rf(app_t *a)
     a->dirty = 1;
 }
 
-void app_init(app_t *a, uint16_t now, uint8_t rst_abnormal)
+void app_init(app_t XPTR *a, uint16_t now, uint8_t rst_abnormal)
 {
-    uint8_t *p = (uint8_t *)a;
+    uint8_t XPTR *p = (uint8_t XPTR *)a;
     uint16_t i;
     for (i = 0; i < sizeof(app_t); i++)
         p[i] = 0;
@@ -39,7 +39,7 @@ void app_init(app_t *a, uint16_t now, uint8_t rst_abnormal)
     update_rf(a);                 /* bank 0 (THRU), bypass, LNA off */
 }
 
-void app_set_active(app_t *a, uint8_t active, uint16_t now)
+void app_set_active(app_t XPTR *a, uint8_t active, uint16_t now)
 {
     active = active ? 1u : 0u;
     if (active == a->active)
@@ -54,7 +54,7 @@ void app_set_active(app_t *a, uint8_t active, uint16_t now)
     }
 }
 
-static void apply_payload(app_t *a, uint8_t p, uint16_t now)
+static void apply_payload(app_t XPTR *a, uint8_t p, uint16_t now)
 {
     uint8_t nb = PL_BANK(p);
 
@@ -80,7 +80,7 @@ static void apply_payload(app_t *a, uint8_t p, uint16_t now)
     update_rf(a);
 }
 
-void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
+void app_event(app_t XPTR *a, uint8_t ev, const dec_t XPTR *d, uint16_t now)
 {
     switch (ev) {
     case EV_FRAME_START:
@@ -142,7 +142,7 @@ void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
     a->dirty = 1;
 }
 
-void app_fault(app_t *a)
+void app_fault(app_t XPTR *a)
 {
     if (a->trip)
         return;
@@ -152,7 +152,7 @@ void app_fault(app_t *a)
     update_rf(a);
 }
 
-void app_measure(app_t *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma)
+void app_measure(app_t XPTR *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma)
 {
     uint8_t v;
 
@@ -197,7 +197,7 @@ void app_measure(app_t *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma)
     }
 }
 
-void app_tick(app_t *a, uint16_t now)
+void app_tick(app_t XPTR *a, uint16_t now)
 {
     if (a->boot == BOOT_LAMPTEST) {
         if (ELAPSED(now, a->t_boot, T_LAMPTEST)) {
@@ -262,7 +262,7 @@ void app_tick(app_t *a, uint16_t now)
     }
 }
 
-uint8_t app_busy(const app_t *a)
+uint8_t app_busy(const app_t XPTR *a)
 {
     return (uint8_t)(a->boot != BOOT_DONE || a->sw_active || a->err_blinks ||
                      a->bit_lamp || a->run_hb ||
