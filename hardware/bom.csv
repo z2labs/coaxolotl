@@ -5,7 +5,7 @@ C3,1,10uF/10V/20%,C_0805_2012Metric,,,Power,
 C4 C5 C12 C13 C14,5,1uF/16V/10%,C_0603_1608Metric,,,"MCU, Power",
 C8,1,47uF/10V/20%,C_1206_3216Metric,,,Power,
 C9,1,330uF/6.3V/20%,CP_EIA-7343-31_Kemet-D,T520D337M006ATE025,,Power,
-C10,1,0.1F/5.5V,CP_Radial_D13.0mm_P5.00mm,KR-5R5V104-R,,Power,C10: VERIFY footprint vs chosen coin supercap
+C10,1,0.1F/5.5V,CP_Radial_D13.0mm_P5.00mm,KR-5R5V104-R,DNP,Power,C10: VERIFY footprint vs chosen coin supercap; hand-soldered (no LCSC part)
 C24 C26,2,200pF/50V/C0G,C_0603_1608Metric,,,RF front end,
 C25,1,68pF/50V/C0G,C_0603_1608Metric,,,RF front end,
 C27,1,NA(47pF/C0G),C_0603_1608Metric,,DNP,RF front end,
@@ -31,8 +31,8 @@ C601 C603,2,27pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
 C602,1,15pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
 C604 C606,2,18pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
 C605,1,33pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
-C701 C703,2,8.2pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
-C702,1,4.7pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
+C701 C703,2,12pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
+C702,1,6.8pF/50V/C0G,C_0603_1608Metric,,,Filter bank,
 D1,1,SMF5.0A(SOD123F),D_SOD-123F,,,Power,
 D2,1,LED/GREEN(0603),LED_0603_1608Metric,,,Power,"D2: PWR lamp, works without MCU"
 D3 D4 D5,3,BAT54WS(SOD323),D_SOD-323,,,Power,
@@ -42,10 +42,10 @@ D31 D32 D41 D42 D44 D51 D53,7,YELLOW(0603),LED_0603_1608Metric,,,Panel,
 D33 D40 D45 D48 D49,5,GREEN(0603),LED_0603_1608Metric,,,Panel,
 D34 D35 D36 D37 D38 D39 D46 D47 D50 D52 D54,11,RED(0603),LED_0603_1608Metric,,,Panel,
 FB1 FB2,2,FB0603/600R/1.3A,L_0603_1608Metric,BLM18KG601SN1D,,"Power, RF front end",
-GDT1,1,4532-090V(1812),GDT_SMD_1812,4532-090V,,RF front end,"GDT1: 90 V, 0.5 pF"
-J1,1,C2_DEBUG,PinHeader_1x04_P2.54mm_Vertical,,,MCU,
-J2,1,SMA/EDGE(ANT),SMA_Amphenol_132289_EdgeMount,,,RF front end,
-J3,1,SMA/EDGE(RTL-SDR),SMA_Amphenol_132289_EdgeMount,,,Filter bank,
+GDT1,1,4532-091-LF(1812),GDT_SMD_1812,4532-091-LF,,RF front end,"GDT1: 90 V, Brightking 4532 series"
+J1,1,C2_DEBUG,PinHeader_1x04_P2.54mm_Vertical,,DNP,MCU,
+J2,1,SMA/EDGE(ANT),SMA_EdgeLaunch_BWSMA-KE-P001_Air,,,RF front end,
+J3,1,SMA/EDGE(RTL-SDR),SMA_EdgeLaunch_BWSMA-KE-P001_Air,,,Filter bank,
 J4 J5,2,NA(HDR1x7/2.54),PinHeader_1x07_P2.54mm_Vertical,,DNP,Panel,
 L1 L2 L501 L502,4,220nH/5%,L_0603_1608Metric,,,"Filter bank, RF front end",
 L3,1,NA(56nH/2%),L_0603_1608Metric,,DNP,RF front end,
@@ -63,7 +63,7 @@ L401 L402,2,560nH/5%,L_0805_2012Metric,,,Filter bank,
 L403 L404,2,330nH/5%,L_0603_1608Metric,,,Filter bank,
 L503 L504,2,150nH/5%,L_0603_1608Metric,,,Filter bank,
 L601 L602 L603 L604,4,56nH/5%,L_0603_1608Metric,,,Filter bank,
-L701 L702,2,15nH/5%,L_0603_1608Metric,,,Filter bank,
+L701 L702,2,10nH/5%,L_0603_1608Metric,,,Filter bank,
 R1,1,680R/1%,R_0603_1608Metric,,,Power,R1: sets the OOK falling edge
 R2,1,3k3/5%,R_0603_1608Metric,,,Power,
 R3,1,10k/1%,R_0603_1608Metric,,,Power,
@@ -71,7 +71,7 @@ R4,1,22k/1%,R_0603_1608Metric,,,Power,
 R5,1,150k/1%,R_0603_1608Metric,,,Power,R5: VERIFY vs TPS2553 Eq.1: IOS(min) > 130 mA
 R6 R23,2,100k/5%,R_0603_1608Metric,,,"MCU, RF front end",R23: static bleed (no choke: keeps 20 kHz)
 R7,1,0R39/1%/0.25W,R_1206_3216Metric,ERJ-8BQFR39V,,Power,
-R8,1,1k/1%,R_0603_1608Metric,,,MCU,
+R8 R30,2,1k/1%,R_0603_1608Metric,,,MCU,R30: FMN shares P2.0 with C2D: the debugger overrides the line through this resistor
 R9,1,100R/5%,R_0603_1608Metric,,,Power,
 R10 R24,2,220R/5%,R_0603_1608Metric,,,"Filter bank, Power",R24: damps the L6 self-resonance
 R11 R12,2,1M/1%,R_0603_1608Metric,,,Power,
@@ -79,13 +79,12 @@ R13 R14 R15 R16 R17 R18 R19 R20 R26,9,10k/5%,R_0603_1608Metric,,,"Filter bank, M
 R21 R22,2,0R/0603,R_0603_1608Metric,,,"Filter bank, RF front end",R21: F0 = straight through; R22: fit when the notch is not fitted
 R25,1,3k32/1%,R_0603_1608Metric,,,RF front end,R25: sets IDD = 65 mA (QPL9547 EVB R4)
 RN1 RN2 RN3 RN4 RN5 RN6 RN7 RN8 RN9 RN10 RN11 RN12,12,2k2x4/5%(CAY16),R_Array_Convex_4x0603,CAY16-222J4LF,,Panel,
-TP1,1,TP/TX,TestPoint_Pad_D1.0mm,,,MCU,
-TP6,1,TP/SENSE,TestPoint_Pad_D1.0mm,,,MCU,
+TP6,1,TP/SENSE,TestPoint_Pad_D1.0mm,,DNP,MCU,
 U1,1,LM66100DCKR(SC70-6),SOT-363_SC-70-6,,,Power,
 U2,1,TPS2553DBVR(SOT23-6),SOT-23-6,,,Power,
 U3,1,INA180A2IDBVR(SOT23-5),SOT-23-5,,,Power,
 U4,1,MCP1700T-3302E/TT(SOT23),SOT-23,,,Power,
-U5,1,EFM8BB21F16G-C(QSOP24),QSOP-24_3.9x8.7mm_P0.635mm,,,MCU,
+U5,1,EFM8BB21F16G-C(QFN20),EFM8_QFN-20-1EP_3x3mm_P0.5mm_EP1.7x1.7mm,,,MCU,
 U6 U7,2,PE42520C-Z(QFN16),QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm,,,RF front end,
 U8 U11,2,PE42582A(QFN24),QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm,,,Filter bank,
 U9 U10,2,NA(PE42520C-Z),QFN-16-1EP_3x3mm_P0.5mm_EP1.7x1.7mm,,DNP,RF front end,
