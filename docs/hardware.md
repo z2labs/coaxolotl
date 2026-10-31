@@ -132,6 +132,55 @@ During reset and boot the pull-downs give a safe state: THRU, bypass, LNA
 unpowered, lamps off. The box then behaves like a plain cable until the
 firmware runs.
 
+## MCU for the next revision: EFM8BB52F32G-C-QFN32
+
+The QFN20 has no spare pin left, and the EFM8BB2 family is ageing (QSOP
+end of life, BB3 end of life). The next board moves to the EFM8BB52F32G-C-QFN32
+(newest EFM8, same 8051 core and SDCC toolchain):
+
+* 32 kB flash (30 kB code in 2 kB pages), 2304 B RAM, 29 GPIO, 1.8–5.5 V,
+  5 × 5 mm QFN32.
+* Snooze about 10 µA with the LFOSC running (80 kHz ±3 %), woken by a Timer 4
+  event or a port match. Same scheme as on the BB2.
+* 12-bit ADC (the BB2 has 10), with internal references. The firmware uses
+  1.8 V at gain 0.5, so 3.6 V full scale, independent of VDD.
+* Factory UART bootloader on P0.4/P0.5, entered when P3.7/C2D is low at reset
+  (AN945). Buy revision C: its only open erratum (BL_E201) concerns the
+  20-pin packages; the Snooze/prefetch, ADC-mux and clock-switch errata are
+  fixed since revision B.
+
+`make -C firmware MCU=bb52` builds it (`hal_efm8bb52.c`,
+`include/efm8bb52_sfr.h`; register details from the EFM8BB52 Reference
+Manual rev 0.3). The default stays `MCU=bb21` until the PCB moves.
+
+| Pin | Port | Net | Dir | Note |
+|---|---|---|---|---|
+| 1 | P0.0 | SENSE | in | VCOAX divider; port-match wake on both edges |
+| 32 | P0.1 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up, port-match wake |
+| 31 | P0.2 | VC_ADC | ana | same divider node as SENSE (ADC0.0) |
+| 30 | P0.3 | SCAP_ADC | ana | 1 M / 1 M + 100 nF (ADC0.1) |
+| 29 | P0.4 | TP_TX | out | UART0 TX test point (bootloader, debug prints) |
+| 28 | P0.5 | TP_RX | in | UART0 RX test point |
+| 27 | P0.6 | LNA_EN | out | 10 k pull-down: LNA off during reset |
+| 26 | P0.7 | LNA_PATH | out | input SPDT U6; 10 k pull-down = bypass |
+| 25, 24, 23 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582; 10 k pull-downs = THRU |
+| 22 | P1.3 | LNA_PATH_OUT | out | output SPDT U7; 10 k pull-down = bypass |
+| 21 | P1.4 | FMN | out | FM notch SPDTs (DNP option); 10 k pull-down |
+| 20, 19 | P1.5, P1.6 | — | out | spare, driven low; keeps distance to the beacon |
+| 18 | P1.7 | BEACON | out | PCA CEX0 into the coax tap during a reply, low otherwise |
+| 17–14 | P2.0–P2.3 | LED_SER, LED_SCK, LED_RCK, LED_OE_N | out | lamp chain; 10 k pull-up on OE_N |
+| 13 | P2.4 | ILNA_ADC | ana | INA180A2 out (ADC0.13; not a crossbar pin) |
+| 12, 11 | P2.5, P2.6 | — | out | spare, driven low |
+| 10–6 | P3.0–P3.4 | — | out | spare, driven low |
+| 5 | P3.7 / C2D | C2D | | debug; 10 k pull-up so the bootloader is not entered by accident |
+| 4 | RSTb / C2CK | RST_N | | 10 k pull-up, C2 clock |
+| 3 | VDD | +3V3 | | 1 µF + 100 nF at the pin (AN203) |
+| 2 | N/C | | | |
+| EP | GND | | | the only ground pin: solder it, with vias |
+
+With its own BEACON pin, the panel's shift bursts no longer reach the coax
+tap.
+
 ## RF notes
 
 * **Switches.**

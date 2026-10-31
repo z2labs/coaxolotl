@@ -112,6 +112,24 @@ When it works:
 * With the supercap removed, the same test causes a power-on reset, and the
   box comes back in THRU and bypass.
 
+## EFM8BB52 (next revision)
+
+```
+make -C firmware clean && make -C firmware MCU=bb52 SNOOZE=0   # bring-up
+make -C firmware clean && make -C firmware MCU=bb52            # Snooze
+```
+
+The register values come from the Reference Manual, so the BB2 VERIFY table
+in step 5 does not apply. What to look at instead:
+
+* RUN goes dark in idle and blips every 6.5 s: Snooze and the Timer 4 wake
+  (interrupt-driven on this part) work.
+* VCOAX, I_LNA and VSCAP in the reply read right without trimming: the ADC
+  runs on the internal 1.8 V reference, not on VDD.
+* Programming: C2 as before, or the factory UART bootloader on TP_TX/TP_RX
+  (hold C2D low during reset, then `efm8load.py`, AN945). Erase the security
+  page and lock the flash for a finished box.
+
 ## Panel modes and the flash log
 
 * Send `coaxolotl.py panel bands`, then `panel off`, then power-cycle the

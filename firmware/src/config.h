@@ -91,8 +91,12 @@
 #endif
 
 /* panel mode log in flash: one 512 B page below the lock-byte page */
-#define NV_PAGE      0x3C00u
+#ifndef NV_PAGE
+#define NV_PAGE      0x3C00u    /* EFM8BB21; the Makefile sets it for the BB52 */
+#endif
+#ifndef NV_PAGE_SIZE
 #define NV_PAGE_SIZE 512u
+#endif
 
 #define T_LAMPTEST   MS2T(700)  /* all 48 lamps on                       */
 #define T_BOOTSWEEP  MS2T(12)   /* per lamp, chaser over all 48 lamps    */

@@ -31,6 +31,9 @@ void     hal_snooze(void);               /* deep sleep: edge or Timer4 wrap */
 /* SDCC needs the ISR prototypes visible in the file that holds main() */
 void hal_isr_pmatch(void) __interrupt(8);
 void hal_isr_timer2(void) __interrupt(5);
+#if defined(MCU_BB52) && CFG_SNOOZE
+void hal_isr_timer4(void) __interrupt(17);
+#endif
 #endif
 
 #endif

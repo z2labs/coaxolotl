@@ -80,6 +80,7 @@ python3 host/coaxolotl.py send --band 2m --lna --backend dry-run \
 # firmware (SDCC >= 4.2)
 make -C firmware            # Snooze build
 make -C firmware SNOOZE=0   # bring-up build, classic registers only
+make -C firmware MCU=bb52   # EFM8BB52F32G-QFN32, the next board revision
 
 # real link
 python3 host/coaxolotl.py bands
@@ -98,8 +99,9 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
 | `firmware/src/app.*` | RF routing, health, sticky flags, animations, pure C |
 | `firmware/src/panel.*` | state → 48-bit lamp image |
 | `firmware/src/beacon.*` | reply packet, CRC and chip sequence, pure C |
-| `firmware/src/hal_efm8bb2.c`, `main.c` | EFM8BB2 hardware layer and main loop |
-| `firmware/include/efm8bb2_sfr.h` | minimal SDCC SFR map |
+| `firmware/src/hal_efm8bb2.c`, `main.c` | EFM8BB21 (QFN20) hardware layer and main loop |
+| `firmware/src/hal_efm8bb52.c` | EFM8BB52F32G (QFN32) hardware layer, `make MCU=bb52` |
+| `firmware/include/efm8bb*_sfr.h` | minimal SDCC SFR maps (BB2, BB52) |
 | `firmware/test/` | unit tests and `sim` (edge replay + ASCII panel) |
 | `host/coaxolotl.py` | keyer: pyrtlsdr / rtl_biast / dry-run, `--listen`, `listen`, `decode` |
 | `host/backchannel.py` | reply packet and demodulator (numpy) |
