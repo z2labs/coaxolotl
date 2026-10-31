@@ -44,6 +44,12 @@ static void test_frames() {
     auto e = coax::edges(f);
     CHECK(e.size() == 31 && e[1].t_ms == 400 && !e[1].on && e[2].t_ms == 470 && e.back().on,
           "edge schedule");
+    coax::Frame cf;
+    cf.config = true;
+    cf.panel = 1;
+    auto cb = cf.bits();
+    int cwant[15] = { 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1 };   // host ConfigFrame(panel=1)
+    CHECK(cf.payload() == 0x10 && std::equal(cb.begin(), cb.end(), cwant), "config frame bits");
     coax::Timing bad;
     bad.gap1 = 40;
     CHECK(coax::Timing().valid() && !bad.valid(), "timing guard");

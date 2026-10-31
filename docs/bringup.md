@@ -63,7 +63,7 @@ python3 host/coaxolotl.py send --bank 6 --lna --listen
   `ACK seq=1 F6 LNA+FMN  Vcoax=4.28 V  I_lna=101 mA  Vscap=3.92 V  flags=HOLD`,
   plus the frequency it heard (HFOSC0 error) and the on/off ratio. Expect
   about 30–40 dB.
-* No reply but a scope trace: check R21–R23/C16 and the BCN_RF connection.
+* No reply but a scope trace: check R_BCN1–3 / C_BCN and the BCN_RF connection.
   Record the band with
   `rtl_sdr -f 36.75e6 -s 2.4e6 -n 4e6 cap.cu8` while you send a frame from
   another dongle or with `--backend rtl_biast`, then run

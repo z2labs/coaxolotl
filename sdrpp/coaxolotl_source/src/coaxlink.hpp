@@ -31,8 +31,10 @@ struct Frame {
     bool lna = false;
     bool quiet = false;
     bool clr = false;
+    bool config = false;  // config frame (sync 010): only `panel` counts
+    int panel = 0;        // 0 full, 1 bands, 2 off; kept in the box's flash
     uint8_t payload() const;
-    std::array<int, 15> bits() const;            // sync 101 | payload | ~payload
+    std::array<int, 15> bits() const;            // sync 101 (010) | payload | ~payload
 };
 
 struct Edge {

@@ -6,6 +6,7 @@
 #define COAX_APP_H
 
 #include <stdint.h>
+#include "config.h"
 #include "decoder.h"
 
 #define BOOT_LAMPTEST 1u
@@ -86,13 +87,13 @@ typedef struct {
     uint8_t dirty;       /* panel needs re-render                    */
 } app_t;
 
-void    app_init(app_t *a, uint16_t now, uint8_t rst_abnormal);
-void    app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now);
-void    app_tick(app_t *a, uint16_t now);
-void    app_measure(app_t *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma);
-void    app_fault(app_t *a);
-void    app_set_panel(app_t *a, uint8_t mode);   /* at boot, from flash */
-void    app_set_active(app_t *a, uint8_t active, uint16_t now);
-uint8_t app_busy(const app_t *a);   /* 1 = animation running, keep ticking */
+void    app_init(app_t XPTR *a, uint16_t now, uint8_t rst_abnormal);
+void    app_event(app_t XPTR *a, uint8_t ev, const dec_t XPTR *d, uint16_t now);
+void    app_tick(app_t XPTR *a, uint16_t now);
+void    app_measure(app_t XPTR *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma);
+void    app_fault(app_t XPTR *a);
+void    app_set_panel(app_t XPTR *a, uint8_t mode);   /* at boot, from flash */
+void    app_set_active(app_t XPTR *a, uint8_t active, uint16_t now);
+uint8_t app_busy(const app_t XPTR *a);   /* 1 = animation running, keep ticking */
 
 #endif

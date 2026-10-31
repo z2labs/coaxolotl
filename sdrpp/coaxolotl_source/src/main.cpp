@@ -302,8 +302,14 @@ private:
         }
         if (j.kind == JobKind::FRAME) {
             char buf[96];
-            snprintf(buf, sizeof buf, "keying F%d%s%s%s ...", j.frame.bank, j.frame.lna ? " LNA" : "",
-                     j.frame.quiet ? " QUIET" : "", j.frame.clr ? " CLR" : "");
+            if (j.frame.config) {
+                snprintf(buf, sizeof buf, "keying config: panel %s ...",
+                         j.frame.panel == 0 ? "full" : j.frame.panel == 1 ? "bands" : "off");
+            }
+            else {
+                snprintf(buf, sizeof buf, "keying F%d%s%s%s ...", j.frame.bank, j.frame.lna ? " LNA" : "",
+                         j.frame.quiet ? " QUIET" : "", j.frame.clr ? " CLR" : "");
+            }
             setStatus(buf);
             auto e = coax::edges(j.frame, timing);
             auto late = coax::play(e, [this](bool on) { rtlsdr_set_bias_tee(dev, on); },
@@ -318,7 +324,7 @@ private:
                 std::lock_guard<std::mutex> lck(statusMtx);
                 jitterMs = *mm.second - *mm.first;
             }
-            lastSentBank = j.frame.bank;
+            if (!j.frame.config) { lastSentBank = j.frame.bank; }
             saveConfig();
             if (!j.listen) {
                 setStatus(jitterMs > 6 ? "sent (jitter > 6 ms!)" : "sent, not listening");
@@ -468,6 +474,18 @@ private:
         }
         if (!running || busy) { SmGui::EndDisabled(); }
 
+        SmGui::LeftLabel("Panel");
+        SmGui::FillWidth();
+        if (SmGui::Combo(CONCAT("##_coax_panel_", name), &panelMode, "full\0bands\0off\0")) {
+            saveConfig();
+            if (running && !busy) {
+                coax::Frame f;
+                f.config = true;
+                f.panel = panelMode;
+                enqueue({ JobKind::FRAME, f, listenReply });
+            }
+        }
+
         SmGui::LeftLabel("Beacon MHz");
         SmGui::FillWidth();
         if (SmGui::SliderFloatWithSteps(CONCAT("##_coax_bcn_", name), &beaconMHz, 24.0f, 120.0f, 0.05f,
@@ -556,6 +574,7 @@ private:
         if (c.contains("autoBand")) { autoBand = c["autoBand"]; }
         if (c.contains("beaconHz")) { beaconHz = c["beaconHz"]; }
         if (c.contains("showBeacon")) { showBeacon = c["showBeacon"]; }
+        if (c.contains("panel")) { panelMode = std::clamp((int)c["panel"], 0, 2); }
         config.release();
         beaconMHz = (float)(beaconHz / 1e6);
     }
@@ -576,6 +595,7 @@ private:
         c["autoBand"] = (bool)autoBand;
         c["beaconHz"] = (double)beaconHz;
         c["showBeacon"] = (bool)showBeacon;
+        c["panel"] = (int)panelMode;
         config.release(true);
     }
 
@@ -604,7 +624,7 @@ private:
     bool biasT = false;
 
     // link settings (GUI thread writes, link thread reads; ints/bools only)
-    int bank = 0;
+    int bank = 0, panelMode = 0;
     bool lna = false, quiet = false, listenReply = true, autoBand = false, showBeacon = true;
     double beaconHz = coax::BEACON_HZ;
     float beaconMHz = (float)(coax::BEACON_HZ / 1e6);

@@ -109,11 +109,11 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
 
 ## Status (v0.1)
 
-* ✅ Decoder, app logic and panel pass 179 host checks. That includes all 64
+* ✅ Decoder, app logic and panel pass 194 host checks. That includes all 64
   payloads, 1800 randomised frames at ±10 % clock skew, 0–10 ms fall delay
   and ±3 ms jitter, every error path and the LED power budget.
 * ✅ Host encoder → firmware decoder, end to end, through the simulator.
-* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 13.5 kB of 15 kB
+* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 12.4 kB of 15 kB, back-channel included
   flash; the page below the lock byte holds the panel-mode log) in both the Snooze and the bring-up build.
 * ✅ Back-channel: firmware checks for HELLO/ACK/NAK, timing, contents and
   the chip round-trip. Firmware packets go through the simulator into the

@@ -12,6 +12,7 @@ remote-controls the Coaxolotl box over the same coax, and reads its replies.
  Branch [F6 2m/AIR (BPF 108-174 MHz) ]
  [x] LNA  [ ] Quiet  [x] Read reply   [ ] Follow tuning
  [Send] [Poll] [Clear] [Listen]
+ Panel [full ]
  Beacon MHz [ 36.750 ]   [x] Show beacon on waterfall
  Link: reply: ACK
  ACK seq 3 (2 s ago)
@@ -43,7 +44,8 @@ the link built in. The rest of SDR++ sees an ordinary source. Select
 **Poll** re-sends the current state (harmless, always answered). **Clear**
 sends it with CLR: clears DROP/GLT/RST and re-arms a tripped LNA. **Listen**
 records 3 s without sending, e.g. for the HELLO after the first power-up.
-**Follow tuning** picks the narrowest branch for the frequency you tune to,
+**Panel** sends a config frame (full / bands / off lamps, stored in the
+box's flash). **Follow tuning** picks the narrowest branch for the frequency you tune to,
 and sends it once you have stayed there for 1.5 s.
 
 While it listens, the waterfall shows the beacon band (**Show beacon on

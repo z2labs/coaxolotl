@@ -220,7 +220,7 @@ uint8_t hal_sense(void)
     return (P0 & PIN_SENSE) ? 1u : 0u;
 }
 
-uint8_t hal_edge_pop(uint8_t *level, uint16_t *t)
+uint8_t hal_edge_pop(uint8_t XPTR *level, uint16_t XPTR *t)
 {
     uint8_t i = e_tail;
     if (i == e_head)
@@ -275,7 +275,7 @@ static uint16_t adc_read(uint8_t ch)
     return (uint16_t)(acc >> 2);
 }
 
-void hal_measure(uint16_t *vc_mv, uint16_t *scap_mv, uint16_t *i_ma)
+void hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_ma)
 {
     uint16_t vc, sc, ia;
     uint8_t i;
@@ -310,7 +310,7 @@ void hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en)
         LNA_PATH = LNA_PATH_OUT = 1;
 }
 
-void hal_panel(const uint8_t *img)
+void hal_panel(const uint8_t XPTR *img)
 {
     uint8_t p = 48u, id, b;
 

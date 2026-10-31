@@ -17,13 +17,16 @@ bool Timing::valid() const {
 }
 
 uint8_t Frame::payload() const {
+    if (config) { return (uint8_t)((panel & 3) << 4); }
     return (uint8_t)(((bank & 7) << 3) | (lna ? 4 : 0) | (quiet ? 2 : 0) | (clr ? 1 : 0));
 }
 
 std::array<int, 15> Frame::bits() const {
     std::array<int, 15> b{};
     uint8_t p = payload();
-    b[0] = 1; b[1] = 0; b[2] = 1;
+    b[0] = config ? 0 : 1;
+    b[1] = config ? 1 : 0;
+    b[2] = b[0];
     for (int i = 0; i < 6; i++) {
         b[3 + i] = (p >> (5 - i)) & 1;
         b[9 + i] = b[3 + i] ^ 1;

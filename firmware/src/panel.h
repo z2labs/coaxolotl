@@ -54,7 +54,7 @@
 #define L_GLT   46u
 #define L_RST   47u
 
-void    panel_render(const app_t *a, uint8_t *img);
-uint8_t panel_count(const uint8_t *img);   /* lamps lit (power budget) */
+void    panel_render(const app_t XPTR *a, uint8_t XPTR *img);
+uint8_t panel_count(const uint8_t XPTR *img);   /* lamps lit (power budget) */
 
 #endif

@@ -197,15 +197,15 @@ SCK and RCK stay still. It is coupled onto the RF line on the coax side of SW2,
 after the filter bank, so the dongle hears it whatever branch is selected:
 
 ```
-P1.4 LED_SER ── R21 4k7 ──┬── R23 1k ── C16 100p C0G ── BCN_RF → SW2 common / bias-T RF port
-                         R22 51
+P1.4 LED_SER ── R_BCN1 4k7 ──┬── R_BCN3 1k ── C_BCN 100p C0G ── BCN_RF → SW2 common / bias-T RF port
+                          R_BCN2 51
                          GND
 ```
 
 * The 3rd harmonic at 36.75 MHz is 0.70 V peak at the pin. The pad gives
   7.5 mV, and 1 kΩ into the 25 Ω of the line (RTL-SDR ‖ switch port) about
   0.18 mV, i.e. **about −65 dBm**. That is 40 dB above the noise in a 2 kHz
-  bin and far below the dongle's overload point. Raise R21 for less, lower it
+  bin and far below the dongle's overload point. Raise R_BCN1 for less, lower it
   for more. **VERIFY** the level on the bench.
 * The 1 kΩ keeps the tap from loading the RF line: < 0.25 dB at 2 GHz,
   also with the parasitic capacitance of an 0603.
@@ -214,7 +214,8 @@ P1.4 LED_SER ── R21 4k7 ──┬── R23 1k ── C16 100p C0G ── BC
 * The tap also sees the panel's shift bursts (48 bits at about 3 MHz, 0.5 ms,
   only when a lamp changes). In idle, and in quiet or panel-off mode, nothing
   shifts. If those bursts show up on the waterfall during frames, lower the
-  tap level or give the beacon its own pin in the next revision. C16 blocks the 1.65 V average during a reply; the PE42582 ports
+  tap level or give the beacon its own pin in the next revision.
+* C_BCN blocks the 1.65 V average during a reply; the PE42582 ports
   must stay at 0 V DC.
 * What leaks back out of the antenna is the reverse isolation of SW2, the
   filter and the LNA or bypass switch below −65 dBm, for 0.7 s per command.
@@ -243,5 +244,6 @@ P1.4 LED_SER ── R21 4k7 ──┬── R23 1k ── C16 100p C0G ── BC
 4. The bias discharge time with your V3 and coax (fall-time budget above).
 5. The EFM8BB2 register fields marked VERIFY in `firmware/include/efm8bb2_sfr.h`.
    `docs/bringup.md` has a test for each.
-6. Beacon level and harmonic content at the coax connector (R21/R22). The
-   RF sheet must connect BCN_RF to SW2 common.
+6. Back-channel tap: R_BCN1–3 and C_BCN from LED_SER (P1.4) to SW2 common
+   are **not in the schematic or the PCB yet**. Then verify the beacon level
+   and harmonic content at the coax connector.

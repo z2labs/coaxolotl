@@ -4,12 +4,12 @@
 #include "panel.h"
 #include "decoder.h"
 
-static void on(uint8_t *img, uint8_t id)
+static void on(uint8_t XPTR *img, uint8_t id)
 {
     img[id >> 3] |= (uint8_t)(1u << (id & 7u));
 }
 
-static void render_full(const app_t *a, uint8_t *img)
+static void render_full(const app_t XPTR *a, uint8_t XPTR *img)
 {
     uint8_t i;
 
@@ -86,7 +86,7 @@ static void render_full(const app_t *a, uint8_t *img)
         on(img, L_RST);
 }
 
-void panel_render(const app_t *a, uint8_t *img)
+void panel_render(const app_t XPTR *a, uint8_t XPTR *img)
 {
     uint8_t i;
 
@@ -97,7 +97,7 @@ void panel_render(const app_t *a, uint8_t *img)
         img[i] = 0;                      /* BANDS keeps lamps F0..F7 only */
 }
 
-uint8_t panel_count(const uint8_t *img)
+uint8_t panel_count(const uint8_t XPTR *img)
 {
     uint8_t i, b, n = 0;
     for (i = 0; i < PANEL_BYTES; i++)

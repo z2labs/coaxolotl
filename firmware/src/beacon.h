@@ -33,10 +33,10 @@
 #define BCN_END       2u    /* bcn_chip(): past the last chip */
 #define BCN_MV_LSB    20u
 
-uint8_t bcn_crc8(const uint8_t *p, uint8_t n);
-uint8_t bcn_due(const app_t *a, const dec_t *d);
-void    bcn_build(uint8_t *pkt, const app_t *a,
+uint8_t bcn_crc8(const uint8_t XPTR *p, uint8_t n);
+uint8_t bcn_due(const app_t XPTR *a, const dec_t XPTR *d);
+void    bcn_build(uint8_t XPTR *pkt, const app_t XPTR *a,
                   uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma);
-uint8_t bcn_chip(const uint8_t *pkt, uint8_t i);   /* 1 = carrier on, 0 = off, BCN_END */
+uint8_t bcn_chip(const uint8_t XPTR *pkt, uint8_t i);   /* 1 = carrier on, 0 = off, BCN_END */
 
 #endif
