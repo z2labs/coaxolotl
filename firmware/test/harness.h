@@ -14,17 +14,24 @@
 #include "decoder.h"
 #include "app.h"
 #include "panel.h"
+#include "beacon.h"
 
 typedef struct { double t; int lvl; } edge_t;     /* t in ms */
 
 #define MAXEV 4096
 typedef struct { uint8_t ev; uint8_t err; uint8_t payload; double t; } evrec_t;
 
+#define MAXTX 64
+typedef struct { uint8_t pkt[BCN_LEN]; double t; } txrec_t;   /* replies sent */
+
 typedef struct {
     dec_t   dec;
     app_t   app;
     evrec_t ev[MAXEV];
     int     nev;
+    txrec_t tx[MAXTX];
+    int     ntx;
+    int     chips;              /* print the chip string of each reply */
     int     max_lamps;          /* outside boot */
     /* simulated analog inputs */
     uint16_t vc_mv, scap_mv, i_ma;
@@ -82,6 +89,7 @@ static void sim_run(sim_t *s, const edge_t *e, int n, double t_end)
     double next_meas;
 
     s->nev = 0;
+    s->ntx = 0;
     s->max_lamps = 0;
     dec_init(&s->dec, 1, ms2tick(0));
     app_init(&s->app, ms2tick(0), 0);
@@ -109,6 +117,24 @@ static void sim_run(sim_t *s, const edge_t *e, int n, double t_end)
                 app_measure(&s->app, s->vc_mv, s->scap_mv, s->i_ma);
         }
         app_tick(&s->app, now);
+        if (bcn_due(&s->app, &s->dec)) {               /* main.c: reply() */
+            txrec_t *r = &s->tx[s->ntx < MAXTX ? s->ntx++ : MAXTX - 1];
+            int k;
+            app_measure(&s->app, s->vc_mv, s->scap_mv, s->i_ma);
+            bcn_build(r->pkt, &s->app, s->vc_mv, s->scap_mv, s->i_ma);
+            r->t = t;
+            s->app.reply = REPLY_NONE;
+            if (s->verbose) {
+                printf("[%9.1f ms] REPLY      ", t);
+                for (k = 0; k < (int)BCN_LEN; k++) printf(" %02X", r->pkt[k]);
+                if (s->chips) {
+                    uint8_t c, i;
+                    printf(" chips=");
+                    for (i = 0; (c = bcn_chip(r->pkt, i)) != BCN_END; i++) putchar('0' + c);
+                }
+                printf("\n");
+            }
+        }
         if (!dec_busy(&s->dec) && !app_busy(&s->app))
             app_set_active(&s->app, 0, now);           /* main.c would Snooze */
         if (s->app.boot == BOOT_DONE) {

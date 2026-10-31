@@ -18,6 +18,9 @@ kicad-cli sch export pdf -o hardware/kicad/coaxolotl-schematic.pdf hardware/kica
   `coaxolotl.kicad_sym`. Everything else comes from the stock KiCad libraries.
 * Fields marked `VERIFY` (Note field) still need a datasheet check.
 
+> The PDF predates the back-channel pad (MCU sheet, block E: R21–R23, C16,
+> TP8, P0.4 renamed BEACON). Re-export it with `kicad-cli` after reviewing.
+
 | Sheet | Status |
 |---|---|
 | Power | v0.1 for review |

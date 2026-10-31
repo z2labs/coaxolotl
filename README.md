@@ -2,8 +2,10 @@
 
 **A mast-head LNA and 8-way filter bank that lives entirely on one coax.**
 An RTL-SDR's bias-T powers it, and the same bias-T switches it by blinking
-its power in short gaps. Its front panel shows every internal state on a
-lamp, like a 1970s minicomputer.
+its power in short gaps. It answers on the same coax with a keyed clock the
+dongle receives, so the host sees what it did and what it measures. Its
+front panel shows every internal state on a lamp, like a 1970s
+minicomputer.
 
 ```
   BANK   ○THRU ○LF ○160/80 ○60-30 ○20-10 ○6/4m ●2m/AIR ○70/23cm
@@ -17,8 +19,8 @@ lamp, like a 1970s minicomputer.
 
 ```mermaid
 flowchart LR
-  PC[host<br/>coaxolotl.py] -- USB --> RTL[RTL-SDR V3<br/>bias-T 4.5 V]
-  RTL <== "RF ↑ · DC + OOK gaps ↓" ==> BOX
+  PC[host<br/>coaxolotl.py · SDR++] -- USB --> RTL[RTL-SDR V3<br/>bias-T 4.5 V]
+  RTL <== "RF + replies ↑ · DC + OOK gaps ↓" ==> BOX
   subgraph BOX[Coaxolotl box]
     direction TB
     DEC[EFM8BB2<br/>gap decoder] --> SW[LNA / bypass<br/>8x filter bank]
@@ -33,6 +35,16 @@ flowchart LR
   and takes about 2.5 s. The sync bits calibrate the threshold, so clock
   skew, slow discharge and USB jitter cancel out.
   → [docs/protocol.md](docs/protocol.md)
+* **Back-channel.** After every frame (and once after boot) the MCU keys a
+  12.25 MHz clock onto the coax for 0.73 s. The dongle hears its 3rd
+  harmonic at 36.75 MHz. The 7-byte Manchester packet carries ACK/NAK with
+  the error, the switch state actually set, VCOAX, LNA current, supercap
+  voltage and the sticky flags. The host searches the band for it, so the
+  ±2 % RC oscillator needs no trimming.
+  → [docs/protocol.md](docs/protocol.md#back-channel-box--host)
+* **SDR++.** `sdrpp/coaxolotl_source` is an RTL-SDR source for SDR++ with
+  the link built in: branch, LNA, Send/Poll/Clear, follow-tuning and a
+  telemetry readout. → [sdrpp/README.md](sdrpp/README.md)
 * **RF path.** Antenna → protection → LNA (with preselector, optional FM
   notch) or bypass → PE42582 SP8T → 8 filters → PE42582 → bias-T → coax.
   The HF/LF branches force bypass automatically.
@@ -55,8 +67,9 @@ flowchart LR
 ## Quick start
 
 ```bash
-# host tests + simulator (gcc, python3)
+# host tests + simulator (gcc, g++, python3 + numpy)
 make -C firmware test sim
+make -C sdrpp test
 python3 -m unittest discover -s host
 
 # what the box would do, without hardware
@@ -71,6 +84,7 @@ make -C firmware SNOOZE=0   # bring-up build, classic registers only
 python3 host/coaxolotl.py bands
 python3 host/coaxolotl.py send --band 2m --lna                 # pyrtlsdr
 python3 host/coaxolotl.py send --bank 3 --backend rtl_biast    # rtl-sdr-blog tool
+python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read the reply
 ```
 
 ## Repository
@@ -81,24 +95,34 @@ python3 host/coaxolotl.py send --bank 3 --backend rtl_biast    # rtl-sdr-blog to
 | `firmware/src/decoder.*` | gap-width OOK decoder, pure C |
 | `firmware/src/app.*` | RF routing, health, sticky flags, animations, pure C |
 | `firmware/src/panel.*` | state → 48-bit lamp image |
+| `firmware/src/beacon.*` | reply packet, CRC and chip sequence, pure C |
 | `firmware/src/hal_efm8bb2.c`, `main.c` | EFM8BB2 hardware layer and main loop |
 | `firmware/include/efm8bb2_sfr.h` | minimal SDCC SFR map |
 | `firmware/test/` | unit tests and `sim` (edge replay + ASCII panel) |
-| `host/coaxolotl.py` | keyer: pyrtlsdr / rtl_biast / dry-run, plus library API |
+| `host/coaxolotl.py` | keyer: pyrtlsdr / rtl_biast / dry-run, `--listen`, `listen`, `decode` |
+| `host/backchannel.py` | reply packet and demodulator (numpy) |
+| `sdrpp/` | SDR++ source module and its standalone tests |
 | `hardware/bom.csv` | first-pass BOM |
 | `docs/` | protocol, hardware, panel, bring-up |
 
 ## Status (v0.1)
 
-* ✅ Decoder, app logic and panel pass 150 host checks. That includes all 64
+* ✅ Decoder, app logic and panel pass 164 host checks. That includes all 64
   payloads, 1800 randomised frames at ±10 % clock skew, 0–10 ms fall delay
   and ±3 ms jitter, every error path and the LED power budget.
 * ✅ Host encoder → firmware decoder, end to end, through the simulator.
-* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 12 kB of 15.5 kB
-  flash) in both the Snooze and the bring-up build.
+* ✅ Back-channel: 14 firmware checks (HELLO/ACK/NAK, timing, contents,
+  chip round-trip). Firmware packets go through the simulator into the Python
+  and C++ demodulators, which decode synthetic captures with the carrier
+  anywhere in ±0.75 MHz and chips ±10 %.
+* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 14.6 kB of
+  15.5 kB flash) in both the Snooze and the bring-up build.
+* ⚠️ The SDR++ module compiles against the SDR++ headers but has not run in
+  SDR++ yet. The beacon level (about −65 dBm) is calculated, not measured.
 * ⚠️ The firmware has **not run on silicon yet**. Three EFM8BB2 register
   details (Snooze bit, Timer 4 LFOSC clock select, Snooze wake on a Timer 4
-  wrap) and the ADC setup are marked VERIFY. `docs/bringup.md` has a test
+  wrap), the ADC setup and the PCA/CLKSEL/crossbar setup of the beacon are
+  marked VERIFY. `docs/bringup.md` has a test
   for each, and the `SNOOZE=0` build avoids them.
 * ⚠️ No schematic or PCB yet. The open items before layout are listed in
   `docs/hardware.md`.

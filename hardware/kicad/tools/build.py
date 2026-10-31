@@ -157,8 +157,8 @@ GLOBALS = {
     "VCOAX", "VMAIN", "VHOLD", "VLED", "LNA_VCC",
     # MCU <-> power sheet
     "SENSE", "SCAP_ADC", "ILNA", "FAULT_N", "LNA_EN",
-    # MCU -> RF sheet (next review)
-    "LNA_PATH", "SW_V1", "SW_V2", "SW_V3", "FMN",
+    # MCU -> RF sheet (next review); BCN_RF lands on the coax side of SW2
+    "LNA_PATH", "SW_V1", "SW_V2", "SW_V3", "FMN", "BCN_RF",
     # MCU -> panel sheet (next review)
     "LED_SER", "LED_SCK", "LED_RCK", "LED_OE_N",
 }
@@ -277,7 +277,7 @@ def sheet_mcu(lib) -> g.Sheet:
                {"6": "+3V3", "7": "RST_N", "8": "C2D",
                 "12": "SPARE_P20", "11": "SPARE_P21", "10": "SPARE_P22", "9": "SPARE_P23", "5": "GND",
                 "4": "SENSE", "3": "SENSE", "2": "SCAP_ADC", "1": "ILNA",
-                "24": "TP_TX", "23": "FAULT_N", "22": "LNA_EN", "21": "LNA_PATH",
+                "24": "BEACON", "23": "FAULT_N", "22": "LNA_EN", "21": "LNA_PATH",
                 "20": "SW_V1", "19": "SW_V2", "18": "SW_V3", "17": "FMN",
                 "16": "LED_SER", "15": "LED_SCK", "14": "LED_RCK", "13": "LED_OE_N"},
                {"MPN": "EFM8BB21F16G-C-QSOP24"}))
@@ -304,10 +304,20 @@ def sheet_mcu(lib) -> g.Sheet:
 
     # D: test points --------------------------------------------------------
     s.box(15, 155, 175, 40, "D  Test points", [
-        "TP_TX: firmware drives it low; route UART0 TX here for debug prints if ever needed."])
-    for i, net in enumerate(["TP_TX", "SPARE_P20", "SPARE_P21", "SPARE_P22", "SPARE_P23", "SENSE", "+3V3"]):
+        "BEACON: PCA clock (12.25 MHz) during a reply, low otherwise. Scope it in bring-up."])
+    for i, net in enumerate(["BEACON", "SPARE_P20", "SPARE_P21", "SPARE_P22", "SPARE_P23", "SENSE", "+3V3"]):
         s.add(Part(f"TP{i + 1}", "Connector:TestPoint", net.replace("+", ""), 30.48 + i * 22.86, 175.26, 0,
                    TP, {"1": net}))
+
+    # E: back-channel injection ---------------------------------------------
+    s.box(195, 155, 210, 40, "E  Back-channel: beacon into the coax (docs/protocol.md)", [
+        "3.3 Vpp square -> 4k7 / 51R pad -> 1k + 100p -> coax side of SW2 (RF sheet).",
+        "3rd harmonic 36.75 MHz arrives at about -65 dBm. Raise R21 for less, lower for more."])
+    s.add(R("R21", "4k7", 213.36, 177.8, "BEACON", "BCN_PAD"))
+    s.add(R("R22", "51", 236.22, 177.8, "BCN_PAD", "GND"))
+    s.add(R("R23", "1k", 259.08, 177.8, "BCN_PAD", "BCN_C"))
+    s.add(C("C16", "100p C0G", 281.94, 177.8, "BCN_C", "BCN_RF"))
+    s.add(Part("TP8", "Connector:TestPoint", "BCN_RF", 304.8, 177.8, 0, TP, {"1": "BCN_RF"}))
     return s
 
 

@@ -32,6 +32,13 @@ SFR(ADC0CF,  0xBC);
 SFR(ADC0L,   0xBD);
 SFR(ADC0H,   0xBE);
 SFR(TMR2CN0, 0xC8);
+SFR(PCA0CN0, 0xD8);   /* VERIFY: PCA block, page 0x00 */
+SFR(PCA0MD,  0xD9);
+SFR(PCA0CPM0,0xDA);
+SFR(PCA0L,   0xF9);
+SFR(PCA0H,   0xFA);
+SFR(PCA0CPL0,0xFB);
+SFR(PCA0CPH0,0xFC);
 SFR(TMR2RLL, 0xCA);
 SFR(TMR2RLH, 0xCB);
 SFR(TMR2L,   0xCC);
@@ -71,6 +78,7 @@ SBIT(TR2,     0xCA);  /* TMR2CN0.2 */
 SBIT(ADEN,    0xEF);  /* ADC0CN0.7 */
 SBIT(ADINT,   0xED);  /* ADC0CN0.5 */
 SBIT(ADBUSY,  0xEC);  /* ADC0CN0.4 */
+SBIT(CR,      0xDE);  /* PCA0CN0.6: PCA counter run */
 
 /* ---- interrupt vector numbers (SDCC __interrupt(n)) --------------- */
 #define TIMER2_IRQn  5
@@ -90,12 +98,20 @@ SBIT(ADBUSY,  0xEC);  /* ADC0CN0.4 */
 #define VDM0CN_VDMEN    0x80
 #define TMR4CN0_TF4H    0x80
 #define TMR4CN0_TR4     0x04
+#define CLKSEL_DIVRDY   0x80
+#define CLKSEL_HFOSC0_1 0x00   /* HFOSC0 24.5 MHz, divide by 1          */
+#define CLKSEL_HFOSC0_8 0x30   /* HFOSC0 / 8 = 3.0625 MHz (reset value) */
+#define PCA0MD_CPS_SYS  0x08   /* PCA clock = SYSCLK                    */
+#define PCA0CPM_FREQOUT 0x46   /* ECOM | TOG | PWM: frequency output    */
+#define XBR1_CEX0       0x01   /* PCA0ME = CEX0 only                    */
 
 /*
  * VERIFY against the EFM8BB2 Reference Manual before trusting CFG_SNOOZE=1:
  *  - PCON1 SNOOZE bit position
  *  - TMR4CN0.T4XCLK code that selects LFOSC0/8 (with CKCON1.T4ML = 0)
  *  - whether Snooze wakes on Timer 4 overflow without its interrupt enabled
+ *  - the PCA SFR addresses above, CLKSEL layout, and the crossbar putting
+ *    CEX0 on P0.4 when every other P0/P1 pin is skipped (beacon)
  * docs/bringup.md has a test for each.
  */
 #define PCON1_SNOOZE        0x80   /* VERIFY */

@@ -85,6 +85,7 @@ void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
     switch (ev) {
     case EV_FRAME_START:
         a->rx = 1;
+        a->reply = REPLY_NONE;    /* host talks again: drop a stale reply */
         a->result = RES_NONE;
         a->err = ERR_NONE;
         a->err_blinks = 0;
@@ -106,6 +107,8 @@ void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
         a->t_bit = now;
         a->rx = 0;
         a->result = RES_OK;
+        a->reply = REPLY_ACK;
+        a->seq++;
         apply_payload(a, d->payload, now);
         break;
     case EV_FRAME_ERR:
@@ -114,6 +117,7 @@ void app_event(app_t *a, uint8_t ev, const dec_t *d, uint16_t now)
         a->rx = 0;
         a->result = RES_ERR;
         a->err = d->err;
+        a->reply = REPLY_NAK;
         a->err_blinks = a->quiet ? 0u : 6u;
         a->t_blink = now;
         if (d->err == ERR_DROP)
@@ -203,6 +207,7 @@ void app_tick(app_t *a, uint16_t now)
             a->dirty = 1;
             if (a->boot == BOOT_DONE) {
                 a->lna_en = (uint8_t)!a->trip;
+                a->reply = REPLY_HELLO;
                 update_rf(a);
             }
         }
@@ -215,6 +220,7 @@ void app_tick(app_t *a, uint16_t now)
             if (++a->boot_i >= 48u) {
                 a->boot = BOOT_DONE;
                 a->lna_en = (uint8_t)!a->trip;   /* LNA on after the show */
+                a->reply = REPLY_HELLO;
                 update_rf(a);
             }
         }

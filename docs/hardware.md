@@ -22,6 +22,7 @@ flowchart LR
   LDO --> MCU[EFM8BB21<br/>QSOP24]
   MCU --> SR[6x 74HC595] --> LAMPS
   MCU --> SW1 & SW2 & S1 & S2 & FMN & LSW
+  MCU -- BEACON 12.25 MHz --> PAD[4k7/51R pad<br/>1k + 100p] -.-> BT
 ```
 
 ## Power tree
@@ -107,7 +108,7 @@ clock (Stop exits only through reset). The BB2 also has 21 I/O on QSOP24.
 | 3 | P0.1 | VC_ADC | ana | same divider node |
 | 2 | P0.2 | SCAP_ADC | ana | 1 M / 1 M + 100 nF |
 | 1 | P0.3 | ILNA_ADC | ana | INA180A2 out (19.5 mV/mA) |
-| 24 | P0.4 | TP_TX | out | test point (UART0 TX if ever needed) |
+| 24 | P0.4 | BEACON | out | PCA CEX0 clock into the coax pad during a reply, low otherwise; test point |
 | 23 | P0.5 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up to 3V3, port-match wake |
 | 22 | P0.6 | LNA_EN | out | 10 k pull-down: LNA off during reset |
 | 21 | P0.7 | LNA_PATH | out | both SPDTs; 1 = through LNA; 10 k pull-down = bypass |
@@ -158,6 +159,32 @@ firmware runs.
   LM66100 / TPS2553 absolute maximum ratings. If not, add 1 Ω plus a 5.6 V
   zener.
 
+## Back-channel injection
+
+The reply (docs/protocol.md) is a 3.3 Vpp, 12.25 MHz square wave from P0.4,
+keyed on and off. It is coupled onto the RF line on the coax side of SW2,
+after the filter bank, so the dongle hears it whatever branch is selected:
+
+```
+P0.4 BEACON ── R21 4k7 ──┬── R23 1k ── C16 100p C0G ── BCN_RF → SW2 common / bias-T RF port
+                         R22 51
+                         GND
+```
+
+* The 3rd harmonic at 36.75 MHz is 0.70 V peak at the pin. The pad gives
+  7.5 mV, and 1 kΩ into the 25 Ω of the line (RTL-SDR ‖ switch port) about
+  0.18 mV, i.e. **about −65 dBm**. That is 40 dB above the noise in a 2 kHz
+  bin and far below the dongle's overload point. Raise R21 for less, lower it
+  for more. **VERIFY** the level on the bench.
+* The 1 kΩ keeps the tap from loading the RF line: < 0.25 dB at 2 GHz,
+  also with the parasitic capacitance of an 0603.
+* P0.4 is low and the crossbar releases it between replies, so no DC sits on
+  the pad. C16 blocks the 1.65 V average during a reply; the PE42582 ports
+  must stay at 0 V DC.
+* What leaks back out of the antenna is the reverse isolation of SW2, the
+  filter and the LNA or bypass switch below −65 dBm, for 0.7 s per command.
+* Keep the BEACON trace short and away from the LNA input.
+
 ## Lamp driver
 
 * 6× 74HC595 (TSSOP-16) powered from 3V3, with the outputs sinking.
@@ -181,3 +208,5 @@ firmware runs.
 4. The bias discharge time with your V3 and coax (fall-time budget above).
 5. The EFM8BB2 register fields marked VERIFY in `firmware/include/efm8bb2_sfr.h`.
    `docs/bringup.md` has a test for each.
+6. Beacon level and harmonic content at the coax connector (R21/R22). The
+   RF sheet must connect BCN_RF to SW2 common.

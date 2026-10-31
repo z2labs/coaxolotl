@@ -1,7 +1,7 @@
 (kicad_sch
   (version 20230121)
   (generator eeschema)
-  (uuid "4844b75d-0fd9-4f0b-bd5e-8223e6e6b934")
+  (uuid "81888a01-cdf8-4261-99d0-8416e7e83120")
   (paper "A3")
   (title_block
     (title "MCU")
@@ -1299,7 +1299,7 @@
     (fill
       (type none)
     )
-    (uuid "022d4245-c118-44a8-8ddb-90980fdedaa4")
+    (uuid "571b04b9-36cf-4783-a7f7-0f74496404c5")
   )
   (text "A  EFM8BB21F16G-C-QSOP24"
     (at 16.27 23 0)
@@ -1310,7 +1310,7 @@
       )
       (justify left bottom)
     )
-    (uuid "e5c65ed9-5c31-49e5-8721-4806e283f636")
+    (uuid "44a7d202-1058-4350-9282-647f8acb4a7a")
   )
   (text "Pin map = firmware/src/hal_efm8bb2.c. P0.0 and P0.1 share SENSE (digital + ADC)."
     (at 16.27 146.53 0)
@@ -1320,7 +1320,7 @@
       )
       (justify left bottom)
     )
-    (uuid "fddc1f83-4343-49d6-8b69-8d3e585d2386")
+    (uuid "14d5134e-f8cb-4e04-b6b4-ff714c22837d")
   )
   (text "SYSCLK HFOSC0/8 = 3.06 MHz; Snooze when idle (no clock -> no spurs). Keep under the can."
     (at 16.27 148.73 0)
@@ -1330,7 +1330,7 @@
       )
       (justify left bottom)
     )
-    (uuid "ab723171-dc4a-4b5e-b662-8a85dd9df640")
+    (uuid "2c47102a-1857-4e42-b03d-895c6410eb2f")
   )
   (symbol
     (lib_id "coaxolotl:EFM8BB21F16G-C-QSOP24")
@@ -1339,7 +1339,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "bef2ccb6-76b6-4013-807c-73bc171cd90b")
+    (uuid "b7dcb832-95bb-4d46-a180-07fa95dec7ce")
     (property "Reference" "U5"
       (at 119.38 49.53 0)
       (effects
@@ -1386,80 +1386,80 @@
       )
     )
     (pin "7"
-      (uuid "62394538-2149-4038-857a-c06e797acc89")
+      (uuid "01ce8933-bd44-4360-b771-fe5310006530")
     )
     (pin "8"
-      (uuid "3d7b149f-27cc-4eb4-8bdc-6a7cbb4a2f92")
+      (uuid "0198cad9-9abf-4a74-94e9-ac1dae73783f")
     )
     (pin "12"
-      (uuid "767e7b77-74e1-43e4-b024-4a9903523c4e")
+      (uuid "15fdd09c-efce-465d-a1fc-2f90473b0686")
     )
     (pin "11"
-      (uuid "597804a0-7e0f-45e6-8dde-29f36a58fd34")
+      (uuid "e903cbdc-ed16-4e46-834d-6c851d2ae37a")
     )
     (pin "10"
-      (uuid "c15a57d0-43a2-42bf-b848-0d5337ec9e54")
+      (uuid "4866426e-0a27-4c28-bcad-7bc968243ed1")
     )
     (pin "9"
-      (uuid "406a347e-1e94-4dea-ad5c-cc228e898b10")
+      (uuid "24cf3fa6-81a6-438e-b918-8464b3f9c265")
     )
     (pin "4"
-      (uuid "a962b047-844e-4be9-aeb2-5430067f6be9")
+      (uuid "f1b394a3-25e5-44f5-80b0-9b8f98d63227")
     )
     (pin "3"
-      (uuid "2099e745-7c9b-44b3-8146-e26bd36ea511")
+      (uuid "32351795-4e7b-41c4-a2c6-74835bab3488")
     )
     (pin "2"
-      (uuid "1e346711-5f10-45be-8e77-2a366295bef1")
+      (uuid "668d40e4-e257-468a-af45-e59b1dc084ac")
     )
     (pin "1"
-      (uuid "14fa22c0-c3c6-4b2c-b2db-bf358a3174b8")
+      (uuid "30875054-c616-44a6-8b46-dcabd77200e3")
     )
     (pin "24"
-      (uuid "4b35a889-f64b-4567-b85e-a296df8bcb21")
+      (uuid "c0b0b371-d522-40fb-a3b5-0c586dd61d04")
     )
     (pin "23"
-      (uuid "cd1557cb-95c3-457a-be13-5e9cd97ca997")
+      (uuid "fc0204a3-261f-4e76-9d20-21d521138277")
     )
     (pin "22"
-      (uuid "143dcaf2-17fd-4561-b9b7-b91787d63c8d")
+      (uuid "d1db8c89-5950-4068-8cf8-52dba240bd91")
     )
     (pin "21"
-      (uuid "00c4ffbc-34b6-4885-93ee-5573a030ed13")
+      (uuid "03ba19ef-71c4-45ef-b340-343d664ef929")
     )
     (pin "20"
-      (uuid "5e06c5f6-eb87-4ea9-8d05-6949e237b733")
+      (uuid "483062dd-901c-4563-aa3e-c74a3adffc82")
     )
     (pin "19"
-      (uuid "e7fe3838-0868-4844-a962-79c4a621e037")
+      (uuid "bd8b1800-bcb0-4cde-ab2d-9047ecc23ff2")
     )
     (pin "18"
-      (uuid "bc2a8376-f631-45e2-bf66-2b34b3d6d17f")
+      (uuid "bf954e07-1423-45fa-a9d8-9bb91d05d218")
     )
     (pin "17"
-      (uuid "916b350e-d842-4a15-bc7c-38cf60df435a")
+      (uuid "7e3ea7d7-aef0-4ffe-bdf2-ad811d25bb3d")
     )
     (pin "16"
-      (uuid "3e004818-3c8d-4d99-a815-79856e339d48")
+      (uuid "3d66047c-56a1-4cad-a937-717fa2249475")
     )
     (pin "15"
-      (uuid "eb5b377b-fa5b-426d-ac44-1838614dd6c5")
+      (uuid "b7179a96-3661-4f30-8613-28e927cceff8")
     )
     (pin "14"
-      (uuid "694aa8df-4177-43ff-a61d-31c8ceb3c1ba")
+      (uuid "4f531b7e-2a94-4327-b7fe-25ce675e9de9")
     )
     (pin "13"
-      (uuid "418b8873-2f98-4026-9b73-a49c4c368f09")
+      (uuid "a37b08fa-f586-42da-bf10-9c36ecc03be4")
     )
     (pin "6"
-      (uuid "8f7bc6f5-fb11-4ea2-8c24-e8d5fbf21baa")
+      (uuid "ab93580e-3270-4536-a547-9d2c937b1539")
     )
     (pin "5"
-      (uuid "b9cf6f00-88ab-49ec-a532-7d79c322915a")
+      (uuid "cbbc21e3-12b6-4826-9a5c-445f46bae06e")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "U5")
           (unit 1)
         )
@@ -1475,7 +1475,7 @@
       (width 0)
       (type default)
     )
-    (uuid "1b68f935-44c4-417f-a707-e978c8814488")
+    (uuid "24a8ba58-38fb-41a1-bba4-3cc0c1220142")
   )
   (label "RST_N"
     (at 81.28 57.15 180)
@@ -1486,7 +1486,7 @@
       )
       (justify right bottom)
     )
-    (uuid "35470455-53b4-4d8a-bd0c-ec5165307e8a")
+    (uuid "24ae57af-aec5-4fcc-9aa8-fd21600b2c4a")
   )
   (wire
     (pts
@@ -1497,7 +1497,7 @@
       (width 0)
       (type default)
     )
-    (uuid "61f6c19d-7594-462e-8bf5-3cb8fea38c6f")
+    (uuid "89770b3a-8a7a-4cde-84a0-2528dce38528")
   )
   (label "C2D"
     (at 81.28 59.69 180)
@@ -1508,7 +1508,7 @@
       )
       (justify right bottom)
     )
-    (uuid "6cbe690e-9552-4bcf-bb07-957038e44d6d")
+    (uuid "9e17b3b5-0cc3-4b21-9aed-bc39e6ffbbc4")
   )
   (wire
     (pts
@@ -1519,7 +1519,7 @@
       (width 0)
       (type default)
     )
-    (uuid "b5abf2a0-cb6c-4489-9f58-81f0fa64062d")
+    (uuid "a1c80a10-7148-448a-afb4-efe646017f04")
   )
   (label "SPARE_P20"
     (at 81.28 64.77 180)
@@ -1530,7 +1530,7 @@
       )
       (justify right bottom)
     )
-    (uuid "0cc6aa9b-8c4e-4f2f-b685-4d16d021039d")
+    (uuid "872fe7b3-1bc6-49f2-93b5-f45ad3943131")
   )
   (wire
     (pts
@@ -1541,7 +1541,7 @@
       (width 0)
       (type default)
     )
-    (uuid "5e09eba3-f20e-47b4-a33b-f95187ff676d")
+    (uuid "80a108b6-2102-4427-a4bf-011adde01aad")
   )
   (label "SPARE_P21"
     (at 81.28 67.31 180)
@@ -1552,7 +1552,7 @@
       )
       (justify right bottom)
     )
-    (uuid "fb4a2119-b2f7-470a-8e5b-14a5c0929b6f")
+    (uuid "22d7954f-59c3-4bae-a642-fbd81cade897")
   )
   (wire
     (pts
@@ -1563,7 +1563,7 @@
       (width 0)
       (type default)
     )
-    (uuid "64f8f1a8-4419-40d7-a158-4e714f6d9885")
+    (uuid "26eef523-171a-4db0-8a20-39a3c22bf834")
   )
   (label "SPARE_P22"
     (at 81.28 69.85 180)
@@ -1574,7 +1574,7 @@
       )
       (justify right bottom)
     )
-    (uuid "dd13ef63-140b-42c4-aec9-276b17551529")
+    (uuid "3a81766e-8761-49d1-98c7-8a25778fe0c2")
   )
   (wire
     (pts
@@ -1585,7 +1585,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f9c5ad9a-d7af-442f-a989-e0ce5d1aef50")
+    (uuid "38f5d154-5fc2-4600-90c9-848385e6b3e3")
   )
   (label "SPARE_P23"
     (at 81.28 72.39 180)
@@ -1596,7 +1596,7 @@
       )
       (justify right bottom)
     )
-    (uuid "dade4def-4e86-4fbf-868d-797ca6505134")
+    (uuid "80dec62d-ef2b-4394-9d83-57e3f19aa503")
   )
   (wire
     (pts
@@ -1607,7 +1607,7 @@
       (width 0)
       (type default)
     )
-    (uuid "3c664107-24bd-4c8a-9eba-c86277a7099c")
+    (uuid "9eac3466-09e6-49d0-ad9b-61ac29dfc98f")
   )
   (global_label "SENSE"
     (shape bidirectional)
@@ -1619,7 +1619,7 @@
       )
       (justify left)
     )
-    (uuid "8832ab7a-1cbc-47f5-8756-31640821a8b9")
+    (uuid "2da4deca-8562-4b8c-8d40-14335dbbcd48")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 57.15 0)
       (effects
@@ -1639,7 +1639,7 @@
       (width 0)
       (type default)
     )
-    (uuid "06d5ccf7-7a17-4cd9-953f-891ee5d91d51")
+    (uuid "dd6bd5e8-baa2-47cd-b515-a3a12e41bcca")
   )
   (global_label "SENSE"
     (shape bidirectional)
@@ -1651,7 +1651,7 @@
       )
       (justify left)
     )
-    (uuid "90b441b9-508e-439d-a61c-aa22ffb79a73")
+    (uuid "2e60e1f6-bdaa-4380-a93a-ba0132599983")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 59.69 0)
       (effects
@@ -1671,7 +1671,7 @@
       (width 0)
       (type default)
     )
-    (uuid "ea47c9c9-3680-4691-9b2b-1ed0a42409bc")
+    (uuid "1020632b-3227-4200-b700-00670346f2f8")
   )
   (global_label "SCAP_ADC"
     (shape bidirectional)
@@ -1683,7 +1683,7 @@
       )
       (justify left)
     )
-    (uuid "4b53818d-0e27-4dc5-8df5-2510555a7dba")
+    (uuid "10368146-526e-4d0e-9793-c1f37dd1534b")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 62.23 0)
       (effects
@@ -1703,7 +1703,7 @@
       (width 0)
       (type default)
     )
-    (uuid "266dd112-afdb-4a02-a7c2-f46e9fd98e50")
+    (uuid "6fbce32c-48b1-469e-b4d0-771b97a09303")
   )
   (global_label "ILNA"
     (shape bidirectional)
@@ -1715,7 +1715,7 @@
       )
       (justify left)
     )
-    (uuid "d282bbfd-7532-4dac-8587-beabbdd720f1")
+    (uuid "9fbcbac1-cb2c-414a-8881-cee11f273321")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 64.77 0)
       (effects
@@ -1735,9 +1735,9 @@
       (width 0)
       (type default)
     )
-    (uuid "f4a5642e-4b8b-442d-b68e-90d7ef724902")
+    (uuid "c4649dd4-bf6c-48f9-a2cf-b5916bd039d6")
   )
-  (label "TP_TX"
+  (label "BEACON"
     (at 121.92 67.31 0)
     (fields_autoplaced)
     (effects
@@ -1746,7 +1746,7 @@
       )
       (justify left bottom)
     )
-    (uuid "cd0fb137-2226-4106-a55f-fe3b5db2ce3d")
+    (uuid "7a40a7e2-f003-4e47-83e5-01c4c4df6581")
   )
   (wire
     (pts
@@ -1757,7 +1757,7 @@
       (width 0)
       (type default)
     )
-    (uuid "cb39652b-e677-4cf1-82de-32a06a189fd0")
+    (uuid "53219bc7-daae-4ff8-82e4-a88f30218b15")
   )
   (global_label "FAULT_N"
     (shape bidirectional)
@@ -1769,7 +1769,7 @@
       )
       (justify left)
     )
-    (uuid "0265ea2b-161b-44c2-a6d5-195acb3e6c35")
+    (uuid "e6761df3-9e91-4507-abea-ba42a474ce9f")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 69.85 0)
       (effects
@@ -1789,7 +1789,7 @@
       (width 0)
       (type default)
     )
-    (uuid "8fa2786c-1711-4da8-af9f-9a55a8859858")
+    (uuid "d20831c5-ddf8-42ef-a95c-d6208a69306b")
   )
   (global_label "LNA_EN"
     (shape bidirectional)
@@ -1801,7 +1801,7 @@
       )
       (justify left)
     )
-    (uuid "1d428e21-9922-4861-8443-b2f1763652e1")
+    (uuid "1c10d272-d876-46f7-90be-425016dd377e")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 72.39 0)
       (effects
@@ -1821,7 +1821,7 @@
       (width 0)
       (type default)
     )
-    (uuid "475632de-ab12-4269-b379-55f831c3f79b")
+    (uuid "bb5a6bbd-5a83-4531-9571-c2d6aa953aa6")
   )
   (global_label "LNA_PATH"
     (shape bidirectional)
@@ -1833,7 +1833,7 @@
       )
       (justify left)
     )
-    (uuid "e7e5ca3f-108c-4664-8e49-11f1f8f34244")
+    (uuid "ce619c7d-3cd0-4fed-9d8d-0c0547707097")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 74.93 0)
       (effects
@@ -1853,7 +1853,7 @@
       (width 0)
       (type default)
     )
-    (uuid "196e3587-ab78-486d-96ef-a88027a4b1cf")
+    (uuid "170324df-88b4-4422-bd0e-4ae26c601228")
   )
   (global_label "SW_V1"
     (shape bidirectional)
@@ -1865,7 +1865,7 @@
       )
       (justify left)
     )
-    (uuid "efef6365-7ccb-4ec0-ab79-090bdb0d0339")
+    (uuid "552adc89-ee64-40f2-a1c9-284ed123ad1a")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 77.47 0)
       (effects
@@ -1885,7 +1885,7 @@
       (width 0)
       (type default)
     )
-    (uuid "aa1b51d0-0f83-4f09-9524-313e41270ea4")
+    (uuid "276598da-ee7f-4c98-816e-947c97252aa3")
   )
   (global_label "SW_V2"
     (shape bidirectional)
@@ -1897,7 +1897,7 @@
       )
       (justify left)
     )
-    (uuid "07550846-1796-4a5f-b83d-3a5b4f64e7af")
+    (uuid "30b1a982-a761-48f5-a5ab-e4723b8867ba")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 80.01 0)
       (effects
@@ -1917,7 +1917,7 @@
       (width 0)
       (type default)
     )
-    (uuid "49fa0c60-c4d1-49dd-b5ed-3ab1a088520e")
+    (uuid "0a22a273-c7cf-44f9-9eaf-d717c3b32de0")
   )
   (global_label "SW_V3"
     (shape bidirectional)
@@ -1929,7 +1929,7 @@
       )
       (justify left)
     )
-    (uuid "789e1555-2537-480a-94f6-d1fad0d1542d")
+    (uuid "21c92043-0829-4c4f-ab64-ff84ecb9d0b7")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 82.55 0)
       (effects
@@ -1949,7 +1949,7 @@
       (width 0)
       (type default)
     )
-    (uuid "3b4151cb-e624-430c-aab3-4da1c8da6367")
+    (uuid "bb0a3de0-723e-4316-9c51-76adf10bf1b2")
   )
   (global_label "FMN"
     (shape bidirectional)
@@ -1961,7 +1961,7 @@
       )
       (justify left)
     )
-    (uuid "302e66d2-5022-4abc-a279-6d8468b7a31b")
+    (uuid "20bf992a-139d-49fb-903c-3da9516e4fc8")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 85.09 0)
       (effects
@@ -1981,7 +1981,7 @@
       (width 0)
       (type default)
     )
-    (uuid "83b28b5c-dbb1-4234-a0b8-ee159f5fc967")
+    (uuid "a8270a37-5a12-409a-93bd-00f94a699362")
   )
   (global_label "LED_SER"
     (shape bidirectional)
@@ -1993,7 +1993,7 @@
       )
       (justify left)
     )
-    (uuid "fbc7187e-9ae5-4f0d-ab2d-fc316776ee31")
+    (uuid "fceb1134-c261-452f-8d54-db4a109fe2e9")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 87.63 0)
       (effects
@@ -2013,7 +2013,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f6586e63-1c08-440a-ae5c-ceab995ca780")
+    (uuid "6962847d-4cfb-449d-b2c2-61523e945f4f")
   )
   (global_label "LED_SCK"
     (shape bidirectional)
@@ -2025,7 +2025,7 @@
       )
       (justify left)
     )
-    (uuid "61f2543a-9ea6-43bd-98e5-d962ea59ad1a")
+    (uuid "40cd705c-97b1-484a-abd2-583291df1e22")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 90.17 0)
       (effects
@@ -2045,7 +2045,7 @@
       (width 0)
       (type default)
     )
-    (uuid "bbab10d8-1208-4c60-baf0-ea8f8b2270e4")
+    (uuid "9856ea23-21a1-43b4-84d8-a9bcf3dfa776")
   )
   (global_label "LED_RCK"
     (shape bidirectional)
@@ -2057,7 +2057,7 @@
       )
       (justify left)
     )
-    (uuid "905ac7f0-2b19-44d0-9d0d-2eb569a8f696")
+    (uuid "36afe1d8-1962-4048-b2e8-71cada926e2e")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 92.71 0)
       (effects
@@ -2077,7 +2077,7 @@
       (width 0)
       (type default)
     )
-    (uuid "551f7991-773c-4955-b8ea-59c1f640ce51")
+    (uuid "8abf06e8-eba2-46ef-97b2-d8826d037750")
   )
   (global_label "LED_OE_N"
     (shape bidirectional)
@@ -2089,7 +2089,7 @@
       )
       (justify left)
     )
-    (uuid "b024ea3e-fa9d-46d0-99cb-9aa41de81317")
+    (uuid "b8f8bc5a-2a92-409f-9d1a-4923e3fc246d")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 121.92 95.25 0)
       (effects
@@ -2109,7 +2109,7 @@
       (width 0)
       (type default)
     )
-    (uuid "b24310c6-b5ec-4978-a23d-e10b214f0c7c")
+    (uuid "528ce28b-f65d-4fff-ae23-bec0c5b2abc5")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -2118,7 +2118,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "13e44f22-45c7-45b9-b87a-4c1d4f851835")
+    (uuid "6b5f1104-453e-4234-b3cd-a54157eccf41")
     (property "Reference" "#PWR001"
       (at 105.41 52.07 0)
       (effects
@@ -2155,11 +2155,11 @@
       )
     )
     (pin "1"
-      (uuid "2edfc174-3982-4013-8cd7-20d77b68c640")
+      (uuid "e415daa3-0048-41f4-8219-94a4f270673c")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR001")
           (unit 1)
         )
@@ -2175,7 +2175,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f2ca5a0b-ca59-4b2c-ba81-e636c69f6a81")
+    (uuid "7a8064ed-f22d-4580-9f25-422f10e6076e")
   )
   (symbol
     (lib_id "power:GND")
@@ -2184,7 +2184,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "4efad06e-597e-44a5-ad29-63acb83f5895")
+    (uuid "10402141-5561-48be-95ea-86f8ac50da2d")
     (property "Reference" "#PWR002"
       (at 105.41 105.41 0)
       (effects
@@ -2221,11 +2221,11 @@
       )
     )
     (pin "1"
-      (uuid "e22bd09c-fb2f-43ef-84b6-a4c42a173104")
+      (uuid "b008b7af-ef38-43c9-80ce-34267ba6dba3")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR002")
           (unit 1)
         )
@@ -2239,7 +2239,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "824b14df-c7f8-4c75-b82f-e08f2d6050fb")
+    (uuid "4ddf69b1-88cd-4be6-85d5-c487f4aeda1f")
     (property "Reference" "C14"
       (at 33.02 130.81 0)
       (effects
@@ -2277,14 +2277,14 @@
       )
     )
     (pin "1"
-      (uuid "35b004d5-b882-43f5-9310-77faf8833b6f")
+      (uuid "603f5a53-e9fd-4741-9094-84aecef1b83b")
     )
     (pin "2"
-      (uuid "bf76763c-7f48-481e-9e2d-1e080ce4ba60")
+      (uuid "d66231d4-624d-454b-ae0f-fdba7e9a6b71")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "C14")
           (unit 1)
         )
@@ -2300,7 +2300,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a5ecdbae-9ae7-47b9-9287-26371fb4e0f4")
+    (uuid "3566c4bc-505c-4573-b5c2-eadcc3aec223")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -2309,7 +2309,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "e5adcf94-1b63-4dd0-8657-242ec6fdb7e2")
+    (uuid "1ac63b47-de28-4b49-b168-dc43d07baecd")
     (property "Reference" "#PWR003"
       (at 34.29 128.27 0)
       (effects
@@ -2346,11 +2346,11 @@
       )
     )
     (pin "1"
-      (uuid "bbf09e2b-6b34-4c4a-8c20-b7c8e4c916e5")
+      (uuid "756feafb-e18a-4a47-99d5-85ca9ab75fdc")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR003")
           (unit 1)
         )
@@ -2366,7 +2366,7 @@
       (width 0)
       (type default)
     )
-    (uuid "0142a899-889c-468e-94b4-be081d7856e2")
+    (uuid "2167a397-637a-4134-ae82-3fe9641080b0")
   )
   (symbol
     (lib_id "power:GND")
@@ -2375,7 +2375,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "a41d76f8-49da-494f-9c54-cf7f0c89d5c1")
+    (uuid "9f17eddc-9a95-44ad-ba26-771f188add5c")
     (property "Reference" "#PWR004"
       (at 34.29 140.97 0)
       (effects
@@ -2412,11 +2412,11 @@
       )
     )
     (pin "1"
-      (uuid "c5c56b70-288e-44a7-9826-31b2bb0e7791")
+      (uuid "8064c78d-8e54-4b8a-bc75-7f2d47008945")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR004")
           (unit 1)
         )
@@ -2430,7 +2430,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "1a5c4780-d13d-46fc-a56e-955c6162e90c")
+    (uuid "a04bf3a8-9ec3-4b0c-aad5-dbe7b226ea92")
     (property "Reference" "C15"
       (at 45.72 130.81 0)
       (effects
@@ -2468,14 +2468,14 @@
       )
     )
     (pin "1"
-      (uuid "37560410-1cee-4329-bb45-7b87f3d7d8e8")
+      (uuid "8e3f8210-d600-4122-83f9-1b5d9d7203a7")
     )
     (pin "2"
-      (uuid "a103c42d-bd58-4ebc-9d12-672c8236d6a6")
+      (uuid "ffb3df7c-d6c7-4b55-b2ca-e0fe2a79211e")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "C15")
           (unit 1)
         )
@@ -2491,7 +2491,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6069998f-4e90-42ea-8a36-634a6b0468d0")
+    (uuid "0fd28551-e599-49a6-878a-5c30adcf0f6a")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -2500,7 +2500,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "ba55d586-1d64-4a6b-ac81-4749903e00a2")
+    (uuid "2782e136-0ab9-40b2-a8e1-6134a2fde64f")
     (property "Reference" "#PWR005"
       (at 46.99 128.27 0)
       (effects
@@ -2537,11 +2537,11 @@
       )
     )
     (pin "1"
-      (uuid "3eac3344-8d7d-43f2-b831-b0895343be3d")
+      (uuid "274f48a3-6d7b-405d-ab45-0e257dfe91e7")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR005")
           (unit 1)
         )
@@ -2557,7 +2557,7 @@
       (width 0)
       (type default)
     )
-    (uuid "39cc8692-95fe-42f9-8e79-e722b69eb914")
+    (uuid "5a4e249b-908f-45d7-b95b-5e5952ce3f38")
   )
   (symbol
     (lib_id "power:GND")
@@ -2566,7 +2566,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "9e586574-fef5-4ec9-8dc6-54481774a1c6")
+    (uuid "5a5094ee-fbc4-40ab-9a26-c3644f492d8d")
     (property "Reference" "#PWR006"
       (at 46.99 140.97 0)
       (effects
@@ -2603,11 +2603,11 @@
       )
     )
     (pin "1"
-      (uuid "82808190-9f2b-4e63-aad8-faf1a76a71f6")
+      (uuid "2dddd0b1-6dd6-4386-b591-c67805a486ba")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR006")
           (unit 1)
         )
@@ -2624,7 +2624,7 @@
     (fill
       (type none)
     )
-    (uuid "3bcd57db-cea3-41a5-bf93-044601d402df")
+    (uuid "875efcea-a115-4d40-b63a-eca55af2730d")
   )
   (text "B  C2 debug / programming"
     (at 196.27 23 0)
@@ -2635,7 +2635,7 @@
       )
       (justify left bottom)
     )
-    (uuid "c9f0fbd0-3039-4da0-9151-3477dd643d4c")
+    (uuid "e1895630-3a82-4a9f-b4c9-f6784c988277")
   )
   (text "4-pin 2.54 mm: 3V3, C2D, C2CK(RSTb), GND. Works with a SiLabs debug adapter"
     (at 196.27 76.53 0)
@@ -2645,7 +2645,7 @@
       )
       (justify left bottom)
     )
-    (uuid "acbd8a53-650a-4b82-8129-e167baa9f861")
+    (uuid "6587c0f9-e631-4b8a-a2a4-15f612ebf2af")
   )
   (text "or an Arduino-based C2 programmer. Do not add a cap on RSTb (C2 clock)."
     (at 196.27 78.73 0)
@@ -2655,7 +2655,7 @@
       )
       (justify left bottom)
     )
-    (uuid "a8c2d71a-b309-42cd-a592-e922fc1c05eb")
+    (uuid "44534ae5-9033-439d-a266-c23b3068e3a1")
   )
   (symbol
     (lib_id "Connector_Generic:Conn_01x04")
@@ -2664,7 +2664,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "43fe3db6-c936-4fa9-86b8-ae02ae459896")
+    (uuid "5ef0387c-a7ce-4923-8061-1fbafd8c4c99")
     (property "Reference" "J1"
       (at 246.38 38.1 0)
       (effects
@@ -2700,20 +2700,20 @@
       )
     )
     (pin "1"
-      (uuid "b2fc8d3c-442d-4b05-b4cd-7fe655a63245")
+      (uuid "95d673f6-6666-4ad5-85ea-3544e108d1e2")
     )
     (pin "2"
-      (uuid "e6684780-e2be-4574-81aa-7372e1368730")
+      (uuid "acc05b8b-8787-440c-b3e4-ba34ff2d25b9")
     )
     (pin "3"
-      (uuid "61c28c6f-9f05-4e81-91b6-09444e2281eb")
+      (uuid "f70bbe54-afd6-4e24-bf7e-69cad1b1c14b")
     )
     (pin "4"
-      (uuid "03cf68b8-1c69-42bd-aa55-bbdf475a1ab2")
+      (uuid "e15cac4f-ea99-4ebf-9279-5833df27688c")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "J1")
           (unit 1)
         )
@@ -2729,7 +2729,7 @@
       (width 0)
       (type default)
     )
-    (uuid "3d29e83c-bfc7-4c81-a7fd-80182b2fd028")
+    (uuid "7619d60d-928b-470f-8771-1fa8c7876672")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -2738,7 +2738,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "f7b36235-a259-4561-b377-b10c03824244")
+    (uuid "8bf02f25-afc3-4ed1-ae74-3087a092edf2")
     (property "Reference" "#PWR007"
       (at 242.57 45.72 90)
       (effects
@@ -2775,11 +2775,11 @@
       )
     )
     (pin "1"
-      (uuid "24eb09a3-1eda-43ef-b34d-66d227ce8676")
+      (uuid "ccb7fa49-cd05-432f-bf41-2f513fd655ca")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR007")
           (unit 1)
         )
@@ -2795,7 +2795,7 @@
       (width 0)
       (type default)
     )
-    (uuid "73705b05-67b3-4623-aea2-fa30bd6da542")
+    (uuid "51395eaf-ab79-417d-aa42-3706913ed61e")
   )
   (label "C2D"
     (at 238.76 45.72 180)
@@ -2806,7 +2806,7 @@
       )
       (justify right bottom)
     )
-    (uuid "309af924-9472-483e-a063-4c0fa21f2406")
+    (uuid "9a6b5816-e8f2-485f-9d25-3212f98ab6e4")
   )
   (wire
     (pts
@@ -2817,7 +2817,7 @@
       (width 0)
       (type default)
     )
-    (uuid "02962cdb-60b9-4539-b808-93536da4496e")
+    (uuid "928eeb2e-e01d-4167-a728-663bfe93391b")
   )
   (label "RST_N"
     (at 238.76 48.26 180)
@@ -2828,7 +2828,7 @@
       )
       (justify right bottom)
     )
-    (uuid "a72be0a6-4560-4c05-ad8a-edb5158f6fa2")
+    (uuid "c27c7325-fadd-4c2e-89de-b3de955d7b1e")
   )
   (wire
     (pts
@@ -2839,7 +2839,7 @@
       (width 0)
       (type default)
     )
-    (uuid "1edc2cf5-a2ec-44c3-b159-44db462682e4")
+    (uuid "b723a18f-3ca7-49ef-b184-9e844852ed10")
   )
   (symbol
     (lib_id "power:GND")
@@ -2848,7 +2848,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "a0be01b9-0241-41d4-8344-6503cedeb0ba")
+    (uuid "76942856-d279-4ce2-b28a-60a553f04986")
     (property "Reference" "#PWR008"
       (at 242.57 53.34 90)
       (effects
@@ -2885,11 +2885,11 @@
       )
     )
     (pin "1"
-      (uuid "9aa9fb86-136d-4a7f-a4bd-25c4d27b126b")
+      (uuid "4e4a27ea-930e-4771-b3a1-10082f001cbf")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR008")
           (unit 1)
         )
@@ -2903,7 +2903,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "725bcd5e-71cb-4833-9c04-9d24195d505d")
+    (uuid "03462793-47e5-495d-be88-a9f2da08209d")
     (property "Reference" "R13"
       (at 215.9 49.53 0)
       (effects
@@ -2941,14 +2941,14 @@
       )
     )
     (pin "1"
-      (uuid "204cd3dd-e20b-400b-9dd6-f68c9be46b95")
+      (uuid "6d430a58-895d-40f9-b559-5d54dec2f9e0")
     )
     (pin "2"
-      (uuid "04f8256b-d6c6-4dd7-a0f2-1f4b01892589")
+      (uuid "d1141517-c90b-4889-95d1-be150bf27c38")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R13")
           (unit 1)
         )
@@ -2964,7 +2964,7 @@
       (width 0)
       (type default)
     )
-    (uuid "fe0a365f-329d-4214-a7a4-0ec15f598eff")
+    (uuid "bd00fb9f-57b2-4ac3-9413-3de42ab68090")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -2973,7 +2973,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "d6ced811-5f27-42d0-b002-959dbb71161e")
+    (uuid "fb786a8a-958c-4ce7-827c-a5bc9634c732")
     (property "Reference" "#PWR009"
       (at 217.17 46.99 0)
       (effects
@@ -3010,11 +3010,11 @@
       )
     )
     (pin "1"
-      (uuid "abeae9ab-fdd9-4c08-9280-301e6b81f9b9")
+      (uuid "b80f6728-49d6-4ab3-b33a-c0d3961df5a0")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR009")
           (unit 1)
         )
@@ -3030,7 +3030,7 @@
       (width 0)
       (type default)
     )
-    (uuid "9ff0e7f0-e712-4f89-90d6-9ded9f138aa0")
+    (uuid "badbd126-ba24-479a-8d16-fc0c26d378a8")
   )
   (label "RST_N"
     (at 213.36 57.15 270)
@@ -3041,7 +3041,7 @@
       )
       (justify right bottom)
     )
-    (uuid "c465fcff-b890-493a-9449-4baeccf18aeb")
+    (uuid "123d1a3b-90e4-4f00-8d6b-22aa5adfd79d")
   )
   (rectangle
     (start 195 85)
@@ -3053,7 +3053,7 @@
     (fill
       (type none)
     )
-    (uuid "24b7e7ee-720b-4569-83dd-967364456947")
+    (uuid "3982bc92-4a93-4124-837b-8241cb3e42a5")
   )
   (text "C  Reset-safe defaults (pins are weak-pull-up / Hi-Z until firmware runs)"
     (at 196.27 88 0)
@@ -3064,7 +3064,7 @@
       )
       (justify left bottom)
     )
-    (uuid "8e23b62e-acbd-4c3d-8c2d-c4edab967700")
+    (uuid "c69308a0-0c69-4d34-8899-1cb5f68ddeaa")
   )
   (text "Pull-downs: LNA off, bypass, branch 0 = THRU, FM notch out -> the box is a plain cable during reset."
     (at 196.27 146.53 0)
@@ -3074,7 +3074,7 @@
       )
       (justify left bottom)
     )
-    (uuid "10dc9f86-178d-48ac-8799-beb0a012ab3f")
+    (uuid "ebe5e211-7b20-4db1-8773-5c12ef89cf17")
   )
   (text "OE_N pull-up keeps all lamps dark until the first panel write. FAULT_N pull-up is on the power sheet."
     (at 196.27 148.73 0)
@@ -3084,7 +3084,7 @@
       )
       (justify left bottom)
     )
-    (uuid "96f828f6-c8a9-4c7c-bbdd-b6f9ae69e630")
+    (uuid "b0a4983c-3c07-47a4-bd25-3e4012a58950")
   )
   (symbol
     (lib_id "Device:R")
@@ -3093,7 +3093,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "5117cf35-ebd1-43df-b598-41d5ea47def7")
+    (uuid "33550f6a-f6c9-4015-943f-04dc9acf2bd7")
     (property "Reference" "R14"
       (at 208.28 114.3 0)
       (effects
@@ -3131,14 +3131,14 @@
       )
     )
     (pin "1"
-      (uuid "f549f7e4-f181-4f5f-b22a-bc8ca0eb19d7")
+      (uuid "0a9de094-bd43-4774-9d24-a1f4a877e36f")
     )
     (pin "2"
-      (uuid "9a83b2ef-d779-4f99-93c9-7ee5660e50d3")
+      (uuid "261b92c6-58ba-4752-9c7b-ee97170bbcf8")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R14")
           (unit 1)
         )
@@ -3154,7 +3154,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6be483c5-9967-4988-9ece-f13fa93fc976")
+    (uuid "8bd88669-7e04-4bf9-9601-797cac1227df")
   )
   (global_label "LNA_EN"
     (shape bidirectional)
@@ -3166,7 +3166,7 @@
       )
       (justify left)
     )
-    (uuid "d2aa1093-bb82-439a-9c0f-2333608f87fa")
+    (uuid "d5639b40-efa5-4c4d-84d3-6a910d0478e7")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 205.74 109.22 0)
       (effects
@@ -3186,7 +3186,7 @@
       (width 0)
       (type default)
     )
-    (uuid "09110935-f6f7-4627-a434-dc6b96ef5e64")
+    (uuid "18e3df3b-18c7-4300-b742-d4df81f19ba5")
   )
   (symbol
     (lib_id "power:GND")
@@ -3195,7 +3195,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "f76268fa-8fbb-4161-abd7-6c9749c92175")
+    (uuid "7ca3e722-d9f9-4480-9725-37d99bd73f23")
     (property "Reference" "#PWR010"
       (at 209.55 124.46 0)
       (effects
@@ -3232,11 +3232,11 @@
       )
     )
     (pin "1"
-      (uuid "bb55928e-8d77-4bda-b7de-6e97fef40ecc")
+      (uuid "c60f38f7-eef1-479a-a990-9de3ec4b020a")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR010")
           (unit 1)
         )
@@ -3250,7 +3250,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "f993d389-2ac1-4dfc-b079-3540e8485b3d")
+    (uuid "bef4d3d2-f656-42a3-8301-3e5222355264")
     (property "Reference" "R15"
       (at 231.14 114.3 0)
       (effects
@@ -3288,14 +3288,14 @@
       )
     )
     (pin "1"
-      (uuid "210a1c06-4cb8-4f34-8313-5e427662939b")
+      (uuid "5a2c74da-79bd-4000-8eed-604d7a582b96")
     )
     (pin "2"
-      (uuid "07b493a6-a898-455d-88b4-7f88f8b29305")
+      (uuid "8a04c868-dba5-4691-82c7-042c80cb5bd6")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R15")
           (unit 1)
         )
@@ -3311,7 +3311,7 @@
       (width 0)
       (type default)
     )
-    (uuid "c131453a-2801-405c-9803-de759862453b")
+    (uuid "94e21f3e-2016-4627-8f0e-ca059b593fd6")
   )
   (global_label "LNA_PATH"
     (shape bidirectional)
@@ -3323,7 +3323,7 @@
       )
       (justify left)
     )
-    (uuid "43e7f4a5-698c-49b4-b0ac-9bfca40606c2")
+    (uuid "a97a1b07-3517-4b2e-a9e4-b95bcfffd159")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 228.6 109.22 0)
       (effects
@@ -3343,7 +3343,7 @@
       (width 0)
       (type default)
     )
-    (uuid "41c54609-b0a0-4112-b01b-7a9de8927cf2")
+    (uuid "eed7f4f8-6774-47e4-ac9e-3456dae71c10")
   )
   (symbol
     (lib_id "power:GND")
@@ -3352,7 +3352,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "74fd075b-6351-41f1-b843-87b7dbcde0e2")
+    (uuid "abea4ff1-51e2-416c-b29e-77292652f14e")
     (property "Reference" "#PWR011"
       (at 232.41 124.46 0)
       (effects
@@ -3389,11 +3389,11 @@
       )
     )
     (pin "1"
-      (uuid "fafa6060-6418-4ca9-82fd-6e749d6a91c2")
+      (uuid "d8e8025f-f07a-4af2-afa2-5e2a77395ed0")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR011")
           (unit 1)
         )
@@ -3407,7 +3407,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "15859609-9d03-466c-8584-25b21dbcd856")
+    (uuid "33ac4626-9b32-4b1b-8990-7a9e0dbf820e")
     (property "Reference" "R16"
       (at 254 114.3 0)
       (effects
@@ -3445,14 +3445,14 @@
       )
     )
     (pin "1"
-      (uuid "dd01770e-2144-4605-bd01-00458a8ee554")
+      (uuid "23c733f6-245d-4eec-9304-383b1ea8343e")
     )
     (pin "2"
-      (uuid "387be332-6c80-4a70-89cb-e4f04a0b33b1")
+      (uuid "92cef486-e44d-4128-ad83-01346b285506")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R16")
           (unit 1)
         )
@@ -3468,7 +3468,7 @@
       (width 0)
       (type default)
     )
-    (uuid "babbdffa-d428-4b17-9c47-905b051a36b0")
+    (uuid "10950635-d0e2-40c9-988a-432939723981")
   )
   (global_label "SW_V1"
     (shape bidirectional)
@@ -3480,7 +3480,7 @@
       )
       (justify left)
     )
-    (uuid "a8c98e60-9348-4248-8a31-5d5263472ee5")
+    (uuid "be41d4a9-39e3-4de5-8ced-904329a05664")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 251.46 109.22 0)
       (effects
@@ -3500,7 +3500,7 @@
       (width 0)
       (type default)
     )
-    (uuid "d68f54c2-3629-4ef5-847a-2c02ab91e5ce")
+    (uuid "3faf4313-1720-42ea-b239-d080afde1594")
   )
   (symbol
     (lib_id "power:GND")
@@ -3509,7 +3509,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "35c13b6a-526f-4bab-8f53-12410c37806b")
+    (uuid "5563e9f4-89df-467c-9b1b-bf8eb9dd5870")
     (property "Reference" "#PWR012"
       (at 255.27 124.46 0)
       (effects
@@ -3546,11 +3546,11 @@
       )
     )
     (pin "1"
-      (uuid "da52540d-0713-4124-b2be-1f781934f254")
+      (uuid "c2c31e86-5c99-4e14-967c-cc9791d4b748")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR012")
           (unit 1)
         )
@@ -3564,7 +3564,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "a98aa0f0-1847-458d-8aab-c8c556d1505e")
+    (uuid "504f3b0d-69bd-42f1-ba21-5c84b78184fd")
     (property "Reference" "R17"
       (at 276.86 114.3 0)
       (effects
@@ -3602,14 +3602,14 @@
       )
     )
     (pin "1"
-      (uuid "b65c8271-30d3-4e78-86e3-19c401a82cb5")
+      (uuid "641c9dbe-98ca-49fa-8776-66d04e753ec2")
     )
     (pin "2"
-      (uuid "589293ae-d76f-40e6-acbe-36979c0a22e9")
+      (uuid "2eaab0b9-c4fc-43c6-a4b8-646d4d53ad31")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R17")
           (unit 1)
         )
@@ -3625,7 +3625,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6241467b-bb96-4d97-ab6b-bbc5b8b4ca3d")
+    (uuid "41a05359-14fa-490d-9639-8c3d6b691e05")
   )
   (global_label "SW_V2"
     (shape bidirectional)
@@ -3637,7 +3637,7 @@
       )
       (justify left)
     )
-    (uuid "df89be65-4d3b-4c54-8bc0-2b5b40ee34c3")
+    (uuid "d87eb3df-3513-4528-828c-ebe32200be77")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 274.32 109.22 0)
       (effects
@@ -3657,7 +3657,7 @@
       (width 0)
       (type default)
     )
-    (uuid "390e5368-e9f6-48a8-bec2-d9a86409e5bd")
+    (uuid "0bc73288-ae88-4101-bcec-e5591d676cf7")
   )
   (symbol
     (lib_id "power:GND")
@@ -3666,7 +3666,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "8eb4c0d6-ac69-4b54-af48-6d9f5f13ece7")
+    (uuid "5f7f9225-328e-4476-82e3-ea7c5c309033")
     (property "Reference" "#PWR013"
       (at 278.13 124.46 0)
       (effects
@@ -3703,11 +3703,11 @@
       )
     )
     (pin "1"
-      (uuid "5702cafc-52c2-4281-80a8-a1cd91e0c849")
+      (uuid "01309504-7ba6-42e5-967f-5a5efe28da28")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR013")
           (unit 1)
         )
@@ -3721,7 +3721,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "bdd0a72f-b4d6-4559-a883-bf7c64c29779")
+    (uuid "642cd5f4-a3a1-4f3d-ac27-f71ed95a2775")
     (property "Reference" "R18"
       (at 299.72 114.3 0)
       (effects
@@ -3759,14 +3759,14 @@
       )
     )
     (pin "1"
-      (uuid "88cd3c6c-980b-45ee-83e9-9dc7e6d01d01")
+      (uuid "95dffb61-6068-4147-a9f3-c1550f886994")
     )
     (pin "2"
-      (uuid "dcd63c77-bbc7-4a72-82a5-838201fcb30a")
+      (uuid "40a2ec0d-e9a7-404a-81f4-c89ece474e81")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R18")
           (unit 1)
         )
@@ -3782,7 +3782,7 @@
       (width 0)
       (type default)
     )
-    (uuid "13e9ef79-c527-4ad8-9a90-7e60f6e2cebe")
+    (uuid "2fe86672-c592-44db-bcd8-ae4b0b2b8a9b")
   )
   (global_label "SW_V3"
     (shape bidirectional)
@@ -3794,7 +3794,7 @@
       )
       (justify left)
     )
-    (uuid "b89e9f5d-05dd-45bd-a872-7d9cb38e9212")
+    (uuid "9abc8998-c7e6-40c1-859c-845290275c66")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 297.18 109.22 0)
       (effects
@@ -3814,7 +3814,7 @@
       (width 0)
       (type default)
     )
-    (uuid "5ae6b79e-ed7c-470c-a081-0392bedb98de")
+    (uuid "85a49143-2c2b-4321-919e-e336db93fbcc")
   )
   (symbol
     (lib_id "power:GND")
@@ -3823,7 +3823,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "80767adb-af59-4250-9332-15e6bb7fbeb1")
+    (uuid "d8aa2d67-c2d3-43d8-a580-f745f7c298f5")
     (property "Reference" "#PWR014"
       (at 300.99 124.46 0)
       (effects
@@ -3860,11 +3860,11 @@
       )
     )
     (pin "1"
-      (uuid "b9fbfa7c-e67e-4210-af97-c6b9dff0713d")
+      (uuid "fd94829d-4f87-4eb3-9633-bc9df907afd2")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR014")
           (unit 1)
         )
@@ -3878,7 +3878,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "46a60e7e-34b7-43d5-9173-c2d0b5cd1775")
+    (uuid "f3637263-3d21-4206-9c04-076e8b45580a")
     (property "Reference" "R19"
       (at 322.58 114.3 0)
       (effects
@@ -3916,14 +3916,14 @@
       )
     )
     (pin "1"
-      (uuid "96b26ff8-e80e-4a6e-a70e-bc1397f08a22")
+      (uuid "6ef6e025-4546-48bd-8235-bb3b306ebbe6")
     )
     (pin "2"
-      (uuid "90bfbfe7-9443-4e31-bc99-c983c6706838")
+      (uuid "8883a763-8f46-44ab-9dbb-f9321054212a")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R19")
           (unit 1)
         )
@@ -3939,7 +3939,7 @@
       (width 0)
       (type default)
     )
-    (uuid "b9d359dc-b25f-4cd9-bd79-b3f314fb15d0")
+    (uuid "1d825acd-4931-43db-8842-3af048a55a32")
   )
   (global_label "FMN"
     (shape bidirectional)
@@ -3951,7 +3951,7 @@
       )
       (justify left)
     )
-    (uuid "38590293-f0ec-4aad-ae03-88f9e9776cb6")
+    (uuid "e50ba69e-91c9-45a6-93be-1630b27cc082")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 320.04 109.22 0)
       (effects
@@ -3971,7 +3971,7 @@
       (width 0)
       (type default)
     )
-    (uuid "e16cb46f-3724-4762-8d52-d2b15c910409")
+    (uuid "3b556309-409f-4264-9aba-76643733a758")
   )
   (symbol
     (lib_id "power:GND")
@@ -3980,7 +3980,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "b0b88843-5be7-4ab0-8ee7-8e428d972d8d")
+    (uuid "666078e3-60d2-4d34-aee6-0bce4d734b9b")
     (property "Reference" "#PWR015"
       (at 323.85 124.46 0)
       (effects
@@ -4017,11 +4017,11 @@
       )
     )
     (pin "1"
-      (uuid "170bde6d-7bdb-4d13-8b1c-8745db48a5d8")
+      (uuid "6603a317-3070-4404-a1d2-5e75841758f2")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR015")
           (unit 1)
         )
@@ -4035,7 +4035,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "5eaccbe8-6d47-4a41-8fa1-454a16354cf0")
+    (uuid "3b2eceab-e444-4df3-9cca-f1104d2aab8c")
     (property "Reference" "R20"
       (at 345.44 114.3 0)
       (effects
@@ -4073,14 +4073,14 @@
       )
     )
     (pin "1"
-      (uuid "5a54c385-6e48-401d-b9cb-b34963b0967e")
+      (uuid "edb20bef-ff6e-4470-a00c-192642bba346")
     )
     (pin "2"
-      (uuid "87f0d2a7-d37b-47e6-90d5-5fc3bd30c9cc")
+      (uuid "a4e7bdf2-9214-46d4-9ccc-6a40d9b56a1c")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "R20")
           (unit 1)
         )
@@ -4096,7 +4096,7 @@
       (width 0)
       (type default)
     )
-    (uuid "3b05ae7a-ff5c-47f4-91a0-db1e9864f156")
+    (uuid "5643282f-8f85-4c2c-91db-37d5584f0f3b")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -4105,7 +4105,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "422595a7-90e6-418a-90c0-c21a401b578c")
+    (uuid "a0e418ed-af4f-4d98-a1ab-e3961c2af7af")
     (property "Reference" "#PWR016"
       (at 346.71 111.76 0)
       (effects
@@ -4142,11 +4142,11 @@
       )
     )
     (pin "1"
-      (uuid "bea76443-6d61-4212-afe8-fea5c43cf513")
+      (uuid "2e41d0dc-3b5f-45ee-a58c-cea7387470a8")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR016")
           (unit 1)
         )
@@ -4162,7 +4162,7 @@
       (width 0)
       (type default)
     )
-    (uuid "d501e063-ac49-4ae6-a904-1c943bf25f01")
+    (uuid "702e826c-814a-4c4f-88f4-c43604944822")
   )
   (global_label "LED_OE_N"
     (shape bidirectional)
@@ -4174,7 +4174,7 @@
       )
       (justify right)
     )
-    (uuid "5d372286-92d8-4575-b32f-c39098504831")
+    (uuid "b2fc3fab-07b7-4c8c-8710-37a3f441683d")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 342.9 121.92 0)
       (effects
@@ -4195,7 +4195,7 @@
     (fill
       (type none)
     )
-    (uuid "81f24938-48d3-4927-a527-48c055dc03b8")
+    (uuid "fc0f2d1a-9a71-4a56-a41c-2ad758552681")
   )
   (text "D  Test points"
     (at 16.27 158 0)
@@ -4206,9 +4206,9 @@
       )
       (justify left bottom)
     )
-    (uuid "cb6e378e-3498-4a7c-870e-8fbd2986be6b")
+    (uuid "650b4d49-3024-483a-a453-88c870eaea46")
   )
-  (text "TP_TX: firmware drives it low; route UART0 TX here for debug prints if ever needed."
+  (text "BEACON: PCA clock (12.25 MHz) during a reply, low otherwise. Scope it in bring-up."
     (at 16.27 193.73 0)
     (effects
       (font
@@ -4216,7 +4216,7 @@
       )
       (justify left bottom)
     )
-    (uuid "9db7a667-63b5-4866-804e-e547d8498944")
+    (uuid "b77b2264-d7bf-4861-823b-83c3ab8a2cb4")
   )
   (symbol
     (lib_id "Connector:TestPoint")
@@ -4225,7 +4225,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "c052bb8b-1ba9-4d6f-937a-479f8ddc1358")
+    (uuid "569b1bdb-066b-4e26-863d-0385bd0cd548")
     (property "Reference" "TP1"
       (at 30.48 172.72 0)
       (effects
@@ -4235,7 +4235,7 @@
         (justify left)
       )
     )
-    (property "Value" "TP_TX"
+    (property "Value" "BEACON"
       (at 30.48 177.8 0)
       (effects
         (font
@@ -4263,11 +4263,11 @@
       )
     )
     (pin "1"
-      (uuid "1f7b3210-c32e-4910-9fb7-8d96e6c26285")
+      (uuid "3d702131-0e8d-4fb6-947c-98c9df793d67")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "TP1")
           (unit 1)
         )
@@ -4283,9 +4283,9 @@
       (width 0)
       (type default)
     )
-    (uuid "f573811f-e313-4337-9f52-1d168712e91c")
+    (uuid "82eba9db-980d-441d-aaf8-b2e5c500056e")
   )
-  (label "TP_TX"
+  (label "BEACON"
     (at 30.48 177.8 270)
     (fields_autoplaced)
     (effects
@@ -4294,7 +4294,7 @@
       )
       (justify right bottom)
     )
-    (uuid "81166c12-ee2c-4a97-a06c-16e81025c56f")
+    (uuid "0dc5e1ef-e1af-4e55-880c-998b942b7e2b")
   )
   (symbol
     (lib_id "Connector:TestPoint")
@@ -4303,7 +4303,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "cc9cfdf1-7cc6-4e81-a78e-4443f4db9ff5")
+    (uuid "8f922aa6-ba42-4233-993d-f801955d0973")
     (property "Reference" "TP2"
       (at 53.34 172.72 0)
       (effects
@@ -4341,11 +4341,11 @@
       )
     )
     (pin "1"
-      (uuid "41c6ebf1-19f8-430a-aa22-718ad85cd4fb")
+      (uuid "838bc89b-95c6-42c6-b677-2a24869f9e20")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "TP2")
           (unit 1)
         )
@@ -4361,7 +4361,7 @@
       (width 0)
       (type default)
     )
-    (uuid "63c43606-072c-4730-96f2-06c560d09542")
+    (uuid "70f0517a-dbd7-4792-9153-b80eae848321")
   )
   (label "SPARE_P20"
     (at 53.34 177.8 270)
@@ -4372,7 +4372,7 @@
       )
       (justify right bottom)
     )
-    (uuid "023316f1-719f-43ad-8333-0bab38154201")
+    (uuid "25afd43f-639a-4f20-860b-57f38c95d112")
   )
   (symbol
     (lib_id "Connector:TestPoint")
@@ -4381,7 +4381,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "eaddc943-e630-4b03-8321-41a9226156b2")
+    (uuid "5d4198bd-5df8-4cf8-a1ac-e5508abaa040")
     (property "Reference" "TP3"
       (at 76.2 172.72 0)
       (effects
@@ -4419,11 +4419,11 @@
       )
     )
     (pin "1"
-      (uuid "e634413b-5676-48b7-9871-d1aa2705b00a")
+      (uuid "796a3a84-390a-4a7c-bf9d-0a674ddf5793")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "TP3")
           (unit 1)
         )
@@ -4439,7 +4439,7 @@
       (width 0)
       (type default)
     )
-    (uuid "c882e673-3f4a-4904-96de-a3574ea4b0cc")
+    (uuid "2338f6f0-80b0-44aa-b15e-296a0cc373cb")
   )
   (label "SPARE_P21"
     (at 76.2 177.8 270)
@@ -4450,7 +4450,7 @@
       )
       (justify right bottom)
     )
-    (uuid "c385d6f1-5f56-4912-98a0-1317813a053f")
+    (uuid "8caed7cd-8d84-4bdf-91f6-8423b28a9f11")
   )
   (symbol
     (lib_id "Connector:TestPoint")
@@ -4459,7 +4459,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "0ac43b93-5344-4919-ae85-4942316d79be")
+    (uuid "b6b88407-1a5f-49ac-8069-5d351fcb8c55")
     (property "Reference" "TP4"
       (at 99.06 172.72 0)
       (effects
@@ -4497,11 +4497,11 @@
       )
     )
     (pin "1"
-      (uuid "ad21d29a-8d05-40a9-b652-804b60952c4f")
+      (uuid "3dfaddc3-f00d-42b7-99d0-4de9d0ceb45c")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "TP4")
           (unit 1)
         )
@@ -4517,7 +4517,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6de8d52d-ed0f-4fd3-a2a8-0d20dd7b090a")
+    (uuid "df0a91ba-6217-45b2-8921-72bcf9d9ffac")
   )
   (label "SPARE_P22"
     (at 99.06 177.8 270)
@@ -4528,7 +4528,7 @@
       )
       (justify right bottom)
     )
-    (uuid "c0a51043-b3c1-4d68-a2b0-84d4aefefe24")
+    (uuid "d7f14b0a-c57a-4e95-9a8a-f7b2cf53e5c3")
   )
   (symbol
     (lib_id "Connector:TestPoint")
@@ -4537,7 +4537,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "d8b5cad5-a197-4ed4-8257-6575661d4d40")
+    (uuid "d61402fe-a80f-4a3f-8925-24c0b910ed2c")
     (property "Reference" "TP5"
       (at 121.92 172.72 0)
       (effects
@@ -4575,11 +4575,11 @@
       )
     )
     (pin "1"
-      (uuid "5d7dc174-acbb-46df-b7c4-31dc12e88eed")
+      (uuid "1b7ffab2-d6eb-47ee-8e8d-908d98328068")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "TP5")
           (unit 1)
         )
@@ -4595,7 +4595,7 @@
       (width 0)
       (type default)
     )
-    (uuid "042ba947-c07f-4746-891f-5b7bece1a3e2")
+    (uuid "dd6bdc0e-9702-4c15-b5e7-bc4be6cc2b3d")
   )
   (label "SPARE_P23"
     (at 121.92 177.8 270)
@@ -4606,7 +4606,7 @@
       )
       (justify right bottom)
     )
-    (uuid "519f1e16-932d-4a10-ade1-88d4e235f2d9")
+    (uuid "956b2194-6950-4085-89bd-11d10d78b4d5")
   )
   (symbol
     (lib_id "Connector:TestPoint")
@@ -4615,7 +4615,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "39a18231-7e2b-41ec-a8a3-094c3a8c5137")
+    (uuid "ebbfedf3-e975-4c3f-a66f-476b089b81b9")
     (property "Reference" "TP6"
       (at 144.78 172.72 0)
       (effects
@@ -4653,11 +4653,11 @@
       )
     )
     (pin "1"
-      (uuid "ef687387-9f32-4ae5-9c24-e6205cd4da66")
+      (uuid "354084ba-5d07-4264-9b6d-a04fb07f69ed")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "TP6")
           (unit 1)
         )
@@ -4673,7 +4673,7 @@
       (width 0)
       (type default)
     )
-    (uuid "29621b02-3e83-4489-b77d-1eb69ac32225")
+    (uuid "69aaf172-5f39-4843-a809-b08ac7e19645")
   )
   (global_label "SENSE"
     (shape bidirectional)
@@ -4685,7 +4685,7 @@
       )
       (justify right)
     )
-    (uuid "27360773-3e3e-4380-a9a6-7b3f0bf56000")
+    (uuid "61f83a64-4283-4d5d-b5d2-f4cc84ef147d")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 144.78 177.8 0)
       (effects
@@ -4703,7 +4703,7 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "4bc9fa55-8d45-490b-8b23-953cc3df597e")
+    (uuid "40a3e8f2-7d5b-4c20-8f7c-e5e83ba3a959")
     (property "Reference" "TP7"
       (at 167.64 172.72 0)
       (effects
@@ -4741,11 +4741,11 @@
       )
     )
     (pin "1"
-      (uuid "2a573901-c02d-40e5-babe-8a13a4001753")
+      (uuid "e7054f18-6fa9-4493-b650-9f6fc78e9724")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "TP7")
           (unit 1)
         )
@@ -4761,7 +4761,7 @@
       (width 0)
       (type default)
     )
-    (uuid "70716af5-8aa7-4f6b-b6b5-e27383ddc0db")
+    (uuid "99fd184f-b622-490c-ad9a-4d67bb0a07a8")
   )
   (symbol
     (lib_id "power:+3V3")
@@ -4770,7 +4770,7 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "63b64e78-4e80-4907-ac4e-c526c15261a7")
+    (uuid "c1880eba-5253-47af-91af-45417f552814")
     (property "Reference" "#PWR017"
       (at 171.45 180.34 0)
       (effects
@@ -4807,14 +4807,611 @@
       )
     )
     (pin "1"
-      (uuid "16393b74-e8b6-42fd-b27c-f08f6a7cb8f5")
+      (uuid "7c7e1068-0917-4595-9a98-d491100c7902")
     )
     (instances
       (project "coaxolotl"
-        (path "/4a735de0-2544-4f0c-8819-8a9c09cd0fe7/0e9b7e7d-a577-492b-bbcc-712e0c2df0a3"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
           (reference "#PWR017")
           (unit 1)
         )
+      )
+    )
+  )
+  (rectangle
+    (start 195 155)
+    (end 405 195)
+    (stroke
+      (width 0.15)
+      (type dash)
+    )
+    (fill
+      (type none)
+    )
+    (uuid "3433dd10-2872-46fd-b847-0e5ecffc7cc8")
+  )
+  (text "E  Back-channel: beacon into the coax (docs/protocol.md)"
+    (at 196.27 158 0)
+    (effects
+      (font
+        (size 2 2)
+        bold
+      )
+      (justify left bottom)
+    )
+    (uuid "c077117b-5dc0-4998-9fec-3ccb041ff0ff")
+  )
+  (text "3.3 Vpp square -> 4k7 / 51R pad -> 1k + 100p -> coax side of SW2 (RF sheet)."
+    (at 196.27 191.53 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left bottom)
+    )
+    (uuid "46202844-20ff-43f1-8c5c-de3c7805ade0")
+  )
+  (text "3rd harmonic 36.75 MHz arrives at about -65 dBm. Raise R21 for less, lower for more."
+    (at 196.27 193.73 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left bottom)
+    )
+    (uuid "322810d9-2ef3-4fde-a890-08b76c3bc64d")
+  )
+  (symbol
+    (lib_id "Device:R")
+    (at 213.36 177.8 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "5813249e-ef04-4548-87a1-3e34cd6f793c")
+    (property "Reference" "R21"
+      (at 215.9 176.53 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Value" "4k7"
+      (at 215.9 179.07 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 217.17 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 217.17 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "88e764ac-7110-4af0-8c32-245732e581dc")
+    )
+    (pin "2"
+      (uuid "d4d67a1d-c4e2-4f44-9e94-833d9820046f")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
+          (reference "R21")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 213.36 173.99)
+      (xy 213.36 171.45)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "2a39c1f6-bc98-4201-9b36-f4540f0d15ba")
+  )
+  (label "BEACON"
+    (at 213.36 171.45 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left bottom)
+    )
+    (uuid "4ca0971e-d1bd-4b08-87e8-a1c684362e0d")
+  )
+  (wire
+    (pts
+      (xy 213.36 181.61)
+      (xy 213.36 184.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "33bf8a51-89d4-4370-b668-a5385e7b3e0e")
+  )
+  (label "BCN_PAD"
+    (at 213.36 184.15 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right bottom)
+    )
+    (uuid "f9a5f9ec-f79b-4c9c-a91c-89aab37a575d")
+  )
+  (symbol
+    (lib_id "Device:R")
+    (at 236.22 177.8 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "91b0e3cc-684d-47a5-9acc-3907368516a3")
+    (property "Reference" "R22"
+      (at 238.76 176.53 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Value" "51"
+      (at 238.76 179.07 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 240.03 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 240.03 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "d9292030-4d20-47a8-9b57-9615221d4299")
+    )
+    (pin "2"
+      (uuid "4ca4abaf-7acd-4b82-ad5f-2072dc076038")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
+          (reference "R22")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 236.22 173.99)
+      (xy 236.22 171.45)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "7527136a-dc55-4b6a-bd87-72be007b2da4")
+  )
+  (label "BCN_PAD"
+    (at 236.22 171.45 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left bottom)
+    )
+    (uuid "3aad71cb-3b01-4a36-95f4-fc980db6ca6e")
+  )
+  (wire
+    (pts
+      (xy 236.22 181.61)
+      (xy 236.22 184.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "757d5f52-18e7-468c-ad07-1d2694d68de8")
+  )
+  (symbol
+    (lib_id "power:GND")
+    (at 236.22 184.15 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "3419d733-c0f2-411b-b84f-f2f27edf5a30")
+    (property "Reference" "#PWR018"
+      (at 240.03 186.69 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Value" "GND"
+      (at 240.03 181.61 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 240.03 184.15 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 240.03 184.15 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "16d3c94a-71cb-4bfd-a2da-6b8701eec266")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
+          (reference "#PWR018")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "Device:R")
+    (at 259.08 177.8 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "e5836e41-a300-4545-a406-77e34b623395")
+    (property "Reference" "R23"
+      (at 261.62 176.53 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Value" "1k"
+      (at 261.62 179.07 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 262.89 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 262.89 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "f876e49e-372f-4f21-a169-70b5d47cd813")
+    )
+    (pin "2"
+      (uuid "37464c3f-4ada-4e05-ac99-13b7fd6a28a3")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
+          (reference "R23")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 259.08 173.99)
+      (xy 259.08 171.45)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "a49aa0e6-c78d-403b-908e-e340dde9e05c")
+  )
+  (label "BCN_PAD"
+    (at 259.08 171.45 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left bottom)
+    )
+    (uuid "963dea3b-8d56-4e82-93a3-e5cec4e1dcf1")
+  )
+  (wire
+    (pts
+      (xy 259.08 181.61)
+      (xy 259.08 184.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "60f9d1d6-7ac2-4f5a-b276-a1218fb5f3ee")
+  )
+  (label "BCN_C"
+    (at 259.08 184.15 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right bottom)
+    )
+    (uuid "5dc3822b-af88-4599-92fb-23b724b38729")
+  )
+  (symbol
+    (lib_id "Device:C")
+    (at 281.94 177.8 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d0da0fba-eab0-4950-b0d0-00beed065029")
+    (property "Reference" "C16"
+      (at 284.48 176.53 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Value" "100p C0G"
+      (at 284.48 179.07 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 285.75 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 285.75 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "65188b79-7301-4858-86c7-03fec846824d")
+    )
+    (pin "2"
+      (uuid "f05c5989-ba97-4ea8-a8d9-540120682ce8")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
+          (reference "C16")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 281.94 173.99)
+      (xy 281.94 171.45)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "54c643c0-04bc-4a06-a976-c798952e34e3")
+  )
+  (label "BCN_C"
+    (at 281.94 171.45 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left bottom)
+    )
+    (uuid "c9a5de6d-766c-4c60-b72f-5a85b93f69cb")
+  )
+  (wire
+    (pts
+      (xy 281.94 181.61)
+      (xy 281.94 184.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "0601abb8-b65c-40c7-90a3-bb148d05a03f")
+  )
+  (global_label "BCN_RF"
+    (shape bidirectional)
+    (at 281.94 184.15 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "d211f080-e063-4193-b3a7-a5cfc94a6871")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 281.94 184.15 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 304.8 177.8 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "00fbc001-2ae6-4a8a-a49c-f09fc380f64c")
+    (property "Reference" "TP8"
+      (at 304.8 175.26 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Value" "BCN_RF"
+      (at 304.8 180.34 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+    )
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 308.61 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "~"
+      (at 308.61 177.8 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (pin "1"
+      (uuid "0cc349be-1194-4cc1-b664-e27ee92a6037")
+    )
+    (instances
+      (project "coaxolotl"
+        (path "/9eb5a832-8a43-4345-acb9-a32a14d13788/651a4cf1-6872-4ba4-8e88-a2e7abbc5228"
+          (reference "TP8")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 304.8 177.8)
+      (xy 304.8 180.34)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6599191e-0d07-4b85-bc58-0176d14b6680")
+  )
+  (global_label "BCN_RF"
+    (shape bidirectional)
+    (at 304.8 180.34 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "5d9349c9-4424-49f1-b178-05463e796d23")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 304.8 180.34 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
       )
     )
   )

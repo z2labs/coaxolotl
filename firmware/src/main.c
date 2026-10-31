@@ -7,12 +7,17 @@
  * in progress, animation running) the MCU idles with a 1 ms tick.
  * Otherwise it Snoozes: HFOSC stopped, woken only by a bias edge, the
  * LNA fault line or the ~6.5 s Timer4 wrap. The RUN lamp shows which.
+ *
+ * Back-channel: once a frame is done and the link is idle again, the
+ * reply (beacon.h) is keyed onto the coax. That takes ~0.73 s and is the
+ * only time the MCU clock runs at 24.5 MHz.
  */
 #include <stdint.h>
 #include "config.h"
 #include "decoder.h"
 #include "app.h"
 #include "panel.h"
+#include "beacon.h"
 #include "hal.h"
 
 static dec_t   dec;
@@ -39,6 +44,36 @@ static void refresh(void)
         hal_panel(img);
     }
 }
+
+#if CFG_BEACON
+static uint8_t pkt[BCN_LEN];
+
+/* measure, then key the reply chip by chip on an absolute schedule.
+ * A bias edge means the host is talking again: stop and listen. */
+static void reply(void)
+{
+    uint16_t t0, vc, sc, ia;
+    uint8_t i, c;
+
+    hal_measure(&vc, &sc, &ia);
+    app_measure(&app, vc, sc, ia);
+    bcn_build(pkt, &app, vc, sc, ia);
+    app.reply = REPLY_NONE;
+    refresh();
+
+    hal_beacon_on();
+    t0 = hal_now();
+    for (i = 0; (c = bcn_chip(pkt, i)) != BCN_END; i++) {
+        hal_beacon_key(c);
+        while ((uint16_t)(hal_now() - t0) < (uint16_t)((uint16_t)(i + 1u) * T_CHIP))
+            if (hal_edge_pending())
+                break;
+        if (hal_edge_pending())
+            break;
+    }
+    hal_beacon_off();
+}
+#endif
 
 void main(void)
 {
@@ -74,6 +109,13 @@ void main(void)
 
         app_tick(&app, now);
         refresh();
+
+#if CFG_BEACON
+        if (bcn_due(&app, &dec)) {
+            reply();
+            continue;
+        }
+#endif
 
         if (dec_busy(&dec) || app_busy(&app)) {
             hal_idle();
