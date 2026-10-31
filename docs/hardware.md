@@ -1,16 +1,22 @@
 # Hardware
 
-> Status: architecture and values for the first PCB. Nothing here has been
+> Status: architecture and values of the first boards. Nothing here has been
 > built yet. Lines marked **VERIFY** need a datasheet check or a bench
-> measurement before layout is frozen.
+> measurement.
+>
+> Two layouts exist. The 4-layer board (`hardware/kicad`, branch
+> `feat/pcb-layout`) carries the whole RF path below. The 2-layer control
+> board (`hardware/kicad_ctrl`, branch `feat/control-2l`) has no RF parts: it
+> keeps the bias-T, power, MCU and lamps, and hands the switch controls to a
+> later RF board through J6 (see [Control board](#control-board-2-layers-no-rf)).
 
 ## Block diagram
 
 ```mermaid
 flowchart LR
   ANT[Antenna<br/>20 kHz-2 GHz] --> PROT[GDT + limiter<br/>100k bleed]
-  PROT --> S1{SPDT<br/>PE42522}
-  S1 -- LNA --> PRE[HPF 25 MHz<br/>LPF 2.2 GHz] --> FMN{FM notch<br/>opt.} --> LNA[QPL9547 LNA<br/>65 mA] --> S2{SPDT<br/>PE42522}
+  PROT --> S1{SPDT<br/>PE42520}
+  S1 -- LNA --> PRE[HPF 25 MHz<br/>LPF 2.2 GHz] --> FMN{FM notch<br/>opt.} --> LNA[QPL9547 LNA<br/>65 mA] --> S2{SPDT<br/>PE42520}
   S1 -- bypass --> S2
   S2 --> SW1[PE42582<br/>SP8T] --> F[8 filters<br/>bandplan.json] --> SW2[PE42582<br/>SP8T] --> BT[Bias-T<br/>broadband]
   BT <== RF + DC + OOK ==> COAX[(coax to<br/>RTL-SDR V3)]
@@ -85,7 +91,7 @@ need to. Every 100 Ω costs about 0.6 mA more.
 | LNA (QPL9547, 65 mA default; budget kept at 100 mA) | VMAIN | 65–100 mA | — |
 | Lamps (1 mA each) | VMAIN | 8–15 mA typical, 23 mA worst | 48 mA during the lamp test (LNA still off) |
 | Bleeder + PWR + divider | VCOAX | 7 mA | |
-| 3V3 domain: MCU, INA180, PE42582 ×2, PE42522 ×2 (+2 DNP), 595s | VHOLD | 0.6 mA (Snooze) – 1.5 mA (active) | |
+| 3V3 domain: MCU, INA180, PE42582 ×2, PE42520 ×2 (+2 DNP), 595s | VHOLD | 0.6 mA (Snooze) – 1.5 mA (active) | |
 | Hold-up charging | VMAIN | 0 | 40 mA (330 µF, about 0.1 s) + 18 mA (SCAP, decays over about 1 min) |
 | **Total** | | **about 120 mA typical, 132 mA worst** | **about 140 mA** right after boot while the SCAP is still charging |
 
@@ -197,13 +203,11 @@ tap.
     generator. If its spur shows up on the waterfall, feed −3.3 V on VSS_EXT
     (bypass mode).
   * RF ports sit at 0 V DC, so no DC blocks are needed around the switches.
-* **LNA bypass.** 2× PE42522 SPDT (9 kHz–26.5 GHz, 2.3–5.5 V, LGA-29
-  4×4 mm). V1 = 0 selects RF1 (bypass), V1 = 1 selects RF2 (LNA). VSS_EXT
-  (pin 29) goes to GND. The PE42520 from the first sketch was dropped
-  because its pinout could not be verified. The PE42522 is overkill in
-  bandwidth and costs more; a cheaper DC-capable SPDT can replace it in the
-  next revision. **VERIFY** the custom LGA-29 footprint against the
-  datasheet land pattern.
+* **LNA bypass.** 2× PE42520 SPDT (9 kHz–13 GHz, 2.3–5.5 V, QFN-16
+  3×3 mm, C500478). CTRL = 0 selects bypass, CTRL = 1 the LNA branch, on
+  both switches. U6 (input, LNA_PATH) has LS = VDD: CTRL = 0 → RF1. U7
+  (output, LNA_PATH_OUT) has LS = GND (CTRL = 0 → RF2), so its RF ports swap
+  and the board needs no crossing; the schematic draws it as `PE42520R`.
 * **LNA: Qorvo QPL9547** (0.1–6 GHz, NF 0.3 dB and OIP3 about +39 dBm at
   1.9 GHz, 3.3–5 V, DFN-8 2×2 mm). The stage copies one stage of the SWL434
   (Spacewalker LNA, 434 MHz):
@@ -220,7 +224,7 @@ tap.
   stay untouched. Branches F1–F4 force bypass and light **AUTO**. Below
   30 MHz the external noise is far above the RTL noise figure, and an LNA
   there only adds IMD.
-* **The FM notch is a population option.** It is a PE42522 pair around an
+* **The FM notch is a population option.** It is a PE42520 pair (U9, U10) around an
   88–108 MHz LC notch (56 nH ‖ 47 pF, f0 ≈ 98 MHz) inside the LNA branch, and it is used only by branches
   with `fm_notch` (F6 by default). Fit 0 Ω links first and populate it only
   if you measure FM-driven IMD.
@@ -274,7 +278,7 @@ P1.4 LED_SER ── R_BCN1 4k7 ──┬── R_BCN3 1k ── C_BCN 100p C0G �
 
 * 6× 74HC595 (TSSOP-16) powered from 3V3, with the outputs sinking.
 * LED anodes go through 2.2 kΩ to VMAIN (via a ferrite and 47 µF). Use
-  4-way resistor arrays (CAY16-222J4, 12 of them).
+  4-way resistor arrays (12 of them; JLC part 4D03WGJ0222T5E, C12001).
 * Use 2 V LEDs only (amber, yellow, green, red). Blue and white need too
   much headroom at about 4.2 V.
 * When a 595 output is high (3.3 V) the LED sees at most 1.2 V, so it stays
@@ -283,9 +287,34 @@ P1.4 LED_SER ── R_BCN1 4k7 ──┬── R_BCN3 1k ── C_BCN 100p C0G �
 * The panel is written only when something changes. Updates are bit-banged
   at 3 MHz and take about 0.5 ms.
 
-## Open items before layout
+## Control board (2 layers, no RF)
 
-1. PE42522 custom footprint (LGA-29); QPL9547 VDD feed: 18 nH at the pin + 560 nH (VERIFY S21 above 1 GHz); filter LC networks F1–F7.
+`hardware/kicad_ctrl`, generated from the same `build.py` with
+`COAX_VARIANT=ctrl` (`pcb_build_ctrl.py`, `route.py`). 100 × 70 mm, two
+layers, every part on top.
+
+* Kept: bias-T (L5–L7, R24) and the RTL-SDR SMA J3 (BWSMA-KE-P001 air launch)
+  on the right edge, the whole power tree, the MCU, the lamp strip and its
+  snap-off tab.
+* Dropped: antenna SMA, protection, both SPDTs, LNA, preselector, FM notch,
+  both PE42582 and the eight filters.
+* **J6**, a 1×10 plated hole row (2.54 mm, not fitted), takes the RF switch
+  controls to a later RF board. The pull-downs stay on this board, so every
+  line is in its safe state with nothing plugged in.
+
+| J6 pin | Net | |
+|---|---|---|
+| 1 | +3V3 | switch supply |
+| 2 | LNA_VCC | after TPS2553 and the 0.39 Ω shunt |
+| 3–5 | SW_V1..V3 | SP8T code, 10 k pull-downs |
+| 6 | LNA_PATH | input SPDT, 10 k pull-down |
+| 7 | LNA_PATH_OUT | output SPDT, 10 k pull-down |
+| 8 | FMN | FM notch, 10 k pull-down |
+| 9, 10 | GND | |
+
+## Open items
+
+1. QPL9547 VDD feed: 18 nH at the pin + 560 nH (VERIFY S21 above 1 GHz); filter LC networks F1–F7 (simulated in openEMS, branch `feat/filter-sim`; F7 retuned).
 2. TPS2553 ILIM resistor. Allowed range 15–232 kΩ, and ILIM tied to IN gives
    75 mA typical, which is too low. R5 = 150 kΩ is a placeholder: read IOS(min)
    > 130 mA off Eq. 1 / Fig. 22 in the PDF. FAULT deglitch is 8 ms.

@@ -106,7 +106,9 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
 | `host/coaxolotl.py` | keyer: pyrtlsdr / rtl_biast / dry-run, `--listen`, `listen`, `decode` |
 | `host/backchannel.py` | reply packet and demodulator (numpy) |
 | `sdrpp/` | SDR++ source module and its standalone tests |
-| `hardware/bom.csv` | first-pass BOM |
+| `hardware/kicad/` | 4-layer RF board: generated schematic (`tools/build.py`), layout, JLC package in `jlc/` |
+| `hardware/kicad_ctrl/` | 2-layer control board without RF (`COAX_VARIANT=ctrl`), JLC package in `jlc/` |
+| `hardware/bom.csv` | grouped BOM of the RF board schematic (`tools/bom.py`) |
 | `docs/` | protocol, hardware, panel, bring-up |
 
 ## Status (v0.1)
@@ -128,8 +130,9 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
   wrap), the ADC setup and the PCA/CLKSEL/crossbar setup of the beacon are
   marked VERIFY. `docs/bringup.md` has a test
   for each, and the `SNOOZE=0` build avoids them.
-* ⚠️ No schematic or PCB yet. The open items before layout are listed in
-  `docs/hardware.md`.
+* ✅ Schematic and two routed layouts with JLC packages: the 4-layer RF board
+  (`hardware/kicad`) and the 2-layer control board without RF
+  (`hardware/kicad_ctrl`). Open items are listed in `docs/hardware.md`.
 
 ## License
 
