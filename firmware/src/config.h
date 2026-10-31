@@ -60,6 +60,22 @@
 #define SYNC_RATIO_DEN 2u
 
 /* ------------------------------------------------------------------ */
+/* Back-channel: clock beacon on the coax (see docs/protocol.md)       */
+/* ------------------------------------------------------------------ */
+/* After every frame (good or bad) and once after boot, the box keys a
+ * square wave from the PCA onto the coax: SYSCLK 24.5 MHz / (2 * CPH)
+ * = 12.25 MHz, which the RTL-SDR hears on its 3rd harmonic at 36.75 MHz.
+ * On-off keyed Manchester chips of BCN_CHIP_MS, so one bit is 2 chips. */
+#ifndef CFG_BEACON
+#define CFG_BEACON 1
+#endif
+/* The reply starts as soon as the decoder is ready for the next frame,
+ * i.e. after T_IDLE_MIN of steady bias following the host's last gap. */
+#define BCN_CHIP_MS   5u
+#define T_CHIP        MS2T(BCN_CHIP_MS)
+#define BCN_PCA_CPH   1u          /* PCA frequency-output divider: f = SYSCLK / (2 * CPH) */
+
+/* ------------------------------------------------------------------ */
 /* Panel / UI                                                          */
 /* ------------------------------------------------------------------ */
 #ifndef CFG_DEFAULT_QUIET

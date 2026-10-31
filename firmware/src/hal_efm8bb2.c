@@ -13,12 +13,16 @@
  *   P1.0..2 SW_V1..3   both PE42582      (10k pull-downs: THRU in reset)
  *   P1.3 LNA_PATH_OUT out output SPDT U7 (own line, same polarity; 10k pull-down)
  *   P1.4 LED_SER, P1.5 LED_SCK, P1.6 LED_RCK
+ *        LED_SER doubles as BEACON: during a reply the crossbar puts PCA CEX0
+ *        on it. The 595s only act on SCK/RCK edges, so the lamps don't care.
  *   P2.0 FMN       out  FM notch SPDTs (10k pull-down: out in reset); shares the pin
  *                       with C2D: R30 (1k) lets the debugger override the line
  *
  * QFN20 (the QSOP24 is end of life): all 16 port pins are used.
  *
- * SYSCLK stays at the reset default, HFOSC0/8 = 3.0625 MHz.
+ * SYSCLK stays at the reset default, HFOSC0/8 = 3.0625 MHz, except while
+ * a back-channel reply is on the air: then HFOSC0/1 = 24.5 MHz feeds the
+ * PCA, whose CEX0 toggles at 12.25 MHz on P1.4 (LED_SER).
  */
 #include <stdint.h>
 #include "efm8bb2_sfr.h"
@@ -43,8 +47,9 @@ SFR(PSCTL,   0x8F);     /* VERIFY: program store control */
 SFR(FLKEY,   0xB7);     /* VERIFY: flash lock and key    */
 SFR(LFO0CN,  0xB1);
 
-/* SYSCLK/12 = 255.2 kHz -> 1 ms */
-#define T2_RELOAD ((uint16_t)(65536u - 255u))
+/* SYSCLK/12 = 255.2 kHz -> 1 ms; 2.042 MHz while the beacon runs */
+#define T2_RELOAD      ((uint16_t)(65536u - 255u))
+#define T2_RELOAD_FAST ((uint16_t)(65536u - 2042u))
 
 #define EBUF 8u
 static volatile uint8_t  e_head, e_tail, e_lvl[EBUF];
@@ -320,6 +325,7 @@ void hal_panel(const uint8_t *img)
     }
     LED_RCK = 1;
     LED_RCK = 0;
+    LED_SER = 0;                         /* idle low: no DC into the beacon tap */
     /* all dark (panel OFF): outputs Hi-Z, not just high */
     LED_OE_N = (img[0] | img[1] | img[2] | img[3] | img[4] | img[5]) ? 0 : 1;
 }
@@ -372,6 +378,53 @@ void hal_nv_save(uint8_t v)
         i = 0;
     }
     nv_op((uint16_t)(NV_PAGE + i), NV_REC(v), 0);
+}
+
+uint8_t hal_edge_pending(void)
+{
+    return (uint8_t)(e_head != e_tail);
+}
+
+static void t2_reload(uint16_t r)
+{
+    TMR2RLL = (uint8_t)r;               /* takes effect on the next wrap */
+    TMR2RLH = (uint8_t)(r >> 8);
+}
+
+void hal_beacon_on(void)
+{
+    CLKSEL = CLKSEL_HFOSC0_1;
+    while (!(CLKSEL & CLKSEL_DIVRDY))
+        ;
+    t2_reload(T2_RELOAD_FAST);          /* keep the 1 ms tick of the !SNOOZE build */
+
+    CR = 0;
+    PCA0MD   = PCA0MD_CPS_SYS;
+    PCA0L    = 0;
+    PCA0H    = 0;
+    PCA0CPL0 = BCN_PCA_CPH;
+    PCA0CPH0 = BCN_PCA_CPH;             /* toggle every CPH clocks */
+    PCA0CPM0 = PCA0CPM_FREQOUT;
+    LED_SER = 0;
+    P1SKIP = (uint8_t)~0x10u;           /* only P1.4 left for the crossbar (P0 all skipped) */
+    XBR1   = XBR1_CEX0;
+}
+
+void hal_beacon_key(uint8_t on)
+{
+    CR = on ? 1 : 0;                    /* counter stopped = CEX0 frozen = no carrier */
+}
+
+void hal_beacon_off(void)
+{
+    CR = 0;
+    PCA0CPM0 = 0;
+    XBR1   = 0x00u;                     /* P1.4 back to its latch (0): no DC into the pad */
+    P1SKIP = 0xFFu;
+    CLKSEL = CLKSEL_HFOSC0_8;
+    while (!(CLKSEL & CLKSEL_DIVRDY))
+        ;
+    t2_reload(T2_RELOAD);
 }
 
 void hal_wdt_kick(void)

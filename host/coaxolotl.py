@@ -7,9 +7,16 @@ The bias-T is the whole link. A frame is 15 short power gaps:
   state frame:  sync 1 0 1 | bank[2:0] lna quiet clr | inverse of those 6 bits
   config frame: sync 0 1 0 | panel[1:0] 0 0 0 0      | inverse of those 6 bits
 
+The box answers every frame on the same coax (back-channel, backchannel.py):
+an ACK/NAK with the switch state, VCOAX, LNA current and supercap voltage,
+keyed as a clock at 36.75 MHz that the dongle itself receives.
+
 Examples
   coaxolotl.py bands
   coaxolotl.py send --band 2m --lna                    # pyrtlsdr, device 0
+  coaxolotl.py send --band 2m --lna --listen           # ... and read the reply
+  coaxolotl.py listen --seconds 3                      # e.g. HELLO after power-up
+  coaxolotl.py decode capture.cu8 --fs 2.4e6           # rtl_sdr capture at 36.75 MHz
   coaxolotl.py send --bank 3 --backend rtl_biast -d 1
   coaxolotl.py send --bank 6 --lna --backend dry-run | firmware/build/sim
   coaxolotl.py panel bands                             # lamps: full | bands | off
@@ -30,6 +37,8 @@ import sys
 import time
 from dataclasses import dataclass
 from typing import Callable, Iterable, List, Optional, Tuple
+
+import backchannel as bc
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 BANDPLAN = ROOT / "bandplan.json"
@@ -139,7 +148,7 @@ def find_band(name: str) -> dict:
 # --------------------------------------------------------------------------
 # backends: a callable taking True/False
 
-def backend_pyrtlsdr(index: int) -> Tuple[Callable[[bool], None], Callable[[], None]]:
+def open_rtlsdr(index: int):
     try:
         from rtlsdr import RtlSdr  # type: ignore
     except ImportError:
@@ -148,7 +157,30 @@ def backend_pyrtlsdr(index: int) -> Tuple[Callable[[bool], None], Callable[[], N
     if not hasattr(sdr, "set_bias_tee"):
         sdr.close()
         raise SystemExit("this pyrtlsdr/librtlsdr has no set_bias_tee(); update or use rtl_biast")
+    return sdr
+
+
+def backend_pyrtlsdr(index: int) -> Tuple[Callable[[bool], None], Callable[[], None]]:
+    sdr = open_rtlsdr(index)
     return (lambda on: sdr.set_bias_tee(bool(on))), sdr.close
+
+
+def tune_for_reply(sdr, a: argparse.Namespace) -> None:
+    sdr.sample_rate = a.fs
+    sdr.center_freq = a.beacon_hz
+    sdr.gain = a.gain
+
+
+def hear(samples, a: argparse.Namespace) -> int:
+    h = bc.demodulate(samples, a.fs)
+    where = f"{(a.beacon_hz + h.offset_hz) / 1e6:.4f} MHz ({h.offset_hz / 1e3:+.1f} kHz)"
+    if h.reply is None:
+        print(f"no reply: {h.note}  (best bin {where}, on/off {h.snr_db:.1f} dB)", file=sys.stderr)
+        return 1
+    print(h.reply.summary())
+    print(f"  heard at {where}, on/off {h.snr_db:.1f} dB, chip {h.chip_ms:.2f} ms, "
+          f"t={h.t_ms:.0f} ms, raw {h.reply.raw.hex(' ')}", file=sys.stderr)
+    return 0 if h.reply.kind != "NAK" else 2
 
 
 def backend_rtl_biast(index: int, exe: str) -> Tuple[Callable[[bool], None], Callable[[], None]]:
@@ -255,6 +287,19 @@ def transmit(a: argparse.Namespace, frame, desc: str) -> int:
             print(f"{t_ms:.1f} {lvl}")
         return 0
 
+    if a.listen:
+        if a.backend != "pyrtlsdr":
+            raise SystemExit("--listen needs the pyrtlsdr backend (it reads samples)")
+        sdr = open_rtlsdr(a.device)
+        try:
+            tune_for_reply(sdr, a)
+            late = play(lambda on: sdr.set_bias_tee(bool(on)), edges)
+            report(late)
+            samples = sdr.read_samples(int(a.fs * (bc.REPLY_DELAY_MS + bc.REPLY_MS + 400) / 1000))
+        finally:
+            sdr.close()
+        return hear(samples, a)
+
     if a.backend == "pyrtlsdr":
         set_bias, close = backend_pyrtlsdr(a.device)
     else:
@@ -267,12 +312,44 @@ def transmit(a: argparse.Namespace, frame, desc: str) -> int:
     return 0
 
 
+def cmd_listen(a: argparse.Namespace) -> int:
+    sdr = open_rtlsdr(a.device)
+    try:
+        tune_for_reply(sdr, a)
+        if a.bias:
+            sdr.set_bias_tee(True)
+        samples = sdr.read_samples(int(a.fs * a.seconds))
+    finally:
+        sdr.close()
+    return hear(samples, a)
+
+
+def cmd_decode(a: argparse.Namespace) -> int:
+    import numpy as np
+    raw = pathlib.Path(a.file).read_bytes()
+    if a.file.endswith(".cf32"):
+        samples = np.frombuffer(raw, dtype=np.complex64)
+    else:                                   # rtl_sdr: interleaved unsigned 8-bit I/Q
+        u = np.frombuffer(raw, dtype=np.uint8).astype(np.float32) - 127.4
+        samples = (u[0::2] + 1j * u[1::2]) / 128.0
+    return hear(samples, a)
+
+
+def add_rx_args(s: argparse.ArgumentParser) -> None:
+    s.add_argument("--fs", type=float, default=2.4e6, help="sample rate for the reply (default 2.4e6)")
+    s.add_argument("--beacon-hz", type=float, default=bc.BEACON_HZ,
+                   help=f"tuning for the reply (default {bc.BEACON_HZ / 1e6:.2f} MHz)")
+    s.add_argument("--gain", type=float, default=20.0, help="tuner gain in dB while listening")
+
+
 def link_args(s: argparse.ArgumentParser) -> None:
     s.add_argument("--backend", choices=["pyrtlsdr", "rtl_biast", "dry-run"], default="pyrtlsdr")
     s.add_argument("-d", "--device", type=int, default=0, help="RTL-SDR index")
     s.add_argument("--rtl-biast", default="rtl_biast", help="rtl_biast executable")
     s.add_argument("--repeat", type=int, default=1, help="send the frame N times")
     s.add_argument("--timing", help="gap0,gap1,on,pre in ms (default 30,70,100,400)")
+    s.add_argument("--listen", action="store_true", help="read the box's reply afterwards")
+    add_rx_args(s)
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -296,6 +373,18 @@ def main(argv: Optional[List[str]] = None) -> int:
                      help="full = every lamp, bands = F0..F7 only, off = PWR lamp only")
     link_args(pnl)
     pnl.set_defaults(fn=cmd_panel)
+
+    s = sub.add_parser("listen", help="capture and decode a reply (e.g. HELLO after power-up)")
+    s.add_argument("-d", "--device", type=int, default=0, help="RTL-SDR index")
+    s.add_argument("--seconds", type=float, default=3.0)
+    s.add_argument("--bias", action="store_true", help="switch the bias-T on first")
+    add_rx_args(s)
+    s.set_defaults(fn=cmd_listen)
+
+    s = sub.add_parser("decode", help="decode a reply from a capture file (.cu8 or .cf32)")
+    s.add_argument("file")
+    add_rx_args(s)
+    s.set_defaults(fn=cmd_decode)
 
     a = ap.parse_args(argv)
     return a.fn(a)

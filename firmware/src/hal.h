@@ -18,6 +18,10 @@ void     hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en);
 void     hal_panel(const uint8_t *img);
 uint8_t  hal_nv_load(uint8_t dflt);      /* panel mode from flash           */
 void     hal_nv_save(uint8_t v);         /* append to the flash log         */
+uint8_t  hal_edge_pending(void);         /* bias edge queued, not popped    */
+void     hal_beacon_on(void);            /* SYSCLK 24.5 MHz, PCA clock on P1.4 */
+void     hal_beacon_key(uint8_t on);     /* carrier on / off                */
+void     hal_beacon_off(void);           /* pin low, SYSCLK back to 3 MHz   */
 void     hal_wdt_kick(void);
 void     hal_idle(void);                 /* sleep until next interrupt      */
 void     hal_snooze(void);               /* deep sleep: edge or Timer4 wrap */

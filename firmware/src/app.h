@@ -20,6 +20,11 @@
 #define PANEL_FULL  0u   /* every lamp                                  */
 #define PANEL_BANDS 1u   /* bank lamps F0..F7 only                      */
 #define PANEL_OFF   2u   /* all 48 dark; only the hard-wired PWR lamp   */
+/* back-channel reply waiting to go out (see beacon.h) */
+#define REPLY_NONE  0u
+#define REPLY_HELLO 1u   /* boot finished                    */
+#define REPLY_ACK   2u   /* frame applied                    */
+#define REPLY_NAK   3u   /* frame rejected, err says why     */
 
 #define I_NONE 0u
 #define I_LO   1u
@@ -58,6 +63,10 @@ typedef struct {
     uint8_t  frame_n;
     uint16_t frame_bits;
     uint8_t  last_bit;
+
+    /* back-channel */
+    uint8_t  reply;      /* REPLY_*, sent when the link is idle again */
+    uint8_t  seq;        /* good frames applied, mod 256              */
 
     /* animations / timers */
     uint8_t  boot;       /* BOOT_*                                   */

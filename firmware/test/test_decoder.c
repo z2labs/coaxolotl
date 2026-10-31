@@ -275,6 +275,101 @@ static void test_panel_modes(void)
     CHECK(S.app.nv_dirty == 0, "boot-time mode does not rewrite flash");
 }
 
+/* manchester-decode a chip string back into bytes (host decoder mirror) */
+static int chips_to_pkt(const uint8_t *pkt_in, uint8_t *out)
+{
+    uint8_t ch[BCN_NCHIPS + 4], i, c;
+    int n = 0, k, bits = (BCN_PRE_BITS + 8 + 8 * BCN_LEN);
+    for (i = 0; (c = bcn_chip(pkt_in, i)) != BCN_END; i++) ch[n++] = c;
+    if (n != (int)BCN_NCHIPS || ch[n - 1] != 1) return -1;
+    memset(out, 0, BCN_LEN);
+    for (k = 0; k < bits; k++) {
+        int a = ch[2 * k], b = ch[2 * k + 1], v;
+        if (a == b) return -2;                         /* not manchester */
+        v = a;
+        if (k < (int)BCN_PRE_BITS) { if (!v) return -3; continue; }
+        if (k < (int)BCN_PRE_BITS + 8) {
+            if (v != (int)((BCN_SYNC >> (7 - (k - BCN_PRE_BITS))) & 1u)) return -4;
+            continue;
+        }
+        k -= BCN_PRE_BITS + 8;
+        out[k >> 3] |= (uint8_t)(v << (7 - (k & 7)));
+        k += BCN_PRE_BITS + 8;
+    }
+    return 0;
+}
+
+static void test_beacon(void)
+{
+    static const uint8_t check[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    uint8_t back[BCN_LEN];
+    const txrec_t *r;
+    int n;
+    double t;
+
+    CHECK(bcn_crc8(check, 9) == 0xFB, "CRC-8 check value 0x%02X (want 0xFB)", bcn_crc8(check, 9));
+    CHECK(BCN_NCHIPS == 145u, "chip count %u", BCN_NCHIPS);
+
+    /* boot alone: one HELLO once the show is over */
+    sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+    sim_run(&S, E, n, 3000);
+    CHECK(S.ntx == 1 && (S.tx[0].pkt[0] >> 6) == REPLY_HELLO, "HELLO after boot (ntx=%d)", S.ntx);
+
+    /* good frame: ACK 300 ms after the last gap, state and readings inside */
+    sim_defaults(); S.i_ma = 97; S.vc_mv = 4212; S.scap_mv = 3611;
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_frame(E, &n, 1500, (6 << 3) | 4, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    CHECK(S.ntx == 2, "HELLO + ACK (ntx=%d)", S.ntx);
+    r = &S.tx[S.ntx - 1];
+    CHECK((r->pkt[0] >> 6) == REPLY_ACK && ((r->pkt[0] >> 3) & 7) == ERR_NONE && (r->pkt[0] & 7) == 1,
+          "ACK header 0x%02X", r->pkt[0]);
+    CHECK(r->pkt[1] == 0xDC, "state byte 0x%02X (F6 LNA FMN)", r->pkt[1]);
+    CHECK(r->pkt[3] == 211 && r->pkt[4] == 97 && r->pkt[5] == 181,
+          "readings %u %u %u", r->pkt[3], r->pkt[4], r->pkt[5]);
+    CHECK(bcn_crc8(r->pkt, 6) == r->pkt[6], "CRC in packet");
+    { double last_rise = E[n - 1].t;
+      CHECK(r->t - last_rise >= 299 && r->t - last_rise <= 302, "reply %.0f ms after last gap",
+            r->t - last_rise); }
+    CHECK(chips_to_pkt(r->pkt, back) == 0 && !memcmp(back, r->pkt, BCN_LEN), "chips round-trip");
+
+    /* bad frame: NAK carries the error code */
+    sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_frame(E, &n, 1500, 0x15, G0, G1, ON);
+    { int i; for (i = 2; i < n; i++) E[i].t -= 30; }
+    sim_run(&S, E, n, t + 1500);
+    r = &S.tx[S.ntx - 1];
+    CHECK((r->pkt[0] >> 6) == REPLY_NAK && ((r->pkt[0] >> 3) & 7) == ERR_SYNC,
+          "NAK SYNC header 0x%02X", r->pkt[0]);
+    CHECK(r->t > E[n - 1].t + 299, "NAK only after the host's frame tail");
+
+    /* two frames back to back: one reply each, no reply in mid-frame */
+    sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_frame(E, &n, 1500, (5 << 3) | 4, G0, G1, ON);
+    t = add_frame(E, &n, t + 1300, (7 << 3) | 4 | 1, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    CHECK(S.ntx == 3 && (S.tx[2].pkt[0] & 7) == 2 && (S.tx[2].pkt[1] >> 5) == 7,
+          "two ACKs, seq 2, bank 7 (ntx=%d)", S.ntx);
+
+    /* trip shows in the flags, current is reported raw */
+    sim_defaults(); S.i_ma = 170;
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_frame(E, &n, 1500, (5 << 3) | 4, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    r = &S.tx[S.ntx - 1];
+    CHECK((r->pkt[2] & 0x80) && !(r->pkt[2] & 0x02) && !(r->pkt[1] & 0x08) && r->pkt[4] == 170,
+          "trip flags 0x%02X state 0x%02X I %u", r->pkt[2], r->pkt[1], r->pkt[4]);
+
+    /* config frame: ACK too, switches untouched */
+    sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_frame(E, &n, 1500, (6 << 3) | 4, G0, G1, ON);
+    t = add_config(E, &n, t + 1300, PANEL_BANDS, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    r = &S.tx[S.ntx - 1];
+    CHECK(S.ntx == 3 && (r->pkt[0] >> 6) == REPLY_ACK && (r->pkt[0] & 7) == 2 && r->pkt[1] == 0xDC &&
+          S.app.panel == PANEL_BANDS, "config frame ACKed, state F6 LNA kept (ntx=%d)", S.ntx);
+}
+
 static void test_budget(void)
 {
     /* worst plausible panel: every sticky, errors, LNA lamps, show mode */
@@ -305,6 +400,7 @@ int main(void)
     test_errors();
     test_app();
     test_panel_modes();
+    test_beacon();
     test_budget();
     printf("%s: %d/%d checks passed\n", fails ? "FAILED" : "OK", checks - fails, checks);
     return fails ? 1 : 0;

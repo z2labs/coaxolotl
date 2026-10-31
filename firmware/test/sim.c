@@ -13,6 +13,7 @@
  *   --ilna MA --scap MV --vc MV   simulated analog readings
  *   --fault-at MS     TPS2553 FAULT at this time
  *   --tail MS         keep simulating after the last edge (default 1500)
+ *   --chips           print the on-air chip string of each reply
  *   -q                no event log, panel only
  */
 #include "harness.h"
@@ -41,6 +42,7 @@ int main(int argc, char **argv)
         else if (!strcmp(a, "--vc")) { S.vc_mv = (uint16_t)atoi(v); i++; }
         else if (!strcmp(a, "--fault-at")) { S.fault_at = atof(v); i++; }
         else if (!strcmp(a, "--tail")) { tail = atof(v); i++; }
+        else if (!strcmp(a, "--chips")) { S.chips = 1; }
         else if (!strcmp(a, "-q")) { S.verbose = 0; }
         else { fprintf(stderr, "unknown option %s\n", a); return 2; }
     }

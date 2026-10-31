@@ -22,6 +22,7 @@ flowchart LR
   LDO --> MCU[EFM8BB21<br/>QFN20]
   MCU --> SR[6x 74HC595] --> LAMPS
   MCU --> SW1 & SW2 & S1 & S2 & FMN & LSW
+  MCU -- LED_SER = BEACON 12.25 MHz --> PAD[4k7/51R pad<br/>1k + 100p] -.-> BT
 ```
 
 ## Power tree
@@ -119,7 +120,7 @@ data line through R30 (1 kΩ), so the debugger can override it.
 | 15 | P0.7 | LNA_PATH | out | both SPDTs; 1 = through LNA; 10 k pull-down = bypass |
 | 14, 13, 11 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 in parallel; 10 k pull-downs = branch 0 (THRU) |
 | 10 | P1.3 | LNA_PATH_OUT | out | output SPDT U7 (its own line, same polarity as LNA_PATH); 10 k pull-down = bypass |
-| 9 | P1.4 | LED_SER | out | 595 chain data |
+| 9 | P1.4 | LED_SER | out | 595 chain data; also BEACON: PCA CEX0 clock into the coax tap during a reply (the 595s ignore SER without SCK), low when idle |
 | 8 | P1.5 | LED_SCK | out | |
 | 7 | P1.6 | LED_RCK | out | |
 | 6 | P2.0 / C2D | FMN | out | FM-notch SPDTs (DNP option); through R30 1 k; 10 k pull-down |
@@ -187,6 +188,38 @@ firmware runs.
   LM66100 / TPS2553 absolute maximum ratings. If not, add 1 Ω plus a 5.6 V
   zener.
 
+## Back-channel injection
+
+The reply (docs/protocol.md) is a 3.3 Vpp, 12.25 MHz square wave, keyed on
+and off. The QFN20 has no free pin, so it comes out on P1.4 (LED_SER): the
+crossbar puts PCA CEX0 there for 0.73 s, and the 74HC595s ignore SER while
+SCK and RCK stay still. It is coupled onto the RF line on the coax side of SW2,
+after the filter bank, so the dongle hears it whatever branch is selected:
+
+```
+P1.4 LED_SER ── R21 4k7 ──┬── R23 1k ── C16 100p C0G ── BCN_RF → SW2 common / bias-T RF port
+                         R22 51
+                         GND
+```
+
+* The 3rd harmonic at 36.75 MHz is 0.70 V peak at the pin. The pad gives
+  7.5 mV, and 1 kΩ into the 25 Ω of the line (RTL-SDR ‖ switch port) about
+  0.18 mV, i.e. **about −65 dBm**. That is 40 dB above the noise in a 2 kHz
+  bin and far below the dongle's overload point. Raise R21 for less, lower it
+  for more. **VERIFY** the level on the bench.
+* The 1 kΩ keeps the tap from loading the RF line: < 0.25 dB at 2 GHz,
+  also with the parasitic capacitance of an 0603.
+* LED_SER idles low (hal_panel ends with SER = 0) and the crossbar releases
+  it between replies, so no DC sits on the pad.
+* The tap also sees the panel's shift bursts (48 bits at about 3 MHz, 0.5 ms,
+  only when a lamp changes). In idle, and in quiet or panel-off mode, nothing
+  shifts. If those bursts show up on the waterfall during frames, lower the
+  tap level or give the beacon its own pin in the next revision. C16 blocks the 1.65 V average during a reply; the PE42582 ports
+  must stay at 0 V DC.
+* What leaks back out of the antenna is the reverse isolation of SW2, the
+  filter and the LNA or bypass switch below −65 dBm, for 0.7 s per command.
+* Keep the BEACON trace short and away from the LNA input.
+
 ## Lamp driver
 
 * 6× 74HC595 (TSSOP-16) powered from 3V3, with the outputs sinking.
@@ -210,3 +243,5 @@ firmware runs.
 4. The bias discharge time with your V3 and coax (fall-time budget above).
 5. The EFM8BB2 register fields marked VERIFY in `firmware/include/efm8bb2_sfr.h`.
    `docs/bringup.md` has a test for each.
+6. Beacon level and harmonic content at the coax connector (R21/R22). The
+   RF sheet must connect BCN_RF to SW2 common.
