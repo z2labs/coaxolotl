@@ -142,7 +142,7 @@ def main(repair_only=False):
             b = run_pass(b, f"repair{rnd + 1}", other, [], ["-top", "F.Cu:3", "-via", "1500", "-it", "40"],
                          rules_nets, summary)
         b = cleanup(b)
-    if CTRL and "GND" in unconnected_nets():
+    if CTRL and unconnected_nets():
         b = gnd_rip(b, rules_nets, summary)
     print("RF widened:", fatten_rf(b))
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
@@ -311,41 +311,47 @@ def gnd_islands(b):
     return [p for p, h in pad_hits if not h or all(f(k) != main for k in h)]
 
 
-def gnd_rip(b, rules_nets, summary, radius=3.0):
-    """local rip-up for GND pads left in a pocket: the signal nets with copper within `radius` mm of such a pad lose
-    all their tracks and vias and are routed again together with GND, so srouter can negotiate room for both"""
-    lost = gnd_islands(b)
-    if not lost:
-        return b
+def _is_power(n):
+    return any(fnmatch.fnmatchcase(n, pat) for pat in POWER)
+
+
+def gnd_rip(b, rules_nets, summary, radius=3.0, rounds=3):
+    """local rip-up and reroute for what the passes leave open on 2 layers: GND pads in a fill pocket and signal nets
+    with no path. The signal nets with copper within `radius` mm of such a pad lose all their tracks and vias and are
+    routed again together with the open nets, so srouter can negotiate room for all of them. A net that ends up open
+    after that is the next round's target. Power nets are never ripped (their repair is the normal repair pass)."""
     T = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
-    rip = set()
-    for p in lost:
-        q = T(p.GetPosition())
-        for t in b.GetTracks():
-            n = t.GetNetname()
-            if n in ("GND", "") or n in rip or any(fnmatch.fnmatchcase(n, pat) for pat in POWER):
-                continue
-            if t.GetClass() == "PCB_VIA":
-                c = T(t.GetPosition())
-                d = ((c[0] - q[0]) ** 2 + (c[1] - q[1]) ** 2) ** 0.5
-            else:
-                d = _d_pt_seg(q, T(t.GetStart()), T(t.GetEnd()))
-            if d < radius:
-                rip.add(n)
-    print(f"GND rip-up: pads {[p.GetParentFootprint().GetReference() + '.' + p.GetNumber() for p in lost]}, "
-          f"nets {sorted(rip)}", flush=True)
-    kill = [t.m_Uuid.AsString() for t in b.GetTracks() if t.GetNetname() in rip]
-    pcbnew.SaveBoard(BOARD, b)
-    _delete_uuids(BOARD, kill)
-    b = pcbnew.LoadBoard(BOARD)
-    b = run_pass(b, "repair_gnd", sorted(rip) + ["GND"], [], ["-top", "F.Cu:3", "-via", "800", "-it", "250",
-                                                                "-stall", "80"], rules_nets, summary)
-    b = cleanup(b)
-    left = unconnected_nets()
-    if left:
-        print(f"GND rip-up: still open {left}", flush=True)
-        b = run_pass(b, "repair_gnd2", left, [], ["-top", "F.Cu:3", "-via", "1500", "-it", "40"], rules_nets, summary)
+    for rnd in range(rounds):
+        open_nets = [n for n in unconnected_nets() if n == "GND" or not _is_power(n)]
+        if not open_nets:
+            break
+        targets = gnd_islands(b) if "GND" in open_nets else []
+        targets += [p for p in b.GetPads() if p.GetNetname() in open_nets and p.GetNetname() != "GND"]
+        rip = {n for n in open_nets if n != "GND"}
+        for p in targets:
+            q = T(p.GetPosition())
+            for t in b.GetTracks():
+                n = t.GetNetname()
+                if n in ("GND", "") or n in rip or _is_power(n):
+                    continue
+                if t.GetClass() == "PCB_VIA":
+                    c = T(t.GetPosition())
+                    d = ((c[0] - q[0]) ** 2 + (c[1] - q[1]) ** 2) ** 0.5
+                else:
+                    d = _d_pt_seg(q, T(t.GetStart()), T(t.GetEnd()))
+                if d < radius:
+                    rip.add(n)
+        print(f"rip-up {rnd + 1}: open {open_nets}, pads {len(targets)}, ripped {len(rip)} nets {sorted(rip)}",
+              flush=True)
+        kill = [t.m_Uuid.AsString() for t in b.GetTracks() if t.GetNetname() in rip]
+        pcbnew.SaveBoard(BOARD, b)
+        _delete_uuids(BOARD, kill)
+        b = pcbnew.LoadBoard(BOARD)
+        only = sorted(rip) + (["GND"] if "GND" in open_nets else [])
+        b = run_pass(b, f"rip{rnd + 1}", only, [], ["-top", "F.Cu:3", "-via", "800", "-it", "250", "-stall", "80"],
+                     rules_nets, summary)
         b = cleanup(b)
+        radius += 1.0
     return b
 
 
