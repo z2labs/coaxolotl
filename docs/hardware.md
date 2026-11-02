@@ -28,6 +28,7 @@ flowchart LR
   LDO --> MCU[EFM8BB21<br/>QFN20]
   MCU --> SR[6x 74HC595] --> LAMPS
   MCU --> SW1 & SW2 & S1 & S2 & FMN & LSW
+  MCU -- LED_SER = BEACON 12.25 MHz --> PAD[4k7/51R pad<br/>1k + 100p] -.-> BT
 ```
 
 ## Power tree
@@ -125,7 +126,7 @@ data line through R30 (1 kΩ), so the debugger can override it.
 | 15 | P0.7 | LNA_PATH | out | input SPDT U6; 1 = through LNA; 10 k pull-down = bypass. hal_rf() switches it together with LNA_PATH_OUT (P1.3) |
 | 14, 13, 11 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 in parallel; 10 k pull-downs = branch 0 (THRU) |
 | 10 | P1.3 | LNA_PATH_OUT | out | output SPDT U7 (its own line, same polarity as LNA_PATH); 10 k pull-down = bypass |
-| 9 | P1.4 | LED_SER | out | 595 chain data |
+| 9 | P1.4 | LED_SER | out | 595 chain data; also BEACON: PCA CEX0 clock into the coax tap during a reply (the 595s ignore SER without SCK), low when idle |
 | 8 | P1.5 | LED_SCK | out | |
 | 7 | P1.6 | LED_RCK | out | |
 | 6 | P2.0 / C2D | FMN | out | FM-notch SPDTs (DNP option); through R30 1 k; 10 k pull-down |
@@ -136,6 +137,55 @@ data line through R30 (1 kΩ), so the debugger can override it.
 During reset and boot the pull-downs give a safe state: THRU, bypass, LNA
 unpowered, lamps off. The box then behaves like a plain cable until the
 firmware runs.
+
+## MCU for the next revision: EFM8BB52F32G-C-QFN32
+
+The QFN20 has no spare pin left, and the EFM8BB2 family is ageing (QSOP
+end of life, BB3 end of life). The next board moves to the EFM8BB52F32G-C-QFN32
+(newest EFM8, same 8051 core and SDCC toolchain):
+
+* 32 kB flash (30 kB code in 2 kB pages), 2304 B RAM, 29 GPIO, 1.8–5.5 V,
+  5 × 5 mm QFN32.
+* Snooze about 10 µA with the LFOSC running (80 kHz ±3 %), woken by a Timer 4
+  event or a port match. Same scheme as on the BB2.
+* 12-bit ADC (the BB2 has 10), with internal references. The firmware uses
+  1.8 V at gain 0.5, so 3.6 V full scale, independent of VDD.
+* Factory UART bootloader on P0.4/P0.5, entered when P3.7/C2D is low at reset
+  (AN945). Buy revision C: its only open erratum (BL_E201) concerns the
+  20-pin packages; the Snooze/prefetch, ADC-mux and clock-switch errata are
+  fixed since revision B.
+
+`make -C firmware MCU=bb52` builds it (`hal_efm8bb52.c`,
+`include/efm8bb52_sfr.h`; register details from the EFM8BB52 Reference
+Manual rev 0.3). The default stays `MCU=bb21` until the PCB moves.
+
+| Pin | Port | Net | Dir | Note |
+|---|---|---|---|---|
+| 1 | P0.0 | SENSE | in | VCOAX divider; port-match wake on both edges |
+| 32 | P0.1 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up, port-match wake |
+| 31 | P0.2 | VC_ADC | ana | same divider node as SENSE (ADC0.0) |
+| 30 | P0.3 | SCAP_ADC | ana | 1 M / 1 M + 100 nF (ADC0.1) |
+| 29 | P0.4 | TP_TX | out | UART0 TX test point (bootloader, debug prints) |
+| 28 | P0.5 | TP_RX | in | UART0 RX test point |
+| 27 | P0.6 | LNA_EN | out | 10 k pull-down: LNA off during reset |
+| 26 | P0.7 | LNA_PATH | out | input SPDT U6; 10 k pull-down = bypass |
+| 25, 24, 23 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582; 10 k pull-downs = THRU |
+| 22 | P1.3 | LNA_PATH_OUT | out | output SPDT U7; 10 k pull-down = bypass |
+| 21 | P1.4 | FMN | out | FM notch SPDTs (DNP option); 10 k pull-down |
+| 20, 19 | P1.5, P1.6 | — | out | spare, driven low; keeps distance to the beacon |
+| 18 | P1.7 | BEACON | out | PCA CEX0 into the coax tap during a reply, low otherwise |
+| 17–14 | P2.0–P2.3 | LED_SER, LED_SCK, LED_RCK, LED_OE_N | out | lamp chain; 10 k pull-up on OE_N |
+| 13 | P2.4 | ILNA_ADC | ana | INA180A2 out (ADC0.13; not a crossbar pin) |
+| 12, 11 | P2.5, P2.6 | — | out | spare, driven low |
+| 10–6 | P3.0–P3.4 | — | out | spare, driven low |
+| 5 | P3.7 / C2D | C2D | | debug; 10 k pull-up so the bootloader is not entered by accident |
+| 4 | RSTb / C2CK | RST_N | | 10 k pull-up, C2 clock |
+| 3 | VDD | +3V3 | | 1 µF + 100 nF at the pin (AN203) |
+| 2 | N/C | | | |
+| EP | GND | | | the only ground pin: solder it, with vias |
+
+With its own BEACON pin, the panel's shift bursts no longer reach the coax
+tap.
 
 ## RF notes
 
@@ -191,6 +241,39 @@ firmware runs.
   LM66100 / TPS2553 absolute maximum ratings. If not, add 1 Ω plus a 5.6 V
   zener.
 
+## Back-channel injection
+
+The reply (docs/protocol.md) is a 3.3 Vpp, 12.25 MHz square wave, keyed on
+and off. The QFN20 has no free pin, so it comes out on P1.4 (LED_SER): the
+crossbar puts PCA CEX0 there for 0.73 s, and the 74HC595s ignore SER while
+SCK and RCK stay still. It is coupled onto the RF line on the coax side of SW2,
+after the filter bank, so the dongle hears it whatever branch is selected:
+
+```
+P1.4 LED_SER ── R_BCN1 4k7 ──┬── R_BCN3 1k ── C_BCN 100p C0G ── BCN_RF → SW2 common / bias-T RF port
+                          R_BCN2 51
+                         GND
+```
+
+* The 3rd harmonic at 36.75 MHz is 0.70 V peak at the pin. The pad gives
+  7.5 mV, and 1 kΩ into the 25 Ω of the line (RTL-SDR ‖ switch port) about
+  0.18 mV, i.e. **about −65 dBm**. That is 40 dB above the noise in a 2 kHz
+  bin and far below the dongle's overload point. Raise R_BCN1 for less, lower it
+  for more. **VERIFY** the level on the bench.
+* The 1 kΩ keeps the tap from loading the RF line: < 0.25 dB at 2 GHz,
+  also with the parasitic capacitance of an 0603.
+* LED_SER idles low (hal_panel ends with SER = 0) and the crossbar releases
+  it between replies, so no DC sits on the pad.
+* The tap also sees the panel's shift bursts (48 bits at about 3 MHz, 0.5 ms,
+  only when a lamp changes). In idle, and in quiet or panel-off mode, nothing
+  shifts. If those bursts show up on the waterfall during frames, lower the
+  tap level or give the beacon its own pin in the next revision.
+* C_BCN blocks the 1.65 V average during a reply; the PE42582 ports
+  must stay at 0 V DC.
+* What leaks back out of the antenna is the reverse isolation of SW2, the
+  filter and the LNA or bypass switch below −65 dBm, for 0.7 s per command.
+* Keep the BEACON trace short and away from the LNA input.
+
 ## Lamp driver
 
 * 6× 74HC595 (TSSOP-16) powered from 3V3, with the outputs sinking.
@@ -239,3 +322,6 @@ layers, every part on top.
 4. The bias discharge time with your V3 and coax (fall-time budget above).
 5. The EFM8BB2 register fields marked VERIFY in `firmware/include/efm8bb2_sfr.h`.
    `docs/bringup.md` has a test for each.
+6. Back-channel tap: R_BCN1–3 and C_BCN from LED_SER (P1.4) to SW2 common
+   are **not in the schematic or the PCB yet**. Then verify the beacon level
+   and harmonic content at the coax connector.

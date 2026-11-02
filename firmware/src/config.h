@@ -11,8 +11,12 @@
 
 #ifdef __SDCC
 #define CODE __code
+/* Large model: all state lives in XRAM. XRAM-typed pointers are 2 bytes and
+ * compile to MOVX instead of generic-pointer library calls (saves ~3 kB). */
+#define XPTR __xdata
 #else
 #define CODE
+#define XPTR
 #endif
 
 /* ------------------------------------------------------------------ */
@@ -60,6 +64,22 @@
 #define SYNC_RATIO_DEN 2u
 
 /* ------------------------------------------------------------------ */
+/* Back-channel: clock beacon on the coax (see docs/protocol.md)       */
+/* ------------------------------------------------------------------ */
+/* After every frame (good or bad) and once after boot, the box keys a
+ * square wave from the PCA onto the coax: SYSCLK 24.5 MHz / (2 * CPH)
+ * = 12.25 MHz, which the RTL-SDR hears on its 3rd harmonic at 36.75 MHz.
+ * On-off keyed Manchester chips of BCN_CHIP_MS, so one bit is 2 chips. */
+#ifndef CFG_BEACON
+#define CFG_BEACON 1
+#endif
+/* The reply starts as soon as the decoder is ready for the next frame,
+ * i.e. after T_IDLE_MIN of steady bias following the host's last gap. */
+#define BCN_CHIP_MS   5u
+#define T_CHIP        MS2T(BCN_CHIP_MS)
+#define BCN_PCA_CPH   1u          /* PCA frequency-output divider: f = SYSCLK / (2 * CPH) */
+
+/* ------------------------------------------------------------------ */
 /* Panel / UI                                                          */
 /* ------------------------------------------------------------------ */
 #ifndef CFG_DEFAULT_QUIET
@@ -71,8 +91,12 @@
 #endif
 
 /* panel mode log in flash: one 512 B page below the lock-byte page */
-#define NV_PAGE      0x3C00u
+#ifndef NV_PAGE
+#define NV_PAGE      0x3C00u    /* EFM8BB21; the Makefile sets it for the BB52 */
+#endif
+#ifndef NV_PAGE_SIZE
 #define NV_PAGE_SIZE 512u
+#endif
 
 #define T_LAMPTEST   MS2T(700)  /* all 48 lamps on                       */
 #define T_BOOTSWEEP  MS2T(12)   /* per lamp, chaser over all 48 lamps    */

@@ -18,3 +18,4 @@ hardware/kicad_ctrl/fp-info-cache
 hardware/kicad_ctrl/*.kicad_prl
 hardware/kicad_ctrl/jlc/gerber/
 hardware/kicad_ctrl/jlc/easyeda_cache/
+sdrpp/build/

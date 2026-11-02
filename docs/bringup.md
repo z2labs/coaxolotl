@@ -51,6 +51,28 @@ python3 host/coaxolotl.py send --bank 6 --lna --backend rtl_biast
   `make -C firmware bandplan`.
 * For bad timing, the tool prints its own latency and jitter.
 
+## 3b. Back-channel
+
+```
+python3 host/coaxolotl.py send --bank 6 --lna --listen
+```
+
+* Scope P1.4 (LED_SER / BEACON): 300 ms after the last gap you should see 0.73 s of
+  bursts of a 12.25 MHz square wave, 5 ms per chip. It is low otherwise.
+* The tool prints the reply, for example
+  `ACK seq=1 F6 LNA+FMN  Vcoax=4.28 V  I_lna=101 mA  Vscap=3.92 V  flags=HOLD`,
+  plus the frequency it heard (HFOSC0 error) and the on/off ratio. Expect
+  about 30–40 dB.
+* No reply but a scope trace: check R_BCN1–3 / C_BCN and the BCN_RF connection.
+  Record the band with
+  `rtl_sdr -f 36.75e6 -s 2.4e6 -n 4e6 cap.cu8` while you send a frame from
+  another dongle or with `--backend rtl_biast`, then run
+  `python3 host/coaxolotl.py decode cap.cu8`.
+* No scope trace: the PCA, CLKSEL or crossbar setup is wrong (the VERIFY
+  items in `efm8bb2_sfr.h`). A trace at 1.53 MHz instead of 12.25 MHz means
+  SYSCLK stayed at 3 MHz (CLKSEL).
+* `make -C firmware BEACON=0` builds the firmware without replies.
+
 ## 4. Health monitoring
 
 * Compare the I-OK window against a DMM in series with the LNA. Trim
@@ -89,6 +111,24 @@ When it works:
   lights. A `--clr` frame clears it.
 * With the supercap removed, the same test causes a power-on reset, and the
   box comes back in THRU and bypass.
+
+## EFM8BB52 (next revision)
+
+```
+make -C firmware clean && make -C firmware MCU=bb52 SNOOZE=0   # bring-up
+make -C firmware clean && make -C firmware MCU=bb52            # Snooze
+```
+
+The register values come from the Reference Manual, so the BB2 VERIFY table
+in step 5 does not apply. What to look at instead:
+
+* RUN goes dark in idle and blips every 6.5 s: Snooze and the Timer 4 wake
+  (interrupt-driven on this part) work.
+* VCOAX, I_LNA and VSCAP in the reply read right without trimming: the ADC
+  runs on the internal 1.8 V reference, not on VDD.
+* Programming: C2 as before, or the factory UART bootloader on TP_TX/TP_RX
+  (hold C2D low during reset, then `efm8load.py`, AN945). Erase the security
+  page and lock the flash for a finished box.
 
 ## Panel modes and the flash log
 
