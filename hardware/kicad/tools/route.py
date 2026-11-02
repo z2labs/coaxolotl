@@ -62,10 +62,12 @@ PASSES = [
 ] + ([] if CTRL else [("pass1_rf", RF, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "80"])]) + [
     ("pass2_power", POWER, [], ["-top", "F.Cu:3", "-via", "3000", "-it", "60"]),
     ("pass3_strip", ["Net-(D*-K)", "Net-(RN*", "/Panel/LED_CH*", "/MCU/LED_*", "Net-(J1-*"], [], ["-top", "F.Cu:2", "-via", "1200"] + (["-it", "200", "-stall", "50"] if CTRL else ["-it", "70", "-stall", "15"])),
+] + ([("pass5_gnd", ["GND"], [], ["-via", "800", "-it", "30", "-stall", "10"])] if CTRL else []) + [
     ("pass4_rest", ["*"], [], ["-top", "F.Cu:4", "-via", "1500", "-it", "40", "-stall", "10"]),
-] + ([("pass5_gnd", ["GND"], [], ["-via", "800", "-it", "30", "-stall", "10"])] if CTRL else [])
-# 2 layers: no GND plane, and the F/B fills break into islands between the tracks; pass 5 wires every GND pad
-# into one tree so no island hangs on a pour that is cut off
+]
+# 2 layers: no GND plane, and the F/B fills break into islands between the tracks; the GND pass wires every GND pad
+# into one tree so no island hangs on a pour that is cut off. It runs before the rest, so the rest cannot box a GND
+# pad in; pockets the strip pass leaves are opened by gnd_rip()
 
 
 def keepouts(board):
@@ -132,7 +134,7 @@ def main(repair_only=False):
             if not open_nets:
                 break
         rf = [n for n in open_nets if n in RF]
-        other = [n for n in open_nets if n not in RF]
+        other = [n for n in open_nets if n not in RF and not (CTRL and n == "GND")]   # ctrl: GND goes to gnd_rip
         if rf:
             b = run_pass(b, f"repair{rnd + 1}_rf", rf, ["In2.Cu", "B.Cu"], ["-via", "50000", "-it", "40"],
                          rules_nets, summary, ign_rf=False)
@@ -321,7 +323,7 @@ def gnd_rip(b, rules_nets, summary, radius=3.0):
         q = T(p.GetPosition())
         for t in b.GetTracks():
             n = t.GetNetname()
-            if n in ("GND", "") or n in rip:
+            if n in ("GND", "") or n in rip or any(fnmatch.fnmatchcase(n, pat) for pat in POWER):
                 continue
             if t.GetClass() == "PCB_VIA":
                 c = T(t.GetPosition())
