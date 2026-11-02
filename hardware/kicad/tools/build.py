@@ -474,7 +474,8 @@ def sheet_mcu_bb52(lib) -> DSheet:
                 "30": "SCAP_ADC", "1": "SENSE", "31": "SENSE", "28": "TP_RX", "29": "TP_TX",
                 "27": "LNA_EN", "26": "LNA_PATH", "25": "SW_V1", "24": "SW_V2", "23": "SW_V3",
                 "22": "LNA_PATH_OUT", "21": "FMN", "17": "LED_SER", "16": "LED_SCK", "15": "LED_RCK",
-                "14": "LED_OE_N", "18": "BEACON"},
+                "14": "LED_OE_N", "18": "BEACON",
+                **{n: None for n in ("2", "6", "7", "8", "9", "10", "11", "12", "19", "20")}},
                txt=(168.91, 176.53)))
     s.add(C("C15", "100nF/16V/10%", 172.72, 69.85, "+3V3", "GND", Place="U5.3 (closest)"))
     s.add(C("C14", "1uF/16V/10%", 193.04, 69.85, "+3V3", "GND", Place="U5.3"))
@@ -497,7 +498,8 @@ def sheet_mcu_bb52(lib) -> DSheet:
     s.rail_pin("R13", "1", "+3V3")
     s.w(s.pt("R13", "2"), (139.7, 83.82))
     s.rail_pin("R34", "1", "+3V3")
-    s.w(s.pt("R34", "2"), (152.4, s.pt("U5", "5")[1]))
+    s.label("C2D", *s.pt("R34", "2"), 180)
+    s.label("C2D", *s.pt("U5", "5"), 180)
     s.add(Part("TP7", "Connector:TestPoint", "TP/TX", 111.76, 96.52, 0, TP, {"1": "TP_TX"}, dnp=True))
     s.add(Part("TP8", "Connector:TestPoint", "TP/RX", 111.76, 104.14, 0, TP, {"1": "TP_RX"}, dnp=True))
     s.label("TP_TX", *s.pt("TP7", "1"), 180)
@@ -524,8 +526,8 @@ def sheet_mcu_bb52(lib) -> DSheet:
     s.pw("U5", "30", (99.06, None))
     s.hlabel("SCAP_ADC", 99.06, s.pt("U5", "30")[1], "L", "input")
     s.gnd("C11", "2")
-    s.pw("U5", "31", (142.24, None))
     s.pw("U5", "1", (142.24, None))
+    s.pw("U5", "31", (142.24, None), (None, s.pt("U5", "1")[1]))
     s.w((142.24, s.pt("U5", "1")[1]), (99.06, s.pt("U5", "1")[1]))
     s.hlabel("SENSE", 99.06, s.pt("U5", "1")[1], "L", "input")
     s.gnd("C2", "2")
