@@ -112,7 +112,7 @@ When it works:
 * With the supercap removed, the same test causes a power-on reset, and the
   box comes back in THRU and bypass.
 
-## EFM8BB52 (next revision)
+## EFM8BB52 (control board)
 
 ```
 make -C firmware clean && make -C firmware MCU=bb52 SNOOZE=0   # bring-up

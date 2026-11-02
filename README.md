@@ -80,7 +80,7 @@ python3 host/coaxolotl.py send --band 2m --lna --backend dry-run \
 # firmware (SDCC >= 4.2)
 make -C firmware            # Snooze build
 make -C firmware SNOOZE=0   # bring-up build, classic registers only
-make -C firmware MCU=bb52   # EFM8BB52F32G-QFN32, the next board revision
+make -C firmware MCU=bb52   # EFM8BB52F32 QFN32: the 2-layer control board
 
 # real link
 python3 host/coaxolotl.py bands

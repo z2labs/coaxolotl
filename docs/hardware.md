@@ -157,7 +157,12 @@ end of life, BB3 end of life). The next board moves to the EFM8BB52F32G-C-QFN32
 
 `make -C firmware MCU=bb52` builds it (`hal_efm8bb52.c`,
 `include/efm8bb52_sfr.h`; register details from the EFM8BB52 Reference
-Manual rev 0.3). The default stays `MCU=bb21` until the PCB moves.
+Manual rev 0.3). The control board (`hardware/kicad_ctrl`) uses it; the
+4-layer RF board is still routed for the QFN20, so `make` defaults to
+`MCU=bb21` and the control board needs `make MCU=bb52`.
+
+JLC part: EFM8BB52F32**I**-C-QFN32 (C3225443, −40…125 °C, same die and
+pinout). The G grade (C6033318) had 1 in stock on 2026-11-02, the I grade 13.
 
 | Pin | Port | Net | Dir | Note |
 |---|---|---|---|---|
@@ -293,6 +298,11 @@ P1.4 LED_SER ── R_BCN1 4k7 ──┬── R_BCN3 1k ── C_BCN 100p C0G �
 `COAX_VARIANT=ctrl` (`pcb_build_ctrl.py`, `route.py`). 100 × 70 mm, two
 layers, every part on top.
 
+* MCU: EFM8BB52F32I-C-QFN32 (U5, pin map above), with R34 (10 k C2D
+  pull-up, keeps the factory bootloader out) and TP7/TP8 (UART0 TX/RX).
+* Back-channel tap at J3: BEACON (P1.7) → R31 4k7 / R32 51 Ω pad next to
+  the MCU, → R33 1 kΩ → C47 100 pF C0G at the J3 centre pin. Firmware and
+  docs name them R_BCN1–3 and C_BCN.
 * Kept: bias-T (L5–L7, R24) and the RTL-SDR SMA J3 (BWSMA-KE-P001 air launch)
   on the right edge, the whole power tree, the MCU, the lamp strip and its
   snap-off tab.
@@ -322,6 +332,7 @@ layers, every part on top.
 4. The bias discharge time with your V3 and coax (fall-time budget above).
 5. The EFM8BB2 register fields marked VERIFY in `firmware/include/efm8bb2_sfr.h`.
    `docs/bringup.md` has a test for each.
-6. Back-channel tap: R_BCN1–3 and C_BCN from LED_SER (P1.4) to SW2 common
-   are **not in the schematic or the PCB yet**. Then verify the beacon level
-   and harmonic content at the coax connector.
+6. Back-channel tap: on the control board as R31–R33 / C47 from BEACON
+   (P1.7) to the J3 centre pin. On the 4-layer RF board (QFN20, from
+   LED_SER P1.4 to SW2 common) it is **not in the schematic or the PCB yet**.
+   Verify the beacon level and harmonic content at the coax connector.
