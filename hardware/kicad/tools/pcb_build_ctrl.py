@@ -314,7 +314,11 @@ for ref, (x, y, r) in SOFT.items():
         BLOCK.append((bx[0] - m, bx[1] - m, bx[2] + m, bx[3] + m))
 
 # QFN20 MCU: a staggered fan-out via per signal pin
-FANOUT_LATE = {"U5": "1 2 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20"}
+# fan-out vias per signal pin: QFN20 (EFM8BB21, COAX_MCU=bb21) or QFN32 (EFM8BB52, the default here; spares and N/C
+# pins 2, 6-12, 19, 20 stay unconnected)
+U5_QFN32 = len(fps["U5"].Pads()) > 25
+FANOUT_LATE = {"U5": "1 4 5 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30 31 32" if U5_QFN32
+               else "1 2 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20"}
 for ref, pins in FANOUT_LATE.items():
     c = where[ref][:2]
     sides = {}
@@ -335,11 +339,15 @@ for ref, pins in FANOUT_LATE.items():
 RAILS = {"GND", "+3V3", "VCOAX", "VMAIN", "VHOLD", "VLED", "LNA_VCC"}
 PARTNER = {
     "C41": ("U14", "16"), "C42": ("U15", "16"), "C43": ("U16", "16"), "C44": ("U17", "16"), "C45": ("U18", "16"),
-    "C46": ("U19", "16"), "C14": ("U5", "4"), "C15": ("U5", "4"), "C6": ("U4", "2"), "C13": ("U4", "2"),
+    "C46": ("U19", "16"), "C14": ("U5", "3" if U5_QFN32 else "4"), "C15": ("U5", "3" if U5_QFN32 else "4"), "C6": ("U4", "2"), "C13": ("U4", "2"),
     "C9": ("U4", "3"), "C12": ("U4", "3"), "C1": ("U1", "1"), "C3": ("U1", "3"), "C4": ("U2", "1"),
     "R1": ("U1", "1"), "D1": ("U1", "1"), "C8": ("FB1", "2"),
     "R30": ("U5", "6"), "R14": ("U2", "3"), "R20": ("U14", "13"),
     "R9": ("U1", "3"), "FB1": ("U1", "3"), "R2": ("U1", "1"), "D3": ("R9", "2"), "D2": ("R2", "2"),
+    # QFN32: C2D pull-up, UART test points, back-channel tap (the 3.3 V beacon trace short: pad at the MCU, the 1k and
+    # the DC block at the coax pin)
+    "R34": ("U5", "5"), "TP7": ("U5", "29"), "TP8": ("U5", "28"),
+    "R31": ("U5", "18"), "R32": ("R31", "2"), "R33": ("J3", "1"), "C47": ("J3", "1"),
 }
 PARTNER = {k: v for k, v in PARTNER.items() if k in fps}
 

@@ -31,6 +31,9 @@ import os
 VARIANT = os.environ.get("COAX_VARIANT", "")
 CTRL = VARIANT == "ctrl"
 OUT = pathlib.Path(__file__).resolve().parent.parent.parent / ("kicad_ctrl" if CTRL else "kicad")
+# COAX_MCU=bb52: EFM8BB52F32 (QFN32) with its own BEACON pin and the back-channel tap; the control board default.
+# bb21: EFM8BB21F16G (QFN20), the RF board as routed.
+MCU = os.environ.get("COAX_MCU", "bb52" if CTRL else "bb21")
 PROJECT = "coaxolotl"
 REV = "0.2"
 
@@ -140,6 +143,21 @@ def build_library(path: pathlib.Path):
                    ("10", "P1.3"), None, ("9", "P1.4"), ("8", "P1.5"), ("7", "P1.6"), ("18", "P0.4")],
             width=30.48, top_pins=[("4", "VDD")], bottom_pins=[("3", "GND"), ("12", "GND"), ("21", "EP")],
             pin_types={"4": "power_in", "3": "power_in", "12": "power_in", "21": "power_in", "5": "input"}),
+        ic_symbol(
+            "EFM8BB52F32I-C-QFN32", "U", "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm",
+            "https://www.silabs.com/documents/public/data-sheets/efm8bb52-datasheet.pdf",
+            "EFM8 Busy Bee 8051 MCU, 32 kB flash, QFN32 5x5 (I grade: -40..125 C). EP is the only GND pin. "
+            "Inputs left, outputs right",
+            left=[("4", "RSTb/C2CK"), ("5", "P3.7/C2D"), None, ("28", "P0.5/RX")] + [None] * 5 +
+                 [("32", "P0.1/PMATCH")] + [None] * 5 + [("13", "P2.4/ADC")] + [None] * 5 +
+                 [("30", "P0.3/ADC")] + [None] * 5 + [("1", "P0.0/PMATCH"), ("31", "P0.2/ADC")] + [None] +
+                 [("10", "P3.0"), ("9", "P3.1"), ("8", "P3.2"), ("7", "P3.3"), ("6", "P3.4")],
+            right=[("27", "P0.6"), ("26", "P0.7"), ("25", "P1.0"), ("24", "P1.1"), ("23", "P1.2"),
+                   ("22", "P1.3"), ("21", "P1.4"), ("17", "P2.0"), ("16", "P2.1"), ("15", "P2.2"), ("14", "P2.3"),
+                   None, ("18", "P1.7/CEX0"), None, ("29", "P0.4/TX"), None, ("20", "P1.5"), ("19", "P1.6"),
+                   ("12", "P2.5"), ("11", "P2.6"), ("2", "N/C")],
+            width=30.48, top_pins=[("3", "VDD")], bottom_pins=[("33", "EP/GND")],
+            pin_types={"3": "power_in", "33": "power_in", "4": "input", "2": "no_connect"}),
         ic_symbol(
             "LM66100DCK", "U", "Package_TO_SOT_SMD:SOT-363_SC-70-6",
             "https://www.ti.com/lit/ds/symlink/lm66100.pdf",
@@ -444,7 +462,96 @@ def sheet_power(lib) -> DSheet:
 # sheet 3: MCU
 
 
+def sheet_mcu_bb52(lib) -> DSheet:
+    """EFM8BB52F32 QFN32 (firmware/src/hal_efm8bb52.c): own BEACON pin P1.7, UART0 test points for the factory
+    bootloader, C2D no longer shared, 10 spare pins (driven low by the firmware, not connected here)."""
+    s = sheet(lib, "MCU", "mcu.kicad_sch", "EFM8BB52F32 (QFN32), C2 debug, UART test points, ADC input conditioning")
+    s.zone = "DIGITAL"
+    s.frame(76.2, 53.34, 167.64, 142.24, "MCU")
+    s.add(Part("U5", "coaxolotl:EFM8BB52F32I-C-QFN32", "EFM8BB52F32I-C(QFN32)", 165.1, 127.0, 0,
+               "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm",
+               {"3": "+3V3", "33": "GND", "4": "RST_N", "5": "C2D", "32": "FAULT_N", "13": "ILNA_ADC",
+                "30": "SCAP_ADC", "1": "SENSE", "31": "SENSE", "28": "TP_RX", "29": "TP_TX",
+                "27": "LNA_EN", "26": "LNA_PATH", "25": "SW_V1", "24": "SW_V2", "23": "SW_V3",
+                "22": "LNA_PATH_OUT", "21": "FMN", "17": "LED_SER", "16": "LED_SCK", "15": "LED_RCK",
+                "14": "LED_OE_N", "18": "BEACON"},
+               txt=(168.91, 176.53)))
+    s.add(C("C15", "100nF/16V/10%", 172.72, 69.85, "+3V3", "GND", Place="U5.3 (closest)"))
+    s.add(C("C14", "1uF/16V/10%", 193.04, 69.85, "+3V3", "GND", Place="U5.3"))
+    s.w(s.pt("U5", "3"), (165.1, 63.5))
+    s.rail("+3V3", 165.1, 63.5)
+    s.w((165.1, 66.04), (193.04, 66.04))
+    s.gnd("C15", "2")
+    s.gnd("C14", "2")
+    s.gnd("U5", "33")
+    s.add(Part("J1", "Connector_Generic:Conn_01x04", "C2_DEBUG", 101.6, 86.36, 180,
+               "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+               {"1": "GND", "2": "C2D", "3": "RST_N", "4": "+3V3"}, {"Place": "edge"}, dnp=True))
+    s.add(R("R13", "10k/5%", 139.7, 76.2, "+3V3", "RST_N", Place="U5.4"))
+    s.add(R("R34", "10k/5%", 152.4, 76.2, "+3V3", "C2D", Place="U5.5",
+            Note="C2D low at reset enters the factory UART bootloader (AN945): keep it high"))
+    s.w(s.pt("J1", "3"), s.pt("U5", "4"))
+    s.w(s.pt("J1", "2"), s.pt("U5", "5"))
+    s.rail_pin("J1", "4", "+3V3")
+    s.gnd("J1", "1")
+    s.rail_pin("R13", "1", "+3V3")
+    s.w(s.pt("R13", "2"), (139.7, 83.82))
+    s.rail_pin("R34", "1", "+3V3")
+    s.w(s.pt("R34", "2"), (152.4, s.pt("U5", "5")[1]))
+    s.add(Part("TP7", "Connector:TestPoint", "TP/TX", 111.76, 96.52, 0, TP, {"1": "TP_TX"}, dnp=True))
+    s.add(Part("TP8", "Connector:TestPoint", "TP/RX", 111.76, 104.14, 0, TP, {"1": "TP_RX"}, dnp=True))
+    s.label("TP_TX", *s.pt("TP7", "1"), 180)
+    s.label("TP_RX", *s.pt("TP8", "1"), 180)
+    s.add(R("R6", "100k/5%", 129.54, 99.06, "+3V3", "FAULT_N", Place="U5.32"))
+    s.pw("U5", "32", (99.06, None))
+    s.hlabel("FAULT_N", 99.06, s.pt("U5", "32")[1], "L", "input")
+    s.rail_pin("R6", "1", "+3V3")
+    s.w(s.pt("R6", "2"), (129.54, s.pt("U5", "32")[1]))
+    s.pw("U5", "28", (144.78, None))
+    s.label("TP_RX", 144.78, s.pt("U5", "28")[1], 180)
+    s.zone = "ANALOG"
+    s.add(R("R8", "1k/1%", 124.46, s.pt("U5", "13")[1], "ILNA", "ILNA_ADC", rot=90, Place="U5.13"))
+    s.add(C("C7", "100nF/16V/10%", 137.16, s.pt("U5", "13")[1] + 3.81, "ILNA_ADC", "GND", Place="U5.13"))
+    s.add(C("C11", "100nF/16V/10%", 137.16, s.pt("U5", "30")[1] + 3.81, "SCAP_ADC", "GND", Place="U5.30"))
+    s.add(C("C2", "10nF/50V/10%", 134.62, s.pt("U5", "1")[1] + 3.81, "SENSE", "GND", Place="U5.1"))
+    s.add(Part("TP6", "Connector:TestPoint", "TP/SENSE", 111.76, s.pt("U5", "1")[1], 0, TP, {"1": "SENSE"},
+               dnp=True))
+    s.zone = "DIGITAL"
+    s.w(s.pt("R8", "2"), s.pt("U5", "13"))
+    s.pw("R8", "1", (99.06, None))
+    s.hlabel("ILNA", 99.06, s.pt("U5", "13")[1], "L", "input")
+    s.gnd("C7", "2")
+    s.pw("U5", "30", (99.06, None))
+    s.hlabel("SCAP_ADC", 99.06, s.pt("U5", "30")[1], "L", "input")
+    s.gnd("C11", "2")
+    s.pw("U5", "31", (142.24, None))
+    s.pw("U5", "1", (142.24, None))
+    s.w((142.24, s.pt("U5", "1")[1]), (99.06, s.pt("U5", "1")[1]))
+    s.hlabel("SENSE", 99.06, s.pt("U5", "1")[1], "L", "input")
+    s.gnd("C2", "2")
+    for num, net in [("27", "LNA_EN"), ("26", "LNA_PATH"), ("25", "SW_V1"), ("24", "SW_V2"), ("23", "SW_V3"),
+                     ("22", "LNA_PATH_OUT"), ("21", "FMN"), ("17", "LED_SER"), ("16", "LED_SCK"),
+                     ("15", "LED_RCK"), ("14", "LED_OE_N"), ("18", "BEACON")]:
+        end = s.pw("U5", num, (215.9, None))
+        s.hlabel(net, *end, "R", "output")
+    end = s.pw("U5", "29", (200.66, None))
+    s.label("TP_TX", *end)
+    for num in ("10", "9", "8", "7", "6", "20", "19", "12", "11", "2"):
+        s.nc("U5", num)
+    s.intent("J1: 1=GND 2=C2D 3=C2CK 4=3V3. TP7/TP8: UART0 for the factory bootloader (C2D low at reset).",
+             86.36, 73.66)
+    s.intent("QFN32: own BEACON pin (P1.7 = PCA CEX0 during a reply), C2D not shared, 10 spares driven low.",
+             78.74, 184.15)
+    s.intent("EP is the only GND pin: solder it, with vias. VDD: 1 uF + 100 nF at the pin (AN203).",
+             78.74, 187.33)
+    s.intent("SYSCLK = HFOSC0/8 = 3.0625 MHz, Snooze when idle (no clock, no spurs). ILNA RC: fc = 1.6 kHz",
+             78.74, 190.5)
+    return s
+
+
 def sheet_mcu(lib) -> DSheet:
+    if MCU == "bb52":
+        return sheet_mcu_bb52(lib)
     s = sheet(lib, "MCU", "mcu.kicad_sch", "EFM8BB21F16G (QFN20), C2 debug, ADC input conditioning")
     s.zone = "DIGITAL"
     s.frame(76.2, 53.34, 167.64, 142.24, "MCU")
@@ -887,7 +994,9 @@ def sheet_ctrl(lib) -> DSheet:
     s.zone = "POWER"
     # bias-T: DC feed from the coax centre to VCOAX (same parts and values as the RF board; no RF DC block here)
     X = 25.4
-    s.frame(X, 25.4, 101.6, 63.5, "Bias-T + coax to RTL-SDR (DC feed only)")
+    s.frame(X, 25.4, 101.6, 101.6 if MCU == "bb52" else 63.5,
+            "Bias-T + coax to RTL-SDR (DC feed + back-channel tap)" if MCU == "bb52" else
+            "Bias-T + coax to RTL-SDR (DC feed only)")
     y1 = 71.12
     xl = X + 50.8
     s.add(Part("L5", "Device:L", "100nH/0603", xl, y1 - 3.81, 0, "Inductor_SMD:L_0603_1608Metric",
@@ -910,6 +1019,24 @@ def sheet_ctrl(lib) -> DSheet:
     s.gnd("J3", "2")
     s.intent("Coax DC feed 100 nH -> 10 uH || 220R -> 1 mH, as on the RF board. D1 (TVS) at J3 (power sheet).",
              X + 2.54, 83.82)
+    if MCU == "bb52":
+        # back-channel tap (docs/hardware.md): BEACON 3.3 Vpp 12.25 MHz -> 4k7/51R pad -> 1k -> 100p C0G -> coax centre
+        yb = y1 + 25.4
+        s.add(R("R31", "4k7/1%", X + 25.4, yb, "BEACON", "BCN_A", rot=90, Place="J3.1", Note="R_BCN1: sets the level"))
+        s.add(R("R32", "51R/1%", X + 33.02, yb + 6.35, "BCN_A", "GND", Note="R_BCN2"))
+        s.add(R("R33", "1k/1%", X + 43.18, yb, "BCN_A", "BCN_B", rot=90, Place="J3.1",
+                Note="R_BCN3: < 0.25 dB load on the line"))
+        s.add(C("C47", "100pF/50V/C0G", X + 55.88, yb, "BCN_B", "COAX", rot=90, Place="J3.1",
+                Note="C_BCN: blocks the coax DC and the 1.65 V average of the beacon"))
+        s.pw("R31", "1", (X + 12.7, None))
+        s.hlabel("BEACON", X + 12.7, yb, "L", "input")
+        s.w(s.pt("R31", "2"), s.pt("R33", "1"))
+        s.w((s.pt("R32", "1")[0], yb), s.pt("R32", "1"))
+        s.gnd("R32", "2")
+        s.w(s.pt("R33", "2"), s.pt("C47", "1"))
+        s.w(s.pt("C47", "2"), (s.pt("J3", "1")[0], yb), s.pt("J3", "1"))
+        s.intent("Back-channel tap: 3rd harmonic 36.75 MHz at about -65 dBm into the coax (R31 sets it). "
+                 "Firmware names R_BCN1-3 = R31-R33, C_BCN = C47.", X + 2.54, yb + 15.24)
 
     # RF switch control lines: pull-downs (safe state while the MCU is in reset) and the via row to the RF board
     s.zone = "DIGITAL"
@@ -1169,10 +1296,10 @@ def draw_block_diagram(r: DSheet):
 def _root_ctrl(root, sheets):
     power, mcu, ctrl, panel = sheets
     left = ["SENSE", "SCAP_ADC", "ILNA", "FAULT_N", "LNA_EN"]
-    to_ctrl = ["LNA_PATH", "FMN", "LNA_PATH_OUT", "SW_V1", "SW_V2", "SW_V3"]
+    to_ctrl = ["LNA_PATH", "FMN", "LNA_PATH_OUT", "SW_V1", "SW_V2", "SW_V3"] + (["BEACON"] if MCU == "bb52" else [])
     to_panel = ["LED_SER", "LED_SCK", "LED_RCK", "LED_OE_N"]
     ys = [180.34 + 5.08 * i for i in range(5)]
-    yc = [180.34 + 5.08 * i for i in range(6)]
+    yc = [180.34 + 5.08 * i for i in range(len(to_ctrl))]
     yl = [226.06 + 5.08 * i for i in range(4)]
     xp, xm, xr = 30.48, 139.7, 248.92
     w = 50.8
@@ -1184,7 +1311,7 @@ def _root_ctrl(root, sheets):
     panel.sheet_pins = [(n, panel.hier[n], xr, y, "L") for n, y in zip(to_panel, yl)]
     root.subsheet(power, xp, 175.26, w, 30.48)
     root.subsheet(mcu, xm, 175.26, w, 71.12)
-    root.subsheet(ctrl, xr, 175.26, w, 33.02)
+    root.subsheet(ctrl, xr, 175.26, w, 38.1)
     root.subsheet(panel, xr, 220.98, w, 22.86)
     for y in ys:
         root.w((xp + w, y), (xm, y))
@@ -1193,6 +1320,8 @@ def _root_ctrl(root, sheets):
     root.intent("Control board (2 layers): no RF. J6 hands the RF switch controls, +3V3 and LNA_VCC to a later "
                 "RF board.", 20.32, 251.46)
     root.intent("Signals cross sheets as hierarchical labels through the sheet pins above. "
+                "Firmware pin map: firmware/src/hal_efm8bb52.c" if MCU == "bb52" else
+                "Signals cross sheets as hierarchical labels through the sheet pins above. "
                 "Firmware pin map: firmware/src/hal_efm8bb2.c", 20.32, 254.64)
 
 
@@ -1252,7 +1381,9 @@ def main():
         root.intent("Power and ground cross sheets only as power symbols (VCOAX, VMAIN, VHOLD, VLED, LNA_VCC, "
                     "+3V3, GND).", 20.32, 251.46)
         root.intent("Signals cross sheets as hierarchical labels through the sheet pins above. "
-                    "Firmware pin map: firmware/src/hal_efm8bb2.c", 20.32, 254.64)
+                    "Firmware pin map: firmware/src/hal_efm8bb52.c" if MCU == "bb52" else
+                "Signals cross sheets as hierarchical labels through the sheet pins above. "
+                "Firmware pin map: firmware/src/hal_efm8bb2.c", 20.32, 254.64)
 
     errs = []
     for sh in sheets + [root]:
