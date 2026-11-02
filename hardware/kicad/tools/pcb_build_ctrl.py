@@ -527,7 +527,7 @@ print("fan-out vias (switch control, MCU):", nfan)
 def via_ok(x, y, rv, ref, own=None, clr=0.25):
     if any(b[0] - rv < x < b[2] + rv and b[1] - rv < y < b[3] + rv for b in LABEL_BOXES):
         return False
-    if x < 0.6 or y < 0.6 or x > W - 0.6 or y > H - 0.6 or SLOT_Y0 - 0.6 < y < SLOT_Y1 + 0.6:
+    if x < 0.6 or y < 0.6 or x > W - 0.6 or y > H - 0.6 or SLOT_Y0 - 0.6 - rv < y < SLOT_Y1 + 0.6 + rv:
         return False
     for r in pads_all:
         if r[1] == "GND" and r[0] == ref:

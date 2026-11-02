@@ -140,6 +140,8 @@ def main(repair_only=False):
             b = run_pass(b, f"repair{rnd + 1}", other, [], ["-top", "F.Cu:3", "-via", "1500", "-it", "40"],
                          rules_nets, summary)
         b = cleanup(b)
+    if CTRL and "GND" in unconnected_nets():
+        b = gnd_rip(b, rules_nets, summary)
     print("RF widened:", fatten_rf(b))
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
     pcbnew.SaveBoard(BOARD, b)
@@ -255,12 +257,6 @@ def bridge_gaps(b, nets, gap=0.6):
                     d = ((q[0] - e[0]) ** 2 + (q[1] - e[1]) ** 2) ** 0.5
                     if d < gap and (best is None or d < best[0]):
                         best = (d, q)
-                for p in pads:
-                    if p.IsOnLayer(s.GetLayer()):
-                        q = T(p.GetPosition())
-                        d = ((q[0] - e[0]) ** 2 + (q[1] - e[1]) ** 2) ** 0.5
-                        if d < gap + 0.5 and (best is None or d < best[0]):
-                            best = (d, q)
                 if best:
                     n = pcbnew.PCB_TRACK(b)
                     n.SetStart(pe); n.SetEnd(pcbnew.VECTOR2I(pcbnew.FromMM(best[1][0]), pcbnew.FromMM(best[1][1])))
@@ -268,6 +264,87 @@ def bridge_gaps(b, nets, gap=0.6):
                     b.Add(n); segs.append(n); added += 1
                     print(f"   bridge {net} {s.GetLayer()} ({e[0]:.2f},{e[1]:.2f}) -> ({best[1][0]:.2f},{best[1][1]:.2f}) {best[0]:.2f} mm")
     return added
+
+
+def gnd_islands(b):
+    """GND pads whose fill pieces (with the vias, tracks and THT pads between them) do not reach the largest GND group:
+    on 2 layers a pocket between signal tracks can hold a GND pad that no route reaches"""
+    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+    polys = []
+    for z in b.Zones():
+        if z.GetIsRuleArea() or z.GetNetname() != "GND":
+            continue
+        for l in (pcbnew.F_Cu, pcbnew.B_Cu):
+            if z.IsOnLayer(l):
+                fp = z.GetFilledPolysList(l)
+                for i in range(fp.OutlineCount()):
+                    polys.append((l, fp.Outline(i)))
+    par = list(range(len(polys)))
+
+    def f(a):
+        while par[a] != a:
+            par[a] = par[par[a]]; a = par[a]
+        return a
+
+    def hit(pt, layer):
+        return [k for k, (l, o) in enumerate(polys) if l == layer and o.PointInside(pt)]
+    pads = [p for p in b.GetPads() if p.GetNetname() == "GND"]
+    pad_hits = []
+    for t in b.GetTracks():
+        if t.GetNetname() != "GND":
+            continue
+        h = (hit(t.GetPosition(), pcbnew.F_Cu) + hit(t.GetPosition(), pcbnew.B_Cu) if t.GetClass() == "PCB_VIA"
+             else hit(t.GetStart(), t.GetLayer()) + hit(t.GetEnd(), t.GetLayer()))
+        for k in h[1:]:
+            par[f(k)] = f(h[0])
+    for p in pads:
+        h = [k for l in (pcbnew.F_Cu, pcbnew.B_Cu) if p.IsOnLayer(l) for k in hit(p.GetPosition(), l)]
+        pad_hits.append((p, h))
+        for k in h[1:]:
+            par[f(k)] = f(h[0])
+    size = {}
+    for k in range(len(polys)):
+        size[f(k)] = size.get(f(k), 0) + 1
+    main = max(size, key=size.get) if size else None
+    return [p for p, h in pad_hits if not h or all(f(k) != main for k in h)]
+
+
+def gnd_rip(b, rules_nets, summary, radius=3.0):
+    """local rip-up for GND pads left in a pocket: the signal nets with copper within `radius` mm of such a pad lose
+    all their tracks and vias and are routed again together with GND, so srouter can negotiate room for both"""
+    lost = gnd_islands(b)
+    if not lost:
+        return b
+    T = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
+    rip = set()
+    for p in lost:
+        q = T(p.GetPosition())
+        for t in b.GetTracks():
+            n = t.GetNetname()
+            if n in ("GND", "") or n in rip:
+                continue
+            if t.GetClass() == "PCB_VIA":
+                c = T(t.GetPosition())
+                d = ((c[0] - q[0]) ** 2 + (c[1] - q[1]) ** 2) ** 0.5
+            else:
+                d = _d_pt_seg(q, T(t.GetStart()), T(t.GetEnd()))
+            if d < radius:
+                rip.add(n)
+    print(f"GND rip-up: pads {[p.GetParentFootprint().GetReference() + '.' + p.GetNumber() for p in lost]}, "
+          f"nets {sorted(rip)}", flush=True)
+    kill = [t.m_Uuid.AsString() for t in b.GetTracks() if t.GetNetname() in rip]
+    pcbnew.SaveBoard(BOARD, b)
+    _delete_uuids(BOARD, kill)
+    b = pcbnew.LoadBoard(BOARD)
+    b = run_pass(b, "repair_gnd", sorted(rip) + ["GND"], [], ["-top", "F.Cu:3", "-via", "800", "-it", "80",
+                                                                "-stall", "20"], rules_nets, summary)
+    b = cleanup(b)
+    left = unconnected_nets()
+    if left:
+        print(f"GND rip-up: still open {left}", flush=True)
+        b = run_pass(b, "repair_gnd2", left, [], ["-top", "F.Cu:3", "-via", "1500", "-it", "40"], rules_nets, summary)
+        b = cleanup(b)
+    return b
 
 
 def unconnected_nets():
