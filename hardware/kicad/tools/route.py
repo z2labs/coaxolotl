@@ -336,8 +336,8 @@ def gnd_rip(b, rules_nets, summary, radius=3.0):
     pcbnew.SaveBoard(BOARD, b)
     _delete_uuids(BOARD, kill)
     b = pcbnew.LoadBoard(BOARD)
-    b = run_pass(b, "repair_gnd", sorted(rip) + ["GND"], [], ["-top", "F.Cu:3", "-via", "800", "-it", "80",
-                                                                "-stall", "20"], rules_nets, summary)
+    b = run_pass(b, "repair_gnd", sorted(rip) + ["GND"], [], ["-top", "F.Cu:3", "-via", "800", "-it", "250",
+                                                                "-stall", "80"], rules_nets, summary)
     b = cleanup(b)
     left = unconnected_nets()
     if left:
