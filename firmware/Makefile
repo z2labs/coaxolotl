@@ -1,7 +1,8 @@
 # Coaxolotl firmware
 #
-#   make              EFM8BB21 (QFN20) image, Snooze build -> build/coaxolotl.hex
-#   make MCU=bb52     EFM8BB52F32G (QFN32) image
+#   make              EFM8BB52F32 (QFN32, control board) image, Snooze build
+#                     -> build/coaxolotl.hex
+#   make MCU=bb21     EFM8BB21F16G (QFN20) image for the 4-layer RF board
 #   make SNOOZE=0     bring-up build (Timer2/Idle only) -> build/coaxolotl.hex
 #   make BEACON=0     no back-channel replies
 #   make test         host unit tests (gcc)
@@ -12,7 +13,7 @@
 # programmer, e.g.:  commander flash build/coaxolotl.hex --device EFM8BB21F16G
 #                    commander flash build/coaxolotl.hex --device EFM8BB52F32G
 
-MCU      ?= bb21
+MCU      ?= bb52
 
 SNOOZE   ?= 1
 BEACON   ?= 1

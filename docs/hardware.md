@@ -157,9 +157,16 @@ end of life, BB3 end of life). The next board moves to the EFM8BB52F32G-C-QFN32
 
 `make -C firmware MCU=bb52` builds it (`hal_efm8bb52.c`,
 `include/efm8bb52_sfr.h`; register details from the EFM8BB52 Reference
-Manual rev 0.3). The control board (`hardware/kicad_ctrl`) uses it; the
-4-layer RF board is still routed for the QFN20, so `make` defaults to
-`MCU=bb21` and the control board needs `make MCU=bb52`.
+Manual rev 0.3). The control board (`hardware/kicad_ctrl`) uses it and it is
+the default build; the 4-layer RF board is still routed for the QFN20 and
+needs `make MCU=bb21`.
+
+The control board netlist was checked against the firmware (2026-11-06): all
+33 MCU pins, the 595 chain U14→U19 with every one of the 48 lamps in the row
+and column `hal_panel()` drives (cathodes to the 595s), the pull-ups and
+pull-downs, both dividers and the beacon tap R31–R33/C47 to J3.
+Without an RF board on J6 the LNA supply has no load, so the box reports
+about 0 mA and lights I-LO; that is expected.
 
 JLC part: EFM8BB52F32**I**-C-QFN32 (C3225443, −40…125 °C, same die and
 pinout). The G grade (C6033318) had 1 in stock on 2026-11-02, the I grade 13.

@@ -78,9 +78,9 @@ python3 host/coaxolotl.py send --band 2m --lna --backend dry-run \
   | firmware/build/sim --fall-delay 6 --jitter 2
 
 # firmware (SDCC >= 4.2)
-make -C firmware            # Snooze build
+make -C firmware            # EFM8BB52 (control board), Snooze build
 make -C firmware SNOOZE=0   # bring-up build, classic registers only
-make -C firmware MCU=bb52   # EFM8BB52F32 QFN32: the 2-layer control board
+make -C firmware MCU=bb21   # EFM8BB21 QFN20: the 4-layer RF board
 
 # real link
 python3 host/coaxolotl.py bands
@@ -88,6 +88,7 @@ python3 host/coaxolotl.py send --band 2m --lna                 # pyrtlsdr
 python3 host/coaxolotl.py send --bank 3 --backend rtl_biast    # rtl-sdr-blog tool
 python3 host/coaxolotl.py panel bands                          # lamps: full | bands | off
 python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read the reply
+python3 host/coaxolotl_gui.py                                  # control panel (--sim: no hardware)
 ```
 
 ## Repository
@@ -100,16 +101,18 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
 | `firmware/src/panel.*` | state → 48-bit lamp image |
 | `firmware/src/beacon.*` | reply packet, CRC and chip sequence, pure C |
 | `firmware/src/hal_efm8bb2.c`, `main.c` | EFM8BB21 (QFN20) hardware layer and main loop |
-| `firmware/src/hal_efm8bb52.c` | EFM8BB52F32G (QFN32) hardware layer, `make MCU=bb52` |
+| `firmware/src/hal_efm8bb52.c` | EFM8BB52F32 (QFN32) hardware layer, the default build |
 | `firmware/include/efm8bb*_sfr.h` | minimal SDCC SFR maps (BB2, BB52) |
 | `firmware/test/` | unit tests and `sim` (edge replay + ASCII panel) |
 | `host/coaxolotl.py` | keyer: pyrtlsdr / rtl_biast / dry-run, `--listen`, `listen`, `decode` |
 | `host/backchannel.py` | reply packet and demodulator (numpy) |
+| `host/link.py` | one open RTL-SDR (or the firmware simulator): key a frame, read the reply |
+| `host/coaxolotl_gui.py` | control panel for the PC (tkinter), see `docs/host.md` |
 | `sdrpp/` | SDR++ source module and its standalone tests |
 | `hardware/kicad/` | 4-layer RF board: generated schematic (`tools/build.py`), layout, JLC package in `jlc/` |
 | `hardware/kicad_ctrl/` | 2-layer control board without RF (`COAX_VARIANT=ctrl`), JLC package in `jlc/` |
 | `hardware/bom.csv` | grouped BOM of the RF board schematic (`tools/bom.py`) |
-| `docs/` | protocol, hardware, panel, bring-up |
+| `docs/` | protocol, hardware, panel, bring-up, PC software (`host.md`) |
 
 ## Status (v0.1)
 
@@ -117,8 +120,11 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
   payloads, 1800 randomised frames at ±10 % clock skew, 0–10 ms fall delay
   and ±3 ms jitter, every error path and the LED power budget.
 * ✅ Host encoder → firmware decoder, end to end, through the simulator.
-* ✅ The firmware builds with SDCC 4.2 for EFM8BB21F16G (about 12.4 kB of 15 kB, back-channel included
-  flash; the page below the lock byte holds the panel-mode log) in both the Snooze and the bring-up build.
+* ✅ The firmware builds with SDCC 4.2, back-channel included, in both the
+  Snooze and the bring-up build: EFM8BB52F32 about 12.5 of 28 kB, EFM8BB21F16G
+  about 12.4 of 15 kB. One flash page holds the panel-mode log.
+* ✅ PC control panel (`host/coaxolotl_gui.py`) and link layer (`host/link.py`),
+  tested end to end against the firmware simulator.
 * ✅ Back-channel: firmware checks for HELLO/ACK/NAK, timing, contents and
   the chip round-trip. Firmware packets go through the simulator into the
   Python and C++ demodulators, which decode synthetic captures with the

@@ -26,7 +26,7 @@ points to one thing.
 
 ```
 make -C firmware clean && make -C firmware SNOOZE=0
-commander flash firmware/build/coaxolotl.hex --device EFM8BB21F16G
+commander flash firmware/build/coaxolotl.hex --device EFM8BB52F32I    # MCU=bb21: EFM8BB21F16G
 ```
 
 This build uses only Timer2, Idle mode and port match. It has no Snooze and
@@ -115,8 +115,8 @@ When it works:
 ## EFM8BB52 (control board)
 
 ```
-make -C firmware clean && make -C firmware MCU=bb52 SNOOZE=0   # bring-up
-make -C firmware clean && make -C firmware MCU=bb52            # Snooze
+make -C firmware clean && make -C firmware SNOOZE=0   # bring-up (MCU=bb52 is the default)
+make -C firmware clean && make -C firmware            # Snooze
 ```
 
 The register values come from the Reference Manual, so the BB2 VERIFY table
