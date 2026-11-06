@@ -313,11 +313,37 @@ for ref, (x, y, r) in SOFT.items():
         bx = occupied[owner.index(ref)]
         BLOCK.append((bx[0] - m, bx[1] - m, bx[2] + m, bx[3] + m))
 
+# whole-coax current shunt (control board, COAX_MCU=bb52): R35 sits on the outer side of L7 pad 1, in line with it,
+# and U20 (INA180A3) right against R35 with IN+/IN- under the shunt pads, so the sense lines are two short straight
+# stubs into the pads (Kelvin) and the coax current never runs through them. The tracks are drawn in step 6.
+KELVIN = None
+if "R35" in fps and "U20" in fps:
+    p1, p2 = padpos[("L7", "1")], padpos[("L7", "2")]
+    d = 1.0 if p1[0] > p2[0] else -1.0
+    l7p = fps["L7"].FindPadByNumber("1")
+    hw7 = pcbnew.ToMM(l7p.GetBoundingBox().GetWidth()) / 2
+    pad1x = p1[0] + d * (hw7 + 1.2 + 0.5625)                 # R35 pad 1 centre (1206: pads +-1.4625, 1.125 wide)
+    rx, ry = pad1x + d * 1.4625, p1[1]
+    rr = 0 if d > 0 else 180                                   # pad 1 towards L7
+    # SOT-23-5 has IN+ (3) / IN- (4) on its bottom row (rot 0: 3 left, 4 right). R35 pad 1 left (d > 0): U20 above
+    # at rot 0; pad 1 right (d < 0): U20 below at rot 180
+    for ur in ((0,) if d > 0 else (180,)):
+        uy = ry - 2.6 if ur == 0 else ry + 2.6
+        bx_r, _ = geom(fps["R35"], rr)
+        bx_u, _ = geom(fps["U20"], ur)
+        if free((bx_r[0] + rx, bx_r[1] + ry, bx_r[2] + rx, bx_r[3] + ry), gap=0.2) and \
+           free((bx_u[0] + rx, bx_u[1] + uy, bx_u[2] + rx, bx_u[3] + uy), gap=0.2):
+            put("R35", rx, ry, rr)
+            put("U20", rx, uy, ur)
+            KELVIN = (ry, d)
+            break
+    print("coax shunt R35/U20:", "at L7.1" if KELVIN else "NO ROOM next to L7.1 (placed by partner)")
+
 # QFN20 MCU: a staggered fan-out via per signal pin
 # fan-out vias per signal pin: QFN20 (EFM8BB21, COAX_MCU=bb21) or QFN32 (EFM8BB52, the default here; spares and N/C
 # pins 2, 6-12, 19, 20 stay unconnected)
 U5_QFN32 = len(fps["U5"].Pads()) > 25
-FANOUT_LATE = {"U5": "1 4 5 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30 31 32" if U5_QFN32
+FANOUT_LATE = {"U5": "4 5 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30 31 32" if U5_QFN32
                else "1 2 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20"}
 for ref, pins in FANOUT_LATE.items():
     c = where[ref][:2]
@@ -348,6 +374,9 @@ PARTNER = {
     # the DC block at the coax pin)
     "R34": ("U5", "5"), "TP7": ("U5", "29"), "TP8": ("U5", "28"),
     "R31": ("U5", "18"), "R32": ("R31", "2"), "R33": ("J3", "1"), "C47": ("J3", "1"),
+    # whole-coax current monitor: U20 decoupling, the ITOT RC at the ADC pin, the VREF cap on P0.0
+    "R35": ("L7", "1"), "U20": ("R35", "1"), "C49": ("U20", "5"),
+    "R36": ("U5", "12"), "C48": ("U5", "12"), "C50": ("U5", "1"),
 }
 PARTNER = {k: v for k, v in PARTNER.items() if k in fps}
 
@@ -431,6 +460,13 @@ def add_track(a, b, w, net="GND", layer=pcbnew.F_Cu):
 
 
 vias, tracks = [], []
+if KELVIN:
+    # coax current path L7.1 -> R35.1 (1 mm), and the two Kelvin sense stubs from U20 IN+/IN- straight into the
+    # inner half of the shunt pads
+    add_track(padpos[("L7", "1")], padpos[("R35", "1")], 1.0, "VCOAX_IN")
+    for pin, pad, net in (("3", "1", "VCOAX_IN"), ("4", "2", "VCOAX")):
+        q = padpos[("U20", pin)]
+        add_track(q, (q[0], padpos[("R35", pad)][1] + (0.3 if q[1] > KELVIN[0] else -0.3)), 0.25, net)
 pads_all = []          # (ref, net, x0, y0, x1, y1)
 for ref, fp in fps.items():
     for p in fp.Pads():

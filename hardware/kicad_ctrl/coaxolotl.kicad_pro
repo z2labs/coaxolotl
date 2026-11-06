@@ -353,6 +353,18 @@
       {
         "netclass": "POWER",
         "pattern": "VSCAP"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "VCOAX_IN"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "BT_1"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "BT_2"
       }
     ]
   },
