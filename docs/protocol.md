@@ -71,20 +71,41 @@ the sync inverted:
 | 00 | full | all 48 lamps, as in `docs/panel.md` |
 | 01 | bands | only the bank row F0–F7 |
 | 10 | off | all 48 dark (OE_N high); only the hard-wired PWR lamp |
-| 11 | reserved | frame accepted, mode unchanged |
+| 11 | — | calibration nibble (below); the panel mode is unchanged |
 
 * A config frame never touches the switches, the LNA or the sticky lamps.
 * The box stores the mode in flash, so it survives a power cycle. The
   lamp test at power-up follows the stored mode: 8 lamps in bands, none in
   off. The chaser runs only in full.
-* The four reserved bits must be 0. They are kept for later settings, for
-  example lamp brightness via OE_N.
+* With PM = 00/01/10 the four low bits must be 0. With PM = 11 they carry
+  one calibration nibble.
 * Short-long-short is told apart from long-short-long by the same 1.5×
   ratio test, and the 0/1 threshold comes out the same way. Old hosts that
   only send state frames keep working.
 
 Host: `coaxolotl.py panel full|bands|off`, or `ConfigFrame(panel=…)` in
 your own code.
+
+### Calibration (PM = 11)
+
+The box scales four readings by factors it keeps in flash (Q15, 1.0 =
+32768, clamped to 0.5–1.5): VCOAX (ch 0), VSCAP (1), I_LNA (2), I_TOT (3).
+They are set over the link, one nibble per config frame (`0 1 0 | 1 1 n3
+n2 n1 n0 | inverse`):
+
+| Sequence | Effect |
+|---|---|
+| `ch`, then 4 nibbles of int16 `v`, MSB first | factor(ch) *= 1 + v / 32768 |
+| `8 + ch` | factor(ch) = 1.0 |
+| `4..7` as the first nibble | ignored |
+
+* The adjustment is relative, so the host needs no idea of the stored
+  factor: it polls, divides the meter reading by what the box reports, and
+  sends that ratio. `coaxolotl.py cal vcoax 4.312` or the GUI do this.
+* Any state frame, any other config frame or a rejected frame drops a
+  half-done sequence. Each nibble frame is answered like any other frame.
+* The readings in the reply are quantised (20 mV, 1 mA, 2 mA), so one
+  calibration gets within about half a step.
 
 
 Because the check is the inverse of the payload, every valid frame has
@@ -155,13 +176,13 @@ collides with a well-behaved host.
 
 | | |
 |---|---|
-| Source | PCA0 CEX0 on P1.4 (shared with LED_SER) in frequency-output mode, SYSCLK = HFOSC0 24.5 MHz, CPH = 1 → 12.25 MHz square wave |
+| Source | PCA0 CEX0 in frequency-output mode (EFM8BB52: own pin P1.7; EFM8BB21: P1.4, shared with LED_SER), SYSCLK = HFOSC0 24.5 MHz, CPH = 1 → 12.25 MHz square wave |
 | Received at | 3rd harmonic, **36.75 MHz** nominal. The 5th, 61.25 MHz, is about 4 dB weaker. HFOSC0 is ±2 %, so ±0.75 MHz |
 | Coupling | 3.3 Vpp → 4.7 kΩ / 51 Ω pad → 1 kΩ + 100 pF → coax side of the output switch, after the filter bank. It works on every branch and in bypass. About −65 dBm at 36.75 MHz (**VERIFY** on the bench) |
 | Modulation | on-off keying: PCA counter running = carrier, stopped = none |
 | Chip | 5 ms (`BCN_CHIP_MS`), timed by Timer 4 / LFOSC (±10 %, the host measures it) |
 | Coding | Manchester: bit 1 = on, off; bit 0 = off, on. 100 bit/s |
-| Duration | 145 chips = 0.725 s |
+| Duration | 161 chips = 0.805 s |
 
 The clock only runs during a reply. Between replies the MCU Snoozes as
 before, so the beacon adds no spurs while you listen.
@@ -169,19 +190,23 @@ before, so the beacon adds no spurs while you listen.
 ### Packet
 
 ```
- preamble   sync        7 bytes, MSB first                      close
- 1×8        0x2D        b0 b1 b2 b3 b4 b5 b6                    1 chip on
+ preamble   sync        8 bytes, MSB first                      close
+ 1×8        0x2D        b0 b1 b2 b3 b4 b5 b6 b7                 1 chip on
 ```
 
 | Byte | Bits | Meaning |
 |---|---|---|
 | 0 | `kind[7:6] err[5:3] seq[2:0]` | kind 1 HELLO, 2 ACK, 3 NAK. err = SYNC/CHK/GAP/RUNT/TMO/DROP (1–6) on a NAK. seq = good frames applied, mod 8 |
 | 1 | `bank[7:5] lna_req lna_path fmn auto quiet` | what the switches actually do now |
-| 2 | `trip low hold drop glt rst lna_en 0` | the health lamps |
+| 2 | `trip low hold drop glt rst lna_en budget` | the health lamps; budget = coax current ≥ 170 mA (10 mA hysteresis) |
 | 3 | VCOAX / 20 mV | measured just before the reply (0–5.10 V) |
 | 4 | I_LNA / mA | raw INA180 reading, also when the LNA is off (shows a stuck switch) |
 | 5 | VSCAP / 20 mV | supercap |
-| 6 | CRC-8 | poly 0x07, init 0xFF, not reflected, over bytes 0–5. Check value for `"123456789"`: 0xFB |
+| 6 | I_TOT / 2 mA | whole coax current (0–510 mA): the RTL-SDR bias-T budget. 0 on boards without the monitor (EFM8BB21 RF board) |
+| 7 | CRC-8 | poly 0x07, init 0xFF, not reflected, over bytes 0–6. Check value for `"123456789"`: 0xFB |
+
+All readings are calibrated. This is protocol v2; v1 (7 bytes, no I_TOT)
+is not decoded any more.
 
 A query is just the current state sent again with CLR = 0. That is
 idempotent and always answered, so the host never needs a separate
@@ -201,7 +226,7 @@ The receiver does not assume the carrier frequency or the chip rate:
 4. The chip length is the median of the single-chip runs. Each run then
    becomes 1 or 2 chips, and anything longer ends a segment.
 5. Search the chips for the preamble tail plus sync, Manchester-decode
-   7 bytes, and check the CRC.
+   8 bytes, and check the CRC.
 
 `host/backchannel.py` and `sdrpp/coaxolotl_source/src/coaxlink.cpp` both
 implement this. The tests check them against each other, against the

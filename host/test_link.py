@@ -55,6 +55,21 @@ class SimLinkTest(unittest.TestCase):
             self.assertFalse(r.trip)
             self.assertTrue(r.lna_path)
 
+    def test_budget_and_calibration(self):
+        with lk.SimLink(it_ma=176, vc_mv=4280) as box:
+            r = box.transact(Frame(bank=6, lna=True)).reply
+            self.assertTrue(r.budget)
+            self.assertEqual(r.i_tot_ma, 176)
+            r = box.calibrate("vcoax", 4.35, lk.reading(r, "vcoax")).reply
+            self.assertAlmostEqual(r.vcoax_v, 4.36, delta=0.021)
+            r = box.calibrate("itot", 150.0, lk.reading(r, "itot")).reply
+            self.assertEqual(r.i_tot_ma, 150)
+            self.assertFalse(r.budget)
+            r = box.transact(Frame(bank=6, lna=True)).reply       # kept for later frames
+            self.assertAlmostEqual(r.vcoax_v, 4.36, delta=0.021)
+            r = box.cal_reset("vcoax").reply
+            self.assertAlmostEqual(r.vcoax_v, 4.28, delta=0.011)
+
     def test_unpowered(self):
         with lk.SimLink() as box:
             self.assertIsNone(box.listen(1.0).reply)

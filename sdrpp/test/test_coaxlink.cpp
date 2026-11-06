@@ -58,21 +58,22 @@ static void test_frames() {
 static void test_reply() {
     const uint8_t chk[] = "123456789";
     CHECK(coax::crc8(chk, 9) == 0xFB, "crc check 0x%02X", coax::crc8(chk, 9));
-    auto p = coax::pack(2, 0, 1, 0xDC, 0x22, 4300, 100, 3900);
-    const uint8_t fw[] = { 0x81, 0xDC, 0x22, 0xD7, 0x64, 0xC3, 0xAC };     // firmware sim output
-    CHECK(!memcmp(p.data(), fw, 7), "pack() == firmware bcn_build()");
+    auto p = coax::pack(2, 0, 1, 0xDC, 0x22, 4300, 100, 3900, 140);
+    const uint8_t fw[] = { 0x81, 0xDC, 0x22, 0xD7, 0x64, 0xC3, 0x46, 0x98 };   // firmware sim output (v2)
+    CHECK(!memcmp(p.data(), fw, 8), "pack() == firmware bcn_build()");
     auto r = coax::Reply::parse(p);
     CHECK(r && r->kind == coax::Kind::ACK && r->bank == 6 && r->lnaPath && r->fmn && r->hold &&
-          r->i_lna_ma == 100 && std::fabs(r->vcoax_v - 4.30f) < 1e-4, "parse");
-    CHECK(r && r->summary() == "ACK seq=1 F6 LNA+FMN  Vcoax=4.30 V  I_lna=100 mA  Vscap=3.90 V  flags=HOLD",
+          r->i_lna_ma == 100 && r->i_tot_ma == 140 && !r->budget && std::fabs(r->vcoax_v - 4.30f) < 1e-4,
+          "parse");
+    CHECK(r && r->summary() == "ACK seq=1 F6 LNA+FMN  Vcoax=4.30 V  I_tot=140 mA  I_lna=100 mA  Vscap=3.90 V  flags=HOLD",
           "summary '%s'", r ? r->summary().c_str() : "");
     p[3] ^= 1;
     CHECK(!coax::Reply::parse(p), "CRC catches a flipped bit");
-    CHECK(coax::chips(p).size() == 145, "145 chips");
+    CHECK(coax::chips(p).size() == 161, "161 chips");
 }
 
 static void test_demod() {
-    auto pkt = coax::pack(3, 2, 4, 0x41, 0x84, 4020, 3, 2210);
+    auto pkt = coax::pack(3, 2, 4, 0x41, 0x85, 4020, 3, 2210, 188);
     struct { double fs, off, chip, snr; } cases[] = {
         { 2.4e6, -700e3, 5.5, -10 }, { 2.4e6, 650e3, 4.5, -10 }, { 2.048e6, 0.3e6, 5.0, -12 },
         { 1.024e6, -200e3, 5.2, -5 }, { 250e3, 40e3, 4.8, 5 },

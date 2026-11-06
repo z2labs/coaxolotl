@@ -27,12 +27,12 @@ from dataclasses import dataclass, field
 from typing import Callable, List, Optional, Tuple, Union
 
 import backchannel as bc
-from coaxolotl import ConfigFrame, Frame, Timing, play
+from coaxolotl import CalNibble, ConfigFrame, Frame, Timing, cal_adjust, cal_reset, play
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SIM = ROOT / "firmware" / "build" / "sim"
 
-AnyFrame = Union[Frame, ConfigFrame]
+AnyFrame = Union[Frame, ConfigFrame, CalNibble]
 # capture after the last edge: reply delay + reply + margin for LFOSC skew
 LISTEN_S = (bc.REPLY_DELAY_MS + bc.REPLY_MS + 400) / 1000.0
 
@@ -57,7 +57,31 @@ class LinkError(RuntimeError):
     pass
 
 
-class RtlLink:
+def reading(reply: bc.Reply, channel: str) -> float:
+    """The box's current value for a calibration channel (V or mA)."""
+    return {"vcoax": reply.vcoax_v, "vscap": reply.vscap_v,
+            "ilna": float(reply.i_lna_ma), "itot": float(reply.i_tot_ma)}[channel]
+
+
+class _Calibrate:
+    """Mixed into both links: calibration sequences over transact()."""
+
+    def calibrate(self, channel: str, true_value: float, reported: float) -> "Transaction":
+        """Scale the box's factor by true / reported; the last frame's reply is read."""
+        if reported <= 0:
+            raise ValueError("the box reports 0 on this channel: nothing to scale")
+        return self._sequence(cal_adjust(channel, true_value / reported))
+
+    def cal_reset(self, channel: str) -> "Transaction":
+        return self._sequence(cal_reset(channel))
+
+    def _sequence(self, frames) -> "Transaction":
+        for f in frames[:-1]:
+            self.transact(f, listen=False)
+        return self.transact(frames[-1], listen=True)
+
+
+class RtlLink(_Calibrate):
     """An RTL-SDR with the box on its bias-T."""
 
     def __init__(self, index: int = 0, fs: float = 2.4e6, beacon_hz: float = bc.BEACON_HZ,
@@ -138,13 +162,13 @@ class RtlLink:
         return self.sdr
 
 
-class SimLink:
+class SimLink(_Calibrate):
     """The firmware logic in a subprocess instead of a box (no hardware)."""
 
     def __init__(self, fs: float = 2.4e6, timing: Timing = Timing(), i_ma: int = 101,
-                 vc_mv: int = 4280, scap_mv: int = 3920, sim: pathlib.Path = SIM):
+                 vc_mv: int = 4280, scap_mv: int = 3920, it_ma: int = 142, sim: pathlib.Path = SIM):
         self.fs, self.timing = fs, timing
-        self.i_ma, self.vc_mv, self.scap_mv = i_ma, vc_mv, scap_mv
+        self.i_ma, self.vc_mv, self.scap_mv, self.it_ma = i_ma, vc_mv, scap_mv, it_ma
         self.sim = sim
         self.edges: List[Tuple[float, int]] = []
         self.t_ms = 0.0
@@ -209,7 +233,7 @@ class SimLink:
         text = "\n".join(f"{t:.1f} {lvl}" for t, lvl in self.edges)
         tail = max(500.0, self.t_ms - self.edges[-1][0] + 1500.0)
         out = subprocess.run([str(self.sim), "--chips", "--tail", f"{tail:.0f}",
-                              "--ilna", str(self.i_ma), "--vc", str(self.vc_mv),
+                              "--ilna", str(self.i_ma), "--itot", str(self.it_ma), "--vc", str(self.vc_mv),
                               "--scap", str(self.scap_mv)],
                              input=text, capture_output=True, text=True, check=True).stdout
         pkt = None

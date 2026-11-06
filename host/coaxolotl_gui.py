@@ -22,11 +22,12 @@ from tkinter import ttk
 from typing import Optional
 
 import backchannel as bc
-from coaxolotl import PANEL_MODES, ConfigFrame, Frame, load_bands
-from link import LinkError, RtlLink, SimLink, Transaction
+from coaxolotl import CAL_CHANNELS, PANEL_MODES, CalNibble, ConfigFrame, Frame, load_bands
+from link import LinkError, RtlLink, SimLink, Transaction, reading
 
 GREEN, RED, AMBER, GREY = "#2e9e3e", "#d03030", "#d08a00", "#9a9a9a"
-FLAGS = ("trip", "low", "hold", "drop", "glt", "rst")
+FLAGS = ("trip", "low", "budget", "hold", "drop", "glt", "rst")
+CAL_UNITS = {"vcoax": "V", "vscap": "V", "ilna": "mA", "itot": "mA"}
 
 
 class App:
@@ -37,6 +38,7 @@ class App:
         self.results: "queue.Queue" = queue.Queue()
         self.busy = False
         self.next_poll = 0.0
+        self.last_reply = None
         self.bands = load_bands()
         self.csv_path = pathlib.Path(args.log) if args.log else None
 
@@ -111,15 +113,32 @@ class App:
         self.l_state = ttk.Label(tel, text="")
         self.l_state.grid(row=1, column=0, columnspan=6, sticky="w", **pad)
         self.l_meas = {}
-        for i, k in enumerate(("Vcoax", "I_lna", "Vscap")):
+        for i, k in enumerate(("Vcoax", "I_tot", "I_lna", "Vscap")):
             self.l_meas[k] = tk.Label(tel, text=f"{k} —", font=("TkFixedFont", 11), fg=GREY)
             self.l_meas[k].grid(row=2, column=2 * i, columnspan=2, sticky="w", **pad)
         self.l_flags = {}
         for i, f in enumerate(FLAGS):
-            self.l_flags[f] = tk.Label(tel, text=f.upper(), width=6, relief="groove", fg=GREY)
+            self.l_flags[f] = tk.Label(tel, text=f.upper(), width=7, relief="groove", fg=GREY)
             self.l_flags[f].grid(row=3, column=i, **pad)
         self.l_rx = ttk.Label(tel, text="", foreground=GREY)
-        self.l_rx.grid(row=4, column=0, columnspan=6, sticky="w", **pad)
+        self.l_rx.grid(row=4, column=0, columnspan=8, sticky="w", **pad)
+
+        cal = ttk.LabelFrame(self.root, text="Calibrate against a meter (kept in the box's flash)")
+        cal.pack(fill="x", **pad)
+        self.v_cal_ch = tk.StringVar(value="vcoax")
+        self.v_cal_val = tk.StringVar(value="")
+        ttk.Combobox(cal, textvariable=self.v_cal_ch, values=list(CAL_CHANNELS), width=7,
+                     state="readonly").grid(row=0, column=0, **pad)
+        ttk.Label(cal, text="meter reads").grid(row=0, column=1)
+        ttk.Entry(cal, width=9, textvariable=self.v_cal_val).grid(row=0, column=2, **pad)
+        self.l_cal_unit = ttk.Label(cal, text="V")
+        self.l_cal_unit.grid(row=0, column=3, sticky="w")
+        self.v_cal_ch.trace_add("write", lambda *_: self.l_cal_unit.config(
+            text=CAL_UNITS[self.v_cal_ch.get()]))
+        for i, (txt, fn) in enumerate((("Apply", self._cal_apply), ("Reset to 1.0", self._cal_reset))):
+            b = ttk.Button(cal, text=txt, command=fn)
+            b.grid(row=0, column=4 + i, sticky="ew", **pad)
+            self.cmd_buttons.append(b)
 
         logf = ttk.LabelFrame(self.root, text="Log")
         logf.pack(fill="both", expand=True, **pad)
@@ -149,6 +168,25 @@ class App:
     def _panel(self, mode: str):
         self._job("frame", ConfigFrame(panel=PANEL_MODES[mode]), self.v_listen.get())
 
+    def _cal_apply(self):
+        ch = self.v_cal_ch.get()
+        try:
+            true = float(self.v_cal_val.get().replace(",", "."))
+        except ValueError:
+            self._log("calibrate: type the meter reading first")
+            return
+        if self.last_reply is None:
+            self._log("calibrate: poll the box first, the factor scales its last reading")
+            return
+        now = reading(self.last_reply, ch)
+        self._log(f"calibrate {ch}: box {now:g}, meter {true:g} -> x{true / now:.4f}" if now
+                  else f"calibrate {ch}: the box reads 0, nothing to scale")
+        if now:
+            self._job("cal", ch, true, now)
+
+    def _cal_reset(self):
+        self._job("calreset", self.v_cal_ch.get())
+
     def _connect(self):
         if self.link is not None:
             self._job("disconnect")
@@ -163,12 +201,14 @@ class App:
             pass
 
     def _job(self, *job):
-        if job[0] in ("frame", "listen") and (self.busy or self.link is None):
+        busy_jobs = ("frame", "listen", "cal", "calreset")
+        if job[0] in busy_jobs and (self.busy or self.link is None):
             return
-        self.busy = job[0] in ("frame", "listen")
+        self.busy = job[0] in busy_jobs
         if self.busy:
             self._set_enabled(False)
-            self.l_link.config(text="keying ..." if job[0] == "frame" else "listening ...",
+            self.l_link.config(text="listening ..." if job[0] == "listen" else
+                               "calibrating (5 frames, ~15 s) ..." if job[0] == "cal" else "keying ...",
                                foreground=AMBER)
         self.jobs.put(job)
 
@@ -202,6 +242,10 @@ class App:
                     self.results.put(("done", self.link.transact(a[0], listen=a[1])))
                 elif kind == "listen" and self.link:
                     self.results.put(("done", self.link.listen(a[0])))
+                elif kind == "cal" and self.link:
+                    self.results.put(("done", self.link.calibrate(*a)))
+                elif kind == "calreset" and self.link:
+                    self.results.put(("done", self.link.cal_reset(a[0])))
                 elif kind == "quit":
                     if self.link:
                         self.link.close()
@@ -264,6 +308,7 @@ class App:
                       f"{h.snr_db:.0f} dB){jit}")
             self._csv(t)
             return
+        self.last_reply = r
         head = r.kind if r.kind != "NAK" else f"NAK  {r.err}"
         self.l_head.config(text=f"{head}   seq {r.seq}", fg=RED if r.kind == "NAK" else GREEN)
         band = self.bands[r.bank]
@@ -278,12 +323,18 @@ class App:
                             foreground=RED if mismatch else "")
         i_ok = (not r.lna_en) or 60 <= r.i_lna_ma <= 130
         self.l_meas["Vcoax"].config(text=f"Vcoax {r.vcoax_v:.2f} V", fg=RED if r.low else GREEN)
+        self.l_meas["I_tot"].config(
+            text=f"I_tot {r.i_tot_ma:3d} mA" if r.i_tot_ma else "I_tot n/a",
+            fg=GREY if not r.i_tot_ma else RED if r.budget else
+            AMBER if r.i_tot_ma > bc.BUDGET_MA - 20 else GREEN)
         self.l_meas["I_lna"].config(text=f"I_lna {r.i_lna_ma:3d} mA",
                                     fg=RED if r.trip else (GREEN if i_ok else AMBER))
         self.l_meas["Vscap"].config(text=f"Vscap {r.vscap_v:.2f} V", fg=GREEN if r.hold else AMBER)
         for f in FLAGS:
             on = getattr(r, f)
             good = f == "hold"
+            if f == "budget" and on:
+                good = False
             self.l_flags[f].config(fg="white" if on else GREY,
                                    bg=(GREEN if good else RED) if on else self.root.cget("bg"))
         osc = (self.v_beacon.get() * 1e6 + h.offset_hz) / bc.BEACON_HZ - 1
@@ -314,7 +365,7 @@ class App:
 
 
 CSV_HEAD = ["time", "sent", "reply", "err", "seq", "bank", "lna_path", "auto", "fmn",
-            "vcoax_v", "i_lna_ma", "vscap_v", "flags", "offset_hz", "snr_db", "jitter_ms"]
+            "vcoax_v", "i_tot_ma", "i_lna_ma", "vscap_v", "flags", "offset_hz", "snr_db", "jitter_ms"]
 
 
 def describe(frame) -> str:
@@ -322,6 +373,8 @@ def describe(frame) -> str:
         return "listen"
     if isinstance(frame, ConfigFrame):
         return "panel " + {v: k for k, v in PANEL_MODES.items()}[frame.panel]
+    if isinstance(frame, CalNibble):
+        return f"cal nibble {frame.nibble:X}"
     s = f"F{frame.bank}{' LNA' if frame.lna else ''}{' QUIET' if frame.quiet else ''}"
     return s + (" CLR" if frame.clr else "")
 
@@ -330,10 +383,10 @@ def csv_row(t: Transaction) -> list:
     r, h = t.reply, t.heard
     base = [time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t.t)), describe(t.frame)]
     if r is None:
-        return base + ["none"] + [""] * 10 + [f"{h.offset_hz:.0f}" if h else "",
+        return base + ["none"] + [""] * 11 + [f"{h.offset_hz:.0f}" if h else "",
                                               f"{h.snr_db:.1f}" if h else "", f"{t.jitter_ms:.1f}"]
     return base + [r.kind, r.err, r.seq, r.bank, int(r.lna_path), int(r.auto), int(r.fmn),
-                   f"{r.vcoax_v:.2f}", r.i_lna_ma, f"{r.vscap_v:.2f}", ",".join(r.flags),
+                   f"{r.vcoax_v:.2f}", r.i_tot_ma, r.i_lna_ma, f"{r.vscap_v:.2f}", ",".join(r.flags),
                    f"{h.offset_hz:.0f}", f"{h.snr_db:.1f}", f"{t.jitter_ms:.1f}"]
 
 

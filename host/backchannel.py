@@ -4,16 +4,19 @@ After a frame (good or bad), and once after boot, the box keys a square wave
 from its MCU onto the coax: 24.5 MHz / 2 = 12.25 MHz, which the RTL-SDR hears
 on the 3rd harmonic at 36.75 MHz. It is on-off keyed, Manchester coded, with
 5 ms chips (one bit = 2 chips, 100 bit/s). The reply starts once the link has
-been idle for 300 ms after the host's last gap and lasts about 0.73 s.
+been idle for 300 ms after the host's last gap and lasts about 0.8 s.
 
-  chips:  preamble 8 x '1' | sync 0x2D | 7 bytes MSB first | one 'on' chip
+  chips:  preamble 8 x '1' | sync 0x2D | 8 bytes MSB first | one 'on' chip
           bit 1 = on,off   bit 0 = off,on
 
   byte 0  kind[7:6] err[5:3] seq[2:0]
   byte 1  bank[7:5] lna_req lna_path fmn auto quiet
-  byte 2  trip low hold drop glt rst lna_en 0
+  byte 2  trip low hold drop glt rst lna_en budget
   byte 3  VCOAX / 20 mV     byte 4  I_LNA / mA     byte 5  VSCAP / 20 mV
-  byte 6  CRC-8 (poly 0x07, init 0xFF) over bytes 0..5
+  byte 6  I_TOT / 2 mA (whole coax current; 0 = not fitted)
+  byte 7  CRC-8 (poly 0x07, init 0xFF) over bytes 0..6
+
+Protocol v2 (v1 had 7 bytes, without I_TOT).
 
 The packet layout must match firmware/src/beacon.h. The demodulator does not
 need to know the carrier exactly: the MCU oscillator is only good to +/-2 %
@@ -33,13 +36,15 @@ REPLY_DELAY_MS = 300.0             # T_IDLE_MIN after the host's last gap
 
 SYNC = 0x2D
 PRE_BITS = 8
-LEN = 7
+LEN = 8
 NCHIPS = (PRE_BITS + 8 + 8 * LEN) * 2 + 1
 REPLY_MS = NCHIPS * CHIP_MS
 
 KINDS = {1: "HELLO", 2: "ACK", 3: "NAK"}
 ERRS = {0: "-", 1: "SYNC", 2: "CHK", 3: "GAP", 4: "RUNT", 5: "TMO", 6: "DROP"}
 MV_LSB = 20
+MA_LSB = 2
+BUDGET_MA = 170                    # firmware I_BUDGET_MA
 
 
 def crc8(data: Sequence[int]) -> int:
@@ -52,7 +57,7 @@ def crc8(data: Sequence[int]) -> int:
 
 
 def chips(pkt: Sequence[int]) -> List[int]:
-    """On-air chip sequence for a 7-byte packet (mirror of bcn_chip())."""
+    """On-air chip sequence for a packet (mirror of bcn_chip())."""
     bits = [1] * PRE_BITS + [(SYNC >> (7 - i)) & 1 for i in range(8)]
     for byte in pkt:
         bits += [(byte >> (7 - i)) & 1 for i in range(8)]
@@ -80,9 +85,11 @@ class Reply:
     glt: bool
     rst: bool
     lna_en: bool
+    budget: bool
     vcoax_v: float
     i_lna_ma: int
     vscap_v: float
+    i_tot_ma: int
     raw: bytes
 
     @classmethod
@@ -90,7 +97,7 @@ class Reply:
         p = bytes(pkt)
         if len(p) != LEN:
             raise ValueError(f"reply must be {LEN} bytes")
-        if crc8(p[:6]) != p[6]:
+        if crc8(p[:LEN - 1]) != p[LEN - 1]:
             raise ValueError("reply CRC mismatch")
         kind = p[0] >> 6
         if kind not in KINDS:
@@ -102,13 +109,13 @@ class Reply:
             fmn=bool(s & 0x04), auto=bool(s & 0x02), quiet=bool(s & 0x01),
             trip=bool(f & 0x80), low=bool(f & 0x40), hold=bool(f & 0x20),
             drop=bool(f & 0x10), glt=bool(f & 0x08), rst=bool(f & 0x04),
-            lna_en=bool(f & 0x02),
+            lna_en=bool(f & 0x02), budget=bool(f & 0x01),
             vcoax_v=p[3] * MV_LSB / 1000.0, i_lna_ma=p[4], vscap_v=p[5] * MV_LSB / 1000.0,
-            raw=p)
+            i_tot_ma=p[6] * MA_LSB, raw=p)
 
     @property
     def flags(self) -> List[str]:
-        names = ["trip", "low", "hold", "drop", "glt", "rst"]
+        names = ["trip", "low", "budget", "hold", "drop", "glt", "rst"]
         return [n.upper() for n in names if getattr(self, n)]
 
     def summary(self) -> str:
@@ -119,17 +126,17 @@ class Reply:
         if self.fmn:
             path += "+FMN"
         return (f"{head} seq={self.seq} F{self.bank} {path}{' QUIET' if self.quiet else ''}  "
-                f"Vcoax={self.vcoax_v:.2f} V  I_lna={self.i_lna_ma} mA  "
+                f"Vcoax={self.vcoax_v:.2f} V  I_tot={self.i_tot_ma} mA  I_lna={self.i_lna_ma} mA  "
                 f"Vscap={self.vscap_v:.2f} V  flags={','.join(self.flags) or '-'}")
 
 
 def pack(kind: int, err: int = 0, seq: int = 0, state: int = 0, flags: int = 0,
-         vcoax_mv: int = 0, i_ma: int = 0, vscap_mv: int = 0) -> bytes:
+         vcoax_mv: int = 0, i_ma: int = 0, vscap_mv: int = 0, itot_ma: int = 0) -> bytes:
     """Build a packet like the firmware does (for tests and simulators)."""
     def q(mv: int) -> int:
         return min(255, (mv + MV_LSB // 2) // MV_LSB)
-    p = [(kind << 6) | ((err & 7) << 3) | (seq & 7), state & 0xFF, flags & 0xFE,
-         q(vcoax_mv), min(255, i_ma), q(vscap_mv)]
+    p = [(kind << 6) | ((err & 7) << 3) | (seq & 7), state & 0xFF, flags & 0xFF,
+         q(vcoax_mv), min(255, i_ma), q(vscap_mv), min(255, (itot_ma + MA_LSB // 2) // MA_LSB)]
     return bytes(p + [crc8(p)])
 
 
@@ -183,7 +190,7 @@ def _manchester(seq: List[int]) -> Optional[bytes]:
             if not ok:
                 break
             out.append(v)
-        if ok and crc8(out[:6]) == out[6]:
+        if ok and crc8(out[:LEN - 1]) == out[LEN - 1]:
             return bytes(out)
     return None
 

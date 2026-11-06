@@ -57,8 +57,11 @@ python host/coaxolotl_gui.py --sim             # the firmware simulator instead 
    * ACK or NAK with the reason (SYNC, CHK, GAP, RUNT, TMO, DROP);
    * the branch and RF path the box actually set (red if it differs from what
      you sent), AUTO when the branch forbids the LNA, the FM notch;
-   * VCOAX, LNA current and supercap voltage, green inside their windows;
-   * the sticky flags TRIP, LOW, DROP, GLT, RST, and HOLD (supercap charged);
+   * VCOAX, the whole coax current (I_tot), the LNA current and the supercap
+     voltage, green inside their windows; I_tot turns amber 20 mA before
+     and red at the 170 mA budget;
+   * the sticky flags TRIP, LOW, BUDGET, DROP, GLT, RST, and HOLD (supercap
+     charged);
    * where the beacon was heard and the MCU oscillator error that implies.
 4. **Poll** re-sends the current state (harmless, always answered),
    **Clear** sends it with CLR (clears the sticky flags, re-arms a tripped
@@ -75,6 +78,22 @@ fall time (`docs/hardware.md`, fall-time budget).
 The control board alone (no RF board on J6) has no load on the LNA supply:
 it reports about 0 mA and lights I-LO. That is expected.
 
+## Calibration
+
+Each reading can be trimmed against a meter; the box keeps the factors in
+flash. Poll first, then measure the same quantity with a meter, pick the
+channel (vcoax, vscap, ilna, itot), type the meter reading and press
+**Apply**. The panel sends 5 frames (about 15 s) and shows the new reading.
+**Reset to 1.0** forgets that channel's factor.
+
+```
+python host/coaxolotl.py cal vcoax 4.312 --band 2m --lna   # V for vcoax/vscap, mA for ilna/itot
+python host/coaxolotl.py cal itot --reset
+```
+
+Measure I_TOT with the meter in series with the coax centre (or the bias-T
+supply), VCOAX at TP6's divider input (the coax side of R3).
+
 ## Scripts
 
 ```python
@@ -89,6 +108,7 @@ with RtlLink(index=0, gain=20) as box:
     else:
         print("no reply:", t.heard.note)
     box.transact(ConfigFrame(panel=1))           # lamps: bank row only
+    box.calibrate("vcoax", 4.312, t.reply.vcoax_v)   # meter vs. box
 ```
 
 `SimLink()` has the same methods and runs the firmware simulator instead,

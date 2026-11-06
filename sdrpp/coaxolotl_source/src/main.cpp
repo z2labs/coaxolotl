@@ -530,6 +530,11 @@ private:
         snprintf(buf, sizeof buf, "Vcoax %.2f V", r.vcoax_v);
         SmGui::TextColored(r.low ? red : green, buf);
         SmGui::SameLine();
+        if (r.i_tot_ma) {   // whole coax current: the RTL-SDR bias-T budget
+            snprintf(buf, sizeof buf, "I_tot %d mA", r.i_tot_ma);
+            SmGui::TextColored(r.budget ? red : r.i_tot_ma > coax::BUDGET_MA - 20 ? amber : green, buf);
+            SmGui::SameLine();
+        }
         snprintf(buf, sizeof buf, "I_lna %d mA", r.i_lna_ma);
         bool iok = !r.lnaEn || (r.i_lna_ma >= 60 && r.i_lna_ma <= 130);
         SmGui::TextColored(r.trip ? red : iok ? green : amber, buf);
@@ -537,9 +542,9 @@ private:
         snprintf(buf, sizeof buf, "Vscap %.2f V", r.vscap_v);
         SmGui::TextColored(r.hold ? green : amber, buf);
 
-        const char* names[] = { "TRIP", "LOW", "DROP", "GLT", "RST" };
-        bool on[] = { r.trip, r.low, r.drop, r.glt, r.rst };
-        for (int i = 0; i < 5; i++) {
+        const char* names[] = { "TRIP", "LOW", "BUDGET", "DROP", "GLT", "RST" };
+        bool on[] = { r.trip, r.low, r.budget, r.drop, r.glt, r.rst };
+        for (int i = 0; i < 6; i++) {
             if (i) { SmGui::SameLine(); }
             SmGui::TextColored(on[i] ? red : grey, names[i]);
         }

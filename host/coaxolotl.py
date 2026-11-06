@@ -17,6 +17,7 @@ Examples
   coaxolotl.py send --band 2m --lna --listen           # ... and read the reply
   coaxolotl.py listen --seconds 3                      # e.g. HELLO after power-up
   coaxolotl.py decode capture.cu8 --fs 2.4e6           # rtl_sdr capture at 36.75 MHz
+  coaxolotl.py cal vcoax 4.312 --band 2m --lna         # meter says 4.312 V
   coaxolotl.py send --bank 3 --backend rtl_biast -d 1
   coaxolotl.py send --bank 6 --lna --backend dry-run | firmware/build/sim
   coaxolotl.py panel bands                             # lamps: full | bands | off
@@ -105,6 +106,48 @@ class ConfigFrame:
 
     def edges(self, timing: Timing = Timing(), t0: float = 0.0) -> List[Tuple[float, int]]:
         return _edges(self.bits(), timing, t0)
+
+
+# calibration channels (firmware nvlog.h CAL_*)
+CAL_CHANNELS = {"vcoax": 0, "vscap": 1, "ilna": 2, "itot": 3}
+
+
+@dataclass(frozen=True)
+class CalNibble:
+    """One nibble of a calibration sequence: a config frame with PM = 3.
+
+    A sequence is a header nibble, then for an adjustment 4 value nibbles
+    (int16 v, MSB first): the box multiplies its factor by 1 + v / 32768.
+    Header 0..3 = adjust channel, 8..11 = reset channel to 1.0.
+    """
+    nibble: int
+
+    @property
+    def payload(self) -> int:
+        if not 0 <= self.nibble <= 15:
+            raise ValueError("nibble must be 0..15")
+        return 0x30 | self.nibble
+
+    def bits(self) -> List[int]:
+        return _bits(SYNC_CONFIG, self.payload)
+
+    def edges(self, timing: Timing = Timing(), t0: float = 0.0) -> List[Tuple[float, int]]:
+        return _edges(self.bits(), timing, t0)
+
+
+def cal_adjust(channel: str, ratio: float) -> List[CalNibble]:
+    """Frames that multiply the box's factor for `channel` by `ratio`
+    (true value / value the box reports now)."""
+    ch = CAL_CHANNELS[channel]
+    v = int(round((ratio - 1.0) * 32768))
+    if not -16384 <= v <= 16383:
+        raise ValueError(f"ratio {ratio:.4f} out of range (0.5 .. 1.5)")
+    v &= 0xFFFF
+    return [CalNibble(ch)] + [CalNibble((v >> s) & 0xF) for s in (12, 8, 4, 0)]
+
+
+def cal_reset(channel: str) -> List[CalNibble]:
+    return [CalNibble(8 | CAL_CHANNELS[channel])]
 
 
 def _bits(sync: Tuple[int, int, int], payload: int) -> List[int]:
@@ -312,6 +355,33 @@ def transmit(a: argparse.Namespace, frame, desc: str) -> int:
     return 0
 
 
+def cmd_cal(a: argparse.Namespace) -> int:
+    """Calibrate one channel against a meter: poll, scale, poll again."""
+    from link import RtlLink, reading   # link imports this module
+    if a.reset is False and a.true is None:
+        raise SystemExit("give the true value (V or mA) measured with a meter, or --reset")
+    bank = find_band(a.band)["id"] if a.band is not None else a.bank
+    state = Frame(bank=bank, lna=a.lna, quiet=a.quiet)
+    with RtlLink(a.device, fs=a.fs, beacon_hz=a.beacon_hz, gain=a.gain,
+                 timing=parse_timing(a.timing)) as box:
+        if a.reset:
+            t = box.cal_reset(a.channel)
+        else:
+            t = box.transact(state)
+            if t.reply is None:
+                raise SystemExit(f"no reply to the poll: {t.heard.note}")
+            before = reading(t.reply, a.channel)
+            print(f"{a.channel}: box reads {before:g}, meter {a.true:g} -> x{a.true / before:.4f}",
+                  file=sys.stderr)
+            box.calibrate(a.channel, a.true, before)
+            t = box.transact(state)
+        if t.reply is None:
+            raise SystemExit(f"no reply: {t.heard.note}")
+        print(t.reply.summary())
+        print(f"{a.channel} now reads {reading(t.reply, a.channel):g}", file=sys.stderr)
+    return 0
+
+
 def cmd_listen(a: argparse.Namespace) -> int:
     sdr = open_rtlsdr(a.device)
     try:
@@ -373,6 +443,20 @@ def main(argv: Optional[List[str]] = None) -> int:
                      help="full = every lamp, bands = F0..F7 only, off = PWR lamp only")
     link_args(pnl)
     pnl.set_defaults(fn=cmd_panel)
+
+    c = sub.add_parser("cal", help="calibrate a reading against a meter (kept in the box's flash)")
+    c.add_argument("channel", choices=list(CAL_CHANNELS))
+    c.add_argument("true", type=float, nargs="?", help="meter reading: V for vcoax/vscap, mA for ilna/itot")
+    c.add_argument("--reset", action="store_true", help="set the channel back to factor 1.0")
+    g = c.add_mutually_exclusive_group()
+    g.add_argument("--bank", type=int, choices=range(8), default=0, help="state to poll with (default THRU)")
+    g.add_argument("--band", help="branch by name")
+    c.add_argument("--lna", action="store_true")
+    c.add_argument("--quiet", action="store_true")
+    c.add_argument("-d", "--device", type=int, default=0, help="RTL-SDR index")
+    c.add_argument("--timing", help="gap0,gap1,on,pre in ms")
+    add_rx_args(c)
+    c.set_defaults(fn=cmd_cal)
 
     s = sub.add_parser("listen", help="capture and decode a reply (e.g. HELLO after power-up)")
     s.add_argument("-d", "--device", type=int, default=0, help="RTL-SDR index")

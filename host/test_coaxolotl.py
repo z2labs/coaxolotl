@@ -74,6 +74,22 @@ class ReplyTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             bc.Reply.parse(bad)
 
+    def test_v2_fields(self):
+        r = bc.Reply.parse(bc.pack(2, flags=0x21, itot_ma=183))
+        self.assertEqual((r.i_tot_ma, r.budget, r.hold), (184, True, True))
+        self.assertIn("I_tot=184 mA", r.summary())
+        self.assertIn("BUDGET", r.flags)
+
+    def test_cal_frames(self):
+        f = cx.cal_adjust("vcoax", 1.02)                # v = 655 = 0x028F
+        self.assertEqual([n.nibble for n in f], [0, 0x0, 0x2, 0x8, 0xF])
+        self.assertEqual(f[0].bits()[:3], [0, 1, 0])     # config frame sync
+        self.assertEqual(f[0].payload, 0x30)
+        self.assertEqual([n.nibble for n in cx.cal_adjust("itot", 0.97)], [3, 0xF, 0xC, 0x2, 0x9])
+        self.assertEqual([n.nibble for n in cx.cal_reset("ilna")], [0xA])
+        with self.assertRaises(ValueError):
+            cx.cal_adjust("vscap", 1.6)
+
     def test_nak(self):
         r = bc.Reply.parse(bc.pack(3, 1, 0))
         self.assertEqual((r.kind, r.err), ("NAK", "SYNC"))
@@ -82,7 +98,7 @@ class ReplyTest(unittest.TestCase):
     def test_chips(self):
         c = bc.chips(bc.pack(1))
         self.assertEqual(len(c), bc.NCHIPS)
-        self.assertEqual(len(c), 145)
+        self.assertEqual(len(c), 161)
         self.assertEqual(c[:4], [1, 0, 1, 0])
         self.assertEqual(c[-1], 1)
         self.assertTrue(all(c[i] != c[i + 1] for i in range(0, 144, 2)))

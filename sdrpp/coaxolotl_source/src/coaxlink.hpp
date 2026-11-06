@@ -57,7 +57,7 @@ constexpr int HARMONIC = 3;
 constexpr double BEACON_HZ = CARRIER_HZ * HARMONIC;  // 36.75 MHz nominal
 constexpr double CHIP_MS = 5.0;
 constexpr double REPLY_DELAY_MS = 300.0;          // after the host's last gap
-constexpr int PKT_LEN = 7;
+constexpr int PKT_LEN = 8;           // protocol v2 (v1: 7, without I_TOT)
 constexpr uint8_t SYNC = 0x2D;
 constexpr int PRE_BITS = 8;
 constexpr int NCHIPS = (PRE_BITS + 8 + 8 * PKT_LEN) * 2 + 1;
@@ -68,7 +68,8 @@ enum class Kind { HELLO = 1, ACK = 2, NAK = 3 };
 uint8_t crc8(const uint8_t* p, int n);
 std::vector<int> chips(const std::array<uint8_t, PKT_LEN>& pkt);
 std::array<uint8_t, PKT_LEN> pack(int kind, int err, int seq, uint8_t state, uint8_t flags,
-                                  int vcoax_mv, int i_ma, int vscap_mv);
+                                  int vcoax_mv, int i_ma, int vscap_mv, int itot_ma = 0);
+constexpr int BUDGET_MA = 170;       // firmware I_BUDGET_MA: BUDGET flag above this coax current
 
 struct Reply {
     Kind kind;
@@ -76,9 +77,10 @@ struct Reply {
     int seq;              // good frames applied, mod 8
     int bank;
     bool lnaReq, lnaPath, fmn, autoByp, quiet;
-    bool trip, low, hold, drop, glt, rst, lnaEn;
+    bool trip, low, hold, drop, glt, rst, lnaEn, budget;
     float vcoax_v, vscap_v;
     int i_lna_ma;
+    int i_tot_ma;         // whole coax current, 0 = not fitted
     std::array<uint8_t, PKT_LEN> raw;
 
     static std::optional<Reply> parse(const std::array<uint8_t, PKT_LEN>& pkt);

@@ -36,11 +36,13 @@ flowchart LR
   skew, slow discharge and USB jitter cancel out.
   → [docs/protocol.md](docs/protocol.md)
 * **Back-channel.** After every frame (and once after boot) the MCU keys a
-  12.25 MHz clock onto the coax for 0.73 s. The dongle hears its 3rd
-  harmonic at 36.75 MHz. The 7-byte Manchester packet carries ACK/NAK with
-  the error, the switch state actually set, VCOAX, LNA current, supercap
-  voltage and the sticky flags. The host searches the band for it, so the
-  ±2 % RC oscillator needs no trimming.
+  12.25 MHz clock onto the coax for 0.8 s. The dongle hears its 3rd
+  harmonic at 36.75 MHz. The 8-byte Manchester packet carries ACK/NAK with
+  the error, the switch state actually set, VCOAX, the whole coax current
+  (the bias-T budget, BUDGET flag at 170 mA), LNA current, supercap voltage
+  and the sticky flags. Readings are calibrated against a meter over the same
+  link. The host searches the band for it, so the ±2 % RC oscillator needs no
+  trimming.
   → [docs/protocol.md](docs/protocol.md#back-channel-box--host)
 * **SDR++.** `sdrpp/coaxolotl_source` is an RTL-SDR source for SDR++ with
   the link built in: branch, LNA, Send/Poll/Clear, follow-tuning and a
@@ -121,8 +123,9 @@ python3 host/coaxolotl_gui.py                                  # control panel (
   and ±3 ms jitter, every error path and the LED power budget.
 * ✅ Host encoder → firmware decoder, end to end, through the simulator.
 * ✅ The firmware builds with SDCC 4.2, back-channel included, in both the
-  Snooze and the bring-up build: EFM8BB52F32 about 12.5 of 28 kB, EFM8BB21F16G
-  about 12.4 of 15 kB. One flash page holds the panel-mode log.
+  Snooze and the bring-up build: EFM8BB52F32 about 15.4 of 28 kB, EFM8BB21F16G
+  about 15.2 of 15.4 kB (full: new features go to the BB52 only). One flash
+  page holds the settings log (panel mode, calibration).
 * ✅ PC control panel (`host/coaxolotl_gui.py`) and link layer (`host/link.py`),
   tested end to end against the firmware simulator.
 * ✅ Back-channel: firmware checks for HELLO/ACK/NAK, timing, contents and

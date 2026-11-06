@@ -17,8 +17,8 @@ remote-controls the Coaxolotl box over the same coax, and reads its replies.
  Link: reply: ACK
  ACK seq 3 (2 s ago)
  box: F6 2m/AIR LNA +FM notch
- Vcoax 4.28 V   I_lna 101 mA   Vscap 3.92 V
- TRIP LOW DROP GLT RST
+ Vcoax 4.28 V   I_tot 142 mA   I_lna 101 mA   Vscap 3.92 V
+ TRIP LOW BUDGET DROP GLT RST
  beacon 36.7391 MHz (osc -0.03 %), on/off 38 dB, chip 5.04 ms
 ```
 

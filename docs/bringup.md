@@ -57,7 +57,7 @@ python3 host/coaxolotl.py send --bank 6 --lna --backend rtl_biast
 python3 host/coaxolotl.py send --bank 6 --lna --listen
 ```
 
-* Scope P1.4 (LED_SER / BEACON): 300 ms after the last gap you should see 0.73 s of
+* Scope BEACON (P1.7 on the EFM8BB52, P1.4 / LED_SER on the EFM8BB21): 300 ms after the last gap you should see 0.8 s of
   bursts of a 12.25 MHz square wave, 5 ms per chip. It is low otherwise.
 * The tool prints the reply, for example
   `ACK seq=1 F6 LNA+FMN  Vcoax=4.28 V  I_lna=101 mA  Vscap=3.92 V  flags=HOLD`,
@@ -147,8 +147,14 @@ in step 5 does not apply. What to look at instead:
 
 * RUN goes dark in idle and blips every 6.5 s: Snooze and the Timer 4 wake
   (interrupt-driven on this part) work.
-* VCOAX, I_LNA and VSCAP in the reply read right without trimming: the ADC
-  runs on the internal 1.8 V reference, not on VDD.
+* VREF (P0.0, C50) shows 2.4 V while the box measures (a short pulse every
+  second when awake), 0 V otherwise.
+* VCOAX, I_TOT, I_LNA and VSCAP read within about ±3 % without trimming.
+  Check each against a meter, then calibrate (`docs/host.md`). Cross-check:
+  I_TOT ≈ I_LNA + lamps (~1 mA each) + 7 mA (bleeder, PWR, divider) + the
+  3V3 domain; right after boot add the hold-up charging current.
+* BUDGET: load J6 pin 2 until I_TOT passes 170 mA: LOW lights and the
+  reply carries BUDGET; it clears below 160 mA.
 * Programming: C2 as before, or the factory UART bootloader on TP_TX/TP_RX
   (hold C2D low during reset, then `efm8load.py`, AN945). Erase the security
   page and lock the flash for a finished box.

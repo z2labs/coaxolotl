@@ -148,8 +148,9 @@ end of life, BB3 end of life). The next board moves to the EFM8BB52F32G-C-QFN32
   5 × 5 mm QFN32.
 * Snooze about 10 µA with the LFOSC running (80 kHz ±3 %), woken by a Timer 4
   event or a port match. Same scheme as on the BB2.
-* 12-bit ADC (the BB2 has 10), with internal references. The firmware uses
-  1.8 V at gain 0.5, so 3.6 V full scale, independent of VDD.
+* 12-bit ADC (the BB2 has 10). The firmware uses the precision reference,
+  2.4 V (±1.4 %) on the VREF pin (P0.0, 100 nF), switched on only while
+  measuring, at gain 0.5: 4.8 V full scale, independent of VDD.
 * Factory UART bootloader on P0.4/P0.5, entered when P3.7/C2D is low at reset
   (AN945). Buy revision C: its only open erratum (BL_E201) concerns the
   20-pin packages; the Snooze/prefetch, ADC-mux and clock-switch errata are
@@ -173,9 +174,9 @@ pinout). The G grade (C6033318) had 1 in stock on 2026-11-02, the I grade 13.
 
 | Pin | Port | Net | Dir | Note |
 |---|---|---|---|---|
-| 1 | P0.0 | SENSE | in | VCOAX divider; port-match wake on both edges |
+| 1 | P0.0 | VREF | ana | precision reference 2.4 V, C50 100 nF |
 | 32 | P0.1 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up, port-match wake |
-| 31 | P0.2 | VC_ADC | ana | same divider node as SENSE (ADC0.0) |
+| 31 | P0.2 | SENSE | in + ana | VCOAX divider: port-match wake on both edges and ADC0.0 at once (PRTDRV.COEX); C2 10 nF |
 | 30 | P0.3 | SCAP_ADC | ana | 1 M / 1 M + 100 nF (ADC0.1) |
 | 29 | P0.4 | TP_TX | out | UART0 TX test point (bootloader, debug prints) |
 | 28 | P0.5 | TP_RX | in | UART0 RX test point |
@@ -188,7 +189,8 @@ pinout). The G grade (C6033318) had 1 in stock on 2026-11-02, the I grade 13.
 | 18 | P1.7 | BEACON | out | PCA CEX0 into the coax tap during a reply, low otherwise |
 | 17–14 | P2.0–P2.3 | LED_SER, LED_SCK, LED_RCK, LED_OE_N | out | lamp chain; 10 k pull-up on OE_N |
 | 13 | P2.4 | ILNA_ADC | ana | INA180A2 out (ADC0.13; not a crossbar pin) |
-| 12, 11 | P2.5, P2.6 | — | out | spare, driven low |
+| 12 | P2.5 | ITOT_ADC | ana | INA180A3 on the coax shunt R35, through R36 1 k / C48 100 nF (ADC0.14) |
+| 11 | P2.6 | — | out | spare, driven low |
 | 10–6 | P3.0–P3.4 | — | out | spare, driven low |
 | 5 | P3.7 / C2D | C2D | | debug; 10 k pull-up so the bootloader is not entered by accident |
 | 4 | RSTb / C2CK | RST_N | | 10 k pull-up, C2 clock |
@@ -198,6 +200,25 @@ pinout). The G grade (C6033318) had 1 in stock on 2026-11-02, the I grade 13.
 
 With its own BEACON pin, the panel's shift bursts no longer reach the coax
 tap.
+
+### Coax current and accuracy (control board)
+
+The RTL-SDR V3 bias-T limits at roughly 180–200 mA. What matters is the
+whole box, not only the LNA, so the control board measures both:
+
+* **I_TOT:** R35 0.1 Ω (1 %, 1206) between the coax DC feed (L7) and VCOAX,
+  before every load: bleeder, PWR lamp, sense divider, the ideal diode and
+  everything behind it (LNA, lamps, hold-up charging). U20 INA180A3
+  (100 V/V) gives 10 mV/mA, up to about 320 mA, with 20 mV of drop at
+  200 mA. At ≥ 170 mA the box sets BUDGET and lights LOW.
+* **I_LNA:** R7 0.39 Ω / U3 INA180A2 as before, for the LNA's own health
+  window and trip.
+
+Uncalibrated, a reading is good to about ±2–3 %: the reference ±1.4 %, the
+1 % resistors and the INA180 gain error. One calibration against a meter per
+channel (`coaxolotl.py cal`, the GUI, `docs/protocol.md`) takes that down to
+the reporting step (20 mV, 1 mA, 2 mA). The factors live in the flash
+settings page, next to the panel mode.
 
 ## RF notes
 
@@ -257,7 +278,7 @@ tap.
 
 The reply (docs/protocol.md) is a 3.3 Vpp, 12.25 MHz square wave, keyed on
 and off. The QFN20 has no free pin, so it comes out on P1.4 (LED_SER): the
-crossbar puts PCA CEX0 there for 0.73 s, and the 74HC595s ignore SER while
+crossbar puts PCA CEX0 there for 0.8 s, and the 74HC595s ignore SER while
 SCK and RCK stay still. It is coupled onto the RF line on the coax side of SW2,
 after the filter bank, so the dongle hears it whatever branch is selected:
 

@@ -100,21 +100,22 @@ std::vector<int> chips(const std::array<uint8_t, PKT_LEN>& pkt) {
 }
 
 std::array<uint8_t, PKT_LEN> pack(int kind, int err, int seq, uint8_t state, uint8_t flags,
-                                  int vcoax_mv, int i_ma, int vscap_mv) {
+                                  int vcoax_mv, int i_ma, int vscap_mv, int itot_ma) {
     auto q = [](int mv) { return (uint8_t)std::min(255, (mv + 10) / 20); };
     std::array<uint8_t, PKT_LEN> p{};
     p[0] = (uint8_t)((kind << 6) | ((err & 7) << 3) | (seq & 7));
     p[1] = state;
-    p[2] = (uint8_t)(flags & 0xFE);
+    p[2] = flags;
     p[3] = q(vcoax_mv);
     p[4] = (uint8_t)std::min(255, i_ma);
     p[5] = q(vscap_mv);
-    p[6] = crc8(p.data(), 6);
+    p[6] = (uint8_t)std::min(255, (itot_ma + 1) / 2);
+    p[7] = crc8(p.data(), PKT_LEN - 1);
     return p;
 }
 
 std::optional<Reply> Reply::parse(const std::array<uint8_t, PKT_LEN>& p) {
-    if (crc8(p.data(), 6) != p[6]) { return std::nullopt; }
+    if (crc8(p.data(), PKT_LEN - 1) != p[PKT_LEN - 1]) { return std::nullopt; }
     int k = p[0] >> 6;
     if (k < 1) { return std::nullopt; }
     Reply r{};
@@ -126,8 +127,10 @@ std::optional<Reply> Reply::parse(const std::array<uint8_t, PKT_LEN>& p) {
     r.autoByp = p[1] & 0x02; r.quiet = p[1] & 0x01;
     r.trip = p[2] & 0x80; r.low = p[2] & 0x40; r.hold = p[2] & 0x20; r.drop = p[2] & 0x10;
     r.glt = p[2] & 0x08; r.rst = p[2] & 0x04; r.lnaEn = p[2] & 0x02;
+    r.budget = p[2] & 0x01;
     r.vcoax_v = p[3] * 0.02f;
     r.i_lna_ma = p[4];
+    r.i_tot_ma = p[6] * 2;
     r.vscap_v = p[5] * 0.02f;
     r.raw = p;
     return r;
@@ -153,13 +156,13 @@ std::string Reply::summary() const {
     if (autoByp) { path += "/AUTO"; }
     if (fmn) { path += "+FMN"; }
     std::string fl;
-    const char* names[] = { "TRIP", "LOW", "HOLD", "DROP", "GLT", "RST" };
-    bool on[] = { trip, low, hold, drop, glt, rst };
-    for (int i = 0; i < 6; i++) {
+    const char* names[] = { "TRIP", "LOW", "BUDGET", "HOLD", "DROP", "GLT", "RST" };
+    bool on[] = { trip, low, budget, hold, drop, glt, rst };
+    for (int i = 0; i < 7; i++) {
         if (on[i]) { fl += (fl.empty() ? "" : ",") + std::string(names[i]); }
     }
-    snprintf(buf, sizeof buf, "%s seq=%d F%d %s%s  Vcoax=%.2f V  I_lna=%d mA  Vscap=%.2f V  flags=%s",
-             head.c_str(), seq, bank, path.c_str(), quiet ? " QUIET" : "", vcoax_v, i_lna_ma,
+    snprintf(buf, sizeof buf, "%s seq=%d F%d %s%s  Vcoax=%.2f V  I_tot=%d mA  I_lna=%d mA  Vscap=%.2f V  flags=%s",
+             head.c_str(), seq, bank, path.c_str(), quiet ? " QUIET" : "", vcoax_v, i_tot_ma, i_lna_ma,
              vscap_v, fl.empty() ? "-" : fl.c_str());
     return buf;
 }
@@ -231,7 +234,7 @@ std::optional<std::array<uint8_t, PKT_LEN>> manchester(const std::vector<int>& s
             }
             out[k] = (uint8_t)v;
         }
-        if (ok && crc8(out.data(), 6) == out[6]) { return out; }
+        if (ok && crc8(out.data(), PKT_LEN - 1) == out[PKT_LEN - 1]) { return out; }
     }
     return std::nullopt;
 }
