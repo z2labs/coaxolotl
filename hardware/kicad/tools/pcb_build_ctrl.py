@@ -328,7 +328,7 @@ if "R35" in fps and "U20" in fps:
     # SOT-23-5 has IN+ (3) / IN- (4) on its bottom row (rot 0: 3 left, 4 right). R35 pad 1 left (d > 0): U20 above
     # at rot 0; pad 1 right (d < 0): U20 below at rot 180
     for ur in ((0,) if d > 0 else (180,)):
-        uy = ry - 2.6 if ur == 0 else ry + 2.6
+        uy = ry - 3.0 if ur == 0 else ry + 3.0                # courtyards just clear
         bx_r, _ = geom(fps["R35"], rr)
         bx_u, _ = geom(fps["U20"], ur)
         if free((bx_r[0] + rx, bx_r[1] + ry, bx_r[2] + rx, bx_r[3] + ry), gap=0.2) and \
