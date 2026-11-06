@@ -93,6 +93,71 @@ python3 host/coaxolotl.py send --band 2m --lna --listen        # ... and read th
 python3 host/coaxolotl_gui.py                                  # control panel (--sim: no hardware)
 ```
 
+## Pin map
+
+### EFM8BB52F32I-C-QFN32: control board (`make -C firmware`, the default)
+
+Source of truth: `firmware/src/hal_efm8bb52.c`; checked against the
+`hardware/kicad_ctrl` netlist.
+
+| Pin | Port | Net | Dir | Function |
+|---|---|---|---|---|
+| 1 | P0.0 | VREF | ana | precision reference 2.4 V, C50 100 nF; on only while measuring |
+| 32 | P0.1 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up; port-match wake |
+| 31 | P0.2 | SENSE | in + ana | VCOAX divider 10k/22k: port-match wake on both edges and ADC0.0 at once (PRTDRV.COEX); C2 10 nF |
+| 30 | P0.3 | SCAP_ADC | ana | supercap / 2 (1 M / 1 M, C11), ADC0.1 |
+| 29 | P0.4 | TP_TX | out | UART0 TX test point (factory bootloader, debug) |
+| 28 | P0.5 | TP_RX | in | UART0 RX test point |
+| 27 | P0.6 | LNA_EN | out | TPS2553 EN; 10 k pull-down |
+| 26 | P0.7 | LNA_PATH | out | input SPDT U6, 1 = LNA; 10 k pull-down = bypass |
+| 25, 24, 23 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582 (via J6); 10 k pull-downs = F0 THRU |
+| 22 | P1.3 | LNA_PATH_OUT | out | output SPDT U7, same polarity; 10 k pull-down |
+| 21 | P1.4 | FMN | out | FM notch SPDTs; 10 k pull-down |
+| 20, 19 | P1.5, P1.6 | — | out | spare, driven low |
+| 18 | P1.7 | BEACON | out | PCA CEX0 12.25 MHz during a reply → R31/R32/R33/C47 → coax; low otherwise |
+| 17 | P2.0 | LED_SER | out | 74HC595 chain data (U14 first) |
+| 16 | P2.1 | LED_SCK | out | shift clock |
+| 15 | P2.2 | LED_RCK | out | latch clock |
+| 14 | P2.3 | LED_OE_N | out | output enable; 10 k pull-up = lamps dark in reset |
+| 13 | P2.4 | ILNA_ADC | ana | LNA current: R7 0.39 Ω, U3 INA180A2, 19.5 mV/mA, R8/C7; ADC0.13 |
+| 12 | P2.5 | ITOT_ADC | ana | whole coax current: R35 0.1 Ω, U20 INA180A3, 10 mV/mA, R36/C48; ADC0.14 |
+| 11 | P2.6 | — | out | spare, driven low |
+| 10–6 | P3.0–P3.4 | — | out | spare, driven low |
+| 5 | P3.7 / C2D | C2D | | debug; R34 10 k pull-up (low at reset = factory bootloader) |
+| 4 | RSTb / C2CK | RST_N | | R13 10 k pull-up, C2 clock |
+| 3 | VDD | +3V3 | | C15 100 nF + C14 1 µF |
+| 2 | N/C | | | |
+| EP | GND | | | the only ground pin |
+
+J6 (via row to a later RF board): 1 +3V3, 2 LNA_VCC, 3–5 SW_V1..V3,
+6 LNA_PATH, 7 LNA_PATH_OUT, 8 FMN, 9–10 GND.
+
+### EFM8BB21F16G-C-QFN20: 4-layer RF board (`make -C firmware MCU=bb21`)
+
+Source of truth: `firmware/src/hal_efm8bb2.c`. All 16 port pins are used.
+
+| Pin | Port | Net | Dir | Function |
+|---|---|---|---|---|
+| 2 | P0.0 | SENSE | in | VCOAX divider; port-match wake |
+| 1 | P0.1 | VC_ADC | ana | same divider node |
+| 20 | P0.2 | SCAP_ADC | ana | supercap / 2 |
+| 19 | P0.3 | ILNA_ADC | ana | INA180A2 output |
+| 18 | P0.4 | LED_OE_N | out | lamp output enable; 10 k pull-up |
+| 17 | P0.5 | FAULT_N | in | TPS2553 FAULT; port-match wake |
+| 16 | P0.6 | LNA_EN | out | 10 k pull-down |
+| 15 | P0.7 | LNA_PATH | out | input SPDT U6; 10 k pull-down |
+| 14, 13, 11 | P1.0–P1.2 | SW_V1..V3 | out | both PE42582; 10 k pull-downs |
+| 10 | P1.3 | LNA_PATH_OUT | out | output SPDT U7; 10 k pull-down |
+| 9 | P1.4 | LED_SER (+ BEACON) | out | 595 data; PCA CEX0 during a reply (no tap on this board yet) |
+| 8 | P1.5 | LED_SCK | out | |
+| 7 | P1.6 | LED_RCK | out | |
+| 6 | P2.0 / C2D | FMN | out | through R30 1 k; 10 k pull-down |
+| 5 | RSTb / C2CK | RST_N | | 10 k pull-up |
+| 4 | VDD | +3V3 | | |
+| 3, 12, EP | GND | | | |
+
+No whole-coax current monitor on this board: I_TOT reads 0.
+
 ## Repository
 
 | Path | What |
