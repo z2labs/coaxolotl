@@ -150,12 +150,12 @@ def build_library(path: pathlib.Path):
             "Inputs left, outputs right",
             left=[("4", "RSTb/C2CK"), ("5", "P3.7/C2D"), None, ("28", "P0.5/RX")] + [None] * 5 +
                  [("32", "P0.1/PMATCH")] + [None] * 5 + [("13", "P2.4/ADC")] + [None] * 5 +
-                 [("30", "P0.3/ADC")] + [None] * 5 + [("1", "P0.0/PMATCH"), ("31", "P0.2/ADC")] + [None] +
+                 [("30", "P0.3/ADC")] + [None] * 5 + [("1", "P0.0/VREF"), ("31", "P0.2/ADC+PM")] + [None] +
                  [("10", "P3.0"), ("9", "P3.1"), ("8", "P3.2"), ("7", "P3.3"), ("6", "P3.4")],
             right=[("27", "P0.6"), ("26", "P0.7"), ("25", "P1.0"), ("24", "P1.1"), ("23", "P1.2"),
                    ("22", "P1.3"), ("21", "P1.4"), ("17", "P2.0"), ("16", "P2.1"), ("15", "P2.2"), ("14", "P2.3"),
                    None, ("18", "P1.7/CEX0"), None, ("29", "P0.4/TX"), None, ("20", "P1.5"), ("19", "P1.6"),
-                   ("12", "P2.5"), ("11", "P2.6"), ("2", "N/C")],
+                   ("12", "P2.5/ADC"), ("11", "P2.6"), ("2", "N/C")],
             width=30.48, top_pins=[("3", "VDD")], bottom_pins=[("33", "EP/GND")],
             pin_types={"3": "power_in", "33": "power_in", "4": "input", "2": "no_connect"}),
         ic_symbol(
@@ -178,6 +178,13 @@ def build_library(path: pathlib.Path):
             "INA180A2", "U", "Package_TO_SOT_SMD:SOT-23-5",
             "https://www.ti.com/lit/ds/symlink/ina180.pdf",
             "Current sense amplifier 50 V/V; sense inputs on top for Kelvin routing from the shunt",
+            left=[None, ("5", "V+"), None], right=[None, ("1", "OUT"), None],
+            top_pins=[("3", "IN+"), ("4", "IN-")], bottom_pins=[("2", "GND")],
+            pin_types={"5": "power_in", "2": "power_in", "1": "output", "3": "input", "4": "input"}),
+        ic_symbol(
+            "INA180A3", "U", "Package_TO_SOT_SMD:SOT-23-5",
+            "https://www.ti.com/lit/ds/symlink/ina180.pdf",
+            "Current sense amplifier 100 V/V; sense inputs on top for Kelvin routing from the shunt",
             left=[None, ("5", "V+"), None], right=[None, ("1", "OUT"), None],
             top_pins=[("3", "IN+"), ("4", "IN-")], bottom_pins=[("2", "GND")],
             pin_types={"5": "power_in", "2": "power_in", "1": "output", "3": "input", "4": "input"}),
@@ -471,11 +478,11 @@ def sheet_mcu_bb52(lib) -> DSheet:
     s.add(Part("U5", "coaxolotl:EFM8BB52F32I-C-QFN32", "EFM8BB52F32I-C(QFN32)", 165.1, 127.0, 0,
                "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm",
                {"3": "+3V3", "33": "GND", "4": "RST_N", "5": "C2D", "32": "FAULT_N", "13": "ILNA_ADC",
-                "30": "SCAP_ADC", "1": "SENSE", "31": "SENSE", "28": "TP_RX", "29": "TP_TX",
+                "30": "SCAP_ADC", "1": "VREF", "31": "SENSE", "12": "ITOT_ADC", "28": "TP_RX", "29": "TP_TX",
                 "27": "LNA_EN", "26": "LNA_PATH", "25": "SW_V1", "24": "SW_V2", "23": "SW_V3",
                 "22": "LNA_PATH_OUT", "21": "FMN", "17": "LED_SER", "16": "LED_SCK", "15": "LED_RCK",
                 "14": "LED_OE_N", "18": "BEACON",
-                **{n: None for n in ("2", "6", "7", "8", "9", "10", "11", "12", "19", "20")}},
+                **{n: None for n in ("2", "6", "7", "8", "9", "10", "11", "19", "20")}},
                txt=(168.91, 176.53)))
     s.add(C("C15", "100nF/16V/10%", 172.72, 69.85, "+3V3", "GND", Place="U5.3 (closest)"))
     s.add(C("C14", "1uF/16V/10%", 193.04, 69.85, "+3V3", "GND", Place="U5.3"))
@@ -515,9 +522,13 @@ def sheet_mcu_bb52(lib) -> DSheet:
     s.add(R("R8", "1k/1%", 124.46, s.pt("U5", "13")[1], "ILNA", "ILNA_ADC", rot=90, Place="U5.13"))
     s.add(C("C7", "100nF/16V/10%", 137.16, s.pt("U5", "13")[1] + 3.81, "ILNA_ADC", "GND", Place="U5.13"))
     s.add(C("C11", "100nF/16V/10%", 137.16, s.pt("U5", "30")[1] + 3.81, "SCAP_ADC", "GND", Place="U5.30"))
-    s.add(C("C2", "10nF/50V/10%", 134.62, s.pt("U5", "1")[1] + 3.81, "SENSE", "GND", Place="U5.1"))
-    s.add(Part("TP6", "Connector:TestPoint", "TP/SENSE", 111.76, s.pt("U5", "1")[1], 0, TP, {"1": "SENSE"},
-               dnp=True))
+    ys = s.pt("U5", "31")[1] + 7.62          # SENSE runs below P0.2, clear of the VREF cap's GND
+    s.add(C("C2", "10nF/50V/10%", 134.62, ys + 3.81, "SENSE", "GND", Place="U5.31"))
+    s.add(Part("TP6", "Connector:TestPoint", "TP/SENSE", 111.76, ys, 0, TP, {"1": "SENSE"}, dnp=True))
+    s.add(C("C50", "100nF/16V/10%", 139.7, s.pt("U5", "1")[1], "GND", "VREF", rot=90, Place="U5.1 (closest)",
+            Note="VREF bypass: precision reference 2.4 V on P0.0"))
+    s.add(R("R36", "1k/1%", 198.12, s.pt("U5", "12")[1], "ITOT", "ITOT_ADC", rot=270, Place="U5.12"))
+    s.add(C("C48", "100nF/16V/10%", 190.5, s.pt("U5", "12")[1] + 3.81, "ITOT_ADC", "GND", Place="U5.12"))
     s.zone = "DIGITAL"
     s.w(s.pt("R8", "2"), s.pt("U5", "13"))
     s.pw("R8", "1", (99.06, None))
@@ -526,11 +537,15 @@ def sheet_mcu_bb52(lib) -> DSheet:
     s.pw("U5", "30", (99.06, None))
     s.hlabel("SCAP_ADC", 99.06, s.pt("U5", "30")[1], "L", "input")
     s.gnd("C11", "2")
-    s.pw("U5", "1", (142.24, None))
-    s.pw("U5", "31", (142.24, None), (None, s.pt("U5", "1")[1]))
-    s.w((142.24, s.pt("U5", "1")[1]), (99.06, s.pt("U5", "1")[1]))
-    s.hlabel("SENSE", 99.06, s.pt("U5", "1")[1], "L", "input")
+    s.w(s.pt("U5", "1"), s.pt("C50", "2"))
+    s.gnd("C50", "1")
+    s.pw("U5", "31", (144.78, None), (None, ys), (99.06, None))
+    s.hlabel("SENSE", 99.06, ys, "L", "input")
     s.gnd("C2", "2")
+    s.w(s.pt("U5", "12"), s.pt("R36", "2"))
+    s.gnd("C48", "2")
+    s.pw("R36", "1", (215.9, None))
+    s.hlabel("ITOT", 215.9, s.pt("U5", "12")[1], "R", "input")
     for num, net in [("27", "LNA_EN"), ("26", "LNA_PATH"), ("25", "SW_V1"), ("24", "SW_V2"), ("23", "SW_V3"),
                      ("22", "LNA_PATH_OUT"), ("21", "FMN"), ("17", "LED_SER"), ("16", "LED_SCK"),
                      ("15", "LED_RCK"), ("14", "LED_OE_N"), ("18", "BEACON")]:
@@ -538,12 +553,14 @@ def sheet_mcu_bb52(lib) -> DSheet:
         s.hlabel(net, *end, "R", "output")
     end = s.pw("U5", "29", (200.66, None))
     s.label("TP_TX", *end)
-    for num in ("10", "9", "8", "7", "6", "20", "19", "12", "11", "2"):
+    for num in ("10", "9", "8", "7", "6", "20", "19", "11", "2"):
         s.nc("U5", num)
     s.intent("J1: 1=GND 2=C2D 3=C2CK 4=3V3. TP7/TP8: UART0 for the factory bootloader (C2D low at reset).",
              86.36, 73.66)
-    s.intent("QFN32: own BEACON pin (P1.7 = PCA CEX0 during a reply), C2D not shared, 10 spares driven low.",
+    s.intent("QFN32: own BEACON pin (P1.7 = PCA CEX0 during a reply), C2D not shared, 9 spares driven low.",
              78.74, 184.15)
+    s.intent("P0.0 = VREF (precision 2.4 V, C50). SENSE = P0.2, digital and ADC at once (PRTDRV.COEX).",
+             78.74, 193.67)
     s.intent("EP is the only GND pin: solder it, with vias. VDD: 1 uF + 100 nF at the pin (AN203).",
              78.74, 187.33)
     s.intent("SYSCLK = HFOSC0/8 = 3.0625 MHz, Snooze when idle (no clock, no spurs). ILNA RC: fc = 1.6 kHz",
@@ -1007,7 +1024,7 @@ def sheet_ctrl(lib) -> DSheet:
                {"1": "BT_2", "2": "BT_1"}, {"MPN": "LQH32CN100K33L"}, txt=(xl - 2.54, y1 - 16.51, "right")))
     s.add(R("R24", "220R/5%", xl + 7.62, y1 - 15.24, "BT_2", "BT_1", Note="damps the L6 self-resonance"))
     s.add(Part("L7", "Device:L", "1mH/0.2A", xl, y1 - 26.67, 0, "Inductor_SMD:L_Bourns_SRR1260",
-               {"1": "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
+               {"1": "VCOAX_IN" if MCU == "bb52" else "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
     s.add(Part("J3", "Connector:Conn_Coaxial", "SMA/EDGE(RTL-SDR)", X + 81.28, y1, 0,
                "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001_Air", {"1": "COAX", "2": "GND"},
                {"Place": "edge"}, txt=(X + 83.82, y1 - 8.89)))
@@ -1016,12 +1033,42 @@ def sheet_ctrl(lib) -> DSheet:
     s.w(s.pt("L6", "1"), s.pt("L7", "2"))
     s.w((xl, s.pt("L6", "2")[1]), (xl + 7.62, s.pt("L6", "2")[1]))
     s.w((xl, s.pt("L6", "1")[1]), (xl + 7.62, s.pt("L6", "1")[1]))
-    s.w(s.pt("L7", "1"), (xl, s.pt("L7", "1")[1] - 2.54))
-    s.rail("VCOAX", xl, s.pt("L7", "1")[1] - 2.54)
+    if MCU == "bb52":
+        # whole coax current: 0.1R between the DC feed and VCOAX, before every load (bleeder, PWR lamp, sense
+        # divider, ideal diode -> LNA, lamps, hold-up charging), so the RTL-SDR bias-T budget (~180-200 mA) shows
+        yt = 33.02
+        xu = X + 83.82
+        s.add(R("R35", "0R1/1%/0.25W", xu, yt, "VCOAX_IN", "VCOAX", rot=90, fp=R1206,
+                txt=(xu - 5.08, yt - 3.81, "right"), Note="coax current shunt: 15 mV at 150 mA"))
+        s.zone = "ANALOG"
+        s.add(Part("U20", "coaxolotl:INA180A3", "INA180A3IDBVR(SOT23-5)", xu, yt + 12.7, 0,
+                   "Package_TO_SOT_SMD:SOT-23-5",
+                   {"3": "VCOAX_IN", "4": "VCOAX", "5": "+3V3", "1": "ITOT", "2": "GND"},
+                   txt=(xu + 5.08, yt + 22.86)))
+        s.add(C("C49", "100nF/16V/10%", xu - 15.24, yt + 16.51, "+3V3", "GND", Place="U20.5",
+                txt=(xu - 17.78, yt + 13.97, "right")))
+        s.zone = "POWER"
+        s.w(s.pt("L7", "1"), (xl, yt), s.pt("R35", "1"))
+        s.pw("R35", "2", (xu + 10.16, None), (None, yt - 2.54))
+        s.rail("VCOAX", xu + 10.16, yt - 2.54)
+        s.pw("U20", "3", (None, yt + 2.54), (s.pt("R35", "1")[0], None), (None, yt))
+        s.pw("U20", "4", (None, yt + 2.54), (s.pt("R35", "2")[0], None), (None, yt))
+        s.rail_pin("U20", "5", "+3V3")
+        s.w((xu - 12.7, yt + 12.7), s.pt("C49", "1"))
+        s.gnd("C49", "2")
+        s.gnd("U20", "2")
+        s.pw("U20", "1", (X + 99.06, None))
+        s.hlabel("ITOT", X + 99.06, s.pt("U20", "1")[1], "R", "output")
+        s.label("VCOAX_IN", xl, yt + 2.54, "L")
+    else:
+        s.w(s.pt("L7", "1"), (xl, s.pt("L7", "1")[1] - 2.54))
+        s.rail("VCOAX", xl, s.pt("L7", "1")[1] - 2.54)
     s.gnd("J3", "2")
     s.intent("Coax DC feed 100 nH -> 10 uH || 220R -> 1 mH, as on the RF board. D1 (TVS) at J3 (power sheet).",
              X + 2.54, 83.82)
     if MCU == "bb52":
+        s.intent("ITOT = 0.1R x 100 V/V = 10 mV/mA (whole box, 200 mA -> 2.0 V); Kelvin taps at R35 pads",
+                 X + 2.54, 86.99)
         # back-channel tap (docs/hardware.md): BEACON 3.3 Vpp 12.25 MHz -> 4k7/51R pad -> 1k -> 100p C0G -> coax centre
         yb = y1 + 25.4
         s.add(R("R31", "4k7/1%", X + 25.4, yb, "BEACON", "BCN_A", rot=90, Place="J3.1", Note="R_BCN1: sets the level"))
@@ -1298,7 +1345,8 @@ def draw_block_diagram(r: DSheet):
 def _root_ctrl(root, sheets):
     power, mcu, ctrl, panel = sheets
     left = ["SENSE", "SCAP_ADC", "ILNA", "FAULT_N", "LNA_EN"]
-    to_ctrl = ["LNA_PATH", "FMN", "LNA_PATH_OUT", "SW_V1", "SW_V2", "SW_V3"] + (["BEACON"] if MCU == "bb52" else [])
+    to_ctrl = ["LNA_PATH", "FMN", "LNA_PATH_OUT", "SW_V1", "SW_V2", "SW_V3"] + (["BEACON", "ITOT"] if MCU == "bb52"
+                                                                                 else [])
     to_panel = ["LED_SER", "LED_SCK", "LED_RCK", "LED_OE_N"]
     ys = [180.34 + 5.08 * i for i in range(5)]
     yc = [180.34 + 5.08 * i for i in range(len(to_ctrl))]
@@ -1313,7 +1361,7 @@ def _root_ctrl(root, sheets):
     panel.sheet_pins = [(n, panel.hier[n], xr, y, "L") for n, y in zip(to_panel, yl)]
     root.subsheet(power, xp, 175.26, w, 30.48)
     root.subsheet(mcu, xm, 175.26, w, 71.12)
-    root.subsheet(ctrl, xr, 175.26, w, 38.1)
+    root.subsheet(ctrl, xr, 175.26, w, 43.18)
     root.subsheet(panel, xr, 220.98, w, 22.86)
     for y in ys:
         root.w((xp + w, y), (xm, y))

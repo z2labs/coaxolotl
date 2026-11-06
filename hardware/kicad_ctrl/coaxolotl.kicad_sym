@@ -612,7 +612,7 @@
       (pin bidirectional line
         (at -17.78 -25.4 0)
         (length 2.54)
-        (name "P0.0/PMATCH"
+        (name "P0.0/VREF"
           (effects
             (font
               (size 1.27 1.27)
@@ -630,7 +630,7 @@
       (pin bidirectional line
         (at -17.78 -27.94 0)
         (length 2.54)
-        (name "P0.2/ADC"
+        (name "P0.2/ADC+PM"
           (effects
             (font
               (size 1.27 1.27)
@@ -1008,7 +1008,7 @@
       (pin bidirectional line
         (at 17.78 -2.54 180)
         (length 2.54)
-        (name "P2.5"
+        (name "P2.5/ADC"
           (effects
             (font
               (size 1.27 1.27)
@@ -1497,6 +1497,158 @@
       )
     )
     (symbol "INA180A2_1_1"
+      (pin power_in line
+        (at -10.16 0 0)
+        (length 2.54)
+        (name "V+"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "5"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin output line
+        (at 10.16 0 180)
+        (length 2.54)
+        (name "OUT"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin input line
+        (at -2.54 7.62 270)
+        (length 2.54)
+        (name "IN+"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "3"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin input line
+        (at 2.54 7.62 270)
+        (length 2.54)
+        (name "IN-"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "4"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+      (pin power_in line
+        (at 0 -7.62 90)
+        (length 2.54)
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+        (number "2"
+          (effects
+            (font
+              (size 1.27 1.27)
+            )
+          )
+        )
+      )
+    )
+  )
+  (symbol "INA180A3"
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "U"
+      (at 0 6.35 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Value" "INA180A3"
+      (at 0 -6.35 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/ina180.pdf"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (property "Description" "Current sense amplifier 100 V/V; sense inputs on top for Kelvin routing from the shunt"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        hide
+      )
+    )
+    (symbol "INA180A3_0_1"
+      (rectangle
+        (start -7.62 5.08)
+        (end 7.62 -5.08)
+        (stroke
+          (width 0.254)
+          (type default)
+        )
+        (fill
+          (type background)
+        )
+      )
+    )
+    (symbol "INA180A3_1_1"
       (pin power_in line
         (at -10.16 0 0)
         (length 2.54)
