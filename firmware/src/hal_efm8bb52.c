@@ -2,9 +2,10 @@
  * Coaxolotl - EFM8BB52F32G (QFN32) hardware layer, SDCC.
  *
  * Pin map (docs/hardware.md):
- *   P0.0 SENSE     in   VCOAX divider, port-match wake (both edges)
+ *   P0.0 VREF      ana  precision reference 2.4 V, 100 nF (C50); on only while measuring
  *   P0.1 FAULT_N   in   TPS2553 FAULT, port-match wake
- *   P0.2 VC_ADC    ana  same divider node as SENSE   (ADC0.0)
+ *   P0.2 SENSE     in+ana  VCOAX divider: port-match wake (both edges) and
+ *                       ADC0.0 at the same time (PRTDRV.COEX)
  *   P0.3 SCAP_ADC  ana  supercap / 2                 (ADC0.1)
  *   P0.4 TP_TX     out  UART0 TX test point, low     (bootloader UART)
  *   P0.5 TP_RX     in   UART0 RX test point
@@ -17,15 +18,17 @@
  *   P1.7 BEACON    out  PCA CEX0 during a reply, low otherwise
  *   P2.0 LED_SER, P2.1 LED_SCK, P2.2 LED_RCK, P2.3 LED_OE_N (10k pull-up)
  *   P2.4 ILNA_ADC  ana  INA180A2 output              (ADC0.13)
- *   P2.5, P2.6, P3.0..P3.4  spare, driven low
+ *   P2.5 ITOT_ADC  ana  INA180A3 on the coax shunt R35 (ADC0.14)
+ *   P2.6, P3.0..P3.4  spare, driven low
  *   P3.7 C2D       debug; held low at reset = factory bootloader
  *
  * SYSCLK stays at the reset default, HFOSC0/8 = 3.0625 MHz, except while a
  * back-channel reply is on the air: then HFOSC0 24.5 MHz feeds the PCA,
  * whose CEX0 toggles at 12.25 MHz on P1.7.
  * The ADC always runs its SAR clock from HFO/2 = 24.5 MHz (it needs
- * 12.5-25 MHz) with the internal 1.8 V reference at gain 0.5: 3.6 V full
- * scale, independent of VDD.
+ * 12.5-25 MHz) with the precision reference (2.4 V +/-1.4 % on the VREF
+ * pin) at gain 0.5: 4.8 V full scale, independent of VDD. Inputs stay
+ * below VDD anyway.
  */
 #include <stdint.h>
 #include "efm8bb52_sfr.h"
@@ -33,7 +36,7 @@
 #include "bandplan.h"
 #include "hal.h"
 
-#define PIN_SENSE  0x01u
+#define PIN_SENSE  0x04u
 #define PIN_FAULT  0x02u
 
 SBIT(LNA_EN,       0x86);   /* P0.6 */
@@ -50,7 +53,8 @@ SBIT(LED_OE_N,     0xA3);   /* P2.3 */
 #define ADC_CH_VC    0u     /* P0.2 */
 #define ADC_CH_SCAP  1u     /* P0.3 */
 #define ADC_CH_ILNA  13u    /* P2.4 */
-#define ADC_REF_MV   3600ul /* 1.8 V / gain 0.5 */
+#define ADC_CH_ITOT  14u    /* P2.5 */
+#define ADC_REF_MV   4800ul /* VREF 2.4 V / gain 0.5 */
 #define ADC_FS12     4095u
 
 /* SYSCLK/12 = 255.2 kHz -> 1 ms; 2.042 MHz while the beacon runs */
@@ -154,19 +158,20 @@ void hal_init(void)
     g_rst = RSTSRC;                     /* supply monitor is always on (RM 9.3.3) */
 
     /* latches first: safe RF state, lamps dark, spares low */
-    P0 = 0x2Fu;                         /* SENSE, FAULT, ADCs, RX high-Z; TX, LNA_EN, LNA_PATH low */
+    P0 = 0x2Fu;                         /* VREF, FAULT, SENSE, SCAP, RX high-Z; TX, LNA_EN, LNA_PATH low */
     P1 = 0x00u;                         /* V=000 (THRU), LNA_PATH_OUT, FMN, BEACON low */
-    P2 = 0x18u;                         /* lamp chain idle, OE_N=1, P2.4 analog */
+    P2 = 0x38u;                         /* lamp chain idle, OE_N=1, P2.4/P2.5 analog */
     P3 = 0x80u;                         /* P3.0..P3.4 low, C2D released */
-    P0MDIN  = 0xF3u;                    /* P0.2, P0.3 analog                    */
+    P0MDIN  = 0xF6u;                    /* P0.0 (VREF), P0.3 analog; P0.2 digital + ADC (COEX) */
     P0MDOUT = 0xD0u;                    /* P0.4, P0.6, P0.7 push-pull           */
     P1MDIN  = 0xFFu;
     P1MDOUT = 0xFFu;
-    P2MDOUT = 0x6Fu;                    /* all but P2.4 (analog) push-pull      */
+    P2MDOUT = 0x4Fu;                    /* all but P2.4/P2.5 (analog) push-pull */
     P0SKIP  = 0xFFu;                    /* no crossbar peripherals              */
     P1SKIP  = 0xFFu;
     SFRPAGE = SFRPAGE_20;
-    P2MDIN  = 0xEFu;                    /* P2.4 analog                          */
+    P2MDIN  = 0xCFu;                    /* P2.4, P2.5 analog                    */
+    PRTDRV |= PRTDRV_COEX;              /* P0.2: port match and ADC together    */
     P2SKIP  = 0x0Fu;
     P3MDOUT = 0x1Fu;                    /* P3.0..P3.4 push-pull                 */
     SFRPAGE = SFRPAGE_0;
@@ -176,8 +181,8 @@ void hal_init(void)
 
     /* ADC: SARCLK 24.5 MHz, internal 1.8 V at gain 0.5, 4x averaging, off */
     CLKGRP0 = CLKGRP0_SAR_HFO2;
-    ADC0CF1 = ADC0CF1_TRACK;
-    ADC0CF2 = ADC0CF2_1V8;
+    ADC0CF1 = ADC0CF1_TRACK | ADC0CF1_RPCE;
+    ADC0CF2 = ADC0CF2_EXTREF;
     ADC0CN1 = ADC0CN1_AVG4;
     ADC0CN2 = 0x00u;                    /* start on ADBUSY                      */
     ADC0CN0 = ADC0CN0_GAIN_0P5;         /* ADEN = 0                             */
@@ -294,21 +299,28 @@ static uint16_t adc_mv(uint16_t code)
     return (uint16_t)(((uint32_t)code * ADC_REF_MV) / ADC_FS12);
 }
 
-void hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_ma)
+void hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_ma,
+                 uint16_t XPTR *it_ma)
 {
-    uint16_t vc, sc, ia, guard;
+    uint16_t vc, sc, ia, it, guard;
 
+    REF0CN = (uint8_t)((REF0CN & 0x0Fu) | REF0CN_EN_2V4);
+    for (guard = 0; guard < 400u; guard++)
+        ;                               /* VREF settles into 100 nF: 110 us typ */
     ADEN = 1;
     for (guard = 0; !(ADC0CN1 & ADC0CN1_POWERUP) && guard < 2000u; guard++)
         ;                               /* ADPWR delay, about 10 us */
     vc = adc_mv(adc_read(ADC_CH_VC));
     sc = adc_mv(adc_read(ADC_CH_SCAP));
     ia = adc_mv(adc_read(ADC_CH_ILNA));
+    it = adc_mv(adc_read(ADC_CH_ITOT));
     ADEN = 0;
+    REF0CN &= 0x0Fu;
 
     *vc_mv   = (uint16_t)(((uint32_t)vc * VC_DIV_NUM) / VC_DIV_DEN);
     *scap_mv = (uint16_t)(((uint32_t)sc * SC_DIV_NUM) / SC_DIV_DEN);
     *i_ma    = (uint16_t)(((uint32_t)ia * 1000u) / I_UV_PER_MA);
+    *it_ma   = (uint16_t)(((uint32_t)it * 1000u) / IT_UV_PER_MA);
 }
 
 void hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en)
@@ -348,16 +360,15 @@ void hal_panel(const uint8_t XPTR *img)
     LED_OE_N = (img[0] | img[1] | img[2] | img[3] | img[4] | img[5]) ? 0 : 1;
 }
 
-/* ---- panel mode log in flash ---------------------------------------
- * One 2 kB page (NV_PAGE). Each change appends a record 0x50 | mode;
- * the last record wins. The page is erased only when it is full, so a
- * mode change costs one byte write (70 us), not an erase.
- * Sequence per RM 4.3.3 / AN201: interrupts off, OKVDDF, key, PSCTL,
- * MOVX, PSCTL = 0. The target address is kept in DATA, not XRAM. */
-#define NV_REC(v)   ((uint8_t)(0x50u | ((v) & 3u)))
-#define NV_IS_REC(b) (((b) & 0xFCu) == 0x50u)
-
+/* ---- settings page (nvlog.c) ----------------------------------------
+ * Byte primitives on NV_PAGE. Sequence per AN201: interrupts off, key,
+ * PSCTL, MOVX, PSCTL = 0; bounds-checked; the address is kept in DATA. */
 static __data uint16_t nv_addr;
+
+uint8_t hal_nv_read(uint16_t i)
+{
+    return i < NV_PAGE_SIZE ? *(const __code uint8_t *)(NV_PAGE + i) : 0xFFu;
+}
 
 static void nv_op(uint8_t v, uint8_t erase)
 {
@@ -375,33 +386,16 @@ static void nv_op(uint8_t v, uint8_t erase)
     EA = ea;
 }
 
-uint8_t hal_nv_load(uint8_t dflt)
+void hal_nv_write(uint16_t i, uint8_t b)
 {
-    uint16_t i;
-    uint8_t b, v = dflt;
-    for (i = 0; i < NV_PAGE_SIZE; i++) {
-        b = *(const __code uint8_t *)(NV_PAGE + i);
-        if (b == 0xFFu)
-            break;
-        if (NV_IS_REC(b))
-            v = (uint8_t)(b & 3u);
-    }
-    return v;
+    nv_addr = (uint16_t)(NV_PAGE + i);
+    nv_op(b, 0);
 }
 
-void hal_nv_save(uint8_t v)
+void hal_nv_erase(void)
 {
-    uint16_t i;
-    for (i = 0; i < NV_PAGE_SIZE; i++)
-        if (*(const __code uint8_t *)(NV_PAGE + i) == 0xFFu)
-            break;
-    if (i == NV_PAGE_SIZE) {             /* page full: start over */
-        nv_addr = NV_PAGE;
-        nv_op(0xFFu, 1);
-        i = 0;
-    }
-    nv_addr = (uint16_t)(NV_PAGE + i);
-    nv_op(NV_REC(v), 0);
+    nv_addr = NV_PAGE;
+    nv_op(0xFFu, 1);
 }
 
 /* ---- back-channel beacon ------------------------------------------ */

@@ -50,6 +50,7 @@ SFR(TMR2RLL,  0xCA);
 SFR(TMR2RLH,  0xCB);
 SFR(TMR2L,    0xCE);
 SFR(TMR2H,    0xCF);
+SFR(REF0CN,   0xD1);   /* 15.4.1, pages 0x00/0x30 */
 SFR(P0SKIP,   0xD4);
 SFR(P1SKIP,   0xD5);
 SFR(PCA0CN0,  0xD8);   /* 19.4.1 */
@@ -69,6 +70,7 @@ SFR(PCA0L,    0xF9);
 SFR(PCA0H,    0xFA);
 SFR(PCA0CPL0, 0xFB);
 SFR(PCA0CPH0, 0xFC);
+SFR(PRTDRV,   0xF6);   /* 11.4.4, pages 0x00/0x20 */
 SFR(P0MAT,    0xFD);
 SFR(P0MASK,   0xFE);
 
@@ -142,5 +144,9 @@ SBIT(ADBUSY,  0xEC);  /* ADC0CN0.4 */
 #define ADC0CN1_AVG4     0x11   /* 12-bit, accumulate 4, shift right 2     */
 #define ADC0CF1_TRACK    0x3F   /* ADTK = 63 SAR clocks = 2.6 us           */
 #define ADC0CF2_1V8      0x3F   /* GND, internal 1.8 V, ADPWR = 15 (10 us) */
+#define ADC0CF2_EXTREF   0x7F   /* GND, VREF pin, ADPWR = 15 (10 us)       */
+#define ADC0CF1_RPCE     0x40   /* connect the VREF pin to the ADC         */
+#define REF0CN_EN_2V4    0xB0   /* EN, GAIN = 2x: 2.4 V on the VREF pin    */
+#define PRTDRV_COEX      0x80   /* digital and analog on the same pin      */
 
 #endif

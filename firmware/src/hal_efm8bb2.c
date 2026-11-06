@@ -275,7 +275,8 @@ static uint16_t adc_read(uint8_t ch)
     return (uint16_t)(acc >> 2);
 }
 
-void hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_ma)
+void hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_ma,
+                 uint16_t XPTR *it_ma)
 {
     uint16_t vc, sc, ia;
     uint8_t i;
@@ -291,6 +292,7 @@ void hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_
     *vc_mv   = (uint16_t)(((uint32_t)vc * VDD_MV * VC_DIV_NUM) / ((uint32_t)ADC_FS * VC_DIV_DEN));
     *scap_mv = (uint16_t)(((uint32_t)sc * VDD_MV * SC_DIV_NUM) / ((uint32_t)ADC_FS * SC_DIV_DEN));
     *i_ma    = (uint16_t)(((uint32_t)ia * VDD_MV * 1000u / ADC_FS) / I_UV_PER_MA);
+    *it_ma   = 0;                       /* no coax current monitor on this board */
 }
 
 void hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en)
@@ -330,54 +332,42 @@ void hal_panel(const uint8_t XPTR *img)
     LED_OE_N = (img[0] | img[1] | img[2] | img[3] | img[4] | img[5]) ? 0 : 1;
 }
 
-/* ---- panel mode log in flash ---------------------------------------
- * One page (NV_PAGE, 512 B). Each change appends a record 0x50 | mode;
- * the last record wins. The page is erased only when it is full, so a
- * mode change costs one byte write (~40 us), not an erase (~20 ms).
- * Flash writes need the VDD monitor on and enabled as a reset source
- * (hal_init does both); they run with interrupts off.            VERIFY */
-#define NV_REC(v)   ((uint8_t)(0x50u | ((v) & 3u)))
-#define NV_IS_REC(b) (((b) & 0xFCu) == 0x50u)
+/* ---- settings page (nvlog.c) ----------------------------------------
+ * Byte primitives on NV_PAGE. Sequence per AN201: interrupts off, key,
+ * PSCTL, MOVX, PSCTL = 0; bounds-checked; the address is kept in DATA. */
+static __data uint16_t nv_addr;
 
-static void nv_op(uint16_t addr, uint8_t v, uint8_t erase)
+uint8_t hal_nv_read(uint16_t i)
+{
+    return i < NV_PAGE_SIZE ? *(const __code uint8_t *)(NV_PAGE + i) : 0xFFu;
+}
+
+static void nv_op(uint8_t v, uint8_t erase)
 {
     uint8_t ea = EA;
+    if (nv_addr < NV_PAGE || nv_addr >= NV_PAGE + NV_PAGE_SIZE)
+        return;
     EA = 0;
     VDM0CN = VDM0CN_VDMEN;
     RSTSRC = RSTSRC_PORSF;
     FLKEY = 0xA5u;
     FLKEY = 0xF1u;
     PSCTL = erase ? 0x03u : 0x01u;      /* PSEE | PSWE, or PSWE */
-    *(__xdata uint8_t *)addr = v;
+    *(__xdata uint8_t *)nv_addr = v;
     PSCTL = 0x00u;
     EA = ea;
 }
 
-uint8_t hal_nv_load(uint8_t dflt)
+void hal_nv_write(uint16_t i, uint8_t b)
 {
-    uint16_t i;
-    uint8_t b, v = dflt;
-    for (i = 0; i < NV_PAGE_SIZE; i++) {
-        b = *(const __code uint8_t *)(NV_PAGE + i);
-        if (b == 0xFFu)
-            break;
-        if (NV_IS_REC(b))
-            v = (uint8_t)(b & 3u);
-    }
-    return v;
+    nv_addr = (uint16_t)(NV_PAGE + i);
+    nv_op(b, 0);
 }
 
-void hal_nv_save(uint8_t v)
+void hal_nv_erase(void)
 {
-    uint16_t i;
-    for (i = 0; i < NV_PAGE_SIZE; i++)
-        if (*(const __code uint8_t *)(NV_PAGE + i) == 0xFFu)
-            break;
-    if (i == NV_PAGE_SIZE) {             /* page full: start over */
-        nv_op(NV_PAGE, 0xFFu, 1);
-        i = 0;
-    }
-    nv_op((uint16_t)(NV_PAGE + i), NV_REC(v), 0);
+    nv_addr = NV_PAGE;
+    nv_op(0xFFu, 1);
 }
 
 uint8_t hal_edge_pending(void)

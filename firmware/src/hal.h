@@ -14,11 +14,14 @@ uint8_t  hal_sense(void);                /* 1 = bias present on the coax    */
 uint8_t  hal_edge_pop(uint8_t XPTR *level, uint16_t XPTR *t);
 uint8_t  hal_take_fault(void);           /* TPS2553 FAULT seen since last   */
 uint8_t  hal_take_hk(void);              /* ~6.5 s housekeeping tick        */
-void     hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_ma);
+void     hal_measure(uint16_t XPTR *vc_mv, uint16_t XPTR *scap_mv, uint16_t XPTR *i_ma,
+                     uint16_t XPTR *it_ma);   /* raw; it_ma = 0 where not fitted */
 void     hal_rf(uint8_t bank, uint8_t lna_path, uint8_t fmn, uint8_t lna_en);
 void     hal_panel(const uint8_t XPTR *img);
-uint8_t  hal_nv_load(uint8_t dflt);      /* panel mode from flash           */
-void     hal_nv_save(uint8_t v);         /* append to the flash log         */
+/* settings page primitives (nvlog.h): byte i of NV_PAGE */
+uint8_t  hal_nv_read(uint16_t i);
+void     hal_nv_write(uint16_t i, uint8_t b);
+void     hal_nv_erase(void);
 uint8_t  hal_edge_pending(void);         /* bias edge queued, not popped    */
 void     hal_beacon_on(void);            /* SYSCLK 24.5 MHz, PCA clock on P1.4 */
 void     hal_beacon_key(uint8_t on);     /* carrier on / off                */

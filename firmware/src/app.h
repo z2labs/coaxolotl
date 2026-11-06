@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include "config.h"
 #include "decoder.h"
+#include "nvlog.h"
 
 #define BOOT_LAMPTEST 1u
 #define BOOT_SWEEP    2u
@@ -53,6 +54,7 @@ typedef struct {
     uint16_t t_lna;
     uint8_t i_class;     /* I_NONE / I_LO / I_OK / I_HI              */
     uint8_t rail_low;
+    uint8_t budget;      /* coax current near the bias-T limit       */
     uint8_t scap_ok;
     uint8_t active;      /* MCU clock running (not in Snooze)        */
 
@@ -70,6 +72,14 @@ typedef struct {
     /* back-channel */
     uint8_t  reply;      /* REPLY_*, sent when the link is idle again */
     uint8_t  seq;        /* good frames applied, mod 256              */
+
+    /* measurements, calibrated (app_measure) */
+    uint16_t vc_mv, scap_mv, i_ma, it_ma;
+    uint16_t cal[CAL_N]; /* Q15 factors, CAL_*                        */
+    uint8_t  cal_dirty;  /* bit ch: factor changed, save to flash     */
+    uint8_t  cal_ch;     /* calibration sequence: channel, 0xFF idle  */
+    uint8_t  cal_n;      /* value nibbles received                    */
+    uint16_t cal_v;
 
     /* animations / timers */
     uint8_t  boot;       /* BOOT_*                                   */
@@ -92,7 +102,8 @@ typedef struct {
 void    app_init(app_t XPTR *a, uint16_t now, uint8_t rst_abnormal);
 void    app_event(app_t XPTR *a, uint8_t ev, const dec_t XPTR *d, uint16_t now);
 void    app_tick(app_t XPTR *a, uint16_t now);
-void    app_measure(app_t XPTR *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma);
+void    app_measure(app_t XPTR *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma, uint16_t it_ma);
+void    app_set_cal(app_t XPTR *a, const uint16_t XPTR *cal);   /* at boot, from flash */
 void    app_fault(app_t XPTR *a);
 void    app_set_panel(app_t XPTR *a, uint8_t mode);   /* at boot, from flash */
 void    app_set_active(app_t XPTR *a, uint8_t active, uint16_t now);

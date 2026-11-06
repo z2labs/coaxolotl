@@ -129,6 +129,12 @@
 #define I_LO_MA       60u       /* LNA current window                           */
 #define I_HI_MA       130u
 #define I_TRIP_MA     150u      /* 2 consecutive samples -> firmware trip       */
+/* whole coax current (EFM8BB52 control board: 0.1 ohm, INA180A3 100 V/V).
+ * The RTL-SDR V3 bias-T limits at about 180-200 mA; BUDGET (and the LOW
+ * lamp) warn before the box runs into it. */
+#define IT_UV_PER_MA  10000u
+#define I_BUDGET_MA   170u
+#define I_BUDGET_HYST 10u
 /* After the LNA supply is switched on, the TPS2553 may sit in current limit
  * while the load's capacitors charge (or a lamp filament warms up, 10x its
  * hot current when cold). FAULT and over-current samples are ignored for

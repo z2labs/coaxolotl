@@ -10,7 +10,7 @@
  *   --fall-delay MS   delay every falling edge (slow bias discharge)
  *   --jitter MS       uniform +/- jitter on every edge
  *   --seed N          jitter seed
- *   --ilna MA --scap MV --vc MV   simulated analog readings
+ *   --ilna MA --itot MA --scap MV --vc MV   simulated analog readings
  *   --fault-at MS     TPS2553 FAULT at this time
  *   --tail MS         keep simulating after the last edge (default 1500)
  *   --chips           print the on-air chip string of each reply
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     int n = 0, i;
 
     memset(&S, 0, sizeof S);
-    S.vc_mv = 4300; S.scap_mv = 3900; S.i_ma = 100; S.fault_at = -1; S.verbose = 1;
+    S.vc_mv = 4300; S.scap_mv = 3900; S.i_ma = 100; S.it_ma = 140; S.fault_at = -1; S.verbose = 1;
 
     for (i = 1; i < argc; i++) {
         const char *a = argv[i];
@@ -38,6 +38,7 @@ int main(int argc, char **argv)
         else if (!strcmp(a, "--jitter")) { jit = atof(v); i++; }
         else if (!strcmp(a, "--seed")) { seed = (unsigned)atoi(v); i++; }
         else if (!strcmp(a, "--ilna")) { S.i_ma = (uint16_t)atoi(v); i++; }
+        else if (!strcmp(a, "--itot")) { S.it_ma = (uint16_t)atoi(v); i++; }
         else if (!strcmp(a, "--scap")) { S.scap_mv = (uint16_t)atoi(v); i++; }
         else if (!strcmp(a, "--vc")) { S.vc_mv = (uint16_t)atoi(v); i++; }
         else if (!strcmp(a, "--fault-at")) { S.fault_at = atof(v); i++; }

@@ -25,6 +25,13 @@ static void update_rf(app_t XPTR *a)
     a->dirty = 1;
 }
 
+void app_set_cal(app_t XPTR *a, const uint16_t XPTR *cal)
+{
+    uint8_t k;
+    for (k = 0; k < CAL_N; k++)
+        a->cal[k] = cal[k];
+}
+
 void app_init(app_t XPTR *a, uint16_t now, uint8_t rst_abnormal)
 {
     uint8_t XPTR *p = (uint8_t XPTR *)a;
@@ -33,6 +40,9 @@ void app_init(app_t XPTR *a, uint16_t now, uint8_t rst_abnormal)
         p[i] = 0;
 
     a->quiet   = CFG_DEFAULT_QUIET;
+    for (i = 0; i < CAL_N; i++)
+        a->cal[i] = CAL_ONE;
+    a->cal_ch  = 0xFFu;
     a->panel   = CFG_DEFAULT_PANEL;
     a->st_rst  = rst_abnormal ? 1u : 0u;
     a->link    = 1;
@@ -107,10 +117,51 @@ void app_set_panel(app_t XPTR *a, uint8_t mode)
     a->dirty = 1;
 }
 
+/* Calibration over the link: config frames with PM = 3 carry one nibble
+ * each (docs/protocol.md). Header nibble 0..3: adjust channel ch, then 4
+ * value nibbles (int16, MSB first): cal *= 1 + v / 32768. Header 8..11:
+ * reset channel ch to 1.0. Any other frame or an error drops a half-done
+ * sequence. */
+static void cal_nibble(app_t XPTR *a, uint8_t nib)
+{
+    uint32_t f;
+    uint8_t ch;
+
+    if (a->cal_ch == 0xFFu) {
+        ch = (uint8_t)(nib & 3u);
+        if (nib & 8u) {
+            a->cal[ch] = CAL_ONE;
+            a->cal_dirty |= (uint8_t)(1u << ch);
+        } else if (!(nib & 4u)) {
+            a->cal_ch = ch;
+            a->cal_n = 0;
+            a->cal_v = 0;
+        }
+        return;
+    }
+    a->cal_v = (uint16_t)((a->cal_v << 4) | (nib & 0xFu));
+    if (++a->cal_n < 4u)
+        return;
+    ch = a->cal_ch;
+    a->cal_ch = 0xFFu;
+    f = ((uint32_t)a->cal[ch] * (uint32_t)(32768L + (int16_t)a->cal_v)) >> 15;
+    if (f < CAL_ONE / 2u)                 /* keep within 0.5 .. 1.5 */
+        f = CAL_ONE / 2u;
+    else if (f > CAL_ONE + CAL_ONE / 2u)
+        f = CAL_ONE + CAL_ONE / 2u;
+    a->cal[ch] = (uint16_t)f;
+    a->cal_dirty |= (uint8_t)(1u << ch);
+}
+
 static void apply_config(app_t XPTR *a, uint8_t p)
 {
-    uint8_t m = CF_PANEL(p);          /* 3 = reserved: no change */
-    if (m <= PANEL_OFF && m != a->panel) {
+    uint8_t m = CF_PANEL(p);
+    if (m == 3u) {
+        cal_nibble(a, (uint8_t)(p & 0x0Fu));
+        return;
+    }
+    a->cal_ch = 0xFFu;
+    if (m != a->panel) {
         app_set_panel(a, m);
         a->nv_dirty = 1;
     }
@@ -145,10 +196,12 @@ void app_event(app_t XPTR *a, uint8_t ev, const dec_t XPTR *d, uint16_t now)
         a->result = RES_OK;
         a->reply = REPLY_ACK;
         a->seq++;
-        if (d->ftype == FT_CONFIG)
+        if (d->ftype == FT_CONFIG) {
             apply_config(a, d->payload);
-        else
+        } else {
+            a->cal_ch = 0xFFu;
             apply_payload(a, d->payload, now);
+        }
         break;
     case EV_FRAME_ERR:
         a->frame_n = d->nbits;
@@ -157,6 +210,7 @@ void app_event(app_t XPTR *a, uint8_t ev, const dec_t XPTR *d, uint16_t now)
         a->result = RES_ERR;
         a->err = d->err;
         a->reply = REPLY_NAK;
+        a->cal_ch = 0xFFu;
         a->err_blinks = SHOW(a) ? 6u : 0u;
         a->t_blink = now;
         if (d->err == ERR_DROP)
@@ -191,9 +245,31 @@ void app_fault(app_t XPTR *a)
     update_rf(a);
 }
 
-void app_measure(app_t XPTR *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma)
+static uint16_t cal_apply(uint16_t raw, uint16_t q15)
+{
+    return (uint16_t)(((uint32_t)raw * q15) >> 15);
+}
+
+void app_measure(app_t XPTR *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma, uint16_t it_ma)
 {
     uint8_t v;
+
+    a->vc_mv   = vc_mv   = cal_apply(vc_mv, a->cal[CAL_VCOAX]);
+    a->scap_mv = scap_mv = cal_apply(scap_mv, a->cal[CAL_VSCAP]);
+    a->i_ma    = i_ma    = cal_apply(i_ma, a->cal[CAL_ILNA]);
+    a->it_ma   = it_ma   = cal_apply(it_ma, a->cal[CAL_ITOT]);
+
+    if (a->link) {
+        v = a->budget;
+        if (!v && it_ma >= I_BUDGET_MA)
+            v = 1;
+        else if (v && it_ma < I_BUDGET_MA - I_BUDGET_HYST)
+            v = 0;
+        if (v != a->budget) {
+            a->budget = v;
+            a->dirty = 1;
+        }
+    }
 
     if (a->link) {
         v = a->rail_low;

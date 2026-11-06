@@ -23,7 +23,7 @@ CC_HOST  ?= cc
 BUILD    := build
 OBJ      := $(BUILD)/$(MCU)
 
-SRC_COMMON := src/decoder.c src/app.c src/panel.c src/beacon.c
+SRC_COMMON := src/decoder.c src/app.c src/panel.c src/beacon.c src/nvlog.c
 
 ifeq ($(MCU),bb52)
 # EFM8BB52F32G: 30 kB code in 2 kB pages (0x0000-0x77FF), the last one is the

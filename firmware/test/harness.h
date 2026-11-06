@@ -15,6 +15,24 @@
 #include "app.h"
 #include "panel.h"
 #include "beacon.h"
+#include "nvlog.h"
+
+/* ---- flash page emulation for nvlog (writes only clear bits) ------- */
+static uint8_t nv_page[NV_PAGE_SIZE];
+static int nv_erases, nv_bad, nv_cut = -1;
+static void nv_flash_reset(void) { memset(nv_page, 0xFF, sizeof nv_page); nv_erases = nv_bad = 0; }
+static int  nv_flash_erases(void) { return nv_erases; }
+static int  nv_flash_violations(void) { return nv_bad; }
+static void nv_flash_cut_after(int writes) { nv_cut = writes; }
+uint8_t hal_nv_read(uint16_t i) { return i < NV_PAGE_SIZE ? nv_page[i] : 0xFF; }
+void hal_nv_write(uint16_t i, uint8_t b)
+{
+    if (nv_cut == 0) return;                 /* power gone */
+    if (nv_cut > 0) nv_cut--;
+    if (i >= NV_PAGE_SIZE || (b & ~nv_page[i])) { nv_bad++; return; }
+    nv_page[i] &= b;
+}
+void hal_nv_erase(void) { if (nv_cut == 0) return; memset(nv_page, 0xFF, sizeof nv_page); nv_erases++; }
 
 typedef struct { double t; int lvl; } edge_t;     /* t in ms */
 
@@ -34,7 +52,7 @@ typedef struct {
     int     chips;              /* print the chip string of each reply */
     int     max_lamps;          /* outside boot */
     /* simulated analog inputs */
-    uint16_t vc_mv, scap_mv, i_ma;
+    uint16_t vc_mv, scap_mv, i_ma, it_ma;
     double   fault_at;          /* ms, <0 = never (one-shot) */
     int      verbose;
     uint8_t  init_panel;        /* panel mode "loaded from flash" at boot */
@@ -121,14 +139,14 @@ static void sim_run(sim_t *s, const edge_t *e, int n, double t_end)
         if (t >= next_meas) {
             next_meas = t + 1000.0;
             if (s->dec.level)
-                app_measure(&s->app, s->vc_mv, s->scap_mv, s->i_ma);
+                app_measure(&s->app, s->vc_mv, s->scap_mv, s->i_ma, s->it_ma);
         }
         app_tick(&s->app, now);
         if (bcn_due(&s->app, &s->dec)) {               /* main.c: reply() */
             txrec_t *r = &s->tx[s->ntx < MAXTX ? s->ntx++ : MAXTX - 1];
             int k;
-            app_measure(&s->app, s->vc_mv, s->scap_mv, s->i_ma);
-            bcn_build(r->pkt, &s->app, s->vc_mv, s->scap_mv, s->i_ma);
+            app_measure(&s->app, s->vc_mv, s->scap_mv, s->i_ma, s->it_ma);
+            bcn_build(r->pkt, &s->app);
             r->t = t;
             s->app.reply = REPLY_NONE;
             if (s->verbose) {

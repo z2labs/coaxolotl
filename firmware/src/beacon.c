@@ -28,8 +28,7 @@ static uint8_t sat8(uint16_t v)
     return (uint8_t)(v > 255u ? 255u : v);
 }
 
-void bcn_build(uint8_t XPTR *pkt, const app_t XPTR *a,
-               uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma)
+void bcn_build(uint8_t XPTR *pkt, const app_t XPTR *a)
 {
     uint8_t err = (a->reply == REPLY_NAK) ? a->err : ERR_NONE;
 
@@ -40,11 +39,12 @@ void bcn_build(uint8_t XPTR *pkt, const app_t XPTR *a,
     pkt[2] = (uint8_t)((a->trip ? 0x80u : 0u) | (a->rail_low ? 0x40u : 0u) |
                        (a->scap_ok ? 0x20u : 0u) | (a->st_drop ? 0x10u : 0u) |
                        (a->st_glt ? 0x08u : 0u) | (a->st_rst ? 0x04u : 0u) |
-                       (a->lna_en ? 0x02u : 0u));
-    pkt[3] = sat8((uint16_t)((vc_mv + BCN_MV_LSB / 2u) / BCN_MV_LSB));
-    pkt[4] = sat8(i_ma);                 /* raw: shows a stuck switch too */
-    pkt[5] = sat8((uint16_t)((scap_mv + BCN_MV_LSB / 2u) / BCN_MV_LSB));
-    pkt[6] = bcn_crc8(pkt, 6u);
+                       (a->lna_en ? 0x02u : 0u) | (a->budget ? 0x01u : 0u));
+    pkt[3] = sat8((uint16_t)((a->vc_mv + BCN_MV_LSB / 2u) / BCN_MV_LSB));
+    pkt[4] = sat8(a->i_ma);              /* also when off: shows a stuck switch */
+    pkt[5] = sat8((uint16_t)((a->scap_mv + BCN_MV_LSB / 2u) / BCN_MV_LSB));
+    pkt[6] = sat8((uint16_t)((a->it_ma + BCN_MA_LSB / 2u) / BCN_MA_LSB));
+    pkt[7] = bcn_crc8(pkt, 7u);
 }
 
 uint8_t bcn_chip(const uint8_t XPTR *pkt, uint8_t i)

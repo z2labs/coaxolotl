@@ -18,6 +18,7 @@
 #include "app.h"
 #include "panel.h"
 #include "beacon.h"
+#include "nvlog.h"
 #include "hal.h"
 
 static dec_t   dec;
@@ -32,11 +33,21 @@ static void pump(uint8_t ev, uint16_t now)
     }
 }
 
+static nv_t nv;
+
 static void refresh(void)
 {
+    uint8_t k;
+
     if (app.nv_dirty) {
         app.nv_dirty = 0;
-        hal_nv_save(app.panel);
+        nv_put_panel(&nv, app.panel);
+    }
+    if (app.cal_dirty) {
+        for (k = 0; k < CAL_N; k++)
+            if (app.cal_dirty & (1u << k))
+                nv_put_cal(&nv, k, app.cal[k]);
+        app.cal_dirty = 0;
     }
     if (app.rf_dirty) {
         app.rf_dirty = 0;
@@ -56,12 +67,12 @@ static uint8_t pkt[BCN_LEN];
  * A bias edge means the host is talking again: stop and listen. */
 static void reply(void)
 {
-    uint16_t t0, vc, sc, ia;
+    uint16_t t0, vc, sc, ia, it;
     uint8_t i, c;
 
-    hal_measure(&vc, &sc, &ia);
-    app_measure(&app, vc, sc, ia);
-    bcn_build(pkt, &app, vc, sc, ia);
+    hal_measure(&vc, &sc, &ia, &it);
+    app_measure(&app, vc, sc, ia, it);
+    bcn_build(pkt, &app);
     app.reply = REPLY_NONE;
     refresh();
 
@@ -81,13 +92,15 @@ static void reply(void)
 
 void main(void)
 {
-    uint16_t now, t_meas, te, vc, sc, ia;
+    uint16_t now, t_meas, te, vc, sc, ia, it;
     uint8_t lvl;
 
     hal_init();
     now = hal_now();
     app_init(&app, now, hal_reset_abnormal());
-    app_set_panel(&app, hal_nv_load(CFG_DEFAULT_PANEL));
+    nv_load(&nv, CFG_DEFAULT_PANEL);
+    app_set_panel(&app, nv.panel);
+    app_set_cal(&app, nv.cal);
     dec_init(&dec, hal_sense(), now);
     t_meas = now;
     refresh();
@@ -107,8 +120,8 @@ void main(void)
         if (hal_take_hk() || (uint16_t)(now - t_meas) >= T_MEAS_ACT) {
             t_meas = now;
             if (hal_sense()) {
-                hal_measure(&vc, &sc, &ia);
-                app_measure(&app, vc, sc, ia);
+                hal_measure(&vc, &sc, &ia, &it);
+                app_measure(&app, vc, sc, ia, it);
             }
         }
 

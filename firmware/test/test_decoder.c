@@ -19,7 +19,7 @@ static edge_t E[8192];
 static void sim_defaults(void)
 {
     memset(&S, 0, sizeof S);
-    S.vc_mv = 4300; S.scap_mv = 3900; S.i_ma = 100; S.fault_at = -1;
+    S.vc_mv = 4300; S.scap_mv = 3900; S.i_ma = 100; S.it_ma = 140; S.fault_at = -1;
 }
 
 static int count_ev(uint8_t ev) { int i, c = 0; for (i = 0; i < S.nev; i++) c += S.ev[i].ev == ev; return c; }
@@ -324,7 +324,7 @@ static void test_beacon(void)
     double t;
 
     CHECK(bcn_crc8(check, 9) == 0xFB, "CRC-8 check value 0x%02X (want 0xFB)", bcn_crc8(check, 9));
-    CHECK(BCN_NCHIPS == 145u, "chip count %u", BCN_NCHIPS);
+    CHECK(BCN_NCHIPS == 161u, "chip count %u", BCN_NCHIPS);
 
     /* boot alone: one HELLO once the show is over */
     sim_defaults(); n = 0; E[n++] = (edge_t){ 0, 1 };
@@ -341,9 +341,9 @@ static void test_beacon(void)
     CHECK((r->pkt[0] >> 6) == REPLY_ACK && ((r->pkt[0] >> 3) & 7) == ERR_NONE && (r->pkt[0] & 7) == 1,
           "ACK header 0x%02X", r->pkt[0]);
     CHECK(r->pkt[1] == 0xDC, "state byte 0x%02X (F6 LNA FMN)", r->pkt[1]);
-    CHECK(r->pkt[3] == 211 && r->pkt[4] == 97 && r->pkt[5] == 181,
-          "readings %u %u %u", r->pkt[3], r->pkt[4], r->pkt[5]);
-    CHECK(bcn_crc8(r->pkt, 6) == r->pkt[6], "CRC in packet");
+    CHECK(r->pkt[3] == 211 && r->pkt[4] == 97 && r->pkt[5] == 181 && r->pkt[6] == 70,
+          "readings %u %u %u %u", r->pkt[3], r->pkt[4], r->pkt[5], r->pkt[6]);
+    CHECK(bcn_crc8(r->pkt, 7) == r->pkt[7], "CRC in packet");
     { double last_rise = E[n - 1].t;
       CHECK(r->t - last_rise >= 299 && r->t - last_rise <= 302, "reply %.0f ms after last gap",
             r->t - last_rise); }
@@ -387,6 +387,99 @@ static void test_beacon(void)
           S.app.panel == PANEL_BANDS, "config frame ACKed, state F6 LNA kept (ntx=%d)", S.ntx);
 }
 
+/* config frame PM = 3: one calibration nibble per frame */
+static double add_nibble(double t, int *n, uint8_t nib)
+{
+    return add_frame_t(E, n, t, 1, (uint8_t)(0x30u | (nib & 0xFu)), G0, G1, ON);
+}
+
+static void test_measure_cal(void)
+{
+    const txrec_t *r;
+    int n;
+    double t;
+    uint8_t img[PANEL_BYTES];
+
+    /* coax current near the bias-T limit: BUDGET flag and the LOW lamp */
+    sim_defaults(); S.it_ma = 182;
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_frame(E, &n, 1500, (6 << 3) | 4, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    r = &S.tx[S.ntx - 1];
+    panel_render(&S.app, img);
+    CHECK((r->pkt[2] & 0x01) && r->pkt[6] == 91 && !S.app.rail_low && ((img[L_LOW >> 3] >> (L_LOW & 7)) & 1),
+          "BUDGET: flags 0x%02X I_TOT %u, LOW lamp", r->pkt[2], r->pkt[6]);
+    sim_defaults(); S.it_ma = 150;
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_frame(E, &n, 1500, (6 << 3) | 4, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    CHECK(!(S.tx[S.ntx - 1].pkt[2] & 0x01), "no BUDGET at 150 mA");
+
+    /* VCOAX +2 % (v = 655 = 0x028F), then the reading follows */
+    sim_defaults();
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = 1500;
+    t = add_nibble(t, &n, 0x0) + 500;
+    t = add_nibble(t, &n, 0x0) + 500;
+    t = add_nibble(t, &n, 0x2) + 500;
+    t = add_nibble(t, &n, 0x8) + 500;
+    t = add_nibble(t, &n, 0xF) + 500;
+    t = add_frame(E, &n, t, (6 << 3) | 4, G0, G1, ON);
+    sim_run(&S, E, n, t + 1500);
+    r = &S.tx[S.ntx - 1];
+    CHECK(S.app.cal[CAL_VCOAX] == 33423 && S.app.cal_dirty == 1 && S.app.cal_ch == 0xFF,
+          "cal factor %u dirty %u", S.app.cal[CAL_VCOAX], S.app.cal_dirty);
+    CHECK(r->pkt[3] == 219 && S.app.vc_mv == 4385, "calibrated VCOAX %u mV (pkt %u)", S.app.vc_mv, r->pkt[3]);
+    CHECK(S.app.panel == PANEL_FULL, "calibration frames leave the panel mode alone");
+
+    /* a state frame in the middle drops the sequence; reset nibble sets 1.0 */
+    sim_defaults();
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    t = add_nibble(1500, &n, 0x3) + 500;               /* adjust I_TOT ... */
+    t = add_nibble(t, &n, 0x7) + 500;
+    t = add_frame(E, &n, t, (6 << 3) | 4, G0, G1, ON) + 500;   /* ... interrupted */
+    t = add_nibble(t, &n, 0x1) + 500;                  /* lone value nibble: header (adjust ch 1) */
+    sim_run(&S, E, n, t + 1500);
+    CHECK(S.app.cal[CAL_ITOT] == CAL_ONE && S.app.cal_ch == 1, "interrupted sequence dropped");
+    S.app.cal[CAL_ILNA] = 30000;
+    S.app.cal_ch = 0xFF;
+    app_event(&S.app, EV_NONE, &S.dec, 0);
+    { dec_t d = S.dec; d.ftype = FT_CONFIG; d.payload = 0x30 | 0x8 | CAL_ILNA;
+      app_event(&S.app, EV_FRAME_OK, &d, 0); }
+    CHECK(S.app.cal[CAL_ILNA] == CAL_ONE && (S.app.cal_dirty & (1 << CAL_ILNA)), "reset nibble");
+}
+
+/* nvlog on a RAM page: writes can only clear bits, like flash */
+static void test_nvlog(void)
+{
+    nv_t nv;
+    int i, ok = 1;
+
+    nv_flash_reset();
+    nv_load(&nv, 0);
+    CHECK(nv.panel == 0 && nv.cal[0] == CAL_ONE && nv.cal[3] == CAL_ONE, "empty page: defaults");
+    nv_put_panel(&nv, 2);
+    nv_put_cal(&nv, CAL_ITOT, 31000);
+    nv_put_cal(&nv, CAL_VCOAX, 33000);
+    nv_load(&nv, 0);
+    CHECK(nv.panel == 2 && nv.cal[CAL_ITOT] == 31000 && nv.cal[CAL_VCOAX] == 33000, "records read back");
+    for (i = 0; i < 1000; i++) {                       /* many changes: page rolls over */
+        nv_put_cal(&nv, CAL_ILNA, (uint16_t)(30000 + i));
+        nv_put_panel(&nv, (uint8_t)(i % 3));
+    }
+    nv_load(&nv, 0);
+    ok = nv.panel == (999 % 3) && nv.cal[CAL_ILNA] == 30999 && nv.cal[CAL_ITOT] == 31000 &&
+         nv.cal[CAL_VCOAX] == 33000 && nv_flash_erases() > 0 && !nv_flash_violations();
+    CHECK(ok, "rollover keeps every setting (erases %d, bad writes %d)", nv_flash_erases(),
+          nv_flash_violations());
+    /* power cut after the value bytes of a cal record, before its header */
+    nv_flash_cut_after(2);
+    nv_put_cal(&nv, CAL_VSCAP, 12345);
+    nv_flash_cut_after(-1);
+    nv_load(&nv, 0);
+    CHECK(nv.cal[CAL_VSCAP] == CAL_ONE && nv.cal[CAL_ILNA] == 30999, "torn record ignored");
+}
+
 static void test_budget(void)
 {
     /* worst plausible panel: every sticky, errors, LNA lamps, show mode */
@@ -418,6 +511,8 @@ int main(void)
     test_app();
     test_panel_modes();
     test_beacon();
+    test_measure_cal();
+    test_nvlog();
     test_budget();
     printf("%s: %d/%d checks passed\n", fails ? "FAILED" : "OK", checks - fails, checks);
     return fails ? 1 : 0;

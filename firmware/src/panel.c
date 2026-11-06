@@ -74,7 +74,7 @@ static void render_full(const app_t XPTR *a, uint8_t XPTR *img)
         on(img, L_RUN);
     if (a->scap_ok || a->hold_phase)
         on(img, L_HOLD);
-    if (a->rail_low)
+    if (a->rail_low || a->budget)         /* weak bias or near the bias-T limit */
         on(img, L_LOW);
     if (a->quiet)
         on(img, L_QUIET);
