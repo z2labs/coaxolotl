@@ -82,6 +82,29 @@ python3 host/coaxolotl.py send --bank 6 --lna --listen
   `--clr` → the LNA comes back.
 * Lower the bias (long cable or a lab supply): below 3.9 V, LOW lights.
 
+### Lamp as a dummy LNA (control board)
+
+Without an RF board, put a small filament lamp on LNA_VCC: J6 pin 2 to pin 9
+or 10 (GND). Solder a 2.54 mm pitch screw terminal block into J6 (10 poles,
+or 2-pole blocks side by side); the board needs no change. The lamp sees
+about 4.15 V (VMAIN minus the TPS2553 and the 0.39 Ω shunt), and draws
+roughly I_rated × (4.15 V / V_rated)^0.55:
+
+| Lamp | Draws at 4.15 V | Box shows |
+|---|---|---|
+| 5 V 60 mA | ~55 mA | I-LO |
+| 5 V 100 mA, 6 V 100 mA | ~90 / ~80 mA | I-OK |
+| 4.5 V 300 mA (torch bulb) | over the limit | TPS2553 limits, TRIP after the soft start, the lamp goes dark; Clear brings it back |
+
+* A cold filament takes about 10× its hot current. The TPS2553 holds it at
+  its limit (R5) while it warms up, and the firmware ignores FAULT and
+  over-current samples for 500 ms after the LNA supply comes on
+  (`T_LNA_SOFT`). A lamp that is still over the limit after that trips.
+* Keep the lamp ≤ 100 mA: the bias-T budget is about 180 mA in total.
+* The LNA supply is on whenever the box runs and is not tripped; the LNA
+  checkbox only moves the RF switches. So the lamp lights after the boot
+  show and goes dark on TRIP.
+
 ## 5. Snooze build (the real one)
 
 ```

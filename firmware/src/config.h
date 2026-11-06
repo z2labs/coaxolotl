@@ -129,5 +129,10 @@
 #define I_LO_MA       60u       /* LNA current window                           */
 #define I_HI_MA       130u
 #define I_TRIP_MA     150u      /* 2 consecutive samples -> firmware trip       */
+/* After the LNA supply is switched on, the TPS2553 may sit in current limit
+ * while the load's capacitors charge (or a lamp filament warms up, 10x its
+ * hot current when cold). FAULT and over-current samples are ignored for
+ * this long; the TPS2553 still limits the current meanwhile. */
+#define T_LNA_SOFT    MS2T(500)
 
 #endif

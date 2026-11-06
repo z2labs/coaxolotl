@@ -191,6 +191,22 @@ static void test_app(void)
     sim_run(&S, E, n, t + 800);
     CHECK(!S.app.trip && S.app.lna_path && !S.app.st_drop, "CLR clears trip and stickies");
 
+    /* soft start: a FAULT right after the LNA supply comes on (cold lamp,
+     * charging caps) is ignored; the same FAULT later trips */
+    sim_defaults();
+    n = 0; E[n++] = (edge_t){ 0, 1 };
+    sim_run(&S, E, n, 1400);
+    { uint16_t t_on = S.app.t_lna; double ms_on = (double)t_on * 1000.0 / TICK_HZ;
+      CHECK(S.app.lna_en && S.app.lna_soft, "LNA on after boot, soft start running");
+      sim_defaults(); S.fault_at = ms_on + 100;
+      n = 0; E[n++] = (edge_t){ 0, 1 };
+      sim_run(&S, E, n, ms_on + 800);
+      CHECK(!S.app.trip && S.app.lna_en && !S.app.lna_soft, "FAULT 100 ms after LNA on ignored");
+      sim_defaults(); S.fault_at = ms_on + 700;
+      n = 0; E[n++] = (edge_t){ 0, 1 };
+      sim_run(&S, E, n, ms_on + 1200);
+      CHECK(S.app.trip && !S.app.lna_en, "FAULT 700 ms after LNA on trips"); }
+
     sim_defaults();                                             /* over-current by measurement */
     S.i_ma = 170;
     n = 0; E[n++] = (edge_t){ 0, 1 };
@@ -355,6 +371,7 @@ static void test_beacon(void)
     sim_defaults(); S.i_ma = 170;
     n = 0; E[n++] = (edge_t){ 0, 1 };
     t = add_frame(E, &n, 1500, (5 << 3) | 4, G0, G1, ON);
+    t = add_frame(E, &n, t + 1300, (5 << 3) | 4, G0, G1, ON);   /* poll */
     sim_run(&S, E, n, t + 1500);
     r = &S.tx[S.ntx - 1];
     CHECK((r->pkt[2] & 0x80) && !(r->pkt[2] & 0x02) && !(r->pkt[1] & 0x08) && r->pkt[4] == 170,

@@ -58,6 +58,16 @@ void app_set_active(app_t XPTR *a, uint8_t active, uint16_t now)
     }
 }
 
+/* LNA supply on; start the soft-start window if it was off */
+static void lna_on(app_t XPTR *a, uint16_t now)
+{
+    if (!a->lna_en) {
+        a->lna_soft = 1;
+        a->t_lna = now;
+    }
+    a->lna_en = 1;
+}
+
 static void apply_payload(app_t XPTR *a, uint8_t p, uint16_t now)
 {
     uint8_t nb = PL_BANK(p);
@@ -73,7 +83,7 @@ static void apply_payload(app_t XPTR *a, uint8_t p, uint16_t now)
         a->trip = 0;
         a->trip_cnt = 0;
         if (a->boot == BOOT_DONE)
-            a->lna_en = 1;        /* retry the LNA after a trip */
+            lna_on(a, now);       /* retry the LNA after a trip */
     }
     if (!a->quiet && a->panel != PANEL_OFF && nb != a->bank) {
         a->sw_active = 1;         /* lamp walks to the new bank */
@@ -173,7 +183,7 @@ void app_event(app_t XPTR *a, uint8_t ev, const dec_t XPTR *d, uint16_t now)
 
 void app_fault(app_t XPTR *a)
 {
-    if (a->trip)
+    if (a->trip || a->lna_soft)
         return;
     a->trip = 1;
     a->lna_en = 0;                /* cut LNA supply, route around it */
@@ -208,7 +218,7 @@ void app_measure(app_t XPTR *a, uint16_t vc_mv, uint16_t scap_mv, uint16_t i_ma)
     }
 
     if (a->lna_en && a->link) {
-        if (i_ma >= I_TRIP_MA) {
+        if (i_ma >= I_TRIP_MA && !a->lna_soft) {
             if (++a->trip_cnt >= 2u) {
                 app_fault(a);
                 return;
@@ -235,7 +245,8 @@ void app_tick(app_t XPTR *a, uint16_t now)
             a->t_boot = now;
             a->dirty = 1;
             if (a->boot == BOOT_DONE) {
-                a->lna_en = (uint8_t)!a->trip;
+                if (!a->trip)
+                    lna_on(a, now);
                 a->reply = REPLY_HELLO;
                 update_rf(a);
             }
@@ -248,7 +259,8 @@ void app_tick(app_t XPTR *a, uint16_t now)
             a->dirty = 1;
             if (++a->boot_i >= 48u) {
                 a->boot = BOOT_DONE;
-                a->lna_en = (uint8_t)!a->trip;   /* LNA on after the show */
+                if (!a->trip)
+                    lna_on(a, now);              /* LNA on after the show */
                 a->reply = REPLY_HELLO;
                 update_rf(a);
             }
@@ -256,6 +268,8 @@ void app_tick(app_t XPTR *a, uint16_t now)
         return;
     }
 
+    if (a->lna_soft && ELAPSED(now, a->t_lna, T_LNA_SOFT))
+        a->lna_soft = 0;
     if (a->sw_active && ELAPSED(now, a->t_sw, T_BANKSTEP)) {
         a->t_sw = now;
         if (a->sw_pos < a->bank)
@@ -294,6 +308,6 @@ void app_tick(app_t XPTR *a, uint16_t now)
 uint8_t app_busy(const app_t XPTR *a)
 {
     return (uint8_t)(a->boot != BOOT_DONE || a->sw_active || a->err_blinks ||
-                     a->bit_lamp || a->run_hb ||
+                     a->bit_lamp || a->run_hb || a->lna_soft ||
                      (!a->scap_ok && SHOW(a) && a->link));
 }

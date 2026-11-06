@@ -49,6 +49,8 @@ typedef struct {
     uint8_t link;        /* bias present                             */
     uint8_t trip;        /* LNA over-current, latched until CLR      */
     uint8_t trip_cnt;
+    uint8_t lna_soft;    /* LNA supply just switched on: no trip yet */
+    uint16_t t_lna;
     uint8_t i_class;     /* I_NONE / I_LO / I_OK / I_HI              */
     uint8_t rail_low;
     uint8_t scap_ok;
