@@ -337,7 +337,16 @@ if "R35" in fps and "U20" in fps:
             put("U20", rx, uy, ur)
             KELVIN = (ry, d)
             break
-    print("coax shunt R35/U20:", "at L7.1" if KELVIN else "NO ROOM next to L7.1 (placed by partner)")
+    print("coax shunt R35/U20:", "at L7.1" if KELVIN else "NO ROOM next to L7.1 (placed by partner)",
+          f"L7.1 {p1} L7.2 {p2} R35 ({rx:.2f},{ry:.2f}) rot {rr}")
+    if not KELVIN:
+        for nm, bx, yy in (("R35", bx_r, ry), ("U20", bx_u, uy)):
+            r_ = (bx[0] + rx, bx[1] + yy, bx[2] + rx, bx[3] + yy)
+            hits = [owner[i] for i, (a, b_, c, e) in enumerate(occupied)
+                    if r_[0] < c + 0.2 and r_[2] > a - 0.2 and r_[1] < e + 0.2 and r_[3] > b_ - 0.2]
+            hb = [k for k in BLOCK if r_[0] < k[2] and r_[2] > k[0] and r_[1] < k[3] and r_[3] > k[1]]
+            print("  ", nm, [round(v, 2) for v in r_], "hits", hits, "blocks", hb[:3],
+                  "edge" if r_[0] < EDGE or r_[1] < EDGE or r_[2] > W - EDGE or r_[3] > H - EDGE else "")
 
 # QFN20 MCU: a staggered fan-out via per signal pin
 # fan-out vias per signal pin: QFN20 (EFM8BB21, COAX_MCU=bb21) or QFN32 (EFM8BB52, the default here; spares and N/C
