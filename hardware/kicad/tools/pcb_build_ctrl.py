@@ -469,6 +469,14 @@ def add_track(a, b, w, net="GND", layer=pcbnew.F_Cu):
 
 
 vias, tracks = [], []
+# lamp anode buses: each row of 24 anodes (pad 2, VLED) is one straight 0.4 mm track, drawn before routing. Left to
+# the router, the lower row's bus came out open on some runs (the upper row's cathode lines box its anodes in); now
+# those lines cross it on B.Cu instead
+for row in (0, 1):
+    for i in range(23):
+        a, b_ = f"D{7 + row * 24 + i}", f"D{8 + row * 24 + i}"
+        if (a, "2") in padpos and (b_, "2") in padpos and fps[a].FindPadByNumber("2").GetNetname() == "VLED":
+            add_track(padpos[(a, "2")], padpos[(b_, "2")], 0.4, "VLED")
 if KELVIN:
     # coax current path L7.1 -> R35.1 (1 mm), and the two Kelvin sense stubs from U20 IN+/IN- straight into the
     # inner half of the shunt pads
