@@ -1471,7 +1471,7 @@ def write_project(root):
             "meta": {"version": 3},
             "netclass_patterns": [{"netclass": "POWER", "pattern": p} for p in
                                   RAILS + ["LNA_SW", "?3V3", "HU_FAST", "SC_CHG", "VSCAP"] +
-                                  (["VCOAX_IN", "BT_1", "BT_2"] if CTRL else [])],
+                                  (["*/VCOAX_IN", "Net-(L5-*", "Net-(L6-*", "Net-(L7-*"] if CTRL else [])],
             # "?3V3", not "+3V3": a leading "+" is not a valid regular expression, and tools that try a pattern
             # as a regex when it has no wildcard (srouter via_rescue) stop on it
         },

@@ -472,8 +472,10 @@ vias, tracks = [], []
 if KELVIN:
     # coax current path L7.1 -> R35.1 (1 mm), and the two Kelvin sense stubs from U20 IN+/IN- straight into the
     # inner half of the shunt pads
-    add_track(padpos[("L7", "1")], padpos[("R35", "1")], 1.0, "VCOAX_IN")
-    for pin, pad, net in (("3", "1", "VCOAX_IN"), ("4", "2", "VCOAX")):
+    nin = fps["R35"].FindPadByNumber("1").GetNetname()        # local net: "/<sheet>/VCOAX_IN"
+    nout = fps["R35"].FindPadByNumber("2").GetNetname()
+    add_track(padpos[("L7", "1")], padpos[("R35", "1")], 1.0, nin)
+    for pin, pad, net in (("3", "1", nin), ("4", "2", nout)):
         q = padpos[("U20", pin)]
         add_track(q, (q[0], padpos[("R35", pad)][1] + (0.3 if q[1] > KELVIN[0] else -0.3)), 0.25, net)
 pads_all = []          # (ref, net, x0, y0, x1, y1)

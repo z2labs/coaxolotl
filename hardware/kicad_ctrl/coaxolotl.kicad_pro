@@ -356,15 +356,19 @@
       },
       {
         "netclass": "POWER",
-        "pattern": "VCOAX_IN"
+        "pattern": "*/VCOAX_IN"
       },
       {
         "netclass": "POWER",
-        "pattern": "BT_1"
+        "pattern": "Net-(L5-*"
       },
       {
         "netclass": "POWER",
-        "pattern": "BT_2"
+        "pattern": "Net-(L6-*"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "Net-(L7-*"
       }
     ]
   },
