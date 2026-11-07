@@ -249,7 +249,7 @@ def cleanup(b):
         b = pcbnew.LoadBoard(BOARD)
         kill, knet = [], {}
         for t in b.GetTracks():
-            if t.GetNetname() == "GND" or t.GetNetname() in keep:
+            if t.GetNetname() == "GND" or t.GetNetname() in keep or t.IsLocked():
                 continue
             for typ, x, y in spots:
                 if typ == "via_dangling" and t.GetClass() == "PCB_VIA":
@@ -396,7 +396,7 @@ def gnd_rip(b, rules_nets, summary, radius=3.0, rounds=3):
                     rip.add(n)
         print(f"rip-up {rnd + 1}: open {open_nets}, pads {len(targets)}, ripped {len(rip)} nets {sorted(rip)}",
               flush=True)
-        kill = [t.m_Uuid.AsString() for t in b.GetTracks() if t.GetNetname() in rip]
+        kill = [t.m_Uuid.AsString() for t in b.GetTracks() if t.GetNetname() in rip and not t.IsLocked()]   # pre-routes stay
         pcbnew.SaveBoard(BOARD, b)
         _delete_uuids(BOARD, kill)
         b = pcbnew.LoadBoard(BOARD)

@@ -479,13 +479,13 @@ print("courtyard overlaps:", nover)
 # ------------------------------------------------------------ 6) vias: exposed pads, GND pins, strip links, fan-out
 def add_via(x, y, net="GND", d=0.6, h=0.3):
     v = pcbnew.PCB_VIA(board); v.SetPosition(P(x, y)); v.SetWidth(mm(d)); v.SetDrill(mm(h))
-    v.SetNet(netobjs[net]); board.Add(v)
+    v.SetNet(netobjs[net]); v.SetLocked(True); board.Add(v)
     vias.append((x, y, d / 2))
 
 
 def add_track(a, b, w, net="GND", layer=pcbnew.F_Cu):
     t = pcbnew.PCB_TRACK(board); t.SetStart(P(*a)); t.SetEnd(P(*b)); t.SetWidth(mm(w))
-    t.SetLayer(layer); t.SetNet(netobjs[net]); board.Add(t)
+    t.SetLayer(layer); t.SetNet(netobjs[net]); t.SetLocked(True); board.Add(t)   # locked: DSN "protect", never ripped
     tracks.append((a, b, w / 2, net))
 
 
