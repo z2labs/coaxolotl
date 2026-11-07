@@ -3284,7 +3284,7 @@
         (justify left)
       )
     )
-    (property "Value" "10k/1%"
+    (property "Value" "12k/1%"
       (at 114.3 57.15 0)
       (effects
         (font
@@ -4074,7 +4074,7 @@
     )
     (uuid "b9d5872d-2ac5-4cd9-9e02-2261578be5c8")
   )
-  (text "SENSE = 0.6875 x VCOAX (3.0 V at 4.4 V)"
+  (text "SENSE = 0.647 x VCOAX (2.85 V at 4.4 V)"
     (at 17.78 81.28 0)
     (effects
       (font

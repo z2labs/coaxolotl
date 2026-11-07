@@ -372,8 +372,14 @@ def check(cu):
             f"SENSE at {V_BUS_MAX} V (USB max): {sense_max:.2f} V" + ("" if sense_max <= vdd * 0.98 else
             f" - above VDD (ADC VIN max [DS-BB52]: reads full scale)" + (f" and above the GPIO maximum "
             f"{absmax:.2f} V (VDD - 2 % + 0.3); through {r3 * r4 / (r3 + r4) / 1000:.1f} k only uA flow. "
-            f"Not reached with the V3 ({V_COAX_NOM} V); a 15 k top resistor (VC_DIV 37/22) keeps it under VDD"
-            if sense_max > absmax else "")))
+            f"Not reached with the V3 ({V_COAX_NOM} V)" if sense_max > absmax else
+            "; the GPIO maximum still holds (owner's choice 2026-11-07: 12 k keeps the logic-1 point below 3.9 V)")))
+    vih = 0.7 * vdd * 1.02                                  # [DS-BB52] VIH = 0.7 VDD, at the MCP1700's +2 % VDD
+    v1 = vih * (r3 + r4) / r4
+    ok(v1 < fw["RAIL_LOW_MV"] / 1000, "range", f"SENSE is a logic 1 (VIH {vih:.2f} V) from VCOAX {v1:.2f} V, below "
+       f"the LOW lamp's {fw['RAIL_LOW_MV'] / 1000:.1f} V: the gap decoder sees every bias-on level the box works at")
+    ok(sense_max <= absmax, "range",
+       f"SENSE at {V_BUS_MAX} V (USB max) {sense_max:.2f} V within the GPIO maximum {absmax:.2f} V [DS-BB52 Table 4.1]")
     ok(fw["RAIL_LOW_MV"] * r4 / (r3 + r4) < vdd * 1000, "range", f"RAIL_LOW {fw['RAIL_LOW_MV']} mV -> SENSE "
        f"{fw['RAIL_LOW_MV'] * r4 / (r3 + r4):.0f} mV, inside the ADC")
     # ---- TPS2553 [DS-2553]
@@ -471,6 +477,8 @@ def selftest(cu):
     case("LNA shunt 0R47", "I_UV_PER_MA", *val("R7", "0R47/1%"))
     case("coax monitor fitted with an A2", "IT_UV_PER_MA", *val("U20", "INA180A2IDBVR(SOT23-5)"))
     case("SENSE divider bottom 20 k", "VC_DIV", *val("R4", "20k/1%"))
+    case("SENSE divider top 10 k again", "GPIO maximum", *val("R3", "10k/1%"))
+    case("SENSE divider top 15 k", "logic 1", *val("R3", "15k/1%"))
     case("RILIM 210 k", "IOS", *val("R5", "210k/1%"))
     case("beacon series 470 R", "dBm", *val("R31", "470R/1%"))
     case("330 uF rated 4 V", "C9", *val("C9", "330uF/4V/20%"))

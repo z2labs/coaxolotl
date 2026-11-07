@@ -218,29 +218,46 @@ def cleanup(b):
         else:
             seen[k] = v
     merged = _delete_uuids(BOARD, dup)
-    removed = 0
-    for _ in range(3):
+    removed, keep = 0, set()
+
+    def open_nets(d):
+        return {m for u in d.get("unconnected_items", []) for it in u.get("items", [])
+                for m in re.findall(r"\[([^\]]+)\]", it.get("description", ""))}
+    for _ in range(6):
         d = drc_json()
+        before = open_nets(d)
         spots = [(x["type"], x["items"][0]["pos"]["x"], x["items"][0]["pos"]["y"])
                  for x in d["violations"] if x["type"] in ("via_dangling", "track_dangling")]
         if not spots:
             break
         b = pcbnew.LoadBoard(BOARD)
-        kill = []
+        kill, knet = [], {}
         for t in b.GetTracks():
-            if t.GetNetname() == "GND":
+            if t.GetNetname() == "GND" or t.GetNetname() in keep:
                 continue
             for typ, x, y in spots:
                 if typ == "via_dangling" and t.GetClass() == "PCB_VIA":
                     q = T(t.GetPosition())
                     if abs(q[0] - x) < 0.01 and abs(q[1] - y) < 0.01:
-                        kill.append(t.m_Uuid.AsString()); break
+                        kill.append(t.m_Uuid.AsString()); knet[kill[-1]] = t.GetNetname(); break
                 if typ == "track_dangling" and t.GetClass() != "PCB_VIA":
                     a_, c_ = T(t.GetStart()), T(t.GetEnd())
                     if any(abs(p[0] - x) < 0.01 and abs(p[1] - y) < 0.01
                            for p in (a_, c_, ((a_[0] + c_[0]) / 2, (a_[1] + c_[1]) / 2))):
-                        kill.append(t.m_Uuid.AsString()); break
-        removed += _delete_uuids(BOARD, kill)
+                        kill.append(t.m_Uuid.AsString()); knet[kill[-1]] = t.GetNetname(); break
+        if not kill:
+            break
+        # a "dangling" segment can still be the only copper reaching a pad (an octilinear end that stops short of
+        # the pad anchor): delete, and put back the nets that the deletion opened
+        backup = open(BOARD, encoding="utf-8").read()
+        n = _delete_uuids(BOARD, kill)
+        opened = open_nets(drc_json()) - before
+        if opened:
+            open(BOARD, "w", encoding="utf-8").write(backup)
+            keep |= opened
+            print(f"cleanup: kept dangling copper on {sorted(opened)} (removing it opened the net)", flush=True)
+            continue
+        removed += n
     print(f"cleanup: {merged} duplicate vias, {removed} dangling items removed", flush=True)
     return pcbnew.LoadBoard(BOARD)
 

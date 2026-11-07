@@ -36,7 +36,7 @@ flowchart LR
 ```
 coax centre ──► broadband choke ──► VCOAX ─┬─ 680 Ω bleeder ── GND           (6.3 mA, sets fall time)
                                            ├─ 3.3 kΩ + PWR LED ── GND        (0.7 mA)
-                                           ├─ 10 k / 22 k ── SENSE, VC_ADC   (to MCU, 3.0 V @ 4.4 V)
+                                           ├─ 12 k / 22 k ── SENSE, VC_ADC   (to MCU, 2.85 V @ 4.4 V)
                                            └─ LM66100 ──► VMAIN ─┬─ TPS2553 (EN, ILIM, FAULT) ─ 0.39 Ω ─ LNA
                                                                  ├─ ferrite ─ 47 µF ─ LED anodes
                                                                  ├─ 100 Ω ─ BAT54 ─┐

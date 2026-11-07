@@ -308,7 +308,7 @@ def sheet_power(lib) -> DSheet:
     s.add(Part("D2", "Device:LED", "LED/GREEN(0603)", 91.44, 68.58, 90, LED0603,
                {"2": "PWR_LED_A", "1": "GND"}, {"Note": "PWR lamp, works without MCU"}, txt=(94.74, 67.31)))
     s.zone = "ANALOG"
-    s.add(R("R3", "10k/1%", 111.76, 55.88, "VCOAX", "SENSE"))
+    s.add(R("R3", "12k/1%", 111.76, 55.88, "VCOAX", "SENSE"))
     s.add(R("R4", "22k/1%", 111.76, 68.58, "SENSE", "GND"))
     s.zone = "POWER"
     s.rail_pin("D1", "1", "VCOAX")
@@ -326,7 +326,7 @@ def sheet_power(lib) -> DSheet:
     s.gnd("R4", "2")
     s.w((111.76, 62.23), (124.46, 62.23))
     s.hlabel("SENSE", 124.46, 62.23, "R", "output")
-    s.intent("SENSE = 0.6875 x VCOAX (3.0 V at 4.4 V)", 17.78, 81.28)
+    s.intent("SENSE = 0.647 x VCOAX (2.85 V at 4.4 V)", 17.78, 81.28)
     s.intent("t_fall = 1.1 x R_eff x C_total: R1 sets the OOK falling edge", 17.78, 84.46)
 
     # B ---- IDEAL DIODE -------------------------------------------------------

@@ -61,7 +61,7 @@ Qty,Comment,Designator,Footprint,LCSC Part #,MPN,Manufacturer,Basic/Extended,SMT
 2,10nH/5%,"L701,L702",L_0603_1608Metric,C15666,SDCL1608C10NJTDF,Sunlord,Extended,SMT,10nH 5% multilayer 0603,https://jlcpcb.com/partdetail/C15666,"F7 retuned (was 15nH, same Sunlord SDCL1608 series); EasyEDA/LCSC stock 52,600; checked 2026-10-28"
 1,680R/1%,R1,R_0603_1608Metric,C23228,0603WAF6800T5E,UNI-ROYAL,Basic,SMT,680R 1% 100mW,https://jlcpcb.com/partdetail/C23228,stock not shown; checked 2026-10-27
 1,3k3/5%,R2,R_0603_1608Metric,C22978,0603WAF3301T5E,UNI-ROYAL,Basic,SMT,3.3k 1% 100mW,https://jlcpcb.com/partdetail/0603WAF3301T5E/C22978,stock not shown; checked 2026-10-27
-1,10k/1%,R3,R_0603_1608Metric,C25804,0603WAF1002T5E,UNI-ROYAL,Basic,SMT,10k 1% 100mW,https://jlcpcb.com/partdetail/0603WAF1002T5E/C25804,stock not shown; checked 2026-10-27
+1,12k/1%,R3,R_0603_1608Metric,C22790,0603WAF1202T5E,UNI-ROYAL,Basic,SMT,12k 1% 100mW,https://jlcpcb.com/partdetail/0603WAF1202T5E/C22790,LCSC 415000 in stock; checked 2026-11-07
 1,22k/1%,R4,R_0603_1608Metric,C31850,0603WAF2202T5E,UNI-ROYAL,Basic,SMT,22k 1% 100mW,https://jlcpcb.com/partdetail/C31850,stock not shown; checked 2026-10-27
 1,150k/1%,R5,R_0603_1608Metric,C22807,0603WAF1503T5E,UNI-ROYAL,Basic,SMT,150k 1% 100mW,https://jlcpcb.com/partdetail/C22807,stock not shown; checked 2026-10-27
 2,100k/5%,"R6,R23",R_0603_1608Metric,C25803,0603WAF1003T5E,UNI-ROYAL,Basic,SMT,100k 1% 100mW,https://jlcpcb.com/partdetail/0603WAF1003T5E/C25803,stock not shown; checked 2026-10-27

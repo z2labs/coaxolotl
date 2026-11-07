@@ -114,7 +114,7 @@
 #define ADC_FS        1023u     /* 10-bit, VDD reference */
 
 /* VCOAX divider 10k (top) / 22k (bottom): Vpin = V * 22/32 */
-#define VC_DIV_NUM    32u
+#define VC_DIV_NUM    34u
 #define VC_DIV_DEN    22u
 /* SCAP divider 1M / 1M */
 #define SC_DIV_NUM    2u

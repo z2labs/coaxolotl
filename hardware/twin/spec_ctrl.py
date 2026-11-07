@@ -153,7 +153,7 @@ A = [
     # ---- VCOAX loads [DOC-HW] [DS-66100]
     ("same", [("D1", "K"), (U_IDEAL, "VIN")], "TVS cathode on VCOAX"), ("gnd", [("D1", "A")], "TVS anode GND"),
     ("res_gnd", (U_IDEAL, "VIN"), 680, "680 R bleeder on VCOAX (sets the fall time)"),
-    ("divider", (U_IDEAL, "VIN"), M("P0.2"), 10000, 22000, "VCOAX -> 10 k / 22 k -> SENSE (P0.2)"),
+    ("divider", (U_IDEAL, "VIN"), M("P0.2"), 12000, 22000, "VCOAX -> 12 k / 22 k -> SENSE (P0.2)"),
     ("led", "D2", (U_IDEAL, "VIN"), "PWR lamp from VCOAX through a resistor, cathode to GND"),
     ("same", [(U_IDEAL, "CE"), (U_IDEAL, "VOUT")], "LM66100 CE tied to VOUT (reverse current protection)"),
     ("gnd", [(U_IDEAL, "ST"), (U_IDEAL, "GND")], "LM66100 ST and GND to ground"),

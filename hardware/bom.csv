@@ -66,7 +66,7 @@ L601 L602 L603 L604,4,56nH/5%,L_0603_1608Metric,,,Filter bank,
 L701 L702,2,10nH/5%,L_0603_1608Metric,,,Filter bank,
 R1,1,680R/1%,R_0603_1608Metric,,,Power,R1: sets the OOK falling edge
 R2,1,3k3/5%,R_0603_1608Metric,,,Power,
-R3,1,10k/1%,R_0603_1608Metric,,,Power,
+R3,1,12k/1%,R_0603_1608Metric,,,Power,
 R4,1,22k/1%,R_0603_1608Metric,,,Power,
 R5,1,150k/1%,R_0603_1608Metric,,,Power,R5: VERIFY vs TPS2553 Eq.1: IOS(min) > 130 mA
 R6 R23,2,100k/5%,R_0603_1608Metric,,,"MCU, RF front end",R23: static bleed (no choke: keeps 20 kHz)

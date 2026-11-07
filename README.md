@@ -104,7 +104,7 @@ Source of truth: `firmware/src/hal_efm8bb52.c`; checked against the
 |---|---|---|---|---|
 | 1 | P0.0 | VREF | ana | precision reference 2.4 V, C50 100 nF; on only while measuring |
 | 32 | P0.1 | FAULT_N | in | TPS2553 FAULT, 100 k pull-up; port-match wake |
-| 31 | P0.2 | SENSE | in + ana | VCOAX divider 10k/22k: port-match wake on both edges and ADC0.0 at once (PRTDRV.COEX); C2 10 nF |
+| 31 | P0.2 | SENSE | in + ana | VCOAX divider 12k/22k: port-match wake on both edges and ADC0.0 at once (PRTDRV.COEX); C2 10 nF |
 | 30 | P0.3 | SCAP_ADC | ana | supercap / 2 (1 M / 1 M, C11), ADC0.1 |
 | 29 | P0.4 | TP_TX | out | UART0 TX test point (factory bootloader, debug) |
 | 28 | P0.5 | TP_RX | in | UART0 RX test point |
