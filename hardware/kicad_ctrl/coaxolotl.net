@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\RF\\Documents\\GitHub\\_claude_tmp\\coax\\ctrl_wt\\hardware\\kicad_ctrl\\coaxolotl.kicad_sch")
-		(date "2026-11-07T01:37:40")
+		(date "2026-11-07T07:17:05")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -1409,7 +1409,7 @@
 		)
 		(comp
 			(ref "R3")
-			(value "10k/1%")
+			(value "12k/1%")
 			(footprint "Resistor_SMD:R_0603_1608Metric")
 			(fields
 				(field
