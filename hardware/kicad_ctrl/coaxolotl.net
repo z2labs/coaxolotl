@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\RF\\Documents\\GitHub\\_claude_tmp\\coax\\ctrl_wt\\hardware\\kicad_ctrl\\coaxolotl.kicad_sch")
-		(date "2026-11-02T22:41:39")
+		(date "2026-11-07T01:37:40")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -55,7 +55,7 @@
 		(sheet
 			(number "2")
 			(name "/Power/")
-			(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+			(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			(title_block
 				(title "Power")
 				(company "z2labs")
@@ -103,7 +103,7 @@
 		(sheet
 			(number "3")
 			(name "/MCU/")
-			(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+			(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			(title_block
 				(title "MCU")
 				(company "z2labs")
@@ -151,7 +151,7 @@
 		(sheet
 			(number "4")
 			(name "/Coax + RF control/")
-			(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+			(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			(title_block
 				(title "Coax + RF control")
 				(company "z2labs")
@@ -199,7 +199,7 @@
 		(sheet
 			(number "5")
 			(name "/Panel/")
-			(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+			(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			(title_block
 				(title "Panel")
 				(company "z2labs")
@@ -289,9 +289,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "c9de73a2-d06e-4708-9a73-d85f421f67f8")
+			(tstamps "414d97ee-82ca-4a70-885a-d2f3098e5478")
 			(units
 				(unit
 					(name "A")
@@ -355,9 +355,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "57fad59e-7f04-426c-aa96-e6f0157d0025")
+			(tstamps "e0fd50e9-6062-4be1-b3e2-b9cad320d4d7")
 			(units
 				(unit
 					(name "A")
@@ -421,9 +421,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "5997420c-8b1b-487e-9410-e18434bd5088")
+			(tstamps "5658a6a8-7a85-4d22-ac4d-16d978aeac61")
 			(units
 				(unit
 					(name "A")
@@ -487,9 +487,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "44845021-1644-4d50-bfea-2682f029b2eb")
+			(tstamps "1b6ffc16-6679-45d7-b8b4-64ab6cbedd2f")
 			(units
 				(unit
 					(name "A")
@@ -553,9 +553,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "0f129dd3-574f-49fc-b12b-f8e88fbcfe56")
+			(tstamps "d5c53c59-5190-4da4-87dd-15191baf84fd")
 			(units
 				(unit
 					(name "A")
@@ -613,9 +613,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "3232d3e2-3778-42d5-bc20-94db389aacde")
+			(tstamps "e1105bac-92c4-4a6d-9214-ad23a9a22b75")
 			(units
 				(unit
 					(name "A")
@@ -679,9 +679,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "c93b21d4-b154-4b26-8962-3ee8553b22fe")
+			(tstamps "fb48b38f-93fa-41d5-9b7d-87728d58f0f2")
 			(units
 				(unit
 					(name "A")
@@ -754,9 +754,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "0d8ca0a7-371b-4fdd-a974-0ace356f1a49")
+			(tstamps "6628851e-b043-45ea-9bfe-f9f99c6ad083")
 			(units
 				(unit
 					(name "A")
@@ -820,9 +820,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "07c03df9-d5f9-44a5-85c4-eb0eb6904897")
+			(tstamps "20b51927-56f0-4d65-a8e5-66d813132f6a")
 			(units
 				(unit
 					(name "A")
@@ -886,9 +886,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "77f33ed9-1d14-4ac5-9785-516b2b9b3432")
+			(tstamps "64d104df-0464-437d-8d28-d15703165b80")
 			(units
 				(unit
 					(name "A")
@@ -952,9 +952,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "33c3669b-3f50-4f55-a92e-73b1614818ff")
+			(tstamps "01f5574b-efaf-4426-be9c-9cd15f70a552")
 			(units
 				(unit
 					(name "A")
@@ -1018,9 +1018,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "860def8a-70b4-45eb-8f2f-c5c9b5c5790d")
+			(tstamps "0599fb50-9cc0-4c86-832d-7717cf7d8598")
 			(units
 				(unit
 					(name "A")
@@ -1078,9 +1078,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "39764eb0-a51d-4fd7-85ab-671a1761d7c2")
+			(tstamps "a5090131-062c-4e54-9b13-fa10fe7cc903")
 			(units
 				(unit
 					(name "A")
@@ -1138,9 +1138,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "101b91f4-5207-4111-ad47-8256f0014250")
+			(tstamps "96c042da-8555-4293-8287-54a882f04daf")
 			(units
 				(unit
 					(name "A")
@@ -1198,9 +1198,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "9b93fe4c-631d-413a-bf4a-d858a37c5ffb")
+			(tstamps "5feaa035-5482-4f9e-bc1b-d417a40cd658")
 			(units
 				(unit
 					(name "A")
@@ -1264,9 +1264,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "bc919d6f-bbe3-41f6-80d0-6dc6c8876589")
+			(tstamps "a969bf3d-0195-459b-91fb-c788aeae5e04")
 			(units
 				(unit
 					(name "A")
@@ -1330,9 +1330,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "16b1f944-b4b2-4f22-9c9c-946eb380de49")
+			(tstamps "1255ac21-e79d-4f55-8340-5ddba7f73437")
 			(units
 				(unit
 					(name "A")
@@ -1390,9 +1390,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "a0dc1a05-c6d5-4f79-b19f-ec2d77081236")
+			(tstamps "4c8c38cf-d151-40f8-ab99-795b81986d83")
 			(units
 				(unit
 					(name "A")
@@ -1450,9 +1450,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "13d8de53-63b9-45a8-ae67-fa7082f09ccd")
+			(tstamps "5c2c71b1-edb5-480d-a237-e7394f7a27d1")
 			(units
 				(unit
 					(name "A")
@@ -1510,9 +1510,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "47733d88-3255-473f-917e-80465cdb637d")
+			(tstamps "42108764-a8f4-4504-9289-98efbb3cc343")
 			(units
 				(unit
 					(name "A")
@@ -1582,9 +1582,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "70f7ea22-a5f9-4a8a-add9-13b0ee71cb10")
+			(tstamps "13197713-268a-4e61-b60d-7a8b586021ba")
 			(units
 				(unit
 					(name "A")
@@ -1648,9 +1648,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "f3046295-c3d4-412c-86a9-559c913d169d")
+			(tstamps "22285ca9-4003-40d9-8e72-5de4434407de")
 			(units
 				(unit
 					(name "A")
@@ -1708,9 +1708,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "3ed65b13-3eb4-4ecf-9ba6-c2a13a62b037")
+			(tstamps "dec7f759-7a14-49a1-b916-e05b4a99a924")
 			(units
 				(unit
 					(name "A")
@@ -1768,9 +1768,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "43fd9867-7ae2-4d61-a051-539686ca3107")
+			(tstamps "472b2ea2-353e-414a-9b84-9306d78a506e")
 			(units
 				(unit
 					(name "A")
@@ -1828,9 +1828,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "8c7db2cc-4edc-41de-b161-6f163a6053cc")
+			(tstamps "dac0eec5-9c8c-4830-b1ce-595e2d39d19f")
 			(units
 				(unit
 					(name "A")
@@ -1888,9 +1888,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "d0d0ec79-ee9a-4171-b3f7-3648ef5d2172")
+			(tstamps "cdd9227f-807c-4b78-bf20-94a7dca65ad1")
 			(units
 				(unit
 					(name "A")
@@ -1954,9 +1954,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "050a48a1-dde8-4bd8-8749-c696fc3f1ff0")
+			(tstamps "17f1fc5d-e587-4e02-89f4-97fed4581861")
 			(units
 				(unit
 					(name "A")
@@ -2006,9 +2006,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "790d6294-ec45-4290-b81c-90d76a454d3d")
+			(tstamps "8068e571-db55-4371-ba16-7db8f1e16405")
 			(units
 				(unit
 					(name "A")
@@ -2070,9 +2070,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "35f57132-58b7-4759-8e76-1f8152348d2f")
+			(tstamps "16ec6518-1bb4-4be8-b762-e2285a7e7b29")
 			(units
 				(unit
 					(name "A")
@@ -2134,9 +2134,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "9686908c-5ce2-4f03-8e4b-0386907cec64")
+			(tstamps "fd054c59-def5-499c-a3e3-272d7f332fb3")
 			(units
 				(unit
 					(name "A")
@@ -2203,9 +2203,9 @@
 			)
 			(sheetpath
 				(names "/Power/")
-				(tstamps "/303c8c94-5e86-4634-9ba1-112dcd64879a/")
+				(tstamps "/352a1b8f-48e8-416d-822c-65122dea0dd7/")
 			)
-			(tstamps "38d2db54-f071-4132-9b2e-63fc1be9ea6a")
+			(tstamps "c053c05c-c9cc-4c74-9f83-72f614e16dae")
 			(units
 				(unit
 					(name "A")
@@ -2229,7 +2229,7 @@
 			(footprint "Capacitor_SMD:C_0603_1608Metric")
 			(fields
 				(field
-					(name "Place") "U5.1")
+					(name "Place") "U5.31")
 				(field
 					(name "Zone") "ANALOG")
 				(field
@@ -2248,7 +2248,7 @@
 			)
 			(property
 				(name "Place")
-				(value "U5.1")
+				(value "U5.31")
 			)
 			(property
 				(name "Zone")
@@ -2272,9 +2272,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "74c92b54-d323-4e95-8e99-89619564fdad")
+			(tstamps "9efe1d8c-3b6c-459b-9cad-ad9e45d277ec")
 			(units
 				(unit
 					(name "A")
@@ -2338,9 +2338,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "1452d56e-87f8-4e2f-bfe7-b87d6efaa5d0")
+			(tstamps "63ec1208-7dcb-45cc-9dfc-561be27f0124")
 			(units
 				(unit
 					(name "A")
@@ -2404,9 +2404,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "ea1438dd-3108-44a5-bb91-a92a97269db6")
+			(tstamps "8cf60132-573b-4cf4-bc21-c5ffd6adebb2")
 			(units
 				(unit
 					(name "A")
@@ -2470,9 +2470,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "5d9c5d8d-db47-4267-902a-b3d98767a3a9")
+			(tstamps "d59505cc-4907-43ab-8010-035799fc9467")
 			(units
 				(unit
 					(name "A")
@@ -2536,9 +2536,147 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "70deb074-557a-46bb-9747-aa5c9dfb2487")
+			(tstamps "2002ebae-6e84-4535-b882-2e6215f3658c")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C48")
+			(value "100nF/16V/10%")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(fields
+				(field
+					(name "Place") "U5.12")
+				(field
+					(name "Zone") "ANALOG")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Place")
+				(value "U5.12")
+			)
+			(property
+				(name "Zone")
+				(value "ANALOG")
+			)
+			(property
+				(name "Sheetname")
+				(value "MCU")
+			)
+			(property
+				(name "Sheetfile")
+				(value "mcu.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/MCU/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
+			)
+			(tstamps "bcf2c483-ee5e-4f5b-bf58-cca0332a8b95")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C50")
+			(value "100nF/16V/10%")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(fields
+				(field
+					(name "Place") "U5.1 (closest)")
+				(field
+					(name "Note") "VREF bypass: precision reference 2.4 V on P0.0")
+				(field
+					(name "Zone") "ANALOG")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Place")
+				(value "U5.1 (closest)")
+			)
+			(property
+				(name "Note")
+				(value "VREF bypass: precision reference 2.4 V on P0.0")
+			)
+			(property
+				(name "Zone")
+				(value "ANALOG")
+			)
+			(property
+				(name "Sheetname")
+				(value "MCU")
+			)
+			(property
+				(name "Sheetfile")
+				(value "mcu.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/MCU/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
+			)
+			(tstamps "c2a93eda-7b42-438b-9e01-51274d8569a7")
 			(units
 				(unit
 					(name "A")
@@ -2605,9 +2743,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "05e2ad92-bacf-4ca4-b40d-226e04996783")
+			(tstamps "eda74ce9-c5d8-48a0-acb4-8203eb618b0d")
 			(units
 				(unit
 					(name "A")
@@ -2677,9 +2815,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "a49bdaac-5686-4548-907b-d23f79d1a02b")
+			(tstamps "4d535221-6177-4897-813e-964540555140")
 			(units
 				(unit
 					(name "A")
@@ -2743,9 +2881,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "13003bf2-7bce-4ad8-acb0-49e899248e39")
+			(tstamps "7b32d7cf-e103-4464-873d-3e09cd2644b9")
 			(units
 				(unit
 					(name "A")
@@ -2809,9 +2947,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "eece1486-f33f-4afa-93f9-2716b661719e")
+			(tstamps "35da7712-4859-4402-ae1c-1d1fe9469174")
 			(units
 				(unit
 					(name "A")
@@ -2881,9 +3019,75 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "832e69dd-9b6d-4fba-b05f-75c9affd0909")
+			(tstamps "8c54aacb-46a1-452c-b5aa-8331ca678577")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R36")
+			(value "1k/1%")
+			(footprint "Resistor_SMD:R_0603_1608Metric")
+			(fields
+				(field
+					(name "Place") "U5.12")
+				(field
+					(name "Zone") "ANALOG")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Place")
+				(value "U5.12")
+			)
+			(property
+				(name "Zone")
+				(value "ANALOG")
+			)
+			(property
+				(name "Sheetname")
+				(value "MCU")
+			)
+			(property
+				(name "Sheetfile")
+				(value "mcu.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/MCU/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
+			)
+			(tstamps "465d40dd-9439-4fd6-a651-b9164d9af6ce")
 			(units
 				(unit
 					(name "A")
@@ -2944,9 +3148,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "37a8ee57-e1d8-4406-982e-25c71c528775")
+			(tstamps "3b710c64-e002-48df-a7b9-953a2e4245b1")
 			(units
 				(unit
 					(name "A")
@@ -3004,9 +3208,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "ae290e91-4511-4577-a01e-129046e32fe1")
+			(tstamps "0929d20c-1f71-45fd-a9ea-fc62105f57fd")
 			(units
 				(unit
 					(name "A")
@@ -3064,9 +3268,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "f67c2241-26cc-42b4-8a88-33de53135d80")
+			(tstamps "a46a7f34-f3fd-44fc-a573-cf21ca039c85")
 			(units
 				(unit
 					(name "A")
@@ -3113,9 +3317,9 @@
 			)
 			(sheetpath
 				(names "/MCU/")
-				(tstamps "/56c4e5e7-e995-48b6-939f-59dff8d011dc/")
+				(tstamps "/dae8bf4b-1977-421a-89ba-e4c4bea6fb0e/")
 			)
-			(tstamps "c4c1b278-9e80-4ffc-9e48-6f644dc45e97")
+			(tstamps "86b179a7-04c6-414a-aa22-8a2277009091")
 			(units
 				(unit
 					(name "A")
@@ -3278,9 +3482,75 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "91b27f3f-947e-46cd-a660-49224c81b0d4")
+			(tstamps "4931d3ff-4ab7-422d-a50a-cc3c5f96b95f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "C49")
+			(value "100nF/16V/10%")
+			(footprint "Capacitor_SMD:C_0603_1608Metric")
+			(fields
+				(field
+					(name "Place") "U20.5")
+				(field
+					(name "Zone") "ANALOG")
+				(field
+					(name "Footprint") "Capacitor_SMD:C_0603_1608Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "C")
+				(description "Unpolarized capacitor")
+			)
+			(property
+				(name "Place")
+				(value "U20.5")
+			)
+			(property
+				(name "Zone")
+				(value "ANALOG")
+			)
+			(property
+				(name "Sheetname")
+				(value "Coax + RF control")
+			)
+			(property
+				(name "Sheetfile")
+				(value "ctrl.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "cap capacitor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "C_*")
+			)
+			(sheetpath
+				(names "/Coax + RF control/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
+			)
+			(tstamps "8b2eda5d-c913-40b3-baf3-f961f2dd4e5b")
 			(units
 				(unit
 					(name "A")
@@ -3344,9 +3614,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "6df690b9-d4a0-4163-8441-b92b0916fbb3")
+			(tstamps "24c598a6-d198-45b5-a2b1-be1e9ce0c6eb")
 			(units
 				(unit
 					(name "A")
@@ -3413,9 +3683,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "ebaf749d-6fa6-4feb-985d-5d51e4fa16b0")
+			(tstamps "6aa287f7-d5a8-4052-81bf-65e65bcf6e97")
 			(units
 				(unit
 					(name "A")
@@ -3497,9 +3767,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "8835ceab-459b-43c8-a0f4-aef9189b81d3")
+			(tstamps "42e719a4-0d93-4a80-98cb-49565fba2755")
 			(units
 				(unit
 					(name "A")
@@ -3563,9 +3833,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "4a6949e6-fce1-40d6-828c-a3165f89e513")
+			(tstamps "d7f1c40b-6222-4633-a97e-f03919ba9db6")
 			(units
 				(unit
 					(name "A")
@@ -3629,9 +3899,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "783aebbb-7209-416d-9381-849c35cb8a46")
+			(tstamps "119bb766-4d5e-4b45-987c-5475f2561f2c")
 			(units
 				(unit
 					(name "A")
@@ -3695,9 +3965,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "d8e22279-dcf1-40f3-9f88-e3866d555b4c")
+			(tstamps "328ae959-2d21-4487-9226-1a6186d824a3")
 			(units
 				(unit
 					(name "A")
@@ -3761,9 +4031,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "eb33653e-6dbf-4da2-bc85-6de642c00d16")
+			(tstamps "a27a7ed2-bb36-4d60-90d8-9de215d616b7")
 			(units
 				(unit
 					(name "A")
@@ -3827,9 +4097,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "dd484276-09ce-4a39-95b6-4ce4e0a7bb52")
+			(tstamps "f0b82a26-972b-4218-a568-3d7f43439e9e")
 			(units
 				(unit
 					(name "A")
@@ -3893,9 +4163,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "ecaa9c14-d0fe-4a13-af50-209219a1d717")
+			(tstamps "45a3bb50-826f-4395-ab93-c2a4a39d2546")
 			(units
 				(unit
 					(name "A")
@@ -3959,9 +4229,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "88d364aa-3645-469f-9a4e-603ec4cafac8")
+			(tstamps "db936500-bf2e-458f-a94b-0fe7d553c8ce")
 			(units
 				(unit
 					(name "A")
@@ -4025,9 +4295,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "342ee5e2-02ca-461b-a728-1869169acfc9")
+			(tstamps "f886bd49-0265-4d61-bf41-888a9d9872ff")
 			(units
 				(unit
 					(name "A")
@@ -4091,9 +4361,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "b7b31aa7-601c-4642-b9f8-466c78e25432")
+			(tstamps "80fe6a9f-7f94-4c62-8065-600f051b1a6b")
 			(units
 				(unit
 					(name "A")
@@ -4163,9 +4433,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "ff1390d8-3f89-4590-8883-c97d49ea42ae")
+			(tstamps "47fbd618-bfa1-4fab-9a22-2bc68531f9ec")
 			(units
 				(unit
 					(name "A")
@@ -4229,9 +4499,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "e9bb7f25-6993-47ca-a7a2-09206ebd3d1f")
+			(tstamps "0496357f-5743-4125-a8f7-62e7bcea8a5e")
 			(units
 				(unit
 					(name "A")
@@ -4301,9 +4571,9 @@
 			)
 			(sheetpath
 				(names "/Coax + RF control/")
-				(tstamps "/332a4019-3ab3-407d-bd73-f0795bc19572/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
 			)
-			(tstamps "e1f8923d-afee-4b61-be03-bf0b6bd6c93d")
+			(tstamps "03c871f6-e41e-4e32-b4c2-7f07ccd8c4e2")
 			(units
 				(unit
 					(name "A")
@@ -4313,6 +4583,133 @@
 						)
 						(pin
 							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R35")
+			(value "0R1/1%/0.25W")
+			(footprint "Resistor_SMD:R_1206_3216Metric")
+			(fields
+				(field
+					(name "Note") "coax current shunt: 15 mV at 150 mA")
+				(field
+					(name "Zone") "POWER")
+				(field
+					(name "Footprint") "Resistor_SMD:R_1206_3216Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Note")
+				(value "coax current shunt: 15 mV at 150 mA")
+			)
+			(property
+				(name "Zone")
+				(value "POWER")
+			)
+			(property
+				(name "Sheetname")
+				(value "Coax + RF control")
+			)
+			(property
+				(name "Sheetfile")
+				(value "ctrl.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/Coax + RF control/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
+			)
+			(tstamps "df348636-76a4-41e7-a155-be5262c3dc80")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U20")
+			(value "INA180A3IDBVR(SOT23-5)")
+			(footprint "Package_TO_SOT_SMD:SOT-23-5")
+			(fields
+				(field
+					(name "Zone") "ANALOG")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "coaxolotl")
+				(part "INA180A3")
+				(description "Current sense amplifier 100 V/V; sense inputs on top for Kelvin routing from the shunt")
+			)
+			(property
+				(name "Zone")
+				(value "ANALOG")
+			)
+			(property
+				(name "Sheetname")
+				(value "Coax + RF control")
+			)
+			(property
+				(name "Sheetfile")
+				(value "ctrl.kicad_sch")
+			)
+			(sheetpath
+				(names "/Coax + RF control/")
+				(tstamps "/9677fcf9-7d77-4e16-a6d2-ea81d586564d/")
+			)
+			(tstamps "154d8642-3dfb-4cbf-9fee-cbefcd448779")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "1")
 						)
 					)
 				)
@@ -4367,9 +4764,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "288732a2-1861-46ce-abae-1cffddec1300")
+			(tstamps "1ec2f9b8-1743-4053-81b1-a15d3762291d")
 			(units
 				(unit
 					(name "A")
@@ -4433,9 +4830,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "3e7fda6b-6fad-4564-ad37-94878be1d13b")
+			(tstamps "5efb30c0-9d44-40a4-801f-59c33190d645")
 			(units
 				(unit
 					(name "A")
@@ -4499,9 +4896,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "d52e012b-cd11-466c-9a61-b08322dce4c9")
+			(tstamps "522ee57d-25fc-441f-a816-949a6e87ef39")
 			(units
 				(unit
 					(name "A")
@@ -4565,9 +4962,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "acf71716-df4e-4863-a936-ddf2138b086a")
+			(tstamps "8bad1886-b283-4144-a59d-7df317359901")
 			(units
 				(unit
 					(name "A")
@@ -4631,9 +5028,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "a64b808b-ee85-49e8-811a-448a4c616e8a")
+			(tstamps "fc034ab7-f19d-45e9-8ef4-5e09711b213c")
 			(units
 				(unit
 					(name "A")
@@ -4697,9 +5094,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "0d73e113-0663-428b-9a00-6d2f39a6bcf1")
+			(tstamps "f40c4a07-834b-4247-974e-856543b6b961")
 			(units
 				(unit
 					(name "A")
@@ -4757,9 +5154,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "da8254f2-1511-4101-ac4a-4087e1f9666f")
+			(tstamps "4d6a62b8-6b9b-4018-9d28-04920c12931b")
 			(units
 				(unit
 					(name "A")
@@ -4817,9 +5214,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "9eab49d4-d26c-4003-890e-847e30367a8f")
+			(tstamps "838d6ce4-e18e-4b6a-894d-6ed1bc83a163")
 			(units
 				(unit
 					(name "A")
@@ -4877,9 +5274,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "5e4a63a8-ddc6-4282-a5a0-3bf0c85b3957")
+			(tstamps "6c95fd54-138d-4446-9c3b-073b1c104324")
 			(units
 				(unit
 					(name "A")
@@ -4937,9 +5334,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "3359f47b-381b-4e92-b822-a3dc681411db")
+			(tstamps "23cb4429-fad5-4224-82f0-f457efa44655")
 			(units
 				(unit
 					(name "A")
@@ -4997,9 +5394,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "8a9d97de-8565-451d-89df-08f884df4920")
+			(tstamps "e8cf29d5-61d5-460a-a0b9-5c8ada0b8692")
 			(units
 				(unit
 					(name "A")
@@ -5057,9 +5454,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "611bbab3-222b-43c9-aa0d-23309ccb25f0")
+			(tstamps "3312c6bd-c951-4a37-9a1f-84e9321cdb99")
 			(units
 				(unit
 					(name "A")
@@ -5117,9 +5514,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "c060cfd3-2016-4546-869d-e513d5bf230d")
+			(tstamps "4556313a-e326-4457-a8dc-c01338298cfb")
 			(units
 				(unit
 					(name "A")
@@ -5177,9 +5574,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "4eb7b26c-dd55-4f3b-a72d-03314165be51")
+			(tstamps "b33e1e8f-83d1-4646-b0a8-15787ef13798")
 			(units
 				(unit
 					(name "A")
@@ -5237,9 +5634,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "35cb97bd-f454-4682-b512-b127bf42cc05")
+			(tstamps "53e3a853-e87c-4b82-83ad-67e3bd252558")
 			(units
 				(unit
 					(name "A")
@@ -5297,9 +5694,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "3b1dd9d8-2ba5-4e87-92cd-62401ddda4ae")
+			(tstamps "7b391434-57b9-461b-a10a-c1bf55c91ee9")
 			(units
 				(unit
 					(name "A")
@@ -5357,9 +5754,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "16652893-cf44-4d01-bcf4-c1f1a1950ad7")
+			(tstamps "749d9e1f-9754-4ca4-9dbd-a200f8fd2dff")
 			(units
 				(unit
 					(name "A")
@@ -5417,9 +5814,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "f1f730a3-1f28-4c7d-b0db-d864383c1c3b")
+			(tstamps "7c657649-3a13-4b3e-8a40-7159cd6c91ff")
 			(units
 				(unit
 					(name "A")
@@ -5477,9 +5874,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "3e39956b-7c6a-439b-aef7-6ade8dfe4bbf")
+			(tstamps "e7752809-8af8-4bb9-b1a5-865abc248648")
 			(units
 				(unit
 					(name "A")
@@ -5537,9 +5934,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "f8fbd9ef-1865-4975-8207-026dedabd151")
+			(tstamps "9dab0574-8cef-41da-8f94-c4156826e82c")
 			(units
 				(unit
 					(name "A")
@@ -5597,9 +5994,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "26afae60-ee4a-42aa-a1bd-8b29f62c417e")
+			(tstamps "d89088e4-564c-4371-a3b9-4f24d5f9fc56")
 			(units
 				(unit
 					(name "A")
@@ -5657,9 +6054,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "5f9448a1-3557-4769-ac58-923488fbd674")
+			(tstamps "c3d8af44-d5f6-4d18-9c51-64327f85e42f")
 			(units
 				(unit
 					(name "A")
@@ -5717,9 +6114,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "23e88bc9-e0b0-40a8-a9fb-24cbb6536c61")
+			(tstamps "efc3f6f1-bffd-483b-bd3d-4c84a9eb5909")
 			(units
 				(unit
 					(name "A")
@@ -5777,9 +6174,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "7d9d147d-9b04-479c-9df0-438ee4043670")
+			(tstamps "23b5456d-d231-4715-8e8a-2ab648d20efe")
 			(units
 				(unit
 					(name "A")
@@ -5837,9 +6234,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "bee2b1a2-ca68-4aec-bf40-34a12b32f54c")
+			(tstamps "535ce1d7-65d6-4f3d-aa7d-fd11a15553b9")
 			(units
 				(unit
 					(name "A")
@@ -5897,9 +6294,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "be07cb70-82c0-42a9-b627-65b6bc6e9ad1")
+			(tstamps "32f85f4d-7629-4760-b7f3-32e7198ebe7c")
 			(units
 				(unit
 					(name "A")
@@ -5957,9 +6354,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "3ae9a7c1-f03a-4f4e-aa03-e410bf996fcf")
+			(tstamps "46556aba-7d59-4c76-a654-e671e3aa2d12")
 			(units
 				(unit
 					(name "A")
@@ -6017,9 +6414,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "df530b10-b93e-4674-bf15-aa314b05aee4")
+			(tstamps "d20181b8-ffd5-4ec7-b578-b624de6aa624")
 			(units
 				(unit
 					(name "A")
@@ -6077,9 +6474,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "54157cd8-74eb-422f-b252-e9000aaed829")
+			(tstamps "58f4d76e-680c-482f-807e-e5207203850c")
 			(units
 				(unit
 					(name "A")
@@ -6137,9 +6534,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "5420a713-5129-47fc-910e-0eba7af8b405")
+			(tstamps "5ddd89c0-3ef0-4861-bb36-2e5e38dbb675")
 			(units
 				(unit
 					(name "A")
@@ -6197,9 +6594,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "eaf7c48b-a8a9-43ba-a6c0-e1cca3bead50")
+			(tstamps "eaec7d9e-1ff3-4f79-bfec-af9eae4b3976")
 			(units
 				(unit
 					(name "A")
@@ -6257,9 +6654,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "f5cb47ea-7d63-4a7a-af7d-67753631da0a")
+			(tstamps "06f6d988-a882-40d4-aaa9-5423bebf6382")
 			(units
 				(unit
 					(name "A")
@@ -6317,9 +6714,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "c4af8cb3-972b-45aa-8cc3-3053bb219828")
+			(tstamps "fce762ec-f915-488e-a5ff-71edc8c6a826")
 			(units
 				(unit
 					(name "A")
@@ -6377,9 +6774,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "1b979b5b-c4c7-4065-b150-a880313924a7")
+			(tstamps "1124eb34-60c8-4720-b5c2-c26dea1cef28")
 			(units
 				(unit
 					(name "A")
@@ -6437,9 +6834,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "4f0eee89-d37f-4150-af8f-e953a7f34e9f")
+			(tstamps "332a45ea-cfdd-479d-9886-02191a7431af")
 			(units
 				(unit
 					(name "A")
@@ -6497,9 +6894,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "e75289dc-b82f-4017-817a-7589f6f2e35b")
+			(tstamps "4ff22221-02fd-4337-b7f1-bbc9caa3b874")
 			(units
 				(unit
 					(name "A")
@@ -6557,9 +6954,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "2f74862f-c80a-4d20-902c-3e03ad072028")
+			(tstamps "e0780dcb-34f2-421f-9922-9052ebda2c8a")
 			(units
 				(unit
 					(name "A")
@@ -6617,9 +7014,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "97ebedc5-486e-4359-bfdd-07a13ac481c7")
+			(tstamps "d89121ba-0b80-4c3e-b2d2-77f830b8ec32")
 			(units
 				(unit
 					(name "A")
@@ -6677,9 +7074,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "037a163f-bcb6-41ee-be48-2104f9858759")
+			(tstamps "4c53d729-5afc-4f97-9a42-b292881ecaf5")
 			(units
 				(unit
 					(name "A")
@@ -6737,9 +7134,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "2fc9d413-9aca-4610-816d-f66b37152aa6")
+			(tstamps "1571cc0d-bd9c-46fb-a9c7-7770b154dd98")
 			(units
 				(unit
 					(name "A")
@@ -6797,9 +7194,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "57d393c0-0ee7-45f5-9715-3701eb3e8a5d")
+			(tstamps "1ce12f59-a8ac-4d0f-ae64-c272ec1b035d")
 			(units
 				(unit
 					(name "A")
@@ -6857,9 +7254,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "08f17e0b-f705-4f60-86b9-63c3a8326c87")
+			(tstamps "fb19d4f0-9e9c-4620-8294-24c7aec0c356")
 			(units
 				(unit
 					(name "A")
@@ -6917,9 +7314,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "596e5b36-28f3-4b05-96ab-a712dfb07813")
+			(tstamps "72d4f9ca-a88b-4ad7-91e3-72b13365bc6c")
 			(units
 				(unit
 					(name "A")
@@ -6977,9 +7374,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "30dcda4f-dc5f-4866-ad4d-07fea16727c7")
+			(tstamps "9151c1b7-b8f7-41ea-9a7e-76f3209a9de4")
 			(units
 				(unit
 					(name "A")
@@ -7037,9 +7434,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "2514c384-ae12-41a8-8aca-d1ad02b90036")
+			(tstamps "5db10410-e6de-470b-86f3-fc9ea3b9dfd9")
 			(units
 				(unit
 					(name "A")
@@ -7097,9 +7494,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "f8bcfef2-bdc2-4860-973d-988751c7d7e5")
+			(tstamps "f20af294-873c-4d2b-a9ec-948a626b677a")
 			(units
 				(unit
 					(name "A")
@@ -7157,9 +7554,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "76b5424e-b81d-4afa-aead-ccf18ad05dc9")
+			(tstamps "e61b3327-a1b4-4090-af41-87f251707542")
 			(units
 				(unit
 					(name "A")
@@ -7217,9 +7614,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "9507e04d-ac4b-4281-a4c6-86f8f904fdc8")
+			(tstamps "f5526acd-008d-48da-8bc7-a3b593ad2090")
 			(units
 				(unit
 					(name "A")
@@ -7277,9 +7674,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "b4fde577-579c-403a-a1cc-8417b2bebd6e")
+			(tstamps "ef051de9-e18a-43cb-90cd-988c202d5af6")
 			(units
 				(unit
 					(name "A")
@@ -7337,9 +7734,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "8dec26a5-9ad2-49f7-aac4-4e0f1fd4edf2")
+			(tstamps "9c1e9e82-2f20-4736-b498-49e3cbac93ff")
 			(units
 				(unit
 					(name "A")
@@ -7397,9 +7794,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "b3cf10bd-8c63-4170-af6f-01237f8e1d1d")
+			(tstamps "f8e76caa-de05-42c0-ad36-02dca595d418")
 			(units
 				(unit
 					(name "A")
@@ -7457,9 +7854,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "289bbadb-8808-4882-b143-626a614e5ea1")
+			(tstamps "46ff314e-8d45-47d6-a5c5-6a99ef8fb3a2")
 			(units
 				(unit
 					(name "A")
@@ -7517,9 +7914,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "ee93f0e0-d292-41a0-87a9-5731b8d4082a")
+			(tstamps "3167cefc-016d-4872-af48-7b62f23cbf88")
 			(units
 				(unit
 					(name "A")
@@ -7577,9 +7974,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "70b299f6-cb4c-42a7-94f6-80b503939b6b")
+			(tstamps "87225934-fb2f-47ae-9b94-df7792e2b1cb")
 			(units
 				(unit
 					(name "A")
@@ -7646,9 +8043,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "26deefe5-6400-4ce6-9c3c-b035fe6ae116")
+			(tstamps "e14b9a3f-87fd-4488-906d-bb735d96bab9")
 			(units
 				(unit
 					(name "A")
@@ -7730,9 +8127,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "30a355c6-7f5e-4121-99f7-2f2ffe6d0163")
+			(tstamps "366205b4-9f37-4b19-9c00-9aafc6e8e5f0")
 			(units
 				(unit
 					(name "A")
@@ -7811,9 +8208,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "cdf9c0fd-d9cd-4d58-8668-8960878f3757")
+			(tstamps "35445e82-5c16-4322-8942-0f23f66a61ba")
 			(units
 				(unit
 					(name "A")
@@ -7877,9 +8274,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "d8087a51-5488-4b31-8838-a32fc15044b7")
+			(tstamps "bddf2d77-f9f1-422a-b653-9d1680e5de66")
 			(units
 				(unit
 					(name "A")
@@ -7961,9 +8358,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "d28f792c-dc28-4f6f-8905-82d573158b7a")
+			(tstamps "f5f87350-e34b-4932-b688-21ca5d8999d3")
 			(units
 				(unit
 					(name "A")
@@ -8045,9 +8442,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "a7ac39a4-f701-442e-ac46-7ee38acf04ba")
+			(tstamps "4e824920-5d97-4dda-8e3f-b8988f34d7fd")
 			(units
 				(unit
 					(name "A")
@@ -8129,9 +8526,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "5e598dd7-9205-479b-b3a7-879ac5178ed6")
+			(tstamps "6e5ebe79-4363-432e-b8e4-ded2ea8aa556")
 			(units
 				(unit
 					(name "A")
@@ -8213,9 +8610,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "4c53baf7-1aac-4a77-a7ca-cdb6f58ad88f")
+			(tstamps "fa3a8c0a-96b7-4329-9908-9990678cec02")
 			(units
 				(unit
 					(name "A")
@@ -8297,9 +8694,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "e295e463-d007-4689-a006-a90ac554eb1a")
+			(tstamps "1d114b93-5d30-432a-879b-63a1b60fa660")
 			(units
 				(unit
 					(name "A")
@@ -8381,9 +8778,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "7dac6565-98f8-48b5-8460-355ad2fe6d98")
+			(tstamps "50b33da9-5057-49e4-9353-b2e9e4269b32")
 			(units
 				(unit
 					(name "A")
@@ -8465,9 +8862,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "c2ffee5b-c5e4-4ce6-8d53-51904c4011ce")
+			(tstamps "f8dd6720-ee69-481e-9dba-185cf6219709")
 			(units
 				(unit
 					(name "A")
@@ -8549,9 +8946,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "65623fd3-92cb-4dfa-bc4a-eb0cd4234322")
+			(tstamps "2f06a5a3-6c2b-4762-a1ef-24483885095c")
 			(units
 				(unit
 					(name "A")
@@ -8633,9 +9030,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "3361083d-4e71-47be-9ee4-32951c02a368")
+			(tstamps "996ca482-eea5-4a50-9af9-4ebaecf8b0c7")
 			(units
 				(unit
 					(name "A")
@@ -8717,9 +9114,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "e8fc4de6-3d97-49e1-b84e-f386ce22f098")
+			(tstamps "94a68c1b-3cb2-436b-9e3a-01b45cf25775")
 			(units
 				(unit
 					(name "A")
@@ -8801,9 +9198,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "fe814fbb-14ec-4abf-bba4-c0a967a4f2d3")
+			(tstamps "c7ab1a2f-aca6-4d78-b7cc-764964e23d61")
 			(units
 				(unit
 					(name "A")
@@ -8871,9 +9268,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "dcd42fc6-3b49-4744-bff8-c1157856f5bc")
+			(tstamps "4ec3f0ff-ca90-4b05-a785-429b6e22bcae")
 			(units
 				(unit
 					(name "A")
@@ -8965,9 +9362,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "a5323f2a-4f79-479d-9741-88409199f4f6")
+			(tstamps "2180b06b-2e2a-43ef-b76e-ed010edf2080")
 			(units
 				(unit
 					(name "A")
@@ -9059,9 +9456,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "a0402cdf-7e03-4f47-9f5b-5e0759ba5105")
+			(tstamps "5a57d240-cca5-4fd9-801c-ce22e96a4b3a")
 			(units
 				(unit
 					(name "A")
@@ -9153,9 +9550,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "ff119a9a-fb87-41df-9308-75efc1272a0b")
+			(tstamps "cd693317-43c9-4a89-844d-704434a8a40e")
 			(units
 				(unit
 					(name "A")
@@ -9247,9 +9644,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "8f9edf0f-4408-42d7-b011-b9f2ed163744")
+			(tstamps "fd09186e-017a-4511-b47b-e7835f70b3bc")
 			(units
 				(unit
 					(name "A")
@@ -9341,9 +9738,9 @@
 			)
 			(sheetpath
 				(names "/Panel/")
-				(tstamps "/3ac740ca-e2a8-433f-9438-77f019ebcec7/")
+				(tstamps "/478d3270-3f07-40ba-86f3-aa3e907550d3/")
 			)
-			(tstamps "e54c1c53-5de3-46f5-bfea-d69ee07ec37c")
+			(tstamps "8b625e8e-85ee-416c-a76d-e0e8c28d746a")
 			(units
 				(unit
 					(name "A")
@@ -10163,7 +10560,7 @@
 			(pins
 				(pin
 					(num "1")
-					(name "P0.0/PMATCH")
+					(name "P0.0/VREF")
 					(type "bidirectional")
 				)
 				(pin
@@ -10218,7 +10615,7 @@
 				)
 				(pin
 					(num "12")
-					(name "P2.5")
+					(name "P2.5/ADC")
 					(type "bidirectional")
 				)
 				(pin
@@ -10313,7 +10710,7 @@
 				)
 				(pin
 					(num "31")
-					(name "P0.2/ADC")
+					(name "P0.2/ADC+PM")
 					(type "bidirectional")
 				)
 				(pin
@@ -10344,6 +10741,51 @@
 					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/ina180.pdf")
 				(field
 					(name "Description") "Current sense amplifier 50 V/V; sense inputs on top for Kelvin routing from the shunt")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "OUT")
+					(type "output")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "3")
+					(name "IN+")
+					(type "input")
+				)
+				(pin
+					(num "4")
+					(name "IN-")
+					(type "input")
+				)
+				(pin
+					(num "5")
+					(name "V+")
+					(type "power_in")
+				)
+			)
+		)
+		(libpart
+			(lib "coaxolotl")
+			(part "INA180A3")
+			(description "Current sense amplifier 100 V/V; sense inputs on top for Kelvin routing from the shunt")
+			(docs "https://www.ti.com/lit/ds/symlink/ina180.pdf")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "INA180A3")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/ina180.pdf")
+				(field
+					(name "Description") "Current sense amplifier 100 V/V; sense inputs on top for Kelvin routing from the shunt")
 			)
 			(pins
 				(pin
@@ -10547,6 +10989,11 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "C49")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
 				(ref "C6")
 				(pin "1")
 				(pintype "passive")
@@ -10668,6 +11115,12 @@
 				(pintype "power_in")
 			)
 			(node
+				(ref "U20")
+				(pin "5")
+				(pinfunction "V+_5")
+				(pintype "power_in")
+			)
+			(node
 				(ref "U3")
 				(pin "5")
 				(pinfunction "V+_5")
@@ -10726,6 +11179,22 @@
 		)
 		(net
 			(code "4")
+			(name "/Coax + RF control/ITOT")
+			(class "Default")
+			(node
+				(ref "R36")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U20")
+				(pin "1")
+				(pinfunction "OUT_1")
+				(pintype "output")
+			)
+		)
+		(net
+			(code "5")
 			(name "/Coax + RF control/LNA_PATH")
 			(class "Default")
 			(node
@@ -10747,7 +11216,7 @@
 			)
 		)
 		(net
-			(code "5")
+			(code "6")
 			(name "/Coax + RF control/LNA_PATH_OUT")
 			(class "Default")
 			(node
@@ -10769,7 +11238,7 @@
 			)
 		)
 		(net
-			(code "6")
+			(code "7")
 			(name "/Coax + RF control/SW_V1")
 			(class "Default")
 			(node
@@ -10791,7 +11260,7 @@
 			)
 		)
 		(net
-			(code "7")
+			(code "8")
 			(name "/Coax + RF control/SW_V2")
 			(class "Default")
 			(node
@@ -10813,7 +11282,7 @@
 			)
 		)
 		(net
-			(code "8")
+			(code "9")
 			(name "/Coax + RF control/SW_V3")
 			(class "Default")
 			(node
@@ -10835,7 +11304,29 @@
 			)
 		)
 		(net
-			(code "9")
+			(code "10")
+			(name "/Coax + RF control/VCOAX_IN")
+			(class "POWER")
+			(node
+				(ref "L7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R35")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U20")
+				(pin "3")
+				(pinfunction "IN+_3")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "11")
 			(name "/MCU/C2D")
 			(class "Default")
 			(node
@@ -10857,7 +11348,7 @@
 			)
 		)
 		(net
-			(code "10")
+			(code "12")
 			(name "/MCU/FAULT_N")
 			(class "Default")
 			(node
@@ -10879,7 +11370,7 @@
 			)
 		)
 		(net
-			(code "11")
+			(code "13")
 			(name "/MCU/ILNA")
 			(class "Default")
 			(node
@@ -10895,7 +11386,7 @@
 			)
 		)
 		(net
-			(code "12")
+			(code "14")
 			(name "/MCU/LED_OE_N")
 			(class "Default")
 			(node
@@ -10959,7 +11450,7 @@
 			)
 		)
 		(net
-			(code "13")
+			(code "15")
 			(name "/MCU/LED_RCK")
 			(class "Default")
 			(node
@@ -11018,7 +11509,7 @@
 			)
 		)
 		(net
-			(code "14")
+			(code "16")
 			(name "/MCU/LED_SCK")
 			(class "Default")
 			(node
@@ -11077,7 +11568,7 @@
 			)
 		)
 		(net
-			(code "15")
+			(code "17")
 			(name "/MCU/LED_SER")
 			(class "Default")
 			(node
@@ -11106,7 +11597,7 @@
 			)
 		)
 		(net
-			(code "16")
+			(code "18")
 			(name "/MCU/LNA_EN")
 			(class "Default")
 			(node
@@ -11128,7 +11619,7 @@
 			)
 		)
 		(net
-			(code "17")
+			(code "19")
 			(name "/MCU/SCAP_ADC")
 			(class "Default")
 			(node
@@ -11154,7 +11645,7 @@
 			)
 		)
 		(net
-			(code "18")
+			(code "20")
 			(name "/MCU/SENSE")
 			(class "Default")
 			(node
@@ -11180,19 +11671,13 @@
 			)
 			(node
 				(ref "U5")
-				(pin "1")
-				(pinfunction "P0.0/PMATCH_1")
-				(pintype "bidirectional")
-			)
-			(node
-				(ref "U5")
 				(pin "31")
-				(pinfunction "P0.2/ADC_31")
+				(pinfunction "P0.2/ADC+PM_31")
 				(pintype "bidirectional")
 			)
 		)
 		(net
-			(code "19")
+			(code "21")
 			(name "/MCU/TP_RX")
 			(class "Default")
 			(node
@@ -11209,7 +11694,7 @@
 			)
 		)
 		(net
-			(code "20")
+			(code "22")
 			(name "/MCU/TP_TX")
 			(class "Default")
 			(node
@@ -11226,7 +11711,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "23")
 			(name "/Panel/LED_CH1")
 			(class "Default")
 			(node
@@ -11243,7 +11728,7 @@
 			)
 		)
 		(net
-			(code "22")
+			(code "24")
 			(name "/Panel/LED_CH2")
 			(class "Default")
 			(node
@@ -11260,7 +11745,7 @@
 			)
 		)
 		(net
-			(code "23")
+			(code "25")
 			(name "/Panel/LED_CH3")
 			(class "Default")
 			(node
@@ -11277,7 +11762,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "26")
 			(name "/Panel/LED_CH4")
 			(class "Default")
 			(node
@@ -11294,7 +11779,7 @@
 			)
 		)
 		(net
-			(code "25")
+			(code "27")
 			(name "/Panel/LED_CH5")
 			(class "Default")
 			(node
@@ -11311,7 +11796,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "28")
 			(name "GND")
 			(class "Default")
 			(node
@@ -11395,8 +11880,23 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "C48")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C49")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
 				(ref "C5")
 				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "C50")
+				(pin "1")
 				(pintype "passive")
 			)
 			(node
@@ -11582,6 +12082,12 @@
 				(pintype "power_in")
 			)
 			(node
+				(ref "U20")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "power_in")
+			)
+			(node
 				(ref "U3")
 				(pin "2")
 				(pinfunction "GND_2")
@@ -11601,7 +12107,7 @@
 			)
 		)
 		(net
-			(code "27")
+			(code "29")
 			(name "LNA_VCC")
 			(class "POWER")
 			(node
@@ -11623,7 +12129,7 @@
 			)
 		)
 		(net
-			(code "28")
+			(code "30")
 			(name "Net-(C47-Pad1)")
 			(class "Default")
 			(node
@@ -11638,7 +12144,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "31")
 			(name "Net-(D2-A)")
 			(class "Default")
 			(node
@@ -11654,7 +12160,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "32")
 			(name "Net-(D3-A)")
 			(class "Default")
 			(node
@@ -11670,7 +12176,7 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "33")
 			(name "Net-(D4-A)")
 			(class "Default")
 			(node
@@ -11686,7 +12192,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "34")
 			(name "Net-(D4-K)")
 			(class "Default")
 			(node
@@ -11713,7 +12219,7 @@
 			)
 		)
 		(net
-			(code "33")
+			(code "35")
 			(name "Net-(D7-K)")
 			(class "Default")
 			(node
@@ -11730,7 +12236,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "36")
 			(name "Net-(D8-K)")
 			(class "Default")
 			(node
@@ -11747,7 +12253,7 @@
 			)
 		)
 		(net
-			(code "35")
+			(code "37")
 			(name "Net-(D9-K)")
 			(class "Default")
 			(node
@@ -11764,7 +12270,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "38")
 			(name "Net-(D10-K)")
 			(class "Default")
 			(node
@@ -11781,7 +12287,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "39")
 			(name "Net-(D11-K)")
 			(class "Default")
 			(node
@@ -11798,7 +12304,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "40")
 			(name "Net-(D12-K)")
 			(class "Default")
 			(node
@@ -11815,7 +12321,7 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "41")
 			(name "Net-(D13-K)")
 			(class "Default")
 			(node
@@ -11832,7 +12338,7 @@
 			)
 		)
 		(net
-			(code "40")
+			(code "42")
 			(name "Net-(D14-K)")
 			(class "Default")
 			(node
@@ -11849,7 +12355,7 @@
 			)
 		)
 		(net
-			(code "41")
+			(code "43")
 			(name "Net-(D15-K)")
 			(class "Default")
 			(node
@@ -11866,7 +12372,7 @@
 			)
 		)
 		(net
-			(code "42")
+			(code "44")
 			(name "Net-(D16-K)")
 			(class "Default")
 			(node
@@ -11883,7 +12389,7 @@
 			)
 		)
 		(net
-			(code "43")
+			(code "45")
 			(name "Net-(D17-K)")
 			(class "Default")
 			(node
@@ -11900,7 +12406,7 @@
 			)
 		)
 		(net
-			(code "44")
+			(code "46")
 			(name "Net-(D18-K)")
 			(class "Default")
 			(node
@@ -11917,7 +12423,7 @@
 			)
 		)
 		(net
-			(code "45")
+			(code "47")
 			(name "Net-(D19-K)")
 			(class "Default")
 			(node
@@ -11934,7 +12440,7 @@
 			)
 		)
 		(net
-			(code "46")
+			(code "48")
 			(name "Net-(D20-K)")
 			(class "Default")
 			(node
@@ -11951,7 +12457,7 @@
 			)
 		)
 		(net
-			(code "47")
+			(code "49")
 			(name "Net-(D21-K)")
 			(class "Default")
 			(node
@@ -11968,7 +12474,7 @@
 			)
 		)
 		(net
-			(code "48")
+			(code "50")
 			(name "Net-(D22-K)")
 			(class "Default")
 			(node
@@ -11985,7 +12491,7 @@
 			)
 		)
 		(net
-			(code "49")
+			(code "51")
 			(name "Net-(D23-K)")
 			(class "Default")
 			(node
@@ -12002,7 +12508,7 @@
 			)
 		)
 		(net
-			(code "50")
+			(code "52")
 			(name "Net-(D24-K)")
 			(class "Default")
 			(node
@@ -12019,7 +12525,7 @@
 			)
 		)
 		(net
-			(code "51")
+			(code "53")
 			(name "Net-(D25-K)")
 			(class "Default")
 			(node
@@ -12036,7 +12542,7 @@
 			)
 		)
 		(net
-			(code "52")
+			(code "54")
 			(name "Net-(D26-K)")
 			(class "Default")
 			(node
@@ -12053,7 +12559,7 @@
 			)
 		)
 		(net
-			(code "53")
+			(code "55")
 			(name "Net-(D27-K)")
 			(class "Default")
 			(node
@@ -12070,7 +12576,7 @@
 			)
 		)
 		(net
-			(code "54")
+			(code "56")
 			(name "Net-(D28-K)")
 			(class "Default")
 			(node
@@ -12087,7 +12593,7 @@
 			)
 		)
 		(net
-			(code "55")
+			(code "57")
 			(name "Net-(D29-K)")
 			(class "Default")
 			(node
@@ -12104,7 +12610,7 @@
 			)
 		)
 		(net
-			(code "56")
+			(code "58")
 			(name "Net-(D30-K)")
 			(class "Default")
 			(node
@@ -12121,7 +12627,7 @@
 			)
 		)
 		(net
-			(code "57")
+			(code "59")
 			(name "Net-(D31-K)")
 			(class "Default")
 			(node
@@ -12138,7 +12644,7 @@
 			)
 		)
 		(net
-			(code "58")
+			(code "60")
 			(name "Net-(D32-K)")
 			(class "Default")
 			(node
@@ -12155,7 +12661,7 @@
 			)
 		)
 		(net
-			(code "59")
+			(code "61")
 			(name "Net-(D33-K)")
 			(class "Default")
 			(node
@@ -12172,7 +12678,7 @@
 			)
 		)
 		(net
-			(code "60")
+			(code "62")
 			(name "Net-(D34-K)")
 			(class "Default")
 			(node
@@ -12189,7 +12695,7 @@
 			)
 		)
 		(net
-			(code "61")
+			(code "63")
 			(name "Net-(D35-K)")
 			(class "Default")
 			(node
@@ -12206,7 +12712,7 @@
 			)
 		)
 		(net
-			(code "62")
+			(code "64")
 			(name "Net-(D36-K)")
 			(class "Default")
 			(node
@@ -12223,7 +12729,7 @@
 			)
 		)
 		(net
-			(code "63")
+			(code "65")
 			(name "Net-(D37-K)")
 			(class "Default")
 			(node
@@ -12240,7 +12746,7 @@
 			)
 		)
 		(net
-			(code "64")
+			(code "66")
 			(name "Net-(D38-K)")
 			(class "Default")
 			(node
@@ -12257,7 +12763,7 @@
 			)
 		)
 		(net
-			(code "65")
+			(code "67")
 			(name "Net-(D39-K)")
 			(class "Default")
 			(node
@@ -12274,7 +12780,7 @@
 			)
 		)
 		(net
-			(code "66")
+			(code "68")
 			(name "Net-(D40-K)")
 			(class "Default")
 			(node
@@ -12291,7 +12797,7 @@
 			)
 		)
 		(net
-			(code "67")
+			(code "69")
 			(name "Net-(D41-K)")
 			(class "Default")
 			(node
@@ -12308,7 +12814,7 @@
 			)
 		)
 		(net
-			(code "68")
+			(code "70")
 			(name "Net-(D42-K)")
 			(class "Default")
 			(node
@@ -12325,7 +12831,7 @@
 			)
 		)
 		(net
-			(code "69")
+			(code "71")
 			(name "Net-(D43-K)")
 			(class "Default")
 			(node
@@ -12342,7 +12848,7 @@
 			)
 		)
 		(net
-			(code "70")
+			(code "72")
 			(name "Net-(D44-K)")
 			(class "Default")
 			(node
@@ -12359,7 +12865,7 @@
 			)
 		)
 		(net
-			(code "71")
+			(code "73")
 			(name "Net-(D45-K)")
 			(class "Default")
 			(node
@@ -12376,7 +12882,7 @@
 			)
 		)
 		(net
-			(code "72")
+			(code "74")
 			(name "Net-(D46-K)")
 			(class "Default")
 			(node
@@ -12393,7 +12899,7 @@
 			)
 		)
 		(net
-			(code "73")
+			(code "75")
 			(name "Net-(D47-K)")
 			(class "Default")
 			(node
@@ -12410,7 +12916,7 @@
 			)
 		)
 		(net
-			(code "74")
+			(code "76")
 			(name "Net-(D48-K)")
 			(class "Default")
 			(node
@@ -12427,7 +12933,7 @@
 			)
 		)
 		(net
-			(code "75")
+			(code "77")
 			(name "Net-(D49-K)")
 			(class "Default")
 			(node
@@ -12444,7 +12950,7 @@
 			)
 		)
 		(net
-			(code "76")
+			(code "78")
 			(name "Net-(D50-K)")
 			(class "Default")
 			(node
@@ -12461,7 +12967,7 @@
 			)
 		)
 		(net
-			(code "77")
+			(code "79")
 			(name "Net-(D51-K)")
 			(class "Default")
 			(node
@@ -12478,7 +12984,7 @@
 			)
 		)
 		(net
-			(code "78")
+			(code "80")
 			(name "Net-(D52-K)")
 			(class "Default")
 			(node
@@ -12495,7 +13001,7 @@
 			)
 		)
 		(net
-			(code "79")
+			(code "81")
 			(name "Net-(D53-K)")
 			(class "Default")
 			(node
@@ -12512,7 +13018,7 @@
 			)
 		)
 		(net
-			(code "80")
+			(code "82")
 			(name "Net-(D54-K)")
 			(class "Default")
 			(node
@@ -12529,7 +13035,7 @@
 			)
 		)
 		(net
-			(code "81")
+			(code "83")
 			(name "Net-(J1-Pin_3)")
 			(class "Default")
 			(node
@@ -12551,7 +13057,7 @@
 			)
 		)
 		(net
-			(code "82")
+			(code "84")
 			(name "Net-(J3-In)")
 			(class "Default")
 			(node
@@ -12573,9 +13079,9 @@
 			)
 		)
 		(net
-			(code "83")
+			(code "85")
 			(name "Net-(L5-Pad1)")
-			(class "Default")
+			(class "POWER")
 			(node
 				(ref "L5")
 				(pin "1")
@@ -12595,9 +13101,9 @@
 			)
 		)
 		(net
-			(code "84")
+			(code "86")
 			(name "Net-(L6-Pad1)")
-			(class "Default")
+			(class "POWER")
 			(node
 				(ref "L6")
 				(pin "1")
@@ -12617,7 +13123,7 @@
 			)
 		)
 		(net
-			(code "85")
+			(code "87")
 			(name "Net-(R31-Pad2)")
 			(class "Default")
 			(node
@@ -12637,7 +13143,7 @@
 			)
 		)
 		(net
-			(code "86")
+			(code "88")
 			(name "Net-(RN1-R1.1)")
 			(class "Default")
 			(node
@@ -12654,7 +13160,7 @@
 			)
 		)
 		(net
-			(code "87")
+			(code "89")
 			(name "Net-(RN1-R2.1)")
 			(class "Default")
 			(node
@@ -12671,7 +13177,7 @@
 			)
 		)
 		(net
-			(code "88")
+			(code "90")
 			(name "Net-(RN1-R3.1)")
 			(class "Default")
 			(node
@@ -12688,7 +13194,7 @@
 			)
 		)
 		(net
-			(code "89")
+			(code "91")
 			(name "Net-(RN1-R4.1)")
 			(class "Default")
 			(node
@@ -12705,7 +13211,7 @@
 			)
 		)
 		(net
-			(code "90")
+			(code "92")
 			(name "Net-(RN2-R1.1)")
 			(class "Default")
 			(node
@@ -12722,7 +13228,7 @@
 			)
 		)
 		(net
-			(code "91")
+			(code "93")
 			(name "Net-(RN2-R2.1)")
 			(class "Default")
 			(node
@@ -12739,7 +13245,7 @@
 			)
 		)
 		(net
-			(code "92")
+			(code "94")
 			(name "Net-(RN2-R3.1)")
 			(class "Default")
 			(node
@@ -12756,7 +13262,7 @@
 			)
 		)
 		(net
-			(code "93")
+			(code "95")
 			(name "Net-(RN2-R4.1)")
 			(class "Default")
 			(node
@@ -12773,7 +13279,7 @@
 			)
 		)
 		(net
-			(code "94")
+			(code "96")
 			(name "Net-(RN3-R1.1)")
 			(class "Default")
 			(node
@@ -12790,7 +13296,7 @@
 			)
 		)
 		(net
-			(code "95")
+			(code "97")
 			(name "Net-(RN3-R2.1)")
 			(class "Default")
 			(node
@@ -12807,7 +13313,7 @@
 			)
 		)
 		(net
-			(code "96")
+			(code "98")
 			(name "Net-(RN3-R3.1)")
 			(class "Default")
 			(node
@@ -12824,7 +13330,7 @@
 			)
 		)
 		(net
-			(code "97")
+			(code "99")
 			(name "Net-(RN3-R4.1)")
 			(class "Default")
 			(node
@@ -12841,7 +13347,7 @@
 			)
 		)
 		(net
-			(code "98")
+			(code "100")
 			(name "Net-(RN4-R1.1)")
 			(class "Default")
 			(node
@@ -12858,7 +13364,7 @@
 			)
 		)
 		(net
-			(code "99")
+			(code "101")
 			(name "Net-(RN4-R2.1)")
 			(class "Default")
 			(node
@@ -12875,7 +13381,7 @@
 			)
 		)
 		(net
-			(code "100")
+			(code "102")
 			(name "Net-(RN4-R3.1)")
 			(class "Default")
 			(node
@@ -12892,7 +13398,7 @@
 			)
 		)
 		(net
-			(code "101")
+			(code "103")
 			(name "Net-(RN4-R4.1)")
 			(class "Default")
 			(node
@@ -12909,7 +13415,7 @@
 			)
 		)
 		(net
-			(code "102")
+			(code "104")
 			(name "Net-(RN5-R1.1)")
 			(class "Default")
 			(node
@@ -12926,7 +13432,7 @@
 			)
 		)
 		(net
-			(code "103")
+			(code "105")
 			(name "Net-(RN5-R2.1)")
 			(class "Default")
 			(node
@@ -12943,7 +13449,7 @@
 			)
 		)
 		(net
-			(code "104")
+			(code "106")
 			(name "Net-(RN5-R3.1)")
 			(class "Default")
 			(node
@@ -12960,7 +13466,7 @@
 			)
 		)
 		(net
-			(code "105")
+			(code "107")
 			(name "Net-(RN5-R4.1)")
 			(class "Default")
 			(node
@@ -12977,7 +13483,7 @@
 			)
 		)
 		(net
-			(code "106")
+			(code "108")
 			(name "Net-(RN6-R1.1)")
 			(class "Default")
 			(node
@@ -12994,7 +13500,7 @@
 			)
 		)
 		(net
-			(code "107")
+			(code "109")
 			(name "Net-(RN6-R2.1)")
 			(class "Default")
 			(node
@@ -13011,7 +13517,7 @@
 			)
 		)
 		(net
-			(code "108")
+			(code "110")
 			(name "Net-(RN6-R3.1)")
 			(class "Default")
 			(node
@@ -13028,7 +13534,7 @@
 			)
 		)
 		(net
-			(code "109")
+			(code "111")
 			(name "Net-(RN6-R4.1)")
 			(class "Default")
 			(node
@@ -13045,7 +13551,7 @@
 			)
 		)
 		(net
-			(code "110")
+			(code "112")
 			(name "Net-(RN7-R1.1)")
 			(class "Default")
 			(node
@@ -13062,7 +13568,7 @@
 			)
 		)
 		(net
-			(code "111")
+			(code "113")
 			(name "Net-(RN7-R2.1)")
 			(class "Default")
 			(node
@@ -13079,7 +13585,7 @@
 			)
 		)
 		(net
-			(code "112")
+			(code "114")
 			(name "Net-(RN7-R3.1)")
 			(class "Default")
 			(node
@@ -13096,7 +13602,7 @@
 			)
 		)
 		(net
-			(code "113")
+			(code "115")
 			(name "Net-(RN7-R4.1)")
 			(class "Default")
 			(node
@@ -13113,7 +13619,7 @@
 			)
 		)
 		(net
-			(code "114")
+			(code "116")
 			(name "Net-(RN8-R1.1)")
 			(class "Default")
 			(node
@@ -13130,7 +13636,7 @@
 			)
 		)
 		(net
-			(code "115")
+			(code "117")
 			(name "Net-(RN8-R2.1)")
 			(class "Default")
 			(node
@@ -13147,7 +13653,7 @@
 			)
 		)
 		(net
-			(code "116")
+			(code "118")
 			(name "Net-(RN8-R3.1)")
 			(class "Default")
 			(node
@@ -13164,7 +13670,7 @@
 			)
 		)
 		(net
-			(code "117")
+			(code "119")
 			(name "Net-(RN8-R4.1)")
 			(class "Default")
 			(node
@@ -13181,7 +13687,7 @@
 			)
 		)
 		(net
-			(code "118")
+			(code "120")
 			(name "Net-(RN9-R1.1)")
 			(class "Default")
 			(node
@@ -13198,7 +13704,7 @@
 			)
 		)
 		(net
-			(code "119")
+			(code "121")
 			(name "Net-(RN9-R2.1)")
 			(class "Default")
 			(node
@@ -13215,7 +13721,7 @@
 			)
 		)
 		(net
-			(code "120")
+			(code "122")
 			(name "Net-(RN9-R3.1)")
 			(class "Default")
 			(node
@@ -13232,7 +13738,7 @@
 			)
 		)
 		(net
-			(code "121")
+			(code "123")
 			(name "Net-(RN9-R4.1)")
 			(class "Default")
 			(node
@@ -13249,7 +13755,7 @@
 			)
 		)
 		(net
-			(code "122")
+			(code "124")
 			(name "Net-(RN10-R1.1)")
 			(class "Default")
 			(node
@@ -13266,7 +13772,7 @@
 			)
 		)
 		(net
-			(code "123")
+			(code "125")
 			(name "Net-(RN10-R2.1)")
 			(class "Default")
 			(node
@@ -13283,7 +13789,7 @@
 			)
 		)
 		(net
-			(code "124")
+			(code "126")
 			(name "Net-(RN10-R3.1)")
 			(class "Default")
 			(node
@@ -13300,7 +13806,7 @@
 			)
 		)
 		(net
-			(code "125")
+			(code "127")
 			(name "Net-(RN10-R4.1)")
 			(class "Default")
 			(node
@@ -13317,7 +13823,7 @@
 			)
 		)
 		(net
-			(code "126")
+			(code "128")
 			(name "Net-(RN11-R1.1)")
 			(class "Default")
 			(node
@@ -13334,7 +13840,7 @@
 			)
 		)
 		(net
-			(code "127")
+			(code "129")
 			(name "Net-(RN11-R2.1)")
 			(class "Default")
 			(node
@@ -13351,7 +13857,7 @@
 			)
 		)
 		(net
-			(code "128")
+			(code "130")
 			(name "Net-(RN11-R3.1)")
 			(class "Default")
 			(node
@@ -13368,7 +13874,7 @@
 			)
 		)
 		(net
-			(code "129")
+			(code "131")
 			(name "Net-(RN11-R4.1)")
 			(class "Default")
 			(node
@@ -13385,7 +13891,7 @@
 			)
 		)
 		(net
-			(code "130")
+			(code "132")
 			(name "Net-(RN12-R1.1)")
 			(class "Default")
 			(node
@@ -13402,7 +13908,7 @@
 			)
 		)
 		(net
-			(code "131")
+			(code "133")
 			(name "Net-(RN12-R2.1)")
 			(class "Default")
 			(node
@@ -13419,7 +13925,7 @@
 			)
 		)
 		(net
-			(code "132")
+			(code "134")
 			(name "Net-(RN12-R3.1)")
 			(class "Default")
 			(node
@@ -13436,7 +13942,7 @@
 			)
 		)
 		(net
-			(code "133")
+			(code "135")
 			(name "Net-(RN12-R4.1)")
 			(class "Default")
 			(node
@@ -13453,7 +13959,7 @@
 			)
 		)
 		(net
-			(code "134")
+			(code "136")
 			(name "Net-(U2-ILIM)")
 			(class "Default")
 			(node
@@ -13469,7 +13975,7 @@
 			)
 		)
 		(net
-			(code "135")
+			(code "137")
 			(name "Net-(U2-OUT)")
 			(class "Default")
 			(node
@@ -13496,7 +14002,23 @@
 			)
 		)
 		(net
-			(code "136")
+			(code "138")
+			(name "Net-(U5-P0.0{slash}VREF)")
+			(class "Default")
+			(node
+				(ref "C50")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "1")
+				(pinfunction "P0.0/VREF_1")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "139")
 			(name "Net-(U5-P2.4{slash}ADC)")
 			(class "Default")
 			(node
@@ -13517,7 +14039,28 @@
 			)
 		)
 		(net
-			(code "137")
+			(code "140")
+			(name "Net-(U5-P2.5{slash}ADC)")
+			(class "Default")
+			(node
+				(ref "C48")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R36")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "12")
+				(pinfunction "P2.5/ADC_12")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "141")
 			(name "VCOAX")
 			(class "POWER")
 			(node
@@ -13529,12 +14072,6 @@
 				(ref "D1")
 				(pin "1")
 				(pinfunction "K_1")
-				(pintype "passive")
-			)
-			(node
-				(ref "L7")
-				(pin "1")
-				(pinfunction "1_1")
 				(pintype "passive")
 			)
 			(node
@@ -13553,14 +14090,25 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "R35")
+				(pin "2")
+				(pintype "passive")
+			)
+			(node
 				(ref "U1")
 				(pin "1")
 				(pinfunction "VIN_1")
 				(pintype "power_in")
 			)
+			(node
+				(ref "U20")
+				(pin "4")
+				(pinfunction "IN-_4")
+				(pintype "input")
+			)
 		)
 		(net
-			(code "138")
+			(code "142")
 			(name "VHOLD")
 			(class "POWER")
 			(node
@@ -13593,7 +14141,7 @@
 			)
 		)
 		(net
-			(code "139")
+			(code "143")
 			(name "VLED")
 			(class "POWER")
 			(node
@@ -13908,7 +14456,7 @@
 			)
 		)
 		(net
-			(code "140")
+			(code "144")
 			(name "VMAIN")
 			(class "POWER")
 			(node
@@ -13956,7 +14504,7 @@
 			)
 		)
 		(net
-			(code "142")
+			(code "146")
 			(name "unconnected-(U1-NC-Pad4)")
 			(class "Default")
 			(node
@@ -13967,7 +14515,7 @@
 			)
 		)
 		(net
-			(code "143")
+			(code "147")
 			(name "unconnected-(U5-N{slash}C-Pad2)")
 			(class "Default")
 			(node
@@ -13978,7 +14526,7 @@
 			)
 		)
 		(net
-			(code "144")
+			(code "148")
 			(name "unconnected-(U5-P1.5-Pad20)")
 			(class "Default")
 			(node
@@ -13989,7 +14537,7 @@
 			)
 		)
 		(net
-			(code "145")
+			(code "149")
 			(name "unconnected-(U5-P1.6-Pad19)")
 			(class "Default")
 			(node
@@ -14000,18 +14548,7 @@
 			)
 		)
 		(net
-			(code "146")
-			(name "unconnected-(U5-P2.5-Pad12)")
-			(class "Default")
-			(node
-				(ref "U5")
-				(pin "12")
-				(pinfunction "P2.5_12")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "147")
+			(code "150")
 			(name "unconnected-(U5-P2.6-Pad11)")
 			(class "Default")
 			(node
@@ -14022,7 +14559,7 @@
 			)
 		)
 		(net
-			(code "148")
+			(code "151")
 			(name "unconnected-(U5-P3.0-Pad10)")
 			(class "Default")
 			(node
@@ -14033,7 +14570,7 @@
 			)
 		)
 		(net
-			(code "149")
+			(code "152")
 			(name "unconnected-(U5-P3.1-Pad9)")
 			(class "Default")
 			(node
@@ -14044,7 +14581,7 @@
 			)
 		)
 		(net
-			(code "150")
+			(code "153")
 			(name "unconnected-(U5-P3.2-Pad8)")
 			(class "Default")
 			(node
@@ -14055,7 +14592,7 @@
 			)
 		)
 		(net
-			(code "151")
+			(code "154")
 			(name "unconnected-(U5-P3.3-Pad7)")
 			(class "Default")
 			(node
@@ -14066,7 +14603,7 @@
 			)
 		)
 		(net
-			(code "152")
+			(code "155")
 			(name "unconnected-(U5-P3.4-Pad6)")
 			(class "Default")
 			(node
@@ -14077,7 +14614,7 @@
 			)
 		)
 		(net
-			(code "153")
+			(code "156")
 			(name "unconnected-(U19-QH'-Pad9)")
 			(class "Default")
 			(node
