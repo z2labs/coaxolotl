@@ -710,7 +710,7 @@ text("RTL-SDR", 97.5, YJ - 8.0, 0.8, 90)
 text("RF CTRL", padpos[("J6", "1")][0] - 1.0, H - 9.6, 0.8, just="left")
 for k, nm in enumerate(["3V3", "LNA", "V1", "V2", "V3", "PTH", "OUT", "FMN", "GND", "GND"]):
     q = padpos[("J6", str(k + 1))]
-    text(nm, q[0], q[1] - 2.0, 0.7, th=0.12)
+    text(nm, q[0], q[1] - 1.6, 0.7, 90, th=0.12, just="left")   # upright column per pin: never shifted onto a neighbour
 
 # ------------------------------------------------------------ save + project rules
 for ref, fp in fps.items():

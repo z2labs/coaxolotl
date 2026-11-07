@@ -1,28 +1,39 @@
-"""Layer 3: the drawn copper against the currents and voltages it has to carry.
+"""Layer 3 - control board: the drawn copper and the part values against the currents and voltages they have to carry.
 
-Ampacity is checked as a max-flow through the real copper of each high-current net - tracks, pads AND zone fills
-(power pours) on every layer, rasterised at 0.2 mm, layers joined by vias (1.5 A per 0.3 mm drill, 25 um barrel,
-conservative; scaled with the drill, since the barrel cross-section is pi * d * t) and by plated through-holes - between the pads where the current really enters and leaves (FLOWS).
-Each copper cell carries k_layer * 0.2 mm, where k_layer = I / W_IPC(I, layer) is the current per mm of width that
-IPC-2221 allows at the design current for a 20 K rise (1 oz outer = 35 um, 0.5 oz inner = 17.5 um, JLC 4-layer).
-The 1 mm around a source or sink pad is the pad-entry neck: a component pin's own width is the part maker's rating.
+Ampacity is a max-flow through the real copper of each DC-path net (tracks, pads, zone fills on both layers,
+rasterised at 0.2 mm, layers joined by vias at 1.5 A per 0.3 mm drill and by plated holes) between the pads where the
+current enters and leaves, against IPC-2221 at a 20 K rise (1 oz = 35 um outer, JLC 2-layer).
+Kelvin: the INA180A3 sense leads of the coax shunt must reach the rest of their net only through the shunt pads.
+Set-points: the firmware scaling constants recomputed from the fitted values, the INA180 swing against the ADC and
+the trip thresholds, the TPS2553 short-circuit current from RILIM, the back-channel level, the power budget against
+the RTL-SDR V3 bias-T and the capacitor voltage ratings.
 
-Also: Pi 5 V IR drop at 5 A, set-points from the divider values (buck 5.0-5.25 V, boost), TAS5805M PVDD window,
-LDO dissipation at a 20 V PD contract.
+Sources: [DS-180] INA180 SBOS741H (gain A2 50 V/V, A3 100 V/V; output swing to VS - 20 mV), [DS-2553] TPS2553
+SLVS841G IOS table (min/typ/max at RILIM 20 k, 49.9 k, 210 k), [DOC-HW] docs/hardware.md power budget (RTL-SDR V3
+bias-T 4.5 V, about 180 mA; LNA budget 100 mA; 3V3 domain 1.5 mA active) and back-channel derivation (3rd harmonic,
+25 R line, about -65 dBm), [FW] firmware/src/config.h and hal_efm8bb52.c constants (read by machine), USB 2.0 VBUS
+5.25 V max (the V3 bias-T is switched from VBUS).
 
-usage: kicad-python twin_analog.py board.kicad_pcb [--selftest]       exit 0 / 1 FAIL / 2 input / 3 selftest
+usage: kicad-python twin_analog.py board.kicad_pcb [--selftest] [-q]     exit 0 / 1 FAIL / 2 input / 3 selftest
 """
-import os, sys, math, collections
+import os, re, sys, math, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "tools"))
-from twin_common import Report, parse_value
+from twin_common import Report
 
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
 DT = 20.0
 CU = {"outer": 0.035, "inner": 0.0175}            # mm
 RHO = 1.72e-5                                     # Ohm*mm (copper, 20 C)
 VIA_A = 1.5                                       # A per 0.3 mm via
 H = 0.2                                           # raster, mm
 NECK = 1.0                                        # mm around source/sink pads
+I_COAX = 0.25        # A: design current of the coax DC path (above the V3 bias-T limit of about 180-200 mA [DOC-HW])
+V_BUS_MAX = 5.25     # V: USB VBUS max, the highest the V3 bias-T can put on the coax
+V_COAX_NOM = 4.5     # V: V3 bias-T [DOC-HW]
+V_V3_LIMIT = 180     # mA [DOC-HW]
+INA_SWING = 0.020    # V below VS [DS-180]
+GAIN = {"INA180A1": 20, "INA180A2": 50, "INA180A3": 100, "INA180A4": 200}           # [DS-180]
+IOS_TAB = [(20e3, 1200, 1295, 1375), (49.9e3, 475, 520, 565), (210e3, 110, 130, 150)]   # [DS-2553] mA
 
 
 def ipc_amps(width_mm, outer):
@@ -38,32 +49,16 @@ def ipc_width(amps, outer):
 
 
 T = lambda r, *p: [(r, x) for x in p]
-FLOWS = [   # (net, source pads, sink pads, A): where the current enters and leaves the copper of that net
-    ("/battery/CELL3", T("BT403", "1"), T("F401", "1"), 6.0),
-    ("/battery/CELL0", T("BT401", "2"), T("J401", "1"), 6.0),
-    ("/battery/CELL1", T("BT401", "1"), T("BT402", "2"), 6.0),
-    ("/battery/CELL2", T("BT402", "1"), T("BT403", "2"), 6.0),
-    ("+BATT", T("F401", "2"), T("U303", "3"), 2.8),                       # Pi buck input at 9 V, 5.1 V / 5 A
-    ("+BATT", T("F401", "2"), T("U201", "15", "16", "27", "28"), 2.5),    # amp 1 PVDD
-    ("+BATT", T("F401", "2"), T("R344", "1"), 2.5),                       # amp 2 PVDD via the 0R select link
-    ("+BATT", T("R304", "2"), T("F401", "2"), 3.5),                       # charging current into the pack
-    ("+5V_BUCK", T("L302", "2"), T("Q101", "5"), 5.0),
-    ("+5V", T("Q101", "1", "2", "3"), T("J101", "2", "4"), 5.0),
-    ("/power/BUCK_SW", T("U303", "2"), T("L302", "1"), 5.0),
-    ("VBUS", T("J301", "A4", "A9", "B4", "B9"), T("R305", "1"), 3.0),
-    ("/power/CHG_VIN", T("R305", "2"), T("R302", "1"), 3.0),
-    ("/power/CHG_NODEB", T("R302", "2"), T("Q301", "5"), 3.0),
-    ("/power/CHG_LX1", T("Q301", "1", "2", "3"), T("L301", "1"), 3.5),
-    ("/power/CHG_LX2", T("L301", "2"), T("Q303", "1", "2", "3"), 3.5),
-    ("/power/CHG_NODEC", T("Q303", "5"), T("R304", "1"), 3.5),
-    ("PVDD_SUB", T("R344", "2"), T("U202", "15", "16", "27", "28"), 2.5),
-    ("/audio/AMP2_P", T("U202", "26", "23"), T("L205", "1"), 3.0),
-    ("/audio/AMP2_N", T("U202", "17", "20"), T("L206", "1"), 3.0),
-    ("/audio/SUB_P", T("L205", "2"), T("J203", "1"), 3.0), ("/audio/SUB_N", T("L206", "2"), T("J203", "2"), 3.0),
-    ("/audio/AMP1_AP", T("U201", "26"), T("L201", "1"), 2.0), ("/audio/AMP1_AN", T("U201", "23"), T("L202", "1"), 2.0),
-    ("/audio/AMP1_BP", T("U201", "17"), T("L203", "1"), 2.0), ("/audio/AMP1_BN", T("U201", "20"), T("L204", "1"), 2.0),
-    ("/audio/SAT_L_P", T("L201", "2"), T("J201", "1"), 2.0), ("/audio/SAT_L_N", T("L202", "2"), T("J201", "2"), 2.0),
-    ("/audio/SAT_R_P", T("L203", "2"), T("J202", "1"), 2.0), ("/audio/SAT_R_N", T("L204", "2"), T("J202", "2"), 2.0),
+FLOWS = [   # (source pads, sink pads, A): the net is the one on the source pads
+    (T("J3", "1"), T("L5", "2"), I_COAX), (T("L5", "1"), T("L6", "2"), I_COAX), (T("L6", "1"), T("L7", "2"), I_COAX),
+    (T("L7", "1"), T("R35", "1"), I_COAX), (T("R35", "2"), T("U1", "1"), I_COAX),
+    (T("U1", "6"), T("U2", "1"), 0.21), (T("U1", "6"), T("FB1", "1"), 0.05),     # TPS2553 IOS max at RILIM; lamps
+    (T("U2", "6"), T("R7", "1"), 0.21), (T("R7", "2"), T("J6", "2"), 0.21),
+    (T("FB1", "2"), T("J4", "2"), 0.05),
+]
+KELVIN = [   # (sense pad, shunt pad, a load pad on the same net): the sense pad may reach the load only via the shunt pad
+    (("U20", "3"), ("R35", "1"), ("L7", "1")), (("U20", "4"), ("R35", "2"), ("U1", "1")),
+    (("U3", "3"), ("R7", "1"), ("U2", "6")), (("U3", "4"), ("R7", "2"), ("J6", "2")),
 ]
 
 
@@ -77,10 +72,14 @@ class Copper:
         import pcbnew
         self.pcbnew = pcbnew
         self.b = pcbnew.LoadBoard(path)
-        self.layers = [pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.B_Cu]
+        n = self.b.GetCopperLayerCount()
+        self.layers = [pcbnew.F_Cu] + [pcbnew.In1_Cu, pcbnew.In2_Cu][:max(0, n - 2)] + [pcbnew.B_Cu]
         self.vals = {fp.GetReference(): fp.GetValue() for fp in self.b.GetFootprints()}
         self.drop_zones = set()     # selftest: nets whose pours are ignored
         self.width_override = {}    # selftest: net -> track width mm
+        self.skip_pads = set()      # pads left out of the copper
+        self.cut_pads = set()       # Kelvin: copper inside these pads' outline removed (tracks included)
+        self.neck = NECK
 
     def net_copper(self, net):
         pcbnew = self.pcbnew
@@ -100,7 +99,7 @@ class Copper:
                 t.SetWidth(w0)
         for fp in self.b.GetFootprints():
             for p in fp.Pads():
-                if p.GetNetname() != net:
+                if p.GetNetname() != net or (fp.GetReference(), p.GetNumber()) in self.skip_pads:
                     continue
                 ls = [l for l in self.layers if p.IsOnLayer(l)]
                 for l in ls:
@@ -135,7 +134,8 @@ class Copper:
         pcbnew = self.pcbnew
         if not hasattr(self, "_nc"):
             self._nc = {}
-        key = (net, tuple(sorted(self.drop_zones)), tuple(sorted(self.width_override.items())))
+        key = (net, tuple(sorted(self.drop_zones)), tuple(sorted(self.width_override.items())),
+               tuple(sorted(self.skip_pads)), len(self.b.GetTracks()), tuple(sorted(self.cut_pads)))
         if key not in self._nc:
             self._nc = {key: self.net_copper(net)}      # cache one net (polys are simplified in place below)
         polys, vias, pth, pads = self._nc[key]
@@ -156,7 +156,7 @@ class Copper:
             x1 = min(x1, max(b[2] for b in tb) + margin); y1 = min(y1, max(b[3] for b in tb) + margin)
         nx, ny = int((x1 - x0) / H) + 1, int((y1 - y0) / H) + 1
         cells = set()
-        outer = {pcbnew.F_Cu: True, pcbnew.B_Cu: True, pcbnew.In1_Cu: False, pcbnew.In2_Cu: False}
+        outer = {l: l in (pcbnew.F_Cu, pcbnew.B_Cu) for l in self.layers}
         kcap = {l: amps / ipc_width(amps, outer[l]) * H for l in self.layers}     # A per cell edge
         for li, l in enumerate(self.layers):
             ps = polys[l]
@@ -172,6 +172,11 @@ class Copper:
                 for j in range(j0, j1):
                     if ps.Contains(pcbnew.VECTOR2I(xx, pcbnew.FromMM(y0 + j * H))):
                         cells.add((li, i, j))
+        for rp in self.cut_pads:
+            for (bx0, by0, bx1, by1) in pads.get(rp, []):
+                i0, j0 = int(math.floor((bx0 - x0) / H)), int(math.floor((by0 - y0) / H))
+                i1, j1 = int(math.ceil((bx1 - x0) / H)), int(math.ceil((by1 - y0) / H))
+                cells -= {(li, i, j) for li in range(len(self.layers)) for i in range(i0, i1 + 1) for j in range(j0, j1 + 1)}
         if not cells:
             return None, "no copper"
         cap = collections.defaultdict(float); adj = collections.defaultdict(list)
@@ -212,7 +217,7 @@ class Copper:
         for term, rps in ((S, src), (Tn, dst)):
             for rp in rps:
                 for (bx0, by0, bx1, by1) in pads[rp]:
-                    i0, j0 = cell_of(bx0 - NECK, by0 - NECK); i1, j1 = cell_of(bx1 + NECK, by1 + NECK)
+                    i0, j0 = cell_of(bx0 - self.neck, by0 - self.neck); i1, j1 = cell_of(bx1 + self.neck, by1 + self.neck)
                     for li in range(len(self.layers)):
                         for i in range(i0, i1 + 1):
                             for j in range(j0, j1 + 1):
@@ -267,54 +272,205 @@ class Copper:
         return flow, where
 
 
+
+
+# ---------------------------------------------------------------- values
+def ohms(v):
+    m = re.match(r"(\d+)([RkKM])(\d*)", v or "")
+    if not m:
+        return None
+    a, u, b = m.groups()
+    return float(f"{a}.{b or 0}") * {"R": 1, "k": 1e3, "K": 1e3, "M": 1e6}[u]
+
+
+def farads(v):
+    m = re.match(r"(\d+(?:\.\d+)?)([pnuµ]?)F", v or "")
+    return float(m.group(1)) * {"": 1, "p": 1e-12, "n": 1e-9, "u": 1e-6, "µ": 1e-6}[m.group(2)] if m else None
+
+
+def volts(v):
+    m = re.search(r"/(\d+(?:\.\d+)?)V", v or "")
+    return float(m.group(1)) if m else None
+
+
+def gain(v):
+    return next((g for k, g in GAIN.items() if k in (v or "")), None)
+
+
+def fw_consts():
+    """#define NAME number from the firmware sources [FW]"""
+    out = {}
+    for f in ("firmware/src/config.h", "firmware/src/hal_efm8bb52.c"):
+        for m in re.finditer(r"#define\s+(\w+)\s+(\d+)u?l?\b", open(os.path.join(ROOT, f), encoding="utf-8").read()):
+            out.setdefault(m.group(1), int(m.group(2)))
+    return out
+
+
+def ios(rilim):
+    """TPS2553 short-circuit current (min, typ, max) in mA, log-log interpolated in the data sheet table [DS-2553]"""
+    t = IOS_TAB
+    for (r0, *a), (r1, *b) in zip(t, t[1:]):
+        if r0 <= rilim <= r1 or (r1, *b) == t[-1]:
+            k = math.log(rilim / r0) / math.log(r1 / r0)
+            return tuple(math.exp(math.log(x) + k * (math.log(y) - math.log(x))) for x, y in zip(a, b))
+
+
+def padnet(cu, rp):
+    for fp in cu.b.GetFootprints():
+        if fp.GetReference() == rp[0]:
+            for p in fp.Pads():
+                if p.GetNumber() == rp[1]:
+                    return p.GetNetname()
+    return None
+
+
+# ---------------------------------------------------------------- checks
 def check(cu):
-    rep = Report("layer 3: copper vs current, set-points")
-    vals = cu.vals
-    for (net, src, dst, amps) in FLOWS:
+    rep = Report("twin_analog - control board, layer 3 (copper vs current, Kelvin, set-points)")
+    v = cu.vals
+    ok = lambda c, g, m: rep.add("PASS" if c else "FAIL", g, m)
+    for (src, dst, amps) in FLOWS:
+        net = padnet(cu, src[0])
         cap, why = cu.flow(net, src, dst, amps)
         if cap is None:
             rep.add("FAIL", "ampacity", f"{net}: {why}"); continue
-        rep.add("PASS" if cap >= amps else "FAIL", "ampacity",
-                f"{net} {fmt(src)} -> {fmt(dst)}: {amps:g} A needed, copper carries {min(cap, amps*1.25):.1f}{'+' if cap >= amps*1.25 else ''} A "
-                f"(IPC-2221 {DT:g} K, pours included, vias {VIA_A} A per 0.3 mm drill)" + (f"  {why}" if why else ""))
-    # ---- Pi 5 V: set-point and drop (FET + copper; the ampacity check guarantees at least the IPC 5 A width)
-    vout = 0.760 * (1 + parse_value(vals.get("R331", "0")) / parse_value(vals.get("R332", "1")))
-    rep.add("PASS" if 5.0 <= vout <= 5.25 else "FAIL", "set-point", f"Pi buck: 0.760*(1+R331/R332) = {vout:.3f} V (5.0-5.25 V)")
-    drop = 5.0 * 0.017                                    # DMP3013SFV Rds(on) at -4.5 V [DS-DMP]
-    for net, a, b_ in (("+5V_BUCK", ("L302", "2"), ("Q101", "5")), ("+5V", ("Q101", "1"), ("J101", "2"))):
-        polys, vias, pth, pads = cu.net_copper(net)
-        if a in pads and b_ in pads:
-            pa = pads[a][0]; pb = pads[b_][0]
-            L = math.dist(((pa[0] + pa[2]) / 2, (pa[1] + pa[3]) / 2), ((pb[0] + pb[2]) / 2, (pb[1] + pb[3]) / 2)) * 1.4
-            drop += 5.0 * RHO * L / (ipc_width(5.0, True) * CU["outer"])
-    rep.add("PASS" if vout - drop >= 4.90 else "FAIL", "IR drop",
-            f"Pi 5 V at the header: {vout:.3f} V - {drop*1000:.0f} mV (ZVD FET + copper at 5 A) = {vout-drop:.3f} V (>= 4.90 V)")
-    vb = 0.6 * (1 + parse_value(vals.get("R341", "0")) / parse_value(vals.get("R342", "1")))
-    rep.add("PASS" if 4.5 <= vb <= 26.4 else "FAIL", "PVDD", f"sub boost {vb:.1f} V inside TAS5805M PVDD 4.5-26.4 V; pack 9.0-12.6 V also inside")
-    rep.add("PASS" if vb <= 28 * 0.85 else "FAIL", "boost", f"MT3608 SW max 28 V: {vb:.1f} V leaves margin")
-    # ---- LDOs: USB side XC6216 at a 20 V PD contract (500 mW without PCB credit), battery side HT7533 at 12.6 V (250 mW)
-    i_ch340 = 0.015                                      # CH340C supply current, typ. (CH340DS1); confirm
-    for ref, part, vin, i, pdmax in (("U306", "XC6216", 20.0, i_ch340, 0.5), ("U305", "HT7533-1", 12.6, 0.010, 0.25)):
-        pd = (vin - 3.3) * i
-        rep.add("PASS" if pd <= 0.8 * pdmax else "FAIL", "LDO",
-                f"{ref} {part} at {vin:g} V, {i*1000:g} mA: {pd*1000:.0f} mW vs {pdmax*1000:.0f} mW rating (80 % = {pdmax*800:.0f} mW)")
+        ok(cap >= amps, "ampacity", f"{net} {fmt(src)} -> {fmt(dst)}: {amps:g} A needed, copper carries "
+           f"{min(cap, amps * 1.25):.2f}{'+' if cap >= amps * 1.25 else ''} A (IPC-2221 {DT:g} K)" + (f"  {why}" if why else ""))
+    # ---- Kelvin: with the shunt pad's outline cut out, the sense lead must no longer reach the load copper
+    for sense, shunt, load in KELVIN:
+        net = padnet(cu, sense)
+        cu.neck, cu.cut_pads = 0.0, {shunt}
+        cap, why = cu.flow(net, [sense], [load], 0.01)
+        cu.neck, cu.cut_pads = NECK, set()
+        cap2, _ = cu.flow(net, [sense], [load], 0.01)
+        ok(cap is None and cap2 is not None, "kelvin",
+           f"{fmt([sense])} meets {fmt([load])} only through the {fmt([shunt])} pad" if cap is None else
+           f"{fmt([sense])} reaches {fmt([load])} outside the {fmt([shunt])} pad: shunt current flows in the sense lead")
+    # ---- firmware scaling vs fitted values [FW]
+    fw = fw_consts()
+    g3, g20 = gain(v.get("U3")), gain(v.get("U20"))
+    r7, r35 = ohms(v.get("R7")), ohms(v.get("R35"))
+    for name, got, want in (("I_UV_PER_MA", r7 * g3 * 1000 if r7 and g3 else None, fw.get("I_UV_PER_MA")),
+                            ("IT_UV_PER_MA", r35 * g20 * 1000 if r35 and g20 else None, fw.get("IT_UV_PER_MA"))):
+        ok(got is not None and want and abs(got - want) <= 0.01 * want, "firmware",
+           f"{name}: fitted parts give {got} uV/mA, firmware uses {want}")
+    r3, r4, r11, r12 = (ohms(v.get(r)) for r in ("R3", "R4", "R11", "R12"))
+    for name, got, num, den in (("VC_DIV", (r3 + r4) / r4, fw["VC_DIV_NUM"], fw["VC_DIV_DEN"]),
+                                ("SC_DIV", (r11 + r12) / r12, fw["SC_DIV_NUM"], fw["SC_DIV_DEN"])):
+        ok(abs(got - num / den) <= 0.005 * num / den, "firmware", f"{name}: fitted divider {got:.4f}, firmware {num}/{den}")
+    vdd = fw["VDD_MV"] / 1000
+    vs = vdd - INA_SWING
+    fs_lna, fs_tot = vs / (r7 * g3) * 1000, vs / (r35 * g20) * 1000
+    ok(fs_lna >= 1.05 * fw["I_TRIP_MA"], "range", f"LNA monitor full scale {fs_lna:.0f} mA (VS - 20 mV) vs trip {fw['I_TRIP_MA']} mA")
+    ok(fs_tot >= max(fw["I_BUDGET_MA"], V_V3_LIMIT), "range",
+       f"coax monitor full scale {fs_tot:.0f} mA vs budget {fw['I_BUDGET_MA']} mA and the V3 limit {V_V3_LIMIT} mA")
+    ok(vs * 1000 < fw.get("ADC_REF_MV", 0), "range", f"INA180 swing {vs:.2f} V inside the ADC range {fw.get('ADC_REF_MV')} mV")
+    sense_nom, sense_max = V_COAX_NOM * r4 / (r3 + r4), V_BUS_MAX * r4 / (r3 + r4)
+    ok(sense_nom < vdd, "range", f"SENSE at {V_COAX_NOM} V coax: {sense_nom:.2f} V < VDD {vdd} V")
+    rep.add("PASS" if sense_max <= vdd else "WARN", "range",
+            f"SENSE at {V_BUS_MAX} V (USB max): {sense_max:.2f} V" + ("" if sense_max <= vdd else
+            f" above VDD: the {r3 * r4 / (r3 + r4) / 1000:.1f} k source limits the clamp current to "
+            f"{max(0, sense_max - vdd - 0.3) / (r3 * r4 / (r3 + r4)) * 1e6:.0f} uA; ADC reads full scale there"))
+    ok(fw["RAIL_LOW_MV"] * r4 / (r3 + r4) < vdd * 1000, "range", f"RAIL_LOW {fw['RAIL_LOW_MV']} mV -> SENSE "
+       f"{fw['RAIL_LOW_MV'] * r4 / (r3 + r4):.0f} mV, inside the ADC")
+    # ---- TPS2553 [DS-2553]
+    r5 = ohms(v.get("R5"))
+    lo, ty, hi = ios(r5)
+    ok(15e3 <= r5 <= 232e3, "tps2553", f"RILIM {r5 / 1000:.0f} k inside 15-232 k")
+    ok(fw["I_HI_MA"] < fw["I_TRIP_MA"] < lo, "tps2553",
+       f"IOS at {r5 / 1000:.0f} k: {lo:.0f}/{ty:.0f}/{hi:.0f} mA (min/typ/max); firmware I-HI {fw['I_HI_MA']} < trip "
+       f"{fw['I_TRIP_MA']} < IOS min, so the firmware trips before the switch limits")
+    # ---- back-channel level [DOC-HW]
+    r31, r32, r33 = (ohms(v.get(r)) for r in ("R31", "R32", "R33"))
+    h3 = 4 / math.pi * vdd / 2 / 3
+    rp = r32 * (r33 + 25) / (r32 + r33 + 25)
+    pad = h3 * rp / (r31 + rp)
+    line = pad * 25 / (r33 + 25)
+    dbm = 10 * math.log10(line ** 2 / 2 / 50 / 1e-3)
+    ok(abs(dbm - (-65)) <= 3, "beacon", f"3rd harmonic at the coax: {line * 1e3:.3f} mV peak = {dbm:.1f} dBm "
+       f"(docs/hardware.md: about -65 dBm)")
+    # ---- power budget [DOC-HW]
+    vf = 2.0
+    lamp = (V_COAX_NOM - vf - 0.1) / ohms(v.get("RN1")) * 1000
+    fixed = (V_COAX_NOM / ohms(v.get("R1")) + (V_COAX_NOM - vf) / ohms(v.get("R2")) + V_COAX_NOM / (r3 + r4)) * 1000
+    worst = 100 + 23 * lamp + fixed + 1.5
+    charge = (V_COAX_NOM - 0.3) / ohms(v.get("R10")) * 1000
+    ok(worst <= fw["I_BUDGET_MA"], "budget", f"steady worst: LNA 100 + 23 lamps x {lamp:.2f} + bleeder/PWR/divider "
+       f"{fixed:.1f} + 3V3 1.5 = {worst:.0f} mA <= BUDGET {fw['I_BUDGET_MA']} mA (docs: 132 mA)")
+    ok(worst + charge <= V_V3_LIMIT, "budget", f"boot peak with the supercap charging ({charge:.0f} mA): "
+       f"{worst + charge:.0f} mA <= V3 bias-T {V_V3_LIMIT} mA")
+    # ---- capacitor voltage ratings
+    rail = {}
+    for fp in cu.b.GetFootprints():
+        r = fp.GetReference()
+        if re.fullmatch(r"C\d+", r):
+            nets = {p.GetNetname() for p in fp.Pads()} - {"GND"}
+            rail[r] = nets
+    vmax = lambda n: vdd + 0.1 if "3V3" in n or "VREF" in n or "ADC" in n or "SENSE" in n else V_BUS_MAX
+    for r, nets in sorted(rail.items(), key=lambda x: int(x[0][1:])):
+        vr = volts(v.get(r))
+        need = max([vmax(n) for n in nets] or [0])
+        if r == "C47":
+            need = V_BUS_MAX      # DC block: the full coax voltage across it
+        if vr is None:
+            rep.add("WARN", "rating", f"{r} {v.get(r)}: no voltage in the value"); continue
+        tant = "CP_EIA" in str(cu.fp_of.get(r, "")) or vr <= 6.3 and (farads(v.get(r)) or 0) >= 100e-6
+        if tant:
+            rep.add("PASS" if need <= 0.8 * vr else ("WARN" if V_COAX_NOM <= 0.8 * vr else "FAIL"), "rating",
+                    f"{r} {v.get(r)} (tantalum/electrolytic) on {sorted(nets)}: {need} V max vs 80 % of {vr} V = "
+                    f"{0.8 * vr:.2f} V" + ("" if need <= 0.8 * vr else f"; the V3's {V_COAX_NOM} V is inside"))
+        else:
+            ok(need <= vr, "rating", f"{r} {v.get(r)} on {sorted(nets)}: {need} V max")
     return rep
 
 
 def selftest(cu):
+    import pcbnew
     base = {r[2] for r in check(cu).fails()}
-    st = Report("selftest: injected faults")
-    cases = []
-    cu.drop_zones = {"/battery/CELL1"}; cu.width_override = {"/battery/CELL1": 0.25}
-    cases.append(("CELL1 link necked to 0.25 mm, no pour", check(cu)))
-    cu.drop_zones = set(); cu.width_override = {}
-    v = dict(cu.vals); cu.vals["R332"] = "8k2 1%"
-    cases.append(("buck divider -> 6.1 V", check(cu)))
-    cu.vals.clear(); cu.vals.update(v)
-    for name, r in cases:
-        new = {x[2] for x in r.fails()} - base
-        st.add("PASS" if new else "FAIL", "inject", f"{name}: {len(new)} new FAIL")
-    return st
+    out = []
+
+    def case(name, key, mutate, undo):
+        mutate()
+        new = [m for s, g, m in check(cu).rows if s == "FAIL" and m not in base]
+        undo()
+        hit = [m for m in new if key in m]
+        print(f"  {'caught' if hit else 'MISSED'}  {name}" + (f"  <- {hit[0][:110]}" if hit else f"  (new FAILs: {new[:2]})"))
+        out.append(bool(hit))
+    v0 = dict(cu.vals)
+
+    def val(r, x):
+        return lambda: cu.vals.__setitem__(r, x), lambda: (cu.vals.clear(), cu.vals.update(v0))
+    added = []
+
+    def kelvin_short():
+        fps = {fp.GetReference(): fp for fp in cu.b.GetFootprints()}
+        a = [p for p in fps["U20"].Pads() if p.GetNumber() == "3"][0]
+        b = [p for p in fps["L7"].Pads() if p.GetNumber() == "1"][0]
+        t = pcbnew.PCB_TRACK(cu.b); t.SetStart(a.GetPosition()); t.SetEnd(b.GetPosition())
+        t.SetWidth(pcbnew.FromMM(0.25)); t.SetLayer(pcbnew.F_Cu); t.SetNet(a.GetNet()); cu.b.Add(t); added.append(t)
+
+    def kelvin_undo():
+        for t in added:
+            cu.b.Remove(t)
+        added.clear(); cu._nc = {}
+    case("INA180A3 sense lead tied to the L7 track", "kelvin", kelvin_short, kelvin_undo)
+    net = padnet(cu, ("R35", "2"))
+
+    def neck():
+        cu.drop_zones = {net}; cu.width_override = {net: 0.02}
+
+    def unneck():
+        cu.drop_zones = set(); cu.width_override = {}
+    case("coax DC path necked to 0.02 mm, no pour", "ampacity", neck, unneck)
+    case("LNA shunt 0R47", "I_UV_PER_MA", *val("R7", "0R47/1%"))
+    case("coax monitor fitted with an A2", "IT_UV_PER_MA", *val("U20", "INA180A2IDBVR(SOT23-5)"))
+    case("SENSE divider bottom 20 k", "VC_DIV", *val("R4", "20k/1%"))
+    case("RILIM 210 k", "IOS", *val("R5", "210k/1%"))
+    case("beacon series 470 R", "dBm", *val("R31", "470R/1%"))
+    case("330 uF rated 4 V", "C9", *val("C9", "330uF/4V/20%"))
+    case("bleeder 100 R", "steady worst", *val("R1", "100R/1%"))
+    case("1 nF 10 V on the coax", "C1", *val("C1", "100nF/4V/10%"))
+    return out
 
 
 if __name__ == "__main__":
@@ -322,10 +478,12 @@ if __name__ == "__main__":
     if not args or not os.path.exists(args[0]):
         print(__doc__); sys.exit(2)
     cu = Copper(args[0])
-    r = check(cu); r.show("-q" in sys.argv)
-    code = 1 if r.fails() else 0
+    cu.fp_of = {fp.GetReference(): fp.GetFPIDAsString() for fp in cu.b.GetFootprints()}
+    code = 0
     if "--selftest" in sys.argv:
-        st = selftest(cu); st.show()
-        if st.fails():
-            code = 3
-    sys.exit(code)
+        print("== selftest (injected faults)")
+        res = selftest(cu)
+        print(f"  -> {sum(res)}/{len(res)} caught")
+        code = 0 if all(res) else 3
+    r = check(cu); r.show("-q" in sys.argv)
+    sys.exit(code or (1 if r.fails() else 0))

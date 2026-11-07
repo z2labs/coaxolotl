@@ -18,6 +18,8 @@ Checks (what JLC sees: copper, holes, silk after --subtract-soldermask):
   silk-width  silk stroke:                             WARN < 0.15 mm                       [JLC-CAP]
   ring        via annular ring:                        WARN < 0.15 mm                       [JLC-CAP] [JLC-DFM]
   tht-smd     THT pad to an SMD pad of another part:   WARN < 2.0 mm (assembly / selective solder) [JLC-DFM]
+  ep-via      thermal via inside an exposed pad of its own net: WARN, listed, not a FAIL - JLC flags it as via-to-pad,
+              but a via in the exposed pad is the package maker's own land pattern (owner's rule, 2026-11)
 
 usage: kicad-python twin_dfm.py board.kicad_pcb [--selftest] [-q] [--list]     exit 0 / 1 FAIL / 2 input / 3 selftest
        kicad-python twin_dfm.py board.kicad_pcb --fix-silk      (flow step after silk_dfm --fix; the check never edits)
@@ -128,6 +130,8 @@ def extract(path, board=None):
             g["holes"].append((c, mm(t.GetDrillValue()) / 2, "via " + t.GetNetname()))
     for fp in b.GetFootprints():
         ref = fp.GetReference()
+        sizes = [(p.GetSize().x * p.GetSize().y, p.GetNumber()) for p in fp.Pads()]
+        ep = max(sizes)[1] if len(sizes) >= 9 else None          # exposed pad: the largest pad of a >= 9-pad package
         for p in fp.Pads():
             attr = p.GetAttribute()
             kind = {pcbnew.PAD_ATTRIB_SMD: "smd", pcbnew.PAD_ATTRIB_PTH: "pth", pcbnew.PAD_ATTRIB_NPTH: "npth"}.get(attr, "other")
@@ -141,7 +145,8 @@ def extract(path, board=None):
             for lay, side in ((pcbnew.F_Cu, "F"), (pcbnew.B_Cu, "B")):
                 if kind != "npth" and p.IsOnLayer(lay):
                     for q in polys(p, lay):
-                        g["pads"].append(dict(ref=ref, num=p.GetNumber(), kind=kind, side=side, net=p.GetNetname(), poly=q, bb=bbox(q)))
+                        g["pads"].append(dict(ref=ref, num=p.GetNumber(), kind=kind, side=side, net=p.GetNetname(), poly=q, bb=bbox(q),
+                                             ep=p.GetNumber() == ep))
             for lay, side in ((pcbnew.F_Mask, "F"), (pcbnew.B_Mask, "B")):
                 if p.IsOnLayer(lay):
                     for q in polys(p, lay):
@@ -181,8 +186,11 @@ def check(g, listing=False):
             rep.add("PASS", name, f"{total} checked")
 
     # via ring to SMD pads
-    bad, warn = [], []
+    bad, warn, epv = [], [], []
     for v in g["vias"]:
+        host = [p for p in smd if p.get("ep") and p["net"] == v["net"] and inside(v["c"], p["poly"])]
+        if host:
+            epv.append((v, host[0])); continue
         m = v["r"] + VIA_PAD_WARN
         q = (v["c"][0] - m, v["c"][1] - m, v["c"][0] + m, v["c"][1] + m)
         gap = min([poly_pt(v["c"], p["poly"]) - v["r"] for p in smd if bb_hit(q, p["bb"])] or [9])
@@ -190,7 +198,11 @@ def check(g, listing=False):
             bad.append((v, gap))
         elif gap < VIA_PAD_WARN:
             warn.append((v, gap))
-    group("via-pad", bad, warn, len(g["vias"]), lambda x: f"{x[0]['net']} ({x[0]['c'][0]:.2f},{x[0]['c'][1]:.2f}) {x[1]:.2f} mm")
+    group("via-pad", bad, warn, len(g["vias"]) - len(epv), lambda x: f"{x[0]['net']} ({x[0]['c'][0]:.2f},{x[0]['c'][1]:.2f}) {x[1]:.2f} mm")
+    if epv:
+        hosts = sorted({f"{p['ref']}.{p['num']}" for _, p in epv})
+        rep.add("WARN", "ep-via", f"{len(epv)} thermal vias inside exposed pads {', '.join(hosts)}: JLC DFM will list them "
+                                  "as via-to-pad; accepted (package land pattern)")
 
     # pads of different parts on the same side
     bad = []
@@ -276,8 +288,13 @@ def selftest(g):
         s.pop("obj", None)                  # pcbnew objects do not deep-copy
     base = check(g)
     st = Report("selftest: injected faults")
-    p = next(p for p in g["pads"] if p["kind"] == "smd")
+    p = next(p for p in g["pads"] if p["kind"] == "smd" and not p.get("ep"))
     g1 = copy.deepcopy(g); g1["vias"].append(dict(c=p["poly"][0], r=0.225, d=0.2, net=p["net"]))
+    e = next((p for p in g["pads"] if p.get("ep")), None)
+    g6 = copy.deepcopy(g)
+    if e:
+        cx = sum(x for x, y in e["poly"]) / len(e["poly"]); cy = sum(y for x, y in e["poly"]) / len(e["poly"])
+        g6["vias"].append(dict(c=(cx, cy), r=0.225, d=0.2, net="OTHER_NET"))
     g2 = copy.deepcopy(g); g2["slots"].append(dict(name="J301.S1", w=0.6, l=1.7))
     v = g["holes"][0]
     sq = [(v[0][0] - 1, v[0][1] - 0.05), (v[0][0] + 1, v[0][1] - 0.05), (v[0][0] + 1, v[0][1] + 0.05), (v[0][0] - 1, v[0][1] + 0.05)]
@@ -291,7 +308,8 @@ def selftest(g):
     g5 = copy.deepcopy(g); g5["pads"].append(dict(q, side=p["side"], poly=moved, bb=bbox(moved)))
     for name, gg, grp in (("via on an SMD pad", g1, "via-pad"), ("0.6 mm plated slot", g2, "slot"),
                           ("silk line across a hole", g3, "silk-hole"), ("silk on a pad", g4, "silk-pad"),
-                          ("two parts' pads 0.03 mm apart", g5, "pad-pad")):
+                          ("two parts' pads 0.03 mm apart", g5, "pad-pad"),
+                          ("foreign-net via inside an exposed pad", g6, "via-pad")):
         hit = nfail(check(gg), grp) > nfail(base, grp)
         st.add("PASS" if hit else "FAIL", "inject", f"{name}: {'caught' if hit else 'MISSED'} ({grp})")
     return st
