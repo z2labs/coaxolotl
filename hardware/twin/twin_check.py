@@ -155,6 +155,13 @@ def check(B):
         elif k == "led":
             kn, an, rail = need((a[1], "K")), need((a[1], "A")), need(a[2])
             ok(kn == GND and bool(V.between("R", an, rail)), k, f"{a[3]}: K {kn}, A {an}")
+        elif k == "adc_fw":
+            src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "firmware", "src",
+                                    "hal_efm8bb52.c"), encoding="utf-8").read()
+            for pin, ch in S.BB52_ADC.items():
+                m = re.search(r"#define\s+" + S.FW_ADC[pin] + r"\s+(\d+)", src)
+                got = int(m.group(1)) if m else None
+                ok(got == ch, k, f"{S.FW_ADC[pin]} = {got}: {pin} is ADC0.CH{ch} in the data sheet")
         elif k == "lamps":
             lamps(B, V, rep)
         elif k == "strip_link":
@@ -309,6 +316,13 @@ def selftest(B0):
         print(f"  {'caught' if hit else 'MISSED'}  {name}" + (f"  <- {hit[0][:110]}" if hit else f"  (new FAILs: {new[:2]})"))
         if not hit:
             missed.append(name)
+    # firmware ADC channel against the data sheet: pretend the data sheet put ILNA on CH14
+    S.BB52_ADC["P2.4"] = 14
+    hit = [m for s, g, m in check(B0).rows if s == "FAIL" and m not in base and "ADC_CH_ILNA" in m]
+    S.BB52_ADC["P2.4"] = 13
+    print(f"  {'caught' if hit else 'MISSED'}  firmware ADC channel off the data sheet")
+    if not hit:
+        missed.append("adc channel")
     return missed
 
 
@@ -321,7 +335,7 @@ def main(argv):
     if "--selftest" in argv:
         print("== selftest (injected faults)")
         missed = selftest(B)
-        print(f"  -> {len(WITNESSES) - len(missed)}/{len(WITNESSES)} caught")
+        print(f"  -> {len(WITNESSES) + 1 - len(missed)}/{len(WITNESSES) + 1} caught")
         if missed:
             rc = 3
     rep = check(B)

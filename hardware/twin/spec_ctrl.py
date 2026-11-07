@@ -3,11 +3,13 @@ from our own schematic or board. Every table names its source. Refdes are ours (
 connectivity come from the sources.
 
 Sources
-  [DS-BB52]   EFM8BB52F32I-C-QFN32 pin list as published by LCSC/EasyEDA for C3225443 (vendor symbol, read by machine
-              from the EasyEDA component API, 2026-11-07): 1 P0.0, 2 N/C, 3 VDD, 4 RSTb/C2CK, 5 P3.7/C2D, 6-10 P3.4..P3.0,
-              11-17 P2.6..P2.0, 18-25 P1.7..P1.0, 26-32 P0.7..P0.1, 33 EP (ground). The Silicon Labs data sheet itself
-              could not be downloaded (silabs.com refuses scripted downloads): the ADC0 channel numbers and the
-              crossbar functions are therefore taken from [FW] and listed under PHYSICAL.
+  [DS-BB52]   Silicon Labs EFM8BB52 Data Sheet rev 1.0, Table 6.1 Pin Definitions for EFM8BB52-QFN32 (attached by the
+              owner 2026-11-07): 1 P0.0 (ADC0.VREF, VREFP.OUT), 2 N/C, 3 VDD, 4 RSTb/C2CK, 5 P3.7/C2D, 6-10 P3.4..P3.0,
+              11-17 P2.6..P2.0, 18-25 P1.7..P1.0, 26-32 P0.7..P0.1, centre pad GND. Analog: P0.2 ADC0.CH0, P0.3 ADC0.CH1,
+              P2.4 ADC0.CH13, P2.5 ADC0.CH14 (P2.4/P2.5 have no crossbar), P0.1 is also ADC0.AGND; P0.4 UART0_TX,
+              P0.5 UART0_RX; P1.7 on the crossbar. Table 4.1: GPIO max VDD + 0.3 V; ADC VIN max at a pin = VDD,
+              range VREF / gain; VREF pin 2.4 V setting 2.36-2.43 V with >= 0.1 uF bypass. Same pin list as the
+              LCSC/EasyEDA symbol of C3225443.
   [FW]        firmware pin map, firmware/src/hal_efm8bb52.c header (EFM8BB52 Reference Manual rev 0.3): P0.0 VREF,
               P0.1 FAULT_N, P0.2 SENSE (port match + ADC), P0.3 SCAP_ADC, P0.4 TX, P0.5 RX, P0.6 LNA_EN, P0.7 LNA_PATH,
               P1.0-P1.2 SW_V1..V3, P1.3 LNA_PATH_OUT, P1.4 FMN, P1.7 BEACON (PCA CEX0), P2.0 LED_SER, P2.1 LED_SCK,
@@ -95,6 +97,9 @@ def lamp_output(n):
 J6_SILK = ["3V3", "LNA", "V1", "V2", "V3", "PTH", "OUT", "FMN", "GND", "GND"]   # [DOC-HW] J6 table, short names
 STRIP_CORE = set(REGS) | {f"RN{k}" for k in range(1, 13)} | {f"D{7 + n}" for n in range(48)}   # [DOC-PANEL]
 
+BB52_ADC = {"P0.2": 0, "P0.3": 1, "P2.4": 13, "P2.5": 14}          # [DS-BB52] ADC0 channel of each pin
+FW_ADC = {"P0.2": "ADC_CH_VC", "P0.3": "ADC_CH_SCAP", "P2.4": "ADC_CH_ILNA", "P2.5": "ADC_CH_ITOT"}   # [FW] names
+
 # ---------------------------------------------------------------- design-intent assertions (by function)
 M = lambda p: (U_MCU, p)
 A = [
@@ -174,13 +179,13 @@ A = [
     ("pullup", M("P2.3"), M("VDD"), 10000, "OE_N 10 k pull-up: lamps dark until the first write"),
     ("same", [M("VDD")] + [(r, "MR") for r in REGS] + [(r, "VCC") for r in REGS], "595 VCC and MR (inactive) on 3V3"),
     ("gnd", [(r, "GND") for r in REGS], "595 GND"),
+    ("adc_fw",),
     ("lamps",), ("strip_link",), ("silk_lamps",), ("silk_j6",),
 ]
 
 PHYSICAL = [
-    "EFM8BB52 ADC0 channel numbers (P0.2 ADC0.0? P0.3, P2.4 = ADC0.13, P2.5 = ADC0.14), P1.7 on the crossbar as PCA "
-    "CEX0 and VREF on P0.0 are from the firmware/Reference Manual, not checked against the data sheet (download "
-    "refused): check in bring-up step 3b/6 or attach the data sheet",
+    "EFM8BB52 register set-up (ADC0CF2 GNDSL = 0 so P0.1/FAULT_N is not the ADC ground, REFSL = VREF pin, gain 0.5, "
+    "PCA CEX0 routed to P1.7) is from the Reference Manual, not the data sheet: bring-up steps 3b/6",
     "LED polarity in the JLC placement preview (EasyEDA symbols disagree on the anode pin number; CPL corrected by "
     "the footprint cathode mark)",
     "J6 mate: the RF board's header pin order is defined only by docs/hardware.md until that board exists",

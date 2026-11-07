@@ -367,10 +367,13 @@ def check(cu):
     ok(vs * 1000 < fw.get("ADC_REF_MV", 0), "range", f"INA180 swing {vs:.2f} V inside the ADC range {fw.get('ADC_REF_MV')} mV")
     sense_nom, sense_max = V_COAX_NOM * r4 / (r3 + r4), V_BUS_MAX * r4 / (r3 + r4)
     ok(sense_nom < vdd, "range", f"SENSE at {V_COAX_NOM} V coax: {sense_nom:.2f} V < VDD {vdd} V")
-    rep.add("PASS" if sense_max <= vdd else "WARN", "range",
-            f"SENSE at {V_BUS_MAX} V (USB max): {sense_max:.2f} V" + ("" if sense_max <= vdd else
-            f" above VDD: the {r3 * r4 / (r3 + r4) / 1000:.1f} k source limits the clamp current to "
-            f"{max(0, sense_max - vdd - 0.3) / (r3 * r4 / (r3 + r4)) * 1e6:.0f} uA; ADC reads full scale there"))
+    absmax = vdd * 0.98 + 0.3          # [DS-BB52] Table 4.1 GPIO <= VDD + 0.3 V, at the MCP1700's -2 % VDD
+    rep.add("PASS" if sense_max <= vdd * 0.98 else "WARN", "range",
+            f"SENSE at {V_BUS_MAX} V (USB max): {sense_max:.2f} V" + ("" if sense_max <= vdd * 0.98 else
+            f" - above VDD (ADC VIN max [DS-BB52]: reads full scale)" + (f" and above the GPIO maximum "
+            f"{absmax:.2f} V (VDD - 2 % + 0.3); through {r3 * r4 / (r3 + r4) / 1000:.1f} k only uA flow. "
+            f"Not reached with the V3 ({V_COAX_NOM} V); a 15 k top resistor (VC_DIV 37/22) keeps it under VDD"
+            if sense_max > absmax else "")))
     ok(fw["RAIL_LOW_MV"] * r4 / (r3 + r4) < vdd * 1000, "range", f"RAIL_LOW {fw['RAIL_LOW_MV']} mV -> SENSE "
        f"{fw['RAIL_LOW_MV'] * r4 / (r3 + r4):.0f} mV, inside the ADC")
     # ---- TPS2553 [DS-2553]
