@@ -614,7 +614,7 @@ def j6_boxes():
     for k, nm in enumerate(J6_NAMES):
         q = padpos.get(("J6", str(k + 1)))
         if q:
-            out.append((q[0] - 0.8, q[1] + 1.3, q[0] + 0.8, q[1] + 1.6 + 0.62 * len(nm) + 0.3))
+            out.append((q[0] - 0.8, q[1] + 1.7, q[0] + 0.8, q[1] + 2.0 + 0.62 * len(nm) + 0.3))
     return out
 
 
@@ -761,7 +761,7 @@ for (x0, y0, x1, y1) in j6_boxes():           # no via under a pin label either 
     board.Add(ko)
 for k, nm in enumerate(J6_NAMES):
     q = padpos[("J6", str(k + 1))]
-    text(nm, q[0], q[1] + 1.6, 0.7, 90, th=0.12, just="right")  # upright column per pin, below the row, reading up
+    text(nm, q[0], q[1] + 2.0, 0.7, 90, th=0.12, just="right")  # upright, below the header outline (q + 1.45), reading up
 
 # ------------------------------------------------------------ save + project rules
 for ref, fp in fps.items():

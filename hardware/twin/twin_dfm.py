@@ -130,8 +130,10 @@ def extract(path, board=None):
             g["holes"].append((c, mm(t.GetDrillValue()) / 2, "via " + t.GetNetname()))
     for fp in b.GetFootprints():
         ref = fp.GetReference()
-        sizes = [(p.GetSize().x * p.GetSize().y, p.GetNumber()) for p in fp.Pads()]
-        ep = max(sizes)[1] if len(sizes) >= 9 else None          # exposed pad: the largest pad of a >= 9-pad package
+        sizes = sorted(((p.GetSize().x * p.GetSize().y, p.GetNumber()) for p in fp.Pads()
+                        if p.GetAttribute() == pcbnew.PAD_ATTRIB_SMD), reverse=True)
+        # exposed pad: an SMD package with >= 9 pads whose largest pad is at least 3x the next one
+        ep = sizes[0][1] if len(sizes) >= 9 and sizes[0][0] >= 3 * sizes[1][0] else None
         for p in fp.Pads():
             attr = p.GetAttribute()
             kind = {pcbnew.PAD_ATTRIB_SMD: "smd", pcbnew.PAD_ATTRIB_PTH: "pth", pcbnew.PAD_ATTRIB_NPTH: "npth"}.get(attr, "other")
