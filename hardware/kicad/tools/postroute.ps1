@@ -38,4 +38,12 @@ step "6b zone refill" { & $py -c "import pcbnew;b=pcbnew.LoadBoard(r'$board');pc
 step "7 DRC"          { & $cli pcb drc --schematic-parity --severity-all --format json -o "$kd\route\drc.json" $board;
                         & $py -c "import json,collections;d=json.load(open(r'$kd\route\drc.json'));v=d['violations'];u=d.get('unconnected_items',[]);p=d.get('schematic_parity',[]);c=collections.Counter((x['severity'],x['type']) for x in v);print('violations',len(v),'unconnected',len(u),'parity',len(p));[print(' ',k,n) for k,n in c.most_common()]" }
 step "8 JLC DFM"      { & $py "$tools\jlc_dfm_check.py" $board }
+if ($ctrl) {
+step "9 refcov"       { & $py "$tools\refcov.py" $board }
+$tw = Resolve-Path "$PSScriptRoot\..\..\twin"
+step "10 twin 1 check"  { & $py "$tw\twin_check.py"  $board --selftest -q }
+step "10 twin 3 analog" { & $py "$tw\twin_analog.py" $board --selftest -q }
+step "10 twin 4 mech"   { & $py "$tw\twin_mech.py"   $board --selftest -q }
+step "10 twin 5 dfm"    { & $py "$tw\twin_dfm.py"    $board --selftest -q }
+}
 "== done $(Get-Date -Format HH:mm:ss)" | Out-File -Append -Encoding utf8 $log

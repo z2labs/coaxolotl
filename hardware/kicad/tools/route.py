@@ -18,7 +18,27 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CTRL = os.environ.get("COAX_VARIANT", "") == "ctrl"       # the 2-layer control board in hardware/kicad_ctrl
 PRJ = os.path.normpath(os.path.join(HERE, "..", "..", "kicad_ctrl") if CTRL else os.path.join(HERE, ".."))
 OUT = os.path.join(PRJ, "route")
-SR = os.environ.get("SROUTER", r"C:\Users\RF\Documents\GitHub\_claude_tmp\srouter-coax\target\release\srouter.exe")   # feat/cuda-wavefront build (-stall, H/V congestion)
+# srouter lines (srouter-twin-jlc guide 2026-11-07): B = feat/jlc-fab (-style oct, the line for boards that go to the
+# fab), A = feat/cuda-wavefront (-stall, H/V congestion; tuning and big boards). The control board goes to JLC: B.
+LINE = os.environ.get("SROUTER_LINE", "B" if CTRL else "A")
+SR = os.environ.get("SROUTER", r"C:\Users\RF\Documents\GitHub\_claude_tmp\srouter-b\srouter.exe" if LINE == "B" else
+                    r"C:\Users\RF\Documents\GitHub\_claude_tmp\srouter-coax\target\release\srouter.exe")
+VIA_2L = 5000          # B line, 2 layers: via cost is the main lever (guide 1.6: 1500 -> 5000 cuts vias by ~30 %)
+
+
+def line_args(args, gnd=False):
+    """translate a pass's options for the B line: no -stall (early stop is A-only), -style oct always, and on the
+    2-layer board vias priced at VIA_2L except in the GND pass (there a via is a stitch to the other pour)"""
+    if LINE != "B":
+        return args
+    out, i = [], 0
+    while i < len(args):
+        if args[i] == "-stall":
+            i += 2; continue
+        if args[i] == "-via" and CTRL and not gnd:
+            out += ["-via", str(VIA_2L)]; i += 2; continue
+        out.append(args[i]); i += 1
+    return out + ["-style", "oct"]
 BOARD = os.path.join(PRJ, "coaxolotl.kicad_pcb")
 PLACED = os.path.join(PRJ, "coaxolotl_placed.kicad_pcb")
 os.makedirs(OUT, exist_ok=True)
@@ -379,7 +399,7 @@ def run_pass(b, name, only, closed, args, rules_nets, summary, ign_rf=None):
         ign = ([] if "GND" in only else ["GND"]) + (RF if (name != "pass1_rf" if ign_rf is None else ign_rf) else [])
         json.dump({"ignore_nets": ign, "nets": rules_nets, "only": "|".join(only), "smooth": True,
                    "style": "oct", "pad_entry": True}, open(rj, "w"), indent=1)
-        cmd = [SR, "-de", dsn, "-do", ses, "-rules", rj, "-report", rep] + args
+        cmd = [SR, "-de", dsn, "-do", ses, "-rules", rj, "-report", rep] + line_args(args, gnd=only == ["GND"])
         print(">>", " ".join(cmd), flush=True)
         t0 = time.time()
         logf = os.path.join(OUT, name + ".log")

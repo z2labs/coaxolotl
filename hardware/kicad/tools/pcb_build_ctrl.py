@@ -300,7 +300,7 @@ CLEAR_AROUND = {"U5": 2.4}
 SOFT = {
     "L7": (86.0, 61.0, 0), "C10": (63.0, 59.0, 0),       # C10 4 mm left: room for the R35/U20 shunt at L7.1
     "U5": (40.0, 46.0, 0), "J1": (28.0, 40.0, 90),
-    "U1": (52.0, 56.0, 0), "U4": (46.0, 63.0, 0), "U2": (58.0, 43.0, 0), "U3": (68.0, 43.0, 0),
+    "U1": (52.0, 56.0, 0), "U4": (46.0, 63.0, 0), "U2": (58.0, 43.0, 0),
     "C9": (53.0, 64.0, 90), "R7": (68.0, 48.0, 0), "D1": (93.0, 48.0, 0),
     "L6": (88.0, 49.0, 90), "L5": (93.0, 54.0, 0), "R24": (84.0, 49.0, 90),
 }
@@ -312,6 +312,19 @@ for ref, (x, y, r) in SOFT.items():
         m = CLEAR_AROUND[ref]
         bx = occupied[owner.index(ref)]
         BLOCK.append((bx[0] - m, bx[1] - m, bx[2] + m, bx[3] + m))
+
+# LNA shunt, Kelvin as below: U3 (INA180A2) straight above R7 at rot 0, so IN+ (3) / IN- (4) on its bottom row sit
+# over R7 pad 1 / pad 2 and the sense lines are two straight stubs into the pads (twin_analog checks it)
+KELVIN_LNA = None
+if "R7" in where and "U3" in fps:
+    rx7, ry7, rr7 = where["R7"]
+    bx_u, _ = geom(fps["U3"], 0)
+    if rr7 == 0 and free((bx_u[0] + rx7, bx_u[1] + ry7 - 3.0, bx_u[2] + rx7, bx_u[3] + ry7 - 3.0), gap=0.2):
+        put("U3", rx7, ry7 - 3.0, 0)
+        KELVIN_LNA = ry7
+    else:
+        place_near("U3", (rx7, ry7 - 5.0), (0,))
+    print("LNA shunt R7/U3:", "Kelvin" if KELVIN_LNA else "NO ROOM above R7 (no Kelvin stubs)")
 
 # whole-coax current shunt (control board, COAX_MCU=bb52): R35 sits on the outer side of L7 pad 1, in line with it,
 # and U20 (INA180A3) right against R35 with IN+/IN- under the shunt pads, so the sense lines are two short straight
@@ -477,6 +490,10 @@ for row in (0, 1):
         a, b_ = f"D{7 + row * 24 + i}", f"D{8 + row * 24 + i}"
         if (a, "2") in padpos and (b_, "2") in padpos and fps[a].FindPadByNumber("2").GetNetname() == "VLED":
             add_track(padpos[(a, "2")], padpos[(b_, "2")], 0.4, "VLED")
+if KELVIN_LNA:
+    for pin, pad in (("3", "1"), ("4", "2")):
+        q = padpos[("U3", pin)]
+        add_track(q, (q[0], padpos[("R7", pad)][1] - 0.3), 0.25, fps["R7"].FindPadByNumber(pad).GetNetname())
 if KELVIN:
     # coax current path L7.1 -> R35.1 (1 mm), and the two Kelvin sense stubs from U20 IN+/IN- straight into the
     # inner half of the shunt pads
@@ -736,10 +753,17 @@ bd = pj.setdefault("board", {}).setdefault("design_settings", {}).setdefault("ru
 bd.update(min_through_hole_diameter=0.2, min_via_diameter=0.4, min_via_annular_width=0.075,
           min_copper_edge_clearance=0.3, min_clearance=0.15, min_track_width=0.15, min_hole_to_hole=0.25)
 json.dump(pj, open(pro, "w", encoding="utf-8"), indent=2)
+# design rules: the JLC 2-layer 1 oz capability file from srouter (fab/jlcpcb_2layer_1oz.kicad_dru, read from
+# jlcpcb.com/capabilities; error = JLC absolute, warning = surcharge / recommended), then the SMA edge exception, then
+# the pour rule last (a bare 0.10 clearance would also set the zone filler -> solder-mask bridges; guide 1.6)
+JLC_DRU = os.environ.get("JLC_DRU", r"C:\Users\RF\Documents\GitHub\_claude_tmp\srouter-coax\fab\jlcpcb_2layer_1oz.kicad_dru")
+jlc_rules = open(JLC_DRU, encoding="utf-8").read().replace("(version 1)", "", 1).strip() + "\n\n"
 open(os.path.join(PRJ, "coaxolotl.kicad_dru"), "w", encoding="utf-8").write(
-    "(version 1)\n"
+    "(version 1)\n" + jlc_rules +
     "# edge SMA: only the connector's own pads may touch the board edge and the milled notch\n"
     "(rule \"SMA edge pads\"\n  (condition \"(A.Type == 'Pad' && A.memberOfFootprint('J3')) || (B.Type == 'Pad' && B.memberOfFootprint('J3'))\")\n"
-    "  (constraint edge_clearance (min 0mm))\n  (severity ignore))\n")
+    "  (constraint edge_clearance (min 0mm))\n  (severity ignore))\n\n"
+    "(rule \"Copper pour to other nets 0.3\"\n  (condition \"A.Type == 'Zone' && A.Net != B.Net\")\n"
+    "  (constraint clearance (min 0.3mm)))\n")
 json.dump({r: list(v) for r, v in where.items()}, open(os.path.join(PRJ, "placement.json"), "w"), indent=0)
 print("placed", len(where), "of", len(fps), "footprints ->", out)

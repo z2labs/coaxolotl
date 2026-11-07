@@ -414,6 +414,9 @@ def check(cu):
             need = V_BUS_MAX      # DC block: the full coax voltage across it
         if vr is None:
             rep.add("WARN", "rating", f"{r} {v.get(r)}: no voltage in the value"); continue
+        if (farads(v.get(r)) or 0) >= 0.01:          # EDLC supercap: rated voltage is the maximum, no derating rule
+            ok(need <= vr, "rating", f"{r} {v.get(r)} (supercap) on {sorted(nets)}: {need} V max <= {vr} V")
+            continue
         tant = "CP_EIA" in str(cu.fp_of.get(r, "")) or vr <= 6.3 and (farads(v.get(r)) or 0) >= 100e-6
         if tant:
             rep.add("PASS" if need <= 0.8 * vr else ("WARN" if V_COAX_NOM <= 0.8 * vr else "FAIL"), "rating",
@@ -453,7 +456,7 @@ def selftest(cu):
         for t in added:
             cu.b.Remove(t)
         added.clear(); cu._nc = {}
-    case("INA180A3 sense lead tied to the L7 track", "kelvin", kelvin_short, kelvin_undo)
+    case("INA180A3 sense lead tied to the L7 track", "outside the R35.1 pad", kelvin_short, kelvin_undo)
     net = padnet(cu, ("R35", "2"))
 
     def neck():
@@ -461,7 +464,7 @@ def selftest(cu):
 
     def unneck():
         cu.drop_zones = set(); cu.width_override = {}
-    case("coax DC path necked to 0.02 mm, no pour", "ampacity", neck, unneck)
+    case("coax DC path necked to 0.02 mm, no pour", "VCOAX: R35.2", neck, unneck)
     case("LNA shunt 0R47", "I_UV_PER_MA", *val("R7", "0R47/1%"))
     case("coax monitor fitted with an A2", "IT_UV_PER_MA", *val("U20", "INA180A2IDBVR(SOT23-5)"))
     case("SENSE divider bottom 20 k", "VC_DIV", *val("R4", "20k/1%"))
