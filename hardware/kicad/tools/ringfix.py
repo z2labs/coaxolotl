@@ -4,7 +4,7 @@
 
     kicad-python ringfix.py board.kicad_pcb
 """
-import sys, json, subprocess, pcbnew
+import sys, json, math, subprocess, pcbnew
 CLI = r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe"
 p = sys.argv[1]
 mm, FM = pcbnew.ToMM, pcbnew.FromMM
@@ -35,6 +35,25 @@ for f in b.GetFootprints():
             for v in b.GetTracks():
                 if v.GetClass() == "PCB_VIA" and pad.HitTest(v.GetPosition()):
                     inpad.add(key(v))
+PAD_GAP = 0.12           # mm via ring to any SMD pad edge (JLC DFM via-to-pad: Danger < 0.10): growing a ring may
+boxes = []               # not eat this, or the ring check would trade one JLC Danger for another
+for f in b.GetFootprints():
+    for pad in f.Pads():
+        if pad.GetAttribute() == pcbnew.PAD_ATTRIB_SMD:
+            bb = pad.GetBoundingBox()
+            boxes.append((mm(bb.GetX()), mm(bb.GetY()), mm(bb.GetRight()), mm(bb.GetBottom())))
+
+
+def pad_room(v):
+    """largest via radius that keeps PAD_GAP to every SMD pad (pad bounding boxes: conservative)"""
+    x, y = key(v)
+    best = 9.0
+    for (x0, y0, x1, y1) in boxes:
+        dx, dy = max(x0 - x, 0, x - x1), max(y0 - y, 0, y - y1)
+        best = min(best, math.hypot(dx, dy))
+    return best - PAD_GAP
+
+
 want = {}
 for v in b.GetTracks():
     if v.GetClass() != "PCB_VIA" or key(v) in inpad:
@@ -43,7 +62,10 @@ for v in b.GetTracks():
     if h > 0.25 and d < 0.6:
         v.SetDrill(FM(0.2)); h = 0.2
     if (d - h) / 2 < 0.149:
-        want[key(v)] = d; v.SetWidth(FM(0.5))
+        room = pad_room(v) * 2
+        new = 0.5 if room >= 0.5 else (0.45 if room >= 0.45 else None)
+        if new and new > d:
+            want[key(v)] = d; v.SetWidth(FM(new))
 pcbnew.ZONE_FILLER(b).Fill(b.Zones()); pcbnew.SaveBoard(p, b)
 for rnd in range(3):
     bad, nv, nu = drc_bad(p)

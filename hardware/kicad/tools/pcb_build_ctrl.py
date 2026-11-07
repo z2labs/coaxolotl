@@ -608,12 +608,13 @@ J6_NAMES = ["3V3", "LNA", "V1", "V2", "V3", "PTH", "OUT", "FMN", "GND", "GND"]
 
 
 def j6_boxes():
-    """no-via boxes under the upright J6 pin labels"""
+    """no-via boxes under the upright J6 pin labels (below the pin row: above it the fan-out and GND stitching vias
+    crowd in and the RF CTRL title sits there)"""
     out = []
     for k, nm in enumerate(J6_NAMES):
         q = padpos.get(("J6", str(k + 1)))
         if q:
-            out.append((q[0] - 0.8, q[1] - 1.6 - 0.62 * len(nm) - 0.3, q[0] + 0.8, q[1] - 1.3))
+            out.append((q[0] - 0.8, q[1] + 1.3, q[0] + 0.8, q[1] + 1.6 + 0.62 * len(nm) + 0.3))
     return out
 
 
@@ -701,6 +702,8 @@ def text(s, x, y, size=1.0, angle=0, th=0.15, layer=pcbnew.F_SilkS, just=None):
         t.SetTextAngleDegrees(angle)
     if just == "left":
         t.SetHorizJustify(pcbnew.GR_TEXT_H_ALIGN_LEFT)
+    elif just == "right":
+        t.SetHorizJustify(pcbnew.GR_TEXT_H_ALIGN_RIGHT)
     board.Add(t)
 
 
@@ -758,7 +761,7 @@ for (x0, y0, x1, y1) in j6_boxes():           # no via under a pin label either 
     board.Add(ko)
 for k, nm in enumerate(J6_NAMES):
     q = padpos[("J6", str(k + 1))]
-    text(nm, q[0], q[1] - 1.6, 0.7, 90, th=0.12, just="left")   # upright column per pin: never shifted onto a neighbour
+    text(nm, q[0], q[1] + 1.6, 0.7, 90, th=0.12, just="right")  # upright column per pin, below the row, reading up
 
 # ------------------------------------------------------------ save + project rules
 for ref, fp in fps.items():

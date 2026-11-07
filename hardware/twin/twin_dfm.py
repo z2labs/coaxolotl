@@ -193,7 +193,8 @@ def check(g, listing=False):
             epv.append((v, host[0])); continue
         m = v["r"] + VIA_PAD_WARN
         q = (v["c"][0] - m, v["c"][1] - m, v["c"][0] + m, v["c"][1] + m)
-        gap = min([poly_pt(v["c"], p["poly"]) - v["r"] for p in smd if bb_hit(q, p["bb"])] or [9])
+        gap = min([(-poly_pt(v["c"], p["poly"]) if inside(v["c"], p["poly"]) else poly_pt(v["c"], p["poly"])) - v["r"]
+                   for p in smd if bb_hit(q, p["bb"])] or [9])          # a via centre on a pad: negative gap
         if gap < VIA_PAD_FAIL:
             bad.append((v, gap))
         elif gap < VIA_PAD_WARN:
