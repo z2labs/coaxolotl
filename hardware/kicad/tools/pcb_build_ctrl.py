@@ -689,7 +689,8 @@ def lna_feed():
     for a, b_ in zip(pts, pts[1:]):
         for r in pads_all:
             if r[1] != net and r[1] != "" and d_seg_rect(a, b_, r) < w / 2 + 0.25:
-                print(f"LNA feed U2.6 -> R7.1: blocked by {r[0]}.{r[6]}, left to the router"); return
+                print(f"LNA feed U2.6 -> R7.1: blocked by {r[0]}.{r[6]} {r[2:6]} at {d_seg_rect(a, b_, r):.2f} mm "
+                      f"from {a}->{b_}, left to the router"); return
         for (vx, vy, vr) in vias:
             if seg_dist((vx, vy), a, b_) < w / 2 + vr + 0.25:
                 print(f"LNA feed U2.6 -> R7.1: blocked by a via at ({vx:.2f},{vy:.2f}), left to the router"); return
