@@ -213,6 +213,11 @@ whole box, not only the LNA, so the control board measures both:
   200 mA. At ≥ 170 mA the box sets BUDGET and lights LOW.
 * **I_LNA:** R7 0.39 Ω / U3 INA180A2 as before, for the LNA's own health
   window and trip.
+* Both shunts are Kelvin-connected. The INA180 sits right next to its shunt,
+  with IN+/IN− over the shunt pads, and two short stubs run into the pads.
+  The load current never flows in a sense lead. `hardware/twin/twin_analog.py`
+  checks this by cutting the shunt pads out of the copper: the sense pin must
+  then lose contact with the load side.
 
 Uncalibrated, a reading is good to about ±2–3 %: the reference ±1.4 %, the
 1 % resistors and the INA180 gain error. One calibration against a meter per
@@ -349,6 +354,12 @@ layers, every part on top.
 | 7 | LNA_PATH_OUT | output SPDT, 10 k pull-down |
 | 8 | FMN | FM notch, 10 k pull-down |
 | 9, 10 | GND | |
+
+The board is checked by the digital twin in `hardware/twin` (README there):
+pad → net against the data sheets, the lamp map, the analog set-points against
+the firmware constants, mechanics and the JLC DFM rules. Design rules come from
+the JLC 2-layer 1 oz capability file (srouter `fab/`). The board is routed with
+the srouter B line (`-style oct`, via cost 5000).
 
 ## Open items
 
