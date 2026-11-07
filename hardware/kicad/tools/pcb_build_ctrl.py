@@ -262,7 +262,7 @@ for n in range(48):
     row, i = divmod(n, 24)
     x = LAMP_X0 + i * LAMP_DX
     L = 0.85 * len(NAMES[n]) + 0.3
-    LABEL_BOXES.append((x - 0.75, LABEL_BASE[row] - L - 0.2, x + 0.75, LABEL_BASE[row] + 0.2))
+    LABEL_BOXES.append((x - 0.95, LABEL_BASE[row] - L - 0.3, x + 0.95, LABEL_BASE[row] + 0.3))   # via ring >= 0.4 mm off the text
 for n in range(48):
     row, i = divmod(n, 24)
     put(f"D{7 + n}", LAMP_X0 + i * LAMP_DX, ROW_Y[row], rot_led)
@@ -604,8 +604,21 @@ print("fan-out vias (switch control, MCU):", nfan)
 
 
 
+J6_NAMES = ["3V3", "LNA", "V1", "V2", "V3", "PTH", "OUT", "FMN", "GND", "GND"]
+
+
+def j6_boxes():
+    """no-via boxes under the upright J6 pin labels"""
+    out = []
+    for k, nm in enumerate(J6_NAMES):
+        q = padpos.get(("J6", str(k + 1)))
+        if q:
+            out.append((q[0] - 0.8, q[1] - 1.6 - 0.62 * len(nm) - 0.3, q[0] + 0.8, q[1] - 1.3))
+    return out
+
+
 def via_ok(x, y, rv, ref, own=None, clr=0.25):
-    if any(b[0] - rv < x < b[2] + rv and b[1] - rv < y < b[3] + rv for b in LABEL_BOXES):
+    if any(b[0] - rv < x < b[2] + rv and b[1] - rv < y < b[3] + rv for b in LABEL_BOXES + j6_boxes()):
         return False
     if x < 0.6 or y < 0.6 or x > W - 0.6 or y > H - 0.6 or SLOT_Y0 - 0.6 - rv < y < SLOT_Y1 + 0.6 + rv:
         return False
@@ -733,7 +746,17 @@ text("ctrl rev 0.1  z2labs", 90.0, 11.5, 1.0)
 text("CERN-OHL-S-2.0", 90.0, 14.0, 1.0)
 text("RTL-SDR", 97.5, YJ - 8.0, 0.8, 90)
 text("RF CTRL", padpos[("J6", "1")][0] - 1.0, H - 9.6, 0.8, just="left")
-for k, nm in enumerate(["3V3", "LNA", "V1", "V2", "V3", "PTH", "OUT", "FMN", "GND", "GND"]):
+for (x0, y0, x1, y1) in j6_boxes():           # no via under a pin label either (silk_dfm would shift it a pin over)
+    ko = pcbnew.ZONE(board); ko.SetIsRuleArea(True)
+    ko.SetDoNotAllowVias(True); ko.SetDoNotAllowTracks(False); ko.SetDoNotAllowPads(False)
+    ko.SetDoNotAllowZoneFills(False); ko.SetDoNotAllowFootprints(False)
+    ls_ = pcbnew.LSET(); [ls_.AddLayer(l) for l in (pcbnew.F_Cu, pcbnew.B_Cu)]
+    ko.SetLayerSet(ls_)
+    ol = ko.Outline(); ol.NewOutline()
+    for (x, y) in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
+        ol.Append(mm(OX + x), mm(OY + y))
+    board.Add(ko)
+for k, nm in enumerate(J6_NAMES):
     q = padpos[("J6", str(k + 1))]
     text(nm, q[0], q[1] - 1.6, 0.7, 90, th=0.12, just="left")   # upright column per pin: never shifted onto a neighbour
 

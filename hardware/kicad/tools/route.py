@@ -105,6 +105,22 @@ def keepouts(board):
             hx, hy = max(0.01, (x1 - x0) / 2 - VIA_PAD_INSET), max(0.01, (y1 - y0) / 2 - VIA_PAD_INSET)   # negative inset grows it
             pts = [(cx - hx, cy - hy), (cx + hx, cy - hy), (cx + hx, cy + hy), (cx - hx, cy + hy)]
             out.append('    (keepout "" (polygon In1.Cu 0 ' + " ".join(f"{x * 1000:.0f} {-y * 1000:.0f}" for x, y in pts) + "))")
+    # Kelvin: the INA180 sense pins and their stubs into the shunt pads are fenced off on F.Cu, so the router can
+    # reach that net only at the shunt pad itself and the load current never runs in a sense lead (twin_analog checks)
+    fps = {fp.GetReference(): fp for fp in board.GetFootprints()}
+    for ina, shunt in (("U3", "R7"), ("U20", "R35")):
+        if ina not in fps or shunt not in fps:
+            continue
+        sp = [fps[ina].FindPadByNumber(n) for n in ("3", "4")]
+        rp = fps[shunt].FindPadByNumber("1")
+        sy = pcbnew.ToMM(sp[0].GetPosition().y); ry = pcbnew.ToMM(rp.GetPosition().y)
+        xs = [pcbnew.ToMM(p.GetPosition().x) for p in sp]
+        half = pcbnew.ToMM(rp.GetBoundingBox().GetHeight()) / 2
+        d = 1 if ry > sy else -1
+        y_a, y_b = sy - d * 0.45, ry - d * (half + 0.05)          # from between pin 2/3 rows to the shunt pad edge
+        x_a, x_b = min(xs) - 1.1, max(xs) + 1.1
+        pts = [(x_a, y_a), (x_b, y_a), (x_b, y_b), (x_a, y_b)]
+        out.append('    (keepout "" (polygon F.Cu 0 ' + " ".join(f"{x * 1000:.0f} {-y * 1000:.0f}" for x, y in pts) + "))")
     return "\n".join(out)
 
 
