@@ -140,9 +140,9 @@ A = [
     ("part", U_ILNA, "INA180A2", "LNA monitor is the 50 V/V version (firmware I_UV_PER_MA 19500 = 0.39 R x 50)"),
     # ---- coax DC feed and whole-coax current [DOC-HW] [DS-180]
     ("chain", ("J3", "1"), ["L5", "L6", "L7", "R35"], (U_IDEAL, "VIN"),
-     "coax centre -> 100 nH -> 10 uH -> 1 mH -> 0.1 R shunt -> VCOAX (DC feed, shunt last)"),
-    ("value", "L5", "100nH", "100 nH first choke"), ("value", "L6", "10uH", "10 uH middle choke"),
-    ("value", "L7", "1mH", "1 mH last choke"), ("value", "R35", "0R1", "0.1 R coax shunt"),
+     "coax centre -> 100 nH -> 10 uH -> 470 uH -> 0.1 R shunt -> VCOAX (DC feed, shunt last)"),
+    ("value", "L5", "100nH/1A", "100 nH 1 A (LQW18CN, 0.1 R) first choke"), ("value", "L6", "10uH", "10 uH middle choke"),
+    ("value", "L7", "470uH", "470 uH low-DCR last choke (owner 2026-11-07)"), ("value", "R35", "0R1", "0.1 R coax shunt"),
     ("parallel", "R24", "L6", 220, "220 R damping across the 10 uH"),
     ("only", ("R35", "1"), {"L7", U_ITOT}, "nothing but the shunt and its sense input before the shunt: every load is measured"),
     ("same", [(U_ITOT, "IN+"), ("R35", "1")], "INA180A3 IN+ on the coax side of R35 (bus side)"),
@@ -153,7 +153,7 @@ A = [
     # ---- VCOAX loads [DOC-HW] [DS-66100]
     ("same", [("D1", "K"), (U_IDEAL, "VIN")], "TVS cathode on VCOAX"), ("gnd", [("D1", "A")], "TVS anode GND"),
     ("res_gnd", (U_IDEAL, "VIN"), 680, "680 R bleeder on VCOAX (sets the fall time)"),
-    ("divider", (U_IDEAL, "VIN"), M("P0.2"), 12000, 22000, "VCOAX -> 12 k / 22 k -> SENSE (P0.2)"),
+    ("divider", (U_IDEAL, "VIN"), M("P0.2"), 11000, 22000, "VCOAX -> 11 k / 22 k -> SENSE (P0.2)"),
     ("led", "D2", (U_IDEAL, "VIN"), "PWR lamp from VCOAX through a resistor, cathode to GND"),
     ("same", [(U_IDEAL, "CE"), (U_IDEAL, "VOUT")], "LM66100 CE tied to VOUT (reverse current protection)"),
     ("gnd", [(U_IDEAL, "ST"), (U_IDEAL, "GND")], "LM66100 ST and GND to ground"),

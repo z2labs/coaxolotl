@@ -114,7 +114,7 @@
 #define ADC_FS        1023u     /* 10-bit, VDD reference */
 
 /* VCOAX divider 10k (top) / 22k (bottom): Vpin = V * 22/32 */
-#define VC_DIV_NUM    34u
+#define VC_DIV_NUM    33u
 #define VC_DIV_DEN    22u
 /* SCAP divider 1M / 1M */
 #define SC_DIV_NUM    2u
@@ -122,7 +122,7 @@
 /* LNA current: shunt 0.39 ohm, INA180A2 gain 50 -> 19.5 mV/mA */
 #define I_UV_PER_MA   19500u
 
-#define RAIL_LOW_MV   3900u     /* LOW lamp below this (cable drop / weak bias) */
+#define RAIL_LOW_MV   3600u     /* LOW lamp below this (cable drop / weak bias) */
 #define RAIL_HYST_MV  100u
 #define SCAP_OK_MV    3600u     /* HOLD lamp steady above this                  */
 #define SCAP_HYST_MV  200u

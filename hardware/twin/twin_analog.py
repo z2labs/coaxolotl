@@ -12,7 +12,9 @@ Sources: [DS-180] INA180 SBOS741H (gain A2 50 V/V, A3 100 V/V; output swing to V
 SLVS841G IOS table (min/typ/max at RILIM 20 k, 49.9 k, 210 k), [DOC-HW] docs/hardware.md power budget (RTL-SDR V3
 bias-T 4.5 V, about 180 mA; LNA budget 100 mA; 3V3 domain 1.5 mA active) and back-channel derivation (3rd harmonic,
 25 R line, about -65 dBm), [FW] firmware/src/config.h and hal_efm8bb52.c constants (read by machine), USB 2.0 VBUS
-5.25 V max (the V3 bias-T is switched from VBUS).
+5.25 V max (the V3 bias-T is switched from VBUS). [MEAS] owner's measurement 2026-11-07: the V3 gives 4.06 V at
+135 mA. DCR max: [DS-LQW18CN] Murata LQW18CN R10 0.10 R, [DOC-HW] LQH32CN100K 0.39 R, [DS-YPRH1209] YJYCOIN
+YPRH1209-471M 0.471 R.
 
 usage: kicad-python twin_analog.py board.kicad_pcb [--selftest] [-q]     exit 0 / 1 FAIL / 2 input / 3 selftest
 """
@@ -31,6 +33,9 @@ I_COAX = 0.25        # A: design current of the coax DC path (above the V3 bias-
 V_BUS_MAX = 5.25     # V: USB VBUS max, the highest the V3 bias-T can put on the coax
 V_COAX_NOM = 4.5     # V: V3 bias-T [DOC-HW]
 V_V3_LIMIT = 180     # mA [DOC-HW]
+V3_LOADED = (4.06, 135)   # V, mA [MEAS]
+DCR = {"L5": ("100nH/1A", 0.10), "L6": ("10uH", 0.39), "L7": ("470uH/1A", 0.471)}   # ref: (fitted value, ohm max)
+CABLE_R = 1.5        # ohm loop, 30 m RG58 at 50 mR/m [DOC-HW]
 INA_SWING = 0.020    # V below VS [DS-180]
 GAIN = {"INA180A1": 20, "INA180A2": 50, "INA180A3": 100, "INA180A4": 200}           # [DS-180]
 IOS_TAB = [(20e3, 1200, 1295, 1375), (49.9e3, 475, 520, 565), (210e3, 110, 130, 150)]   # [DS-2553] mA
@@ -380,6 +385,21 @@ def check(cu):
        f"the LOW lamp's {fw['RAIL_LOW_MV'] / 1000:.1f} V: the gap decoder sees every bias-on level the box works at")
     ok(sense_max <= absmax, "range",
        f"SENSE at {V_BUS_MAX} V (USB max) {sense_max:.2f} V within the GPIO maximum {absmax:.2f} V [DS-BB52 Table 4.1]")
+    # ---- DC feed drop with the measured V3 [MEAS]: VCOAX must stay above LOW and the logic-1 point
+    feed = 0.0
+    for ref, (key, dcr) in DCR.items():
+        if not v.get(ref, "").startswith(key):
+            rep.add("FAIL", "feed", f"{ref} = {v.get(ref)!r} ({cu.mpn.get(ref, '')}): no DCR source for this part"); feed = None; break
+        feed += dcr
+    if feed is not None:
+        feed += r35
+        v0, i0 = V3_LOADED
+        vc_short = v0 - i0 / 1000 * feed
+        vc_long = v0 - i0 / 1000 * (feed + CABLE_R)
+        ok(vc_short > fw["RAIL_LOW_MV"] / 1000 + 0.1, "feed", f"VCOAX with the V3 at {i0} mA, short cable: {v0} V - "
+           f"{feed:.2f} R x {i0} mA = {vc_short:.2f} V, LOW at {fw['RAIL_LOW_MV'] / 1000:.1f} V (0.1 V margin)")
+        ok(vc_long > v1, "feed", f"30 m RG58 ({CABLE_R} R loop): VCOAX {vc_long:.2f} V, above the logic-1 point "
+           f"{v1:.2f} V: the decoder still reads every bias-on level")
     ok(fw["RAIL_LOW_MV"] * r4 / (r3 + r4) < vdd * 1000, "range", f"RAIL_LOW {fw['RAIL_LOW_MV']} mV -> SENSE "
        f"{fw['RAIL_LOW_MV'] * r4 / (r3 + r4):.0f} mV, inside the ADC")
     # ---- TPS2553 [DS-2553]
@@ -478,6 +498,7 @@ def selftest(cu):
     case("coax monitor fitted with an A2", "IT_UV_PER_MA", *val("U20", "INA180A2IDBVR(SOT23-5)"))
     case("SENSE divider bottom 20 k", "VC_DIV", *val("R4", "20k/1%"))
     case("SENSE divider top 10 k again", "GPIO maximum", *val("R3", "10k/1%"))
+    case("old 1 mH / 1.7 R choke fitted", "no DCR source", *val("L7", "1mH/0.2A"))
     case("SENSE divider top 15 k", "logic 1", *val("R3", "15k/1%"))
     case("RILIM 210 k", "IOS", *val("R5", "210k/1%"))
     case("beacon series 470 R", "dBm", *val("R31", "470R/1%"))
@@ -493,6 +514,8 @@ if __name__ == "__main__":
         print(__doc__); sys.exit(2)
     cu = Copper(args[0])
     cu.fp_of = {fp.GetReference(): fp.GetFPIDAsString() for fp in cu.b.GetFootprints()}
+    cu.mpn = {fp.GetReference(): (fp.GetFieldText("MPN") if fp.HasFieldByName("MPN") else "")
+              for fp in cu.b.GetFootprints()}
     code = 0
     if "--selftest" in sys.argv:
         print("== selftest (injected faults)")

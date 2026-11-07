@@ -36,7 +36,7 @@ flowchart LR
 ```
 coax centre ──► broadband choke ──► VCOAX ─┬─ 680 Ω bleeder ── GND           (6.3 mA, sets fall time)
                                            ├─ 3.3 kΩ + PWR LED ── GND        (0.7 mA)
-                                           ├─ 12 k / 22 k ── SENSE, VC_ADC   (to MCU, 2.85 V @ 4.4 V)
+                                           ├─ 11 k / 22 k ── SENSE, VC_ADC   (to MCU, 2.93 V @ 4.4 V)
                                            └─ LM66100 ──► VMAIN ─┬─ TPS2553 (EN, ILIM, FAULT) ─ 0.39 Ω ─ LNA
                                                                  ├─ ferrite ─ 47 µF ─ LED anodes
                                                                  ├─ 100 Ω ─ BAT54 ─┐
@@ -95,8 +95,19 @@ need to. Every 100 Ω costs about 0.6 mA more.
 | Hold-up charging | VMAIN | 0 | 40 mA (330 µF, about 0.1 s) + 18 mA (SCAP, decays over about 1 min) |
 | **Total** | | **about 120 mA typical, 132 mA worst** | **about 140 mA** right after boot while the SCAP is still charging |
 
-The cable drop is about 50 mΩ/m loop for RG58. At 30 m and 140 mA that is
-about 0.2 V, so VCOAX ≈ 4.2–4.3 V. The LOW lamp lights below 3.9 V.
+The RTL-SDR Blog V3 itself sags under load: measured 4.06 V at 135 mA
+with a short SMA link (2026-11-07), not the 4.5 V it gives unloaded. The
+box's DC feed adds L5 0.1 Ω + L6 0.39 Ω + L7 0.47 Ω (control board: plus
+the 0.1 Ω coax shunt), about 0.13 V at 135 mA, so VCOAX ≈ 3.9 V with a
+short cable. The cable drop is about 50 mΩ/m loop for RG58: at 30 m and
+140 mA another 0.2 V, VCOAX ≈ 3.7 V. The LOW lamp lights below 3.6 V;
+the SENSE input still reads a logic 1 down to 3.53 V (VIH = 0.7 VDD
+through 11 k / 22 k).
+
+On the control board L7 is a 470 µH, 0.47 Ω YJYCOIN YPRH1209-471M (still
+5 kΩ at 160 m) and L5 a Murata LQW18CNR10K0ZD (0.1 Ω, SRF ≥ 1.26 GHz).
+The RF board still has the 1 mH SRR1260 (1.7 Ω) and the LQW18AN (0.68 Ω);
+swap them at its next layout.
 **VERIFY** that the QPL9547 still meets its gain and OIP3 at about 4.2 V
 (it is specified for 3.3–5 V).
 

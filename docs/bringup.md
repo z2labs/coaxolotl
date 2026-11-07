@@ -80,7 +80,7 @@ python3 host/coaxolotl.py send --bank 6 --lna --listen
 * Trip test: load the LNA rail with about 22 Ω. TPS2553 limits the current
   and raises FAULT → TRIP lights, and the box drops to BYP. Then send
   `--clr` → the LNA comes back.
-* Lower the bias (long cable or a lab supply): below 3.9 V, LOW lights.
+* Lower the bias (long cable or a lab supply): below 3.6 V, LOW lights.
 
 ### Lamp as a dummy LNA (control board)
 

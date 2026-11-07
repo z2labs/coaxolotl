@@ -308,7 +308,7 @@ def sheet_power(lib) -> DSheet:
     s.add(Part("D2", "Device:LED", "LED/GREEN(0603)", 91.44, 68.58, 90, LED0603,
                {"2": "PWR_LED_A", "1": "GND"}, {"Note": "PWR lamp, works without MCU"}, txt=(94.74, 67.31)))
     s.zone = "ANALOG"
-    s.add(R("R3", "12k/1%", 111.76, 55.88, "VCOAX", "SENSE"))
+    s.add(R("R3", "11k/1%", 111.76, 55.88, "VCOAX", "SENSE"))
     s.add(R("R4", "22k/1%", 111.76, 68.58, "SENSE", "GND"))
     s.zone = "POWER"
     s.rail_pin("D1", "1", "VCOAX")
@@ -326,7 +326,7 @@ def sheet_power(lib) -> DSheet:
     s.gnd("R4", "2")
     s.w((111.76, 62.23), (124.46, 62.23))
     s.hlabel("SENSE", 124.46, 62.23, "R", "output")
-    s.intent("SENSE = 0.647 x VCOAX (2.85 V at 4.4 V)", 17.78, 81.28)
+    s.intent("SENSE = 0.667 x VCOAX (2.93 V at 4.4 V)", 17.78, 81.28)
     s.intent("t_fall = 1.1 x R_eff x C_total: R1 sets the OOK falling edge", 17.78, 84.46)
 
     # B ---- IDEAL DIODE -------------------------------------------------------
@@ -1018,13 +1018,15 @@ def sheet_ctrl(lib) -> DSheet:
             "Bias-T + coax to RTL-SDR (DC feed only)")
     y1 = 71.12
     xl = X + 50.8
-    s.add(Part("L5", "Device:L", "100nH/0603", xl, y1 - 3.81, 0, "Inductor_SMD:L_0603_1608Metric",
-               {"1": "BT_1", "2": "COAX"}, txt=(xl - 2.54, y1 - 5.08, "right")))
+    # DC feed DCR (owner's measurement 2026-11-07: the V3 gives 4.06 V at 135 mA): 0.1 R L5 + 0.47 R L7 instead of
+    # 0.68 + 1.7 R keep VCOAX ~0.24 V higher. LQW18CN: SRF >= 1260 MHz like the LQW18AN it replaces.
+    s.add(Part("L5", "Device:L", "100nH/1A(0603)", xl, y1 - 3.81, 0, "Inductor_SMD:L_0603_1608Metric",
+               {"1": "BT_1", "2": "COAX"}, {"MPN": "LQW18CNR10K0ZD"}, txt=(xl - 2.54, y1 - 5.08, "right")))
     s.add(Part("L6", "Device:L", "10uH/0.45A(1210)", xl, y1 - 15.24, 0, "Inductor_SMD:L_1210_3225Metric",
                {"1": "BT_2", "2": "BT_1"}, {"MPN": "LQH32CN100K33L"}, txt=(xl - 2.54, y1 - 16.51, "right")))
     s.add(R("R24", "220R/5%", xl + 7.62, y1 - 15.24, "BT_2", "BT_1", Note="damps the L6 self-resonance"))
-    s.add(Part("L7", "Device:L", "1mH/0.2A", xl, y1 - 26.67, 0, "Inductor_SMD:L_Bourns_SRR1260",
-               {"1": "VCOAX_IN" if MCU == "bb52" else "VCOAX", "2": "BT_2"}, {"MPN": "SRR1260-102M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
+    s.add(Part("L7", "Device:L", "470uH/1A", xl, y1 - 26.67, 0, "coaxolotl:L_YJYCOIN_YPRH1209",
+               {"1": "VCOAX_IN" if MCU == "bb52" else "VCOAX", "2": "BT_2"}, {"MPN": "YPRH1209-471M"}, txt=(xl - 2.54, y1 - 27.94, "right")))
     s.add(Part("J3", "Connector:Conn_Coaxial", "SMA/EDGE(RTL-SDR)", X + 81.28, y1, 0,
                "coaxolotl:SMA_EdgeLaunch_BWSMA-KE-P001_Air", {"1": "COAX", "2": "GND"},
                {"Place": "edge"}, txt=(X + 83.82, y1 - 8.89)))
@@ -1064,7 +1066,7 @@ def sheet_ctrl(lib) -> DSheet:
         s.w(s.pt("L7", "1"), (xl, s.pt("L7", "1")[1] - 2.54))
         s.rail("VCOAX", xl, s.pt("L7", "1")[1] - 2.54)
     s.gnd("J3", "2")
-    s.intent("Coax DC feed 100 nH -> 10 uH || 220R -> 1 mH, as on the RF board. D1 (TVS) at J3 (power sheet).",
+    s.intent("Coax DC feed 100 nH -> 10 uH || 220R -> 470 uH (low-DCR, 0.67 R total). D1 (TVS) at J3 (power sheet).",
              X + 2.54, 83.82)
     if MCU == "bb52":
         s.intent("ITOT = 0.1R x 100 V/V = 10 mV/mA (whole box, 200 mA -> 2.0 V); Kelvin taps at R35 pads",

@@ -66,7 +66,7 @@ D(7+n); its 2.2 kΩ is in array RN(1 + 2k) for row 1 and RN(2 + 2k) for row 2.
 | 40 | TRIP | red | the LNA supply was cut (TPS2553 fault, or 2 samples ≥ 150 mA). Latched until CLR |
 | 41 | RUN | green | the MCU clock is running. Off means Snooze, so no MCU spurs (show mode only) |
 | 42 | HOLD | green | supercap ≥ 3.6 V. Blinks while charging (show mode) |
-| 43 | LOW | red | coax DC < 3.9 V (long cable, weak bias), or the coax current ≥ 170 mA (near the RTL-SDR bias-T limit; the reply's BUDGET flag tells which) |
+| 43 | LOW | red | coax DC < 3.6 V (long cable, weak bias), or the coax current ≥ 170 mA (near the RTL-SDR bias-T limit; the reply's BUDGET flag tells which) |
 | 44 | QUIET | yellow | quiet mode |
 | 45 | DROP | red | sticky: bias was lost ≥ 300 ms since the last CLR |
 | 46 | GLT | yellow | sticky: rail crackle (< 5 ms dips) was seen |
