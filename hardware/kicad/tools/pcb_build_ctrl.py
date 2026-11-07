@@ -683,16 +683,16 @@ def lna_feed():
     net = fps["R7"].FindPadByNumber("1").GetNetname()
     p6, r1 = padpos[("U2", "6")], padpos[("R7", "1")]
     hw = pcbnew.ToMM(fps["U2"].FindPadByNumber("6").GetBoundingBox().GetWidth()) / 2
-    xm = p6[0] + hw + 0.8
+    xm = p6[0] + hw + 0.7
     pts = [p6, (xm, p6[1]), (xm, r1[1]), r1]
     w = 0.4
     for a, b_ in zip(pts, pts[1:]):
         for r in pads_all:
-            if r[1] != net and r[1] != "" and d_seg_rect(a, b_, r) < w / 2 + 0.25:
+            if r[1] != net and r[1] != "" and d_seg_rect(a, b_, r) < w / 2 + 0.2:
                 print(f"LNA feed U2.6 -> R7.1: blocked by {r[0]}.{r[6]} {r[2:6]} at {d_seg_rect(a, b_, r):.2f} mm "
                       f"from {a}->{b_}, left to the router"); return
         for (vx, vy, vr) in vias:
-            if seg_dist((vx, vy), a, b_) < w / 2 + vr + 0.25:
+            if seg_dist((vx, vy), a, b_) < w / 2 + vr + 0.2:
                 print(f"LNA feed U2.6 -> R7.1: blocked by a via at ({vx:.2f},{vy:.2f}), left to the router"); return
     for a, b_ in zip(pts, pts[1:]):
         add_track(a, b_, w, net)
