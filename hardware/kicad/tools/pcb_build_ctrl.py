@@ -301,7 +301,7 @@ SOFT = {
     "L7": (86.0, 61.0, 0), "C10": (63.0, 59.0, 0),       # C10 4 mm left: room for the R35/U20 shunt at L7.1
     "U5": (40.0, 46.0, 0), "J1": (28.0, 40.0, 90),
     "U1": (52.0, 56.0, 0), "U4": (46.0, 63.0, 0), "U2": (58.0, 43.0, 0),
-    "C9": (53.0, 64.0, 90), "R7": (68.0, 48.0, 0), "D1": (93.0, 48.0, 0),
+    "C9": (53.0, 64.0, 90), "D1": (93.0, 48.0, 0),
     "L6": (88.0, 49.0, 90), "L5": (93.0, 54.0, 0), "R24": (84.0, 49.0, 90),
 }
 for ref, (x, y, r) in SOFT.items():
@@ -316,15 +316,23 @@ for ref, (x, y, r) in SOFT.items():
 # LNA shunt, Kelvin as below: U3 (INA180A2) straight above R7 at rot 0, so IN+ (3) / IN- (4) on its bottom row sit
 # over R7 pad 1 / pad 2 and the sense lines are two straight stubs into the pads (twin_analog checks it)
 KELVIN_LNA = None
-if "R7" in where and "U3" in fps:
-    rx7, ry7, rr7 = where["R7"]
+if "R7" in fps and "U3" in fps:
+    bx_r, _ = geom(fps["R7"], 0)
     bx_u, _ = geom(fps["U3"], 0)
-    if rr7 == 0 and free((bx_u[0] + rx7, bx_u[1] + ry7 - 3.0, bx_u[2] + rx7, bx_u[3] + ry7 - 3.0), gap=0.2):
-        put("U3", rx7, ry7 - 3.0, 0)
-        KELVIN_LNA = ry7
+    cands = sorted(((dx, dy) for dx in [k * 0.5 for k in range(-16, 17)] for dy in [k * 0.5 for k in range(-8, 13)]),
+                   key=lambda c: math.hypot(*c))
+    for dx, dy in cands:                          # nearest spot to (68, 47) where both fit, U3 3 mm above R7
+        rx7, ry7 = 68.0 + dx, 47.0 + dy
+        if free((bx_r[0] + rx7, bx_r[1] + ry7, bx_r[2] + rx7, bx_r[3] + ry7), gap=0.2) and \
+           free((bx_u[0] + rx7, bx_u[1] + ry7 - 3.0, bx_u[2] + rx7, bx_u[3] + ry7 - 3.0), gap=0.2):
+            put("R7", rx7, ry7, 0)
+            put("U3", rx7, ry7 - 3.0, 0)
+            KELVIN_LNA = ry7
+            break
     else:
-        place_near("U3", (rx7, ry7 - 5.0), (0,))
-    print("LNA shunt R7/U3:", "Kelvin" if KELVIN_LNA else "NO ROOM above R7 (no Kelvin stubs)")
+        place_near("R7", (68.0, 48.0), (0,))
+        place_near("U3", (68.0, 43.0), (0,))
+    print("LNA shunt R7/U3:", f"Kelvin, R7 at {where['R7']}" if KELVIN_LNA else "NO ROOM (no Kelvin stubs)")
 
 # whole-coax current shunt (control board, COAX_MCU=bb52): R35 sits on the outer side of L7 pad 1, in line with it,
 # and U20 (INA180A3) right against R35 with IN+/IN- under the shunt pads, so the sense lines are two short straight
