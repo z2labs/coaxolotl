@@ -378,7 +378,7 @@ def check(cu):
             f" - above VDD (ADC VIN max [DS-BB52]: reads full scale)" + (f" and above the GPIO maximum "
             f"{absmax:.2f} V (VDD - 2 % + 0.3); through {r3 * r4 / (r3 + r4) / 1000:.1f} k only uA flow. "
             f"Not reached with the V3 ({V_COAX_NOM} V)" if sense_max > absmax else
-            "; the GPIO maximum still holds (owner's choice 2026-11-07: 12 k keeps the logic-1 point below 3.9 V)")))
+            "; the GPIO maximum still holds (owner's choice 2026-11-07: 11 k keeps the logic-1 point below the 3.6 V LOW threshold)")))
     vih = 0.7 * vdd * 1.02                                  # [DS-BB52] VIH = 0.7 VDD, at the MCP1700's +2 % VDD
     v1 = vih * (r3 + r4) / r4
     ok(v1 < fw["RAIL_LOW_MV"] / 1000, "range", f"SENSE is a logic 1 (VIH {vih:.2f} V) from VCOAX {v1:.2f} V, below "
