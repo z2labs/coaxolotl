@@ -389,7 +389,7 @@ def check(cu):
     feed = 0.0
     for ref, (key, dcr) in DCR.items():
         if not v.get(ref, "").startswith(key):
-            rep.add("FAIL", "feed", f"{ref} = {v.get(ref)!r} ({cu.mpn.get(ref, '')}): no DCR source for this part"); feed = None; break
+            rep.add("FAIL", "feed", f"{ref} = {v.get(ref)!r}: no DCR source for this part"); feed = None; break
         feed += dcr
     if feed is not None:
         feed += r35
@@ -514,8 +514,6 @@ if __name__ == "__main__":
         print(__doc__); sys.exit(2)
     cu = Copper(args[0])
     cu.fp_of = {fp.GetReference(): fp.GetFPIDAsString() for fp in cu.b.GetFootprints()}
-    cu.mpn = {fp.GetReference(): (fp.GetFieldText("MPN") if fp.HasFieldByName("MPN") else "")
-              for fp in cu.b.GetFootprints()}
     code = 0
     if "--selftest" in sys.argv:
         print("== selftest (injected faults)")
