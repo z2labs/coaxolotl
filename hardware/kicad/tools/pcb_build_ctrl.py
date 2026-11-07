@@ -674,6 +674,39 @@ def dogbones():
 dogbones()
 
 
+def lna_feed():
+    """U2 OUT -> R7 pad 1 drawn here: with U3's sense pins fenced off (Kelvin) the router often found no way into
+    R7.1 between R5, U3 and their GND dog-bones. Down the gap right of U2, then straight into R7.1 from the side
+    away from U3. Skipped (left to the router) if any piece would come within 0.25 mm of another net's pad or via."""
+    if KELVIN_LNA is None or ("U2", "6") not in padpos:
+        return
+    net = fps["R7"].FindPadByNumber("1").GetNetname()
+    p6, r1 = padpos[("U2", "6")], padpos[("R7", "1")]
+    hw = pcbnew.ToMM(fps["U2"].FindPadByNumber("6").GetBoundingBox().GetWidth()) / 2
+    xm = p6[0] + hw + 0.8
+    pts = [p6, (xm, p6[1]), (xm, r1[1]), r1]
+    w = 0.4
+    for a, b_ in zip(pts, pts[1:]):
+        for r in pads_all:
+            if r[1] != net and r[1] != "" and d_seg_rect(a, b_, r) < w / 2 + 0.25:
+                print(f"LNA feed U2.6 -> R7.1: blocked by {r[0]}.{r[6]}, left to the router"); return
+        for (vx, vy, vr) in vias:
+            if seg_dist((vx, vy), a, b_) < w / 2 + vr + 0.25:
+                print(f"LNA feed U2.6 -> R7.1: blocked by a via at ({vx:.2f},{vy:.2f}), left to the router"); return
+    for a, b_ in zip(pts, pts[1:]):
+        add_track(a, b_, w, net)
+    print("LNA feed U2.6 -> R7.1 drawn")
+
+
+def seg_dist(p, a, b_):
+    ax, ay = b_[0] - a[0], b_[1] - a[1]; L = ax * ax + ay * ay
+    t = 0.0 if L == 0 else max(0.0, min(1.0, ((p[0] - a[0]) * ax + (p[1] - a[1]) * ay) / L))
+    return math.hypot(p[0] - a[0] - ax * t, p[1] - a[1] - ay * t)
+
+
+lna_feed()
+
+
 # ------------------------------------------------------------ 7) zones: GND on both layers, strip and main apart
 def zone(layer, y0, y1, prio=0, name=""):
     z = pcbnew.ZONE(board); z.SetLayer(layer); z.SetNet(netobjs["GND"])
